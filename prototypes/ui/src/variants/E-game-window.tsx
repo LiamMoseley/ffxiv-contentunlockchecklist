@@ -19,6 +19,31 @@ function WikiIcon({ src, size = 20 }: { src?: string; size?: number }) {
   return src ? <img className="ve-wiki" src={src} width={size} height={size} alt="" loading="lazy" referrerPolicy="no-referrer" /> : null;
 }
 
+/** A link to the wiki. Clicking it must not change the row's status. */
+function WikiLink({ children }: { children: React.ReactNode }) {
+  return <a className="ve-link" href="#" onClick={(ev) => ev.stopPropagation()}>{children}</a>;
+}
+
+/** Location: the wiki links the zone, not the coordinates. */
+function Location({ text }: { text: string }) {
+  const i = text.search(/\s*\(x/i);
+  return i < 0 ? <WikiLink>{text}</WikiLink> : <><WikiLink>{text.slice(0, i)}</WikiLink>{text.slice(i)}</>;
+}
+
+/** Plain text with the given phrases turned into wiki links, as the wiki does in its Information column. */
+function Linked({ text, phrases = [] }: { text: string; phrases?: string[] }) {
+  const parts: React.ReactNode[] = [];
+  let rest = text;
+  for (const ph of phrases) {
+    const i = rest.indexOf(ph);
+    if (i < 0) continue;
+    parts.push(rest.slice(0, i), <WikiLink key={ph}>{ph}</WikiLink>);
+    rest = rest.slice(i + ph.length);
+  }
+  parts.push(rest);
+  return <>{parts}</>;
+}
+
 const statusWord: Record<Status, string> = { unmarked: 'Unmarked', completed: 'Completed', notInterested: 'Not interested' };
 
 /** Tri-state tick-box: empty → yellow (Completed) → grey with a stroke (Not interested). */
@@ -59,11 +84,6 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
       <div className="ve-window">
         <header className="ve-title">
           <h1>Content Unlock Log</h1>
-          <div className="ve-overall" title="Completed entries across every expansion. Not-interested entries are left out of the count.">
-            <span className="ve-overall-label">Overall Progress</span>
-            <Bar p={log.overall} thin />
-            <span className="ve-num">{log.overall.done}/{log.overall.total}</span>
-          </div>
           <div className="ve-charwrap">
             <button className="ve-char" onClick={() => setCharOpen(!charOpen)} aria-expanded={charOpen}>
               <span className="lvl">Level {log.character.level}</span>
@@ -186,16 +206,21 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                               </span>
                               <span data-l="Unlock" className="unlock">
                                 <WikiIcon src={e.unlockIcon} />
-                                <a href="#" onClick={(ev) => ev.stopPropagation()}>{e.unlock}</a>
+                                <WikiLink>{e.unlock}</WikiLink>
                                 {e.isNew && <em className="ve-new">NEW</em>}
                               </span>
-                              <span data-l="Type" className="type"><span><WikiIcon src={e.typeIcon} />{e.type}</span></span>
-                              <span data-l="Quest" className="quest">
-                                {e.quest ? <span><WikiIcon src={e.questIcon} /><a href="#" onClick={(ev) => ev.stopPropagation()}>{e.quest}</a></span> : <span className="none">—</span>}
+                              <span data-l="Type" className="type">
+                                <span>
+                                  <WikiIcon src={e.typeIcon} />
+                                  {e.type === 'Job Unlock' ? <><WikiLink>Job</WikiLink>&nbsp;Unlock</> : <WikiLink>{e.type}</WikiLink>}
+                                </span>
                               </span>
-                              <span data-l="Location">{e.location}</span>
+                              <span data-l="Quest" className="quest">
+                                {e.quest ? <span><WikiIcon src={e.questIcon} /><WikiLink>{e.quest}</WikiLink></span> : <span className="none">—</span>}
+                              </span>
+                              <span data-l="Location"><span><Location text={e.location} /></span></span>
                               <span data-l="Information" className={`notes ${e.notes ? '' : 'empty'}`}>
-                                <span>{e.noteIcons?.map((src, i) => <WikiIcon key={i} src={src} size={16} />)}{e.notes ?? ''}</span>
+                                <span>{e.noteIcons?.map((src, i) => <WikiIcon key={i} src={src} size={16} />)}<Linked text={e.notes ?? ''} phrases={e.noteLinks} /></span>
                               </span>
                             </div>
                           );

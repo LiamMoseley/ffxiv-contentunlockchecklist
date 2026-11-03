@@ -15,6 +15,7 @@ export interface Entry {
   location: string;
   notes?: string;
   noteIcons?: string[];
+  noteLinks?: string[]; // phrases in the notes that the wiki links
   optionalChallenge?: boolean;
   isNew?: boolean;
 }
@@ -94,6 +95,18 @@ export const entries: Entry[] = [
   { id: 'e21', sectionId: 'shb-cap', level: '440-450', unlock: "Eden's Gate (Savage)", type: 'Raid', typeIcon: icon.raid, location: 'Amh Araeng (X:26.8, Y:16.4)', notes: '(Optional challenge content) Speak with Lewrey', optionalChallenge: true },
   { id: 'e22', sectionId: 'shb-cap', level: '475', unlock: 'The Epic of Alexander (Ultimate)', type: 'Ultimate Raid', typeIcon: icon.raid, location: 'Kugane (X:11.6, Y:12.6)', notes: "(Optional challenge content) Talk to the Wandering Minstrel; requires Eden's Gate: Sepulture (Savage)", optionalChallenge: true },
 ];
+
+// Which phrases in each row's Information cell are links on the wiki
+const noteLinks: Record<string, string[]> = {
+  e1: ['Stormblood'], e2: ['Palace of the Dead'], e3: ['Stormblood'], e4: ['Kojin', 'Tide Goes in, Imperials Go Out'],
+  e5: ['Stormblood'], e6: ['Raids', 'Trials'], e7: ['Endwalker', "Ul'dah"], e8: ['Stormblood'], e9: ['Stormblood'],
+  e10: ['Magitek Terminal', 'The Anomaly'], e11: ['Wandering Minstrel', 'Deltascape V4.0 (Savage)'],
+  e12: ['Shadowbringers'], e13: ['Shadowbringers'], e14: ['Shadowbringers'], e15: ['Pixies', 'The Wheel Turns'],
+  e16: ['Shadowbringers'], e17: ['Dawntrail', "Ul'dah"], e18: ['Shadowbringers'], e19: ['Anxious Crystarium Guard', 'Eden Quests'],
+  e20: ['Vows of Virtue, Deeds of Cruelty', 'The Bozja Incident', 'Fire in the Forge'], e21: ['Lewrey'],
+  e22: ['Wandering Minstrel', "Eden's Gate: Sepulture (Savage)"],
+};
+for (const e of entries) e.noteLinks = noteLinks[e.id];
 
 export interface Character {
   id: string;
