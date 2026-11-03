@@ -1,4 +1,4 @@
-// PROTOTYPE: four UI variations of the Content Unlock Log main window, switchable via ?variant=A|B|C|D.
+// PROTOTYPE: five UI variations of the Content Unlock Log main window, switchable via ?variant=A|B|C|D|E.
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useLog } from './model';
@@ -7,17 +7,20 @@ import { VariantA } from './variants/A-config-window';
 import { VariantB } from './variants/B-ledger';
 import { VariantC } from './variants/C-quest-board';
 import { VariantD } from './variants/D-split-pane';
+import { VariantE } from './variants/E-game-window';
 import './shared.css';
 import './variants/A.css';
 import './variants/B.css';
 import './variants/C.css';
 import './variants/D.css';
+import './variants/E.css';
 
 const variants = [
   { key: 'A', name: 'Config window', C: VariantA },
   { key: 'B', name: 'Ledger', C: VariantB },
   { key: 'C', name: 'Quest board', C: VariantC },
   { key: 'D', name: 'Split pane', C: VariantD },
+  { key: 'E', name: 'Game window (A refined)', C: VariantE },
 ];
 
 function App() {
