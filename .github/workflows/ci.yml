@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Lints the workflows, so PRs catch mistakes in the main-only deploy path.
+      - uses: docker://rhysd/actionlint:1.7.7
+        with:
+          args: -color
       - uses: actions/setup-node@v4
         with:
           node-version: 24
