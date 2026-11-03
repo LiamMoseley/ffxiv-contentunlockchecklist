@@ -14,6 +14,10 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
+## Repository settings
+
+Read a setting's current state before telling the owner to change it: `gh api repos/<owner>/<repo>/pages` (Pages source and URL), `.../branches/main/protection`, `.../environments`. A 404 means the setting is off. Changing settings stays with the owner.
+
 ## Pull requests as a triage surface
 
 **PRs as a request surface: no.** _(Set to `yes` if this repo treats external PRs as feature requests; `/triage` reads this flag.)_
