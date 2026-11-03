@@ -22,6 +22,10 @@ A major release of the game that raises the level cap (A Realm Reborn to Dawntra
 **Unlock**:
 The in-game act of gaining access to a piece of content, usually by completing a quest. A verb or event, never a row.
 
+**Unlock name**:
+The name of what an entry unlocks, as the wiki writes it, for example "Sastasha" or "Duty Roulette: Leveling". An entry is recognised by its unlock name and the names of its quests.
+_Avoid_: Content name
+
 **Optional challenge**:
 An entry the wiki tags as "Optional challenge content", such as Extreme trials, Savage raids and Ultimates. Entries the wiki merely describes as optional are not optional challenges.
 
