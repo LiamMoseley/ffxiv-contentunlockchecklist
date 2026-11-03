@@ -33,7 +33,7 @@ _Avoid_: iLvl, gear score
 The highest character level in an expansion. Every entry in a level-cap section requires it.
 
 **Patch**:
-A game update. The log is labelled with the patch the wiki says it is current to.
+A game update that often adds new content.
 
 ## Characters
 

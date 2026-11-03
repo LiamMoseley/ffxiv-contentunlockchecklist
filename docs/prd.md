@@ -74,7 +74,9 @@ The app is for personal use. It isn't a shared or multi-user service.
 - The content comes from the community wiki's **Content Unlock** page, which lists every unlock in
   tables grouped by level band.
 - The app must credit the wiki as its source and link to the page.
-- The app must show which game patch the content is current to (for example "Patch 7.4").
+- The app does **not** show the wiki's "Updated up to Patch …" label. The owner found it out of date
+  on the wiki (the content is actually current to 7.5x), so repeating it would mislead. Whether to show
+  a patch at all, and where it would come from, is an open question.
 
 ### 5.2 Structure
 
@@ -106,11 +108,15 @@ Each story is followed by its acceptance criteria.
 **US-1. Browse by expansion.**
 *As a player, I want to pick an expansion and see its content, so that I can focus on one part of the
 game at a time.*
-- A column of expansion tiles is always visible (a row on mobile). Each tile shows an icon, the
-  expansion's name and its level range.
+- A column of expansion tiles is always visible (a row on mobile). Each tile shows an icon, with the
+  expansion's name, its level range and a small progress bar with a count beside it.
 - The selected expansion is clearly highlighted.
-- Each tile shows a small progress bar for that expansion, and a "complete" marker once everything in
-  it is done.
+- An expansion is shown as complete by its progress bar turning to the full blue "Quality" fill, not by
+  a separate icon.
+- The column can be collapsed to just the tiles, short names (ARR, HW, SB, ShB, EW, DT) and bars, with
+  the full names as tooltips. On phones it is always a compact row, so the collapse control is hidden.
+- A tile carries a small NEW marker while its expansion has NEW entries that haven't been marked as
+  seen (US-20).
 
 **US-2. Switch between an expansion's sections.**
 *As a player, I want to switch between an expansion's levelling and level-cap lists, so that I can see
@@ -137,8 +143,12 @@ list.*
 **US-5. Mark an entry as completed.**
 *As a player, I want to tick off an entry when I've unlocked it, so that I have a record of my
 progress.*
-- Clicking or tapping an entry toggles it between completed and not completed, and the keyboard can do
-  the same.
+- Each entry has a single three-state status box: empty for Unmarked, yellow for Completed, and grey
+  with a diagonal stroke for Not interested.
+- Clicking or tapping the box, or anywhere on the row, cycles Unmarked → Completed → Not interested →
+  Unmarked. Space does the same from the keyboard. Clicking a wiki link in the row never changes the
+  status.
+- A legend for the three box states is always visible.
 - Completed entries are visibly distinct and dimmed, but stay readable.
 - All progress counts and bars update immediately.
 - Finishing a whole section is acknowledged with a short message.
@@ -146,11 +156,11 @@ progress.*
 **US-6. Mark an entry as not interested.**
 *As a casual player, I want to set aside content I'll never do, so that my progress reflects only what
 I care about.*
-- Each entry has a separate "not interested" control, plus a keyboard shortcut.
-- Not-interested entries are greyed out and left out of every progress count, so that 100% means
-  "everything I want".
-- An entry can't be both completed and not interested. Ticking a not-interested entry marks it
-  completed.
+- Not interested is the third state of the same status box (US-5), not a separate control. A keyboard
+  shortcut (X) sets it directly.
+- Not-interested entries are faded, with greyscale icons, and left out of every progress count, so that
+  100% means "everything I want".
+- An entry can't be both completed and not interested.
 
 **US-7. Mark many entries at once.**
 *As a returning player, I want to mark everything shown as complete in one step, so that I can catch up
@@ -269,10 +279,16 @@ to another device.*
 **US-20. Update the list from the wiki.**
 *As a player, I want to fetch the latest list after a game patch, so that new content appears in my
 log.*
-- An **Update** action checks the wiki and reports what changed (new, changed and removed entries, and
-  the new patch) before applying anything.
+- An **Update** action checks the wiki and reports what changed (new, changed and removed entries)
+  before applying anything.
 - If nothing changed, the app says it's up to date.
-- New entries are tagged **NEW** until the next update.
+- New entries are tagged **NEW** until the player marks them as seen, or until the next update.
+- While there are NEW entries not yet seen, a notice names up to three of them (then "and N more"),
+  with two actions:
+  - **Show** filters the log to every NEW entry across all expansions. Choosing **Show all entries**,
+    a tile or a tab returns to the normal view.
+  - **Mark as seen** clears every NEW tag and marker at once, with a short confirming message.
+- Whether NEW entries have been seen belongs to the device's log, not to a character.
 - The app ships with a copy of the list, so it works offline from its first visit. A device keeps
   whichever copy is newer: if a new release of the app carries a newer list than the device has, it is
   offered for review like any other update, never applied silently.
@@ -410,15 +426,25 @@ asked the same thing on every device.*
 The app should feel like an in-game window, taking inspiration from Final Fantasy XIV's
 configuration screens without copying any of the game's artwork.
 
-- **Window:** a single dark charcoal window in a bronze frame on a black background, with a condensed
-  title at the top left and overall progress at the top right.
+The detailed look was settled by a UI prototype, variant E ("Game window"). Its verdict,
+`docs/prototypes/ui-verdict.md` on the `prototype/ui` branch, is the primary source for colours,
+sizes, breakpoints and typefaces, and the runnable prototype is on the same branch. Rebuild it
+properly; don't promote the prototype code.
+
+- **Window:** a single dark charcoal window in a thick bronze frame on a black background. The title
+  bar has a condensed title at the left and the current character at the right. Overall progress is
+  shown on the All tile, not in the title bar.
 - **Navigation:** a column of red, rounded icon tiles with gold pictograms, one per expansion, with the
   selected tile glowing. The "All" tile is a different colour to set it apart.
-- **Tabs:** slanted, parallelogram-shaped grey tabs, with a small yellow mark on the active one.
-- **Checkboxes:** small dark squares that fill with bright yellow when on.
+- **Tabs:** separate slanted, parallelogram-shaped grey tabs with gaps between them, with a small
+  yellow triangle in the active tab's corner.
+- **Status boxes:** small dark squares in three states: empty, bright yellow, and grey with a diagonal
+  stroke (US-5).
 - **Progress bars:** a dark recessed track with a glossy fill that runs from blue to yellow-green,
-  inspired by the crafting window's Progress and Quality bars.
-- **Buttons:** grey pill-shaped buttons in a footer bar.
+  inspired by the crafting window's Progress bar. A full bar switches to the blue Quality fill.
+- **Links:** wiki links are blue, as on the wiki, on exactly the words the wiki links. The blue is
+  lightened so it stays readable on the charcoal window.
+- **Buttons:** embossed grey pill-shaped buttons with a black edge, in a footer bar.
 - **Dialogs and messages:** pop-ups use the same window style. Messages appear briefly near the bottom
   of the screen.
 - **Sync status:** when sync is on, its status is visible at a glance, in the same visual language,
