@@ -1,0 +1,4435 @@
+{
+ "revisionId": 1580240,
+ "expansions": [
+  {
+   "id": "arr",
+   "name": "A Realm Reborn",
+   "shortName": "ARR",
+   "minLevel": 1,
+   "levelCap": 50
+  },
+  {
+   "id": "hw",
+   "name": "Heavensward",
+   "shortName": "HW",
+   "minLevel": 51,
+   "levelCap": 60
+  },
+  {
+   "id": "sb",
+   "name": "Stormblood",
+   "shortName": "SB",
+   "minLevel": 61,
+   "levelCap": 70
+  },
+  {
+   "id": "shb",
+   "name": "Shadowbringers",
+   "shortName": "ShB",
+   "minLevel": 71,
+   "levelCap": 80
+  },
+  {
+   "id": "ew",
+   "name": "Endwalker",
+   "shortName": "EW",
+   "minLevel": 81,
+   "levelCap": 90
+  },
+  {
+   "id": "dt",
+   "name": "Dawntrail",
+   "shortName": "DT",
+   "minLevel": 91,
+   "levelCap": 100
+  }
+ ],
+ "sections": [
+  {
+   "id": "arr-levelling",
+   "expansionId": "arr",
+   "kind": "levelling",
+   "heading": "Level 1 - 50",
+   "entries": [
+    {
+     "id": "level-1-class-quest",
+     "level": "1",
+     "itemLevel": "",
+     "unlock": "Level 1 Class Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "This unlocks Hunting Log."
+    },
+    {
+     "id": "level-5-class-quest",
+     "level": "5",
+     "itemLevel": "",
+     "unlock": "Level 5 Class Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 1 Class Quest first."
+    },
+    {
+     "id": "mist-access/where-the-heart-is-mist",
+     "level": "5",
+     "itemLevel": "",
+     "unlock": "Mist access",
+     "type": "Housing",
+     "quest": "Where the Heart Is (Mist)",
+     "location": "Lower La Noscea (X:31, Y:20)",
+     "information": ""
+    },
+    {
+     "id": "the-goblet-access/where-the-heart-is-the-goblet",
+     "level": "5",
+     "itemLevel": "",
+     "unlock": "The Goblet access",
+     "type": "Housing",
+     "quest": "Where the Heart Is (The Goblet)",
+     "location": "Western Thanalan (X:26, Y:24)",
+     "information": ""
+    },
+    {
+     "id": "guildleves-inn-access/spirithold-broken-way-down-in-the-hole-just-deserts",
+     "level": "10",
+     "itemLevel": "",
+     "unlock": "Guildleves\nInn Access",
+     "type": "Game Mechanic",
+     "quest": "Spirithold Broken\nWay Down in the Hole\nJust Deserts",
+     "location": "Central Shroud (X:23, Y:19)\nCentral Thanalan (X:20, Y:18)\nMiddle La Noscea (X:25, Y:17)",
+     "information": "Unlocks levequests & Inns.\nGridania: Unlocks Leves of Bentbranch\nUl'dah: Unlocks Leves of Horizon\nLimsa Lominsa: Unlocks Leves of Swiftperch"
+    },
+    {
+     "id": "level-10-class-quest",
+     "level": "10",
+     "itemLevel": "",
+     "unlock": "Level 10 Class Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 5 Class Quest first.\nUnlocks class changing via the Armoury system.\nSince Rogue is available as an ARR class but not available to start the game with, this is the earliest you can access that class."
+    },
+    {
+     "id": "rank-2-hunting-log/you-need-to-complete-rank-1-first",
+     "level": "10",
+     "itemLevel": "",
+     "unlock": "Rank 2 Hunting Log",
+     "type": "Game Mechanic",
+     "quest": "You need to complete Rank 1 first",
+     "location": "",
+     "information": "Gives you extra exp for completing objectives."
+    },
+    {
+     "id": "the-lavender-beds-access/where-the-heart-is-the-lavender-beds",
+     "level": "10",
+     "itemLevel": "",
+     "unlock": "The Lavender Beds access",
+     "type": "Housing",
+     "quest": "Where the Heart Is (The Lavender Beds)",
+     "location": "Central Shroud (X:21, Y:21)",
+     "information": ""
+    },
+    {
+     "id": "guildhests/simply-the-hest-gridania-simply-the-hest-uldah-simply-the-hest-limsa-lominsa",
+     "level": "10",
+     "itemLevel": "",
+     "unlock": "Guildhests",
+     "type": "Game Mechanic",
+     "quest": "Simply the Hest (Gridania)\nSimply the Hest (Ul'dah)\nSimply the Hest (Limsa Lominsa)",
+     "location": "Central Shroud (X:22, Y:22)\nWestern Thanalan (X:23, Y:16)\nWestern La Noscea (X:34, Y:31)",
+     "information": ""
+    },
+    {
+     "id": "duty-roulette-guildhests",
+     "level": "10",
+     "itemLevel": "",
+     "unlock": "Duty Roulette: Guildhests",
+     "type": "Roulette",
+     "quest": "",
+     "location": "",
+     "information": "Unlocks on the completion of your first Guildhest."
+    },
+    {
+     "id": "level-15-class-quest",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Level 15 Class Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 10 Class Quest first."
+    },
+    {
+     "id": "dye/color-your-world",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Dye",
+     "type": "Cosmetic",
+     "quest": "Color Your World",
+     "location": "Western Thanalan (X:12, Y:14)",
+     "information": "Allows the player to recolor their gear with dyes."
+    },
+    {
+     "id": "cast-glamour-glamour-plate/if-i-had-a-glamour-a-selfimproving-man",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Cast Glamour\nGlamour Plate",
+     "type": "Cosmetic",
+     "quest": "If I Had a Glamour\nA Self-improving Man",
+     "location": "Western Thanalan (X:12, Y:14)\nMor Dhona (X:22.1, Y:6.7)",
+     "information": "Allows the player to change the look of their gear with glamours."
+    },
+    {
+     "id": "master-recipes-glamours-set/absolutely-glamourous-submission-impossible",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Master Recipes: Glamours Set",
+     "type": "Cosmetic",
+     "quest": "Absolutely Glamourous\nSubmission Impossible",
+     "location": "Western Thanalan (X:12.6, Y:14.3)\nMor Dhona (X:22, Y:6)",
+     "information": "Allows the player to craft Glamour Prisms."
+    },
+    {
+     "id": "aesthetician/beauty-is-only-scalp-deep",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Aesthetician",
+     "type": "Cosmetic",
+     "quest": "Beauty Is Only Scalp Deep",
+     "location": "Limsa Lominsa Upper Decks (X:11, Y:11)",
+     "information": "Allows the player to redo certain character creation settings such as hairstyle."
+    },
+    {
+     "id": "the-gold-saucer/it-could-happen-to-you",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "The Gold Saucer",
+     "type": "Game Extra",
+     "quest": "It Could Happen to You",
+     "location": "Ul'dah - Steps of Nald (X:9, Y:9)",
+     "information": "Contains mini-games such as Chocobo Racing, Triple Triad, Cactpot and more."
+    },
+    {
+     "id": "challenge-log/rising-to-the-challenge",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Challenge Log",
+     "type": "Game Mechanic",
+     "quest": "Rising to the Challenge",
+     "location": "Limsa Lominsa Upper Decks (X:11, Y:10)",
+     "information": "Gives you extra gil and exp for completing objectives."
+    },
+    {
+     "id": "hall-of-the-novice",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Hall of the Novice",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "Western La Noscea (X:28, Y:24)",
+     "information": "Tutorials on combat mechanics for each class or job. Free Starter Gear and EXP Up Ring"
+    },
+    {
+     "id": "sastasha/its-probably-pirates",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Sastasha",
+     "type": "Dungeon",
+     "quest": "It's Probably Pirates",
+     "location": "Limsa Lominsa Upper Decks (X:7, Y:5)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "party-finder",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Party Finder",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "Unlocks after completing Sastasha."
+    },
+    {
+     "id": "airships/the-lominsan-envoy-the-uldahn-envoy-the-gridanian-envoy",
+     "level": "15",
+     "itemLevel": "",
+     "unlock": "Airships",
+     "type": "Game Mechanic",
+     "quest": "The Lominsan Envoy\nThe Ul'dahn Envoy\nThe Gridanian Envoy",
+     "location": "",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "the-tamtara-deepcroft/fire-in-the-gloom",
+     "level": "16",
+     "itemLevel": "",
+     "unlock": "The Tam-Tara Deepcroft",
+     "type": "Dungeon",
+     "quest": "Fire in the Gloom",
+     "location": "New Gridania (X:11, Y:13)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "duty-roulette-leveling",
+     "level": "16",
+     "itemLevel": "",
+     "unlock": "Duty Roulette: Leveling",
+     "type": "Roulette",
+     "quest": "",
+     "location": "",
+     "information": "Unlocks when you have more than one Dungeon."
+    },
+    {
+     "id": "retainers/the-scions-of-the-seventh-dawn",
+     "level": "17",
+     "itemLevel": "",
+     "unlock": "Retainers",
+     "type": "Game Mechanic",
+     "quest": "The Scions of the Seventh Dawn",
+     "location": "New Gridania (X:11, Y:12)\nUl'dah - Steps of Nald (X:9, Y:8)\nLimsa Lominsa Lower Decks (X:9, Y:11)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "retainer-ventures/an-illconceived-venture-an-illconceived-venture-an-illconceived-venture",
+     "level": "17",
+     "itemLevel": "",
+     "unlock": "Retainer Ventures",
+     "type": "Game Mechanic",
+     "quest": "An Ill-conceived Venture\nAn Ill-conceived Venture\nAn Ill-conceived Venture",
+     "location": "New Gridania (X:11, Y:12)\nUl'dah - Steps of Nald (X:9, Y:8)\nLimsa Lominsa Lower Decks (X:9, Y:11)",
+     "information": "Send your retainers on missions to obtain items."
+    },
+    {
+     "id": "copperbell-mines/into-a-copper-hell",
+     "level": "17",
+     "itemLevel": "",
+     "unlock": "Copperbell Mines",
+     "type": "Dungeon",
+     "quest": "Into a Copper Hell",
+     "location": "Ul'dah - Steps of Nald (X:11, Y:9)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "palace-of-the-dead/the-house-that-death-built",
+     "level": "17",
+     "itemLevel": "",
+     "unlock": "Palace of the Dead",
+     "type": "Deep Dungeon",
+     "quest": "The House That Death Built",
+     "location": "New Gridania (X:12.0, Y:13.1)",
+     "information": "Rogue-like Dungeon"
+    },
+    {
+     "id": "ceremony-of-eternal-bonding/the-ties-that-bind",
+     "level": "17",
+     "itemLevel": "",
+     "unlock": "Ceremony of Eternal Bonding",
+     "type": "Game Mechanic",
+     "quest": "The Ties That Bind",
+     "location": "East Shroud (X:17, Y:18)",
+     "information": "Player weddings"
+    },
+    {
+     "id": "materia-extraction/forging-the-spirit",
+     "level": "19",
+     "itemLevel": "",
+     "unlock": "Materia Extraction",
+     "type": "Materia",
+     "quest": "Forging the Spirit",
+     "location": "Central Thanalan (X:24, Y:13)",
+     "information": "Extract materia from fully spiritbonded gear."
+    },
+    {
+     "id": "materia-melding/waking-the-spirit",
+     "level": "19",
+     "itemLevel": "",
+     "unlock": "Materia Melding",
+     "type": "Materia\nCrafting",
+     "quest": "Waking the Spirit",
+     "location": "Central Thanalan (X:23, Y:13)",
+     "information": "Meld Materia onto gear with sockets. Requires a level 19 crafting class."
+    },
+    {
+     "id": "level-20-class-quest",
+     "level": "20",
+     "itemLevel": "",
+     "unlock": "Level 20 Class Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 15 Class Quest first."
+    },
+    {
+     "id": "rank-3-hunting-log/you-need-to-complete-rank-2-first",
+     "level": "20",
+     "itemLevel": "",
+     "unlock": "Rank 3 Hunting Log",
+     "type": "Game Mechanic",
+     "quest": "You need to complete Rank 2 first",
+     "location": "",
+     "information": "Gives you extra exp for completing objectives."
+    },
+    {
+     "id": "halatali/hallo-halatali",
+     "level": "20",
+     "itemLevel": "",
+     "unlock": "Halatali",
+     "type": "Dungeon",
+     "quest": "Hallo Halatali",
+     "location": "Western Thanalan (X:12, Y:14)",
+     "information": "Optional Dungeon."
+    },
+    {
+     "id": "the-bowl-of-embers/lord-of-the-inferno",
+     "level": "20",
+     "itemLevel": "",
+     "unlock": "The Bowl of Embers",
+     "type": "Trial",
+     "quest": "Lord of the Inferno",
+     "location": "The Waking Sands (X:6, Y:6)",
+     "information": "Ifrit Main Scenario Quest unlock."
+    },
+    {
+     "id": "grand-companies/the-company-you-keep",
+     "level": "20",
+     "itemLevel": "",
+     "unlock": "Grand Companies",
+     "type": "Game Mechanic",
+     "quest": "The Company You Keep",
+     "location": "",
+     "information": "Allows you to select a grand company."
+    },
+    {
+     "id": "mount-access/my-little-chocobo",
+     "level": "20",
+     "itemLevel": "",
+     "unlock": "Mount Access",
+     "type": "Game Mechanic",
+     "quest": "My Little Chocobo",
+     "location": "",
+     "information": "Allows you to ride mounts."
+    },
+    {
+     "id": "sightseeing-log/a-sight-to-behold",
+     "level": "20",
+     "itemLevel": "",
+     "unlock": "Sightseeing Log",
+     "type": "Game Extra",
+     "quest": "A Sight to Behold",
+     "location": "New Gridania (X:11, Y:13)",
+     "information": "Unlocks various paintings by the painter in Idyllshire. Annoyingly hard in ARR, easier later."
+    },
+    {
+     "id": "the-thousand-maws-of-totorak/into-the-beasts-maw",
+     "level": "24",
+     "itemLevel": "",
+     "unlock": "The Thousand Maws of Toto-Rak",
+     "type": "Dungeon",
+     "quest": "Into the Beast's Maw",
+     "location": "South Shroud (X:18, Y:19)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "level-25-class-quest",
+     "level": "25",
+     "itemLevel": "",
+     "unlock": "Level 25 Class Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 20 Class Quest first."
+    },
+    {
+     "id": "advanced-materia-melding/melding-materia-muchly",
+     "level": "25",
+     "itemLevel": "",
+     "unlock": "Advanced Materia Melding",
+     "type": "Materia\nCrafting",
+     "quest": "Melding Materia Muchly",
+     "location": "Central Thanalan (X:23, Y:13)",
+     "information": "Meld more materia onto gear than normally possible."
+    },
+    {
+     "id": "haukke-manor/skeletons-in-her-closet",
+     "level": "28",
+     "itemLevel": "",
+     "unlock": "Haukke Manor",
+     "type": "Dungeon",
+     "quest": "Skeletons in Her Closet",
+     "location": "Old Gridania (X:11, Y:4)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "white-wolf-gate-access/broadening-horizons",
+     "level": "29",
+     "itemLevel": "",
+     "unlock": "White Wolf Gate Access",
+     "type": "Transportation",
+     "quest": "Broadening Horizons",
+     "location": "New Gridania (X:12, Y:11)",
+     "information": "Grants you access to White Wolf Gate (a Gridanian exit gate to the upper level of Central Shroud map) by talking to the NPC in front of the gate. The exit will also add the destination to the Gridanian Aethernet."
+    },
+    {
+     "id": "level-30-class-quest",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Level 30 Class Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 25 Class Quest first."
+    },
+    {
+     "id": "level-30-job-quest",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Level 30 Job Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 30 Class Quest and Sylph-management first."
+    },
+    {
+     "id": "rank-4-hunting-log/you-need-to-complete-rank-3-first",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Rank 4 Hunting Log",
+     "type": "Game Mechanic",
+     "quest": "You need to complete Rank 3 first",
+     "location": "",
+     "information": "Gives you extra exp for completing objectives."
+    },
+    {
+     "id": "desynthesis/gone-to-pieces",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Desynthesis",
+     "type": "Crafting",
+     "quest": "Gone to Pieces",
+     "location": "Ul'dah - Steps of Thal (X:14, Y:10)",
+     "information": "Breaks down items to components and other items."
+    },
+    {
+     "id": "wolves-den-pier/a-pup-no-longer-maelstrom-a-pup-no-longer-twin-adder-a-pup-no-longer-immortal-flames",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Wolves' Den Pier",
+     "type": "PvP\nLocation",
+     "quest": "A Pup No Longer (Maelstrom)\nA Pup No Longer (Twin Adder)\nA Pup No Longer (Immortal Flames)",
+     "location": "Limsa Lominsa Upper Decks (X:13, Y:12)\nNew Gridania (X:9, Y:11)\nSteps of Nald (X:8, Y:8)",
+     "information": "The PvP hub zone.\nPrerequisite to unlock Crystalline Conflict, Frontline, and Rival Wings modes"
+    },
+    {
+     "id": "crystalline-conflict/the-crystal-lines-call",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Crystalline Conflict",
+     "type": "PvP",
+     "quest": "The Crystal (Line's) Call",
+     "location": "Wolves' Den Pier (X:4.9, Y:6.4)",
+     "information": "Ranked PvP Mode; players must be equipped with a Soul Crystal to enter this mode."
+    },
+    {
+     "id": "daily-challenge-frontline/like-civilized-men-and-women-maelstrom-like-civilized-men-and-women-twin-adder-like-civilized-men-and-women-immortal-flames",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Daily Challenge: Frontline",
+     "type": "PvP\nRoulette",
+     "quest": "Like Civilized Men and Women (Maelstrom)\nLike Civilized Men and Women (Twin Adder)\nLike Civilized Men and Women (Immortal Flames)",
+     "location": "Limsa Lominsa Upper Decks (X:12.7, Y:12.8)\nNew Gridania (X:9, Y:11)\nUl'dah - Steps of Nald (X:8, Y:9)",
+     "information": "Duty Roulette: Frontline places the player into one of the Frontline PvP maps. Players must be equipped with a Soul Crystal to use this 'Roulette.'"
+    },
+    {
+     "id": "rival-wings/earning-your-wings",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Rival Wings",
+     "type": "PvP",
+     "quest": "Earning Your Wings",
+     "location": "Wolves' Den Pier (X:5.7, Y:5.5)",
+     "information": "Players must be equipped with a Soul Crystal to enter this mode."
+    },
+    {
+     "id": "companion-chocobo-saddlebag/my-feisty-little-chocobo",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Companion\nChocobo Saddlebag",
+     "type": "Chocobo",
+     "quest": "My Feisty Little Chocobo",
+     "location": "South Shroud (X:17, Y:28)",
+     "information": "Allows your Chocobo to fight alone side you, good for solo-ing in the overworld."
+    },
+    {
+     "id": "chocobo-raising/bird-in-hand",
+     "level": "30",
+     "itemLevel": "",
+     "unlock": "Chocobo Raising",
+     "type": "Chocobo",
+     "quest": "Bird in Hand",
+     "location": "Central Shroud (X:20, Y:21)",
+     "information": "Raise your chocobo with a stable in Free Company or outside an Apartment building."
+    },
+    {
+     "id": "brayfloxs-longstop/the-things-we-do-for-cheese",
+     "level": "32",
+     "itemLevel": "",
+     "unlock": "Brayflox's Longstop",
+     "type": "Dungeon",
+     "quest": "The Things We Do for Cheese",
+     "location": "Eastern La Noscea (X:32, Y:30)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "the-navel/lord-of-crags",
+     "level": "34",
+     "itemLevel": "",
+     "unlock": "The Navel",
+     "type": "Trial",
+     "quest": "Lord of Crags",
+     "location": "Upper La Noscea (X:31, Y:24)",
+     "information": "Titan Main Scenario Quest unlock."
+    },
+    {
+     "id": "level-35-job-quest",
+     "level": "35",
+     "itemLevel": "",
+     "unlock": "Level 35 Job Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 30 Job Quest first."
+    },
+    {
+     "id": "the-sunken-temple-of-qarn/braving-new-depths",
+     "level": "35",
+     "itemLevel": "",
+     "unlock": "The Sunken Temple of Qarn",
+     "type": "Dungeon",
+     "quest": "Braving New Depths",
+     "location": "Western Thanalan (X:12, Y:14)",
+     "information": "Optional Dungeon."
+    },
+    {
+     "id": "treasure-hunt/treasures-and-tribulations",
+     "level": "36",
+     "itemLevel": "",
+     "unlock": "Treasure Hunt",
+     "type": "Game Mechanic",
+     "quest": "Treasures and Tribulations",
+     "location": "Eastern La Noscea (X:21, Y:21)",
+     "information": "Treasure maps are found while gathering.\nSolve the map, get to the location and defeat the enemy for reward."
+    },
+    {
+     "id": "cutters-cry/dishonor-before-death",
+     "level": "38",
+     "itemLevel": "",
+     "unlock": "Cutter's Cry",
+     "type": "Dungeon",
+     "quest": "Dishonor Before Death",
+     "location": "Ul'dah - Steps of Thal (X:14, Y:10)",
+     "information": "Optional Dungeon."
+    },
+    {
+     "id": "level-40-job-quest",
+     "level": "40",
+     "itemLevel": "",
+     "unlock": "Level 40 Job Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 35 Job Quest first."
+    },
+    {
+     "id": "rank-5-hunting-log/you-need-to-complete-rank-4-first",
+     "level": "40",
+     "itemLevel": "",
+     "unlock": "Rank 5 Hunting Log",
+     "type": "Game Mechanic",
+     "quest": "You need to complete Rank 4 first",
+     "location": "",
+     "information": "Gives you extra exp for completing objectives."
+    },
+    {
+     "id": "the-stone-vigil/in-pursuit-of-the-past",
+     "level": "41",
+     "itemLevel": "",
+     "unlock": "The Stone Vigil",
+     "type": "Dungeon",
+     "quest": "In Pursuit of the Past",
+     "location": "Coerthas Central Highlands (X:12, Y:16)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "ixal-daily-quests/a-bad-bladder",
+     "level": "41",
+     "itemLevel": "",
+     "unlock": "Ixal Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "A Bad Bladder",
+     "location": "New Gridania (X:9, Y:11)",
+     "information": "Daily Quests for the Ixal. Requires crafters."
+    },
+    {
+     "id": "kobold-daily-quests/highway-robbery",
+     "level": "41",
+     "itemLevel": "",
+     "unlock": "Kobold Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Highway Robbery",
+     "location": "Limsa Lominsa Upper Decks (X:12, Y:12)",
+     "information": "Daily Quests for the Kobolds"
+    },
+    {
+     "id": "sylph-daily-quests/seeking-solace",
+     "level": "42",
+     "itemLevel": "",
+     "unlock": "Sylph Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Seeking Solace",
+     "location": "New Gridania (X:9, Y:11)",
+     "information": "Daily Quests for the Sylphs"
+    },
+    {
+     "id": "amaljaa-daily-quests/peace-for-thanalan",
+     "level": "43",
+     "itemLevel": "",
+     "unlock": "Amalj'aa Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Peace for Thanalan",
+     "location": "Ul'dah - Steps of Nald (X:8, Y:8)",
+     "information": "Daily Quests for the Amalj'aa"
+    },
+    {
+     "id": "sahagin-daily-quests/they-came-from-the-deep",
+     "level": "44",
+     "itemLevel": "",
+     "unlock": "Sahagin Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "They Came from the Deep",
+     "location": "Limsa Lominsa Upper Decks (X:13, Y:12)",
+     "information": "Daily Quests for the Sahagin"
+    },
+    {
+     "id": "dzemael-darkhold/fort-of-fear",
+     "level": "44",
+     "itemLevel": "",
+     "unlock": "Dzemael Darkhold",
+     "type": "Dungeon",
+     "quest": "Fort of Fear",
+     "location": "Coerthas Central Highlands (X:24, Y:28)",
+     "information": "Optional Dungeon"
+    },
+    {
+     "id": "the-howling-eye/lady-of-the-vortex",
+     "level": "44",
+     "itemLevel": "",
+     "unlock": "The Howling Eye",
+     "type": "Trial",
+     "quest": "Lady of the Vortex",
+     "location": "New Gridania (X:11, Y:14)",
+     "information": "Garuda Main Scenario Quest unlock."
+    },
+    {
+     "id": "level-45-job-quest",
+     "level": "45",
+     "itemLevel": "",
+     "unlock": "Level 45 Job Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 40 Job Quest first."
+    },
+    {
+     "id": "the-aurum-vale/going-for-gold",
+     "level": "47",
+     "itemLevel": "",
+     "unlock": "The Aurum Vale",
+     "type": "Dungeon",
+     "quest": "Going for Gold",
+     "location": "Western Thanalan (X:12, Y:14)",
+     "information": "Optional Dungeon"
+    },
+    {
+     "id": "adventurer-squadrons/squadron-and-commander",
+     "level": "47",
+     "itemLevel": "",
+     "unlock": "Adventurer Squadrons",
+     "type": "Game Mechanic",
+     "quest": "Squadron and Commander",
+     "location": "",
+     "information": "Unlocks Grand Company Adventurer Squadrons."
+    },
+    {
+     "id": "hall-of-the-novice-tactical-exercises/hearts-on-fire",
+     "level": "49",
+     "itemLevel": "",
+     "unlock": "Hall of the Novice: Tactical Exercises",
+     "type": "Game Mechanic",
+     "quest": "Hearts on Fire",
+     "location": "Western La Noscea (X:28, Y:24)",
+     "information": "Tutorials on advanced combat mechanics and enemy attack indicators. Rewards a second EXP Up Ring."
+    },
+    {
+     "id": "level-50-job-quest",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Level 50 Job Quest",
+     "type": "Game Mechanic",
+     "quest": "",
+     "location": "",
+     "information": "You need to complete your level 45 Job Quest first."
+    },
+    {
+     "id": "castrum-meridianum/rock-the-castrum",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Castrum Meridianum",
+     "type": "Dungeon",
+     "quest": "Rock the Castrum",
+     "location": "Northern Thanalan (X:15, Y:16)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "the-praetorium/the-ultimate-weapon",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "The Praetorium",
+     "type": "Dungeon",
+     "quest": "The Ultimate Weapon",
+     "location": "Northern Thanalan (X:3, Y:3)",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "the-porta-decumana/the-ultimate-weapon",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "The Porta Decumana",
+     "type": "Trial",
+     "quest": "The Ultimate Weapon",
+     "location": "",
+     "information": "Unlocks in the Main Scenario Quest."
+    },
+    {
+     "id": "duty-roulette-main-scenario",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Duty Roulette: Main Scenario",
+     "type": "Roulette",
+     "quest": "",
+     "location": "",
+     "information": "Unlocks when you complete The Porta Decumana."
+    },
+    {
+     "id": "duty-roulette-trials",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Duty Roulette: Trials",
+     "type": "Roulette",
+     "quest": "",
+     "location": "",
+     "information": "Unlocks once at least two 8-player Trials have been unlocked."
+    },
+    {
+     "id": "duty-roulette-alliance-raid",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Duty Roulette: Alliance Raid",
+     "type": "Roulette",
+     "quest": "",
+     "location": "",
+     "information": "Unlocks once at least two 24-man raids have been unlocked. The first set of these is the Crystal Tower."
+    },
+    {
+     "id": "hildibrand-adventures/the-rise-and-fall-of-gentlemen",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Hildibrand Adventures",
+     "type": "Side Quests",
+     "quest": "The Rise and Fall of Gentlemen",
+     "location": "Ul'dah - Steps of Nald (X:9, Y:8)",
+     "information": "Humor, trials, glams, emotes, minions, mount, relic weapons. This is a long quest chain that goes through multiple expansions."
+    },
+    {
+     "id": "the-hunt/let-the-hunt-begin-maelstrom-let-the-hunt-begin-immortal-flames-let-the-hunt-begin-twin-adder",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "The Hunt",
+     "type": "Game Mechanic",
+     "quest": "Let the Hunt Begin (Maelstrom)\nLet the Hunt Begin (Immortal Flames)\nLet the Hunt Begin (Twin Adder)",
+     "location": "Limsa Lominsa Upper Decks (X:12, Y:12)\nUl'dah - Steps of Nald (X:8, Y:9)\nNew Gridania (X:9, Y:11)",
+     "information": "Hunt rare enemies for good rewards."
+    },
+    {
+     "id": "zodiac-weapon/the-weaponsmith-of-legend",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Zodiac Weapon",
+     "type": "Relic Weapons",
+     "quest": "The Weaponsmith of Legend",
+     "location": "Western Thanalan (X:12, Y:14)",
+     "information": "Obtain Zodiac Weapons. Very optional and extremely grindy."
+    },
+    {
+     "id": "master-recipes-crafting/just-tooling-around",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Master Recipes: Crafting",
+     "type": "Game Mechanic",
+     "quest": "Just Tooling Around",
+     "location": "Mor Dhona (X:21, Y:6)",
+     "information": "Unlocks the vendor Talan and all levels of crafting Master Recipe Tomes."
+    },
+    {
+     "id": "mount-upgrade/magiteknical-difficulties",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Mount Upgrade",
+     "type": "Cosmetic",
+     "quest": "Magiteknical Difficulties",
+     "location": "Mor Dhona (X:21.9, Y:7.8)",
+     "information": "Upgrades your Magitek Armor mount to fire from its weapon"
+    },
+    {
+     "id": "intersocietal-quests/call-of-the-wild-immortal-flames-call-of-the-wild-maelstrom-call-of-the-wild-twin-adder",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Intersocietal Quests",
+     "type": "Side Quests",
+     "quest": "Call of the Wild (Immortal Flames)\nCall of the Wild (Maelstrom)\nCall of the Wild (Twin Adder)",
+     "location": "Ul'dah - Steps of Nald (X:8, Y:9)\nLimsa Lominsa Upper Decks (X:12, Y:12)\nNew Gridania (X:9, Y:11)",
+     "information": "Unlocks after completing all Allied Society reputation grinds."
+    },
+    {
+     "id": "delivery-moogle-quests/of-errant-epistles",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Delivery Moogle Quests",
+     "type": "Side Quests",
+     "quest": "Of Errant Epistles",
+     "location": "Mor Dhona (X:30, Y:13)",
+     "information": "Lore, glam, and minion."
+    }
+   ]
+  },
+  {
+   "id": "arr-levelCap",
+   "expansionId": "arr",
+   "kind": "levelCap",
+   "heading": "Level 50",
+   "entries": [
+    {
+     "id": "samurai/the-way-of-the-samurai",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Samurai",
+     "type": "Job Unlock",
+     "quest": "The Way of the Samurai",
+     "location": "Ul'dah - Steps of Nald (X:9.2, Y:9.1)",
+     "information": "Once unlocked, job starts at level 50."
+    },
+    {
+     "id": "red-mage/taking-the-red",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Red Mage",
+     "type": "Job Unlock",
+     "quest": "Taking the Red",
+     "location": "Ul'dah - Steps of Thal (X:14.1, Y:11.7)",
+     "information": "Once unlocked, job starts at level 50."
+    },
+    {
+     "id": "blue-mage/out-of-the-blue",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Blue Mage",
+     "type": "Job Unlock",
+     "quest": "Out of the Blue",
+     "location": "Limsa Lominsa Lower Decks (X:9.9, Y:11.0)",
+     "information": "Limited job.\nOnce unlocked, job starts at level 1."
+    },
+    {
+     "id": "beastmaster/strangers-in-the-wood",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Beastmaster",
+     "type": "Job Unlock",
+     "quest": "Strangers in the Wood",
+     "location": "New Gridania (X:11.8, Y:13.6)",
+     "information": "Limited job; requires Dawntrail expansion.\nOnce unlocked, job starts at level 1."
+    },
+    {
+     "id": "amdapor-keep/ghosts-of-amdapor",
+     "level": "",
+     "itemLevel": "45",
+     "unlock": "Amdapor Keep",
+     "type": "Dungeon",
+     "quest": "Ghosts of Amdapor",
+     "location": "Western Thanalan (X:12, Y:14)",
+     "information": "Requires The Aurum Vale cleared"
+    },
+    {
+     "id": "the-wanderers-palace/trauma-queen",
+     "level": "",
+     "itemLevel": "45",
+     "unlock": "The Wanderer's Palace",
+     "type": "Dungeon",
+     "quest": "Trauma Queen",
+     "location": "Western Thanalan (X:11, Y:13)",
+     "information": ""
+    },
+    {
+     "id": "pharos-sirius/sirius-business",
+     "level": "",
+     "itemLevel": "48",
+     "unlock": "Pharos Sirius",
+     "type": "Dungeon",
+     "quest": "Sirius Business",
+     "location": "Western La Noscea (X:26, Y:26)",
+     "information": ""
+    },
+    {
+     "id": "copperbell-mines-hard/out-of-sight-out-of-mine",
+     "level": "",
+     "itemLevel": "48",
+     "unlock": "Copperbell Mines (Hard)",
+     "type": "Dungeon",
+     "quest": "Out of Sight, Out of Mine",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": ""
+    },
+    {
+     "id": "haukke-manor-hard/maniac-manor",
+     "level": "",
+     "itemLevel": "48",
+     "unlock": "Haukke Manor (Hard)",
+     "type": "Dungeon",
+     "quest": "Maniac Manor",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": ""
+    },
+    {
+     "id": "the-bowl-of-embers-hard/ifrit-bleeds-we-can-kill-it",
+     "level": "",
+     "itemLevel": "49",
+     "unlock": "The Bowl of Embers (Hard)",
+     "type": "Trial",
+     "quest": "Ifrit Bleeds, We Can Kill It",
+     "location": "The Waking Sands (X:6.1, Y:5.1)",
+     "information": "Required for Patch 2.5 MSQ Good Intentions; part of Primal Quests. Requires A Recurring Problem at the same location."
+    },
+    {
+     "id": "the-labyrinth-of-the-ancients/labyrinth-of-the-ancients",
+     "level": "",
+     "itemLevel": "50",
+     "unlock": "The Labyrinth of the Ancients",
+     "type": "Alliance Raid",
+     "quest": "Labyrinth of the Ancients",
+     "location": "Mor Dhona (X:21, Y:8)",
+     "information": "Required for Patch 2.55 MSQ A Time to Every Purpose; part of Crystal Tower"
+    },
+    {
+     "id": "battle-on-the-big-bridge/the-three-collectors",
+     "level": "",
+     "itemLevel": "50",
+     "unlock": "Battle on the Big Bridge",
+     "type": "Trial",
+     "quest": "The Three Collectors",
+     "location": "Western Thanalan (X:12, Y:13)",
+     "information": "Unlocks during the Hildibrand questline."
+    },
+    {
+     "id": "a-relic-reborn-the-chimera/a-relic-reborn",
+     "level": "",
+     "itemLevel": "52",
+     "unlock": "A Relic Reborn: The Chimera",
+     "type": "Trial",
+     "quest": "A Relic Reborn",
+     "location": "North Shroud (X:30, Y:20)",
+     "information": ""
+    },
+    {
+     "id": "a-relic-reborn-the-hydra/a-relic-reborn",
+     "level": "",
+     "itemLevel": "52",
+     "unlock": "A Relic Reborn: The Hydra",
+     "type": "Trial",
+     "quest": "A Relic Reborn",
+     "location": "North Shroud (X:30, Y:20)",
+     "information": ""
+    },
+    {
+     "id": "the-howling-eye-hard/in-for-garuda-awakening",
+     "level": "",
+     "itemLevel": "52",
+     "unlock": "The Howling Eye (Hard)",
+     "type": "Trial",
+     "quest": "In for Garuda Awakening",
+     "location": "The Waking Sands (X:6.1, Y:5.0)",
+     "information": "Required for Patch 2.5 MSQ Good Intentions; part of Primal Quests."
+    },
+    {
+     "id": "thornmarch-hard/you-have-selected-regicide",
+     "level": "",
+     "itemLevel": "54",
+     "unlock": "Thornmarch (Hard)",
+     "type": "Trial",
+     "quest": "You Have Selected Regicide",
+     "location": "Old Gridania (X:6, Y:10)",
+     "information": "Unlocks as part of the Patch 2.1 main quests."
+    },
+    {
+     "id": "the-lost-city-of-amdapor/one-night-in-amdapor",
+     "level": "",
+     "itemLevel": "55",
+     "unlock": "The Lost City of Amdapor",
+     "type": "Dungeon",
+     "quest": "One Night in Amdapor",
+     "location": "Old Gridania (X:6, Y:10)",
+     "information": ""
+    },
+    {
+     "id": "halatali-hard/this-times-for-fun",
+     "level": "",
+     "itemLevel": "55",
+     "unlock": "Halatali (Hard)",
+     "type": "Dungeon",
+     "quest": "This Time's for Fun",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": "Requires Halatali cleared"
+    },
+    {
+     "id": "brayfloxs-longstop-hard/curds-and-slay",
+     "level": "",
+     "itemLevel": "55",
+     "unlock": "Brayflox's Longstop (Hard)",
+     "type": "Dungeon",
+     "quest": "Curds and Slay",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": ""
+    },
+    {
+     "id": "the-navel-hard/in-a-titan-spot",
+     "level": "",
+     "itemLevel": "57",
+     "unlock": "The Navel (Hard)",
+     "type": "Trial",
+     "quest": "In a Titan Spot",
+     "location": "The Waking Sands (X:6.1, Y:5.1)",
+     "information": "Required for Patch 2.5 MSQ Good Intentions; part of Primal Quests."
+    },
+    {
+     "id": "the-whorleater-hard/lord-of-the-whorl",
+     "level": "",
+     "itemLevel": "60",
+     "unlock": "The Whorleater (Hard)",
+     "type": "Trial",
+     "quest": "Lord of the Whorl",
+     "location": "Lower La Noscea (X:24, Y:33)",
+     "information": "Unlocks as part of the Patch 2.2 main quests."
+    },
+    {
+     "id": "the-minstrels-ballad-ultimas-bane/the-ultimate-ballad",
+     "level": "",
+     "itemLevel": "61",
+     "unlock": "The Minstrel's Ballad: Ultima's Bane",
+     "type": "Trial",
+     "quest": "The Ultimate Ballad",
+     "location": "Mor Dhona (X:21, Y:8)",
+     "information": "(Optional challenge content)"
+    },
+    {
+     "id": "the-striking-tree-hard/levin-an-impression",
+     "level": "",
+     "itemLevel": "65",
+     "unlock": "The Striking Tree (Hard)",
+     "type": "Trial",
+     "quest": "Levin an Impression",
+     "location": "East Shroud (X:23, Y:14)",
+     "information": "Unlocks as part of the Patch 2.3 main quests."
+    },
+    {
+     "id": "the-howling-eye-extreme/galeforce-warning",
+     "level": "",
+     "itemLevel": "65",
+     "unlock": "The Howling Eye (Extreme)",
+     "type": "Trial",
+     "quest": "Gale-force Warning",
+     "location": "New Gridania (X:9, Y:11)",
+     "information": "(Optional challenge content) Requires Primal Nature"
+    },
+    {
+     "id": "the-navel-extreme/quake-me-up-before-you-oghomoro",
+     "level": "",
+     "itemLevel": "67",
+     "unlock": "The Navel (Extreme)",
+     "type": "Trial",
+     "quest": "Quake Me Up Before You O'Ghomoro",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "(Optional challenge content) Requires Gale-force Warning"
+    },
+    {
+     "id": "the-bowl-of-embers-extreme/ifrit-aint-broke",
+     "level": "",
+     "itemLevel": "70",
+     "unlock": "The Bowl of Embers (Extreme)",
+     "type": "Trial",
+     "quest": "Ifrit Ain't Broke",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "(Optional challenge content) Requires Quake Me Up Before You O'Ghomoro"
+    },
+    {
+     "id": "the-binding-coil-of-bahamut/primal-awakening",
+     "level": "",
+     "itemLevel": "70-82",
+     "unlock": "The Binding Coil of Bahamut",
+     "type": "Raid",
+     "quest": "Primal Awakening",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "Requires In a Titan Spot; part of Bahamut Quests"
+    },
+    {
+     "id": "syrcus-tower/syrcus-tower",
+     "level": "",
+     "itemLevel": "70",
+     "unlock": "Syrcus Tower",
+     "type": "Alliance Raid",
+     "quest": "Syrcus Tower",
+     "location": "Mor Dhona (X:30, Y:12)",
+     "information": "Required for Patch 2.55 MSQ A Time to Every Purpose; part of Crystal Tower"
+    },
+    {
+     "id": "hullbreaker-isle/king-of-the-hull",
+     "level": "",
+     "itemLevel": "70",
+     "unlock": "Hullbreaker Isle",
+     "type": "Dungeon",
+     "quest": "King of the Hull",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": ""
+    },
+    {
+     "id": "the-tamtara-deepcroft-hard/corpse-groom",
+     "level": "",
+     "itemLevel": "70",
+     "unlock": "The Tam-Tara Deepcroft (Hard)",
+     "type": "Dungeon",
+     "quest": "Corpse Groom",
+     "location": "Ul'dah - Steps of Nald (X:12, Y:8)",
+     "information": ""
+    },
+    {
+     "id": "the-stone-vigil-hard/blood-for-stone",
+     "level": "",
+     "itemLevel": "70",
+     "unlock": "The Stone Vigil (Hard)",
+     "type": "Dungeon",
+     "quest": "Blood for Stone",
+     "location": "Mor Dhona (X:21, Y:8)",
+     "information": ""
+    },
+    {
+     "id": "sastasha-hard/its-definitely-pirates",
+     "level": "",
+     "itemLevel": "80",
+     "unlock": "Sastasha (Hard)",
+     "type": "Dungeon",
+     "quest": "It's Definitely Pirates",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": ""
+    },
+    {
+     "id": "the-sunken-temple-of-qarn-hard/the-wrath-of-qarn",
+     "level": "",
+     "itemLevel": "80",
+     "unlock": "The Sunken Temple of Qarn (Hard)",
+     "type": "Dungeon",
+     "quest": "The Wrath of Qarn",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": "Requires The Sunken Temple of Qarn cleared"
+    },
+    {
+     "id": "snowcloak/the-path-of-the-righteous",
+     "level": "",
+     "itemLevel": "80",
+     "unlock": "Snowcloak",
+     "type": "Dungeon",
+     "quest": "The Path of the Righteous",
+     "location": "Coerthas Central Highlands (X:12, Y:17)",
+     "information": "Unlocks as part of the Patch 2.4 main quests."
+    },
+    {
+     "id": "the-dragons-neck/the-coliseum-conundrum",
+     "level": "",
+     "itemLevel": "80",
+     "unlock": "The Dragon's Neck",
+     "type": "Trial",
+     "quest": "The Coliseum Conundrum",
+     "location": "Ul'dah - Steps of Thal (X:14, Y:10)",
+     "information": "Unlocks during the Hildibrand questline"
+    },
+    {
+     "id": "thornmarch-extreme/the-king-lives",
+     "level": "",
+     "itemLevel": "80",
+     "unlock": "Thornmarch (Extreme)",
+     "type": "Trial",
+     "quest": "The King Lives",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "(Optional challenge content) Requires Thornmarch (Hard)"
+    },
+    {
+     "id": "the-whorleater-extreme/whorl-of-a-time",
+     "level": "",
+     "itemLevel": "80",
+     "unlock": "The Whorleater (Extreme)",
+     "type": "Trial",
+     "quest": "Whorl of a Time",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "(Optional challenge content) Requires The Whorleater (Hard)"
+    },
+    {
+     "id": "the-akh-afah-amphitheatre-hard/the-instruments-of-our-deliverance",
+     "level": "",
+     "itemLevel": "80",
+     "unlock": "The Akh Afah Amphitheatre (Hard)",
+     "type": "Trial",
+     "quest": "The Instruments of Our Deliverance",
+     "location": "Mor Dhona (X:6, Y:5)",
+     "information": "Unlocks as part of the Patch 2.4 main quests."
+    },
+    {
+     "id": "the-striking-tree-extreme/judgment-bolts-and-lightning",
+     "level": "",
+     "itemLevel": "85",
+     "unlock": "The Striking Tree (Extreme)",
+     "type": "Trial",
+     "quest": "Judgment Bolts and Lightning",
+     "location": "New Gridania (X:9, Y:11)",
+     "information": "(Optional challenge content) Requires Brave New Companions, The Whorleater (Extreme) and Thornmarch (Extreme)."
+    },
+    {
+     "id": "the-chrysalis/an-uninvited-ascian",
+     "level": "",
+     "itemLevel": "90",
+     "unlock": "The Chrysalis",
+     "type": "Trial",
+     "quest": "An Uninvited Ascian",
+     "location": "Northern Thanalan (X:20, Y:22)",
+     "information": "Unlocks as part of the Patch 2.5 main quests."
+    },
+    {
+     "id": "duty-roulette-highlevel-dungeons",
+     "level": "",
+     "itemLevel": "96",
+     "unlock": "Duty Roulette: High-level Dungeons",
+     "type": "Roulette",
+     "quest": "",
+     "location": "",
+     "information": "Requires unlocking a minimum of two of the included Dungeons."
+    },
+    {
+     "id": "battle-in-the-big-keep/her-last-vow",
+     "level": "",
+     "itemLevel": "90",
+     "unlock": "Battle in the Big Keep",
+     "type": "Trial",
+     "quest": "Her Last Vow",
+     "location": "Ul'dah - Steps of Thal (X:12, Y:11)",
+     "information": "Unlocks during the Hildibrand questline."
+    },
+    {
+     "id": "the-world-of-darkness/the-world-of-darkness",
+     "level": "",
+     "itemLevel": "90",
+     "unlock": "The World of Darkness",
+     "type": "Alliance Raid",
+     "quest": "The World of Darkness",
+     "location": "Mor Dhona (X:30, Y:12)",
+     "information": "Required for Patch 2.55 MSQ A Time to Every Purpose; part of Crystal Tower"
+    },
+    {
+     "id": "amdapor-keep-hard/for-keeps-sake",
+     "level": "",
+     "itemLevel": "90",
+     "unlock": "Amdapor Keep (Hard)",
+     "type": "Dungeon",
+     "quest": "For Keep's Sake",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": "Requires Amdapor Keep cleared"
+    },
+    {
+     "id": "the-wanderers-palace-hard/not-easy-being-green",
+     "level": "",
+     "itemLevel": "90",
+     "unlock": "The Wanderer's Palace (Hard)",
+     "type": "Dungeon",
+     "quest": "Not Easy Being Green",
+     "location": "Mor Dhona (X:22, Y:8)",
+     "information": "Requires The Wanderer's Palace cleared"
+    },
+    {
+     "id": "the-keeper-of-the-lake/bestlaid-schemes",
+     "level": "",
+     "itemLevel": "90",
+     "unlock": "The Keeper of the Lake",
+     "type": "Dungeon",
+     "quest": "Best-laid Schemes",
+     "location": "Eastern Thanalan (X:25, Y:25)",
+     "information": "Unlocks as part of the Patch 2.5 main quests."
+    },
+    {
+     "id": "urths-fount/fear-and-odin-in-the-shroud",
+     "level": "",
+     "itemLevel": "95",
+     "unlock": "Urth's Fount",
+     "type": "Trial",
+     "quest": "Fear and Odin in the Shroud",
+     "location": "New Gridania (X:9, Y:11)",
+     "information": "(Optional challenge content) Unlocks during the Who Was That Man in Black questline"
+    },
+    {
+     "id": "the-akh-afah-amphitheatre-extreme/drop-dead-shiva",
+     "level": "",
+     "itemLevel": "95",
+     "unlock": "The Akh Afah Amphitheatre (Extreme)",
+     "type": "Trial",
+     "quest": "Drop Dead Shiva",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "(Optional challenge content) Requires Let Us Cling Together and The Striking Tree (Extreme)."
+    },
+    {
+     "id": "the-second-coil-of-bahamut/another-turn-in-the-coil",
+     "level": "",
+     "itemLevel": "90-105",
+     "unlock": "The Second Coil of Bahamut",
+     "type": "Raid",
+     "quest": "Another Turn in the Coil",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "Requires Alisaie's Pledge after completing The Binding Coil of Bahamut - Turn 5; part of Bahamut Quests."
+    },
+    {
+     "id": "the-second-coil-of-bahamut-savage/sing-me-another-song",
+     "level": "",
+     "itemLevel": "105",
+     "unlock": "The Second Coil of Bahamut (Savage)",
+     "type": "Raid",
+     "quest": "Sing Me Another Song",
+     "location": "Mor Dhona (X:21, Y:8)",
+     "information": "(Optional challenge content) Requires the completion of The Second Coil of Bahamut - Turn 4\nNo loot, only Title"
+    },
+    {
+     "id": "the-final-coil-of-bahamut/fragments-of-truth",
+     "level": "",
+     "itemLevel": "110-123",
+     "unlock": "The Final Coil of Bahamut",
+     "type": "Raid",
+     "quest": "Fragments of Truth",
+     "location": "The Waking Sands (X:6.0, Y:4.9)",
+     "information": "Requires Alisaie's Resolve after completing The Second Coil of Bahamut - Turn 4; part of Bahamut Quests."
+    }
+   ]
+  },
+  {
+   "id": "hw-levelling",
+   "expansionId": "hw",
+   "kind": "levelling",
+   "heading": "Level 51 - 60",
+   "entries": [
+    {
+     "id": "dark-knight/a-dark-spectacle",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Dark Knight",
+     "type": "Job Unlock",
+     "quest": "A Dark Spectacle",
+     "location": "The Pillars (X:13.2, Y:8.8)",
+     "information": "Once unlocked, job starts at level 30. Requires Heavensward MSQ Coming to Ishgard for access to the quest giver in Ishgard."
+    },
+    {
+     "id": "astrologian/whats-your-sign",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Astrologian",
+     "type": "Job Unlock",
+     "quest": "What's Your Sign",
+     "location": "The Pillars (X:15.2, Y:10.0)",
+     "information": "Once unlocked, job starts at level 30. Requires Heavensward MSQ Coming to Ishgard for access to the quest giver in Ishgard."
+    },
+    {
+     "id": "machinist/so-you-want-to-be-a-machinist",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Machinist",
+     "type": "Job Unlock",
+     "quest": "So You Want to Be a Machinist",
+     "location": "Foundation (X:8.1, Y:10.1)",
+     "information": "Once unlocked, job starts at level 30. Requires Heavensward MSQ Coming to Ishgard for access to the quest giver in Ishgard."
+    },
+    {
+     "id": "collectables/inscrutable-tastes",
+     "level": "50",
+     "itemLevel": "",
+     "unlock": "Collectables ",
+     "type": "Crafting mechanic",
+     "quest": "Inscrutable Tastes",
+     "location": "Foundation (X:10.1, Y:10.4)",
+     "information": "Requires Heavensward MSQ The Better Half"
+    },
+    {
+     "id": "the-dusk-vigil/for-all-the-nights-to-come",
+     "level": "51",
+     "itemLevel": "",
+     "unlock": "The Dusk Vigil",
+     "type": "Dungeon",
+     "quest": "For All the Nights to Come",
+     "location": "Coerthas Western Highlands (X:16, Y:22)",
+     "information": "Speak with Wealdtheow"
+    },
+    {
+     "id": "heavensward-sightseeing-log-unlock/sights-of-the-north",
+     "level": "52",
+     "itemLevel": "",
+     "unlock": "Heavensward Sightseeing Log Unlock",
+     "type": "Game Mechanic",
+     "quest": "Sights of the North",
+     "location": "The Dravanian Forelands (X:31.1, Y:22.2)",
+     "information": "Speak with Kester Ironheart"
+    },
+    {
+     "id": "vath-daily-quests/the-naming-of-vath",
+     "level": "53",
+     "itemLevel": "",
+     "unlock": "Vath Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "The Naming of Vath",
+     "location": "The Dravanian Forelands (X:24, Y:19)",
+     "information": "Daily Quests for the Gnath, requires Lord of the Hive"
+    },
+    {
+     "id": "sohm-al/mourn-in-passing",
+     "level": "53",
+     "itemLevel": "",
+     "unlock": "Sohm Al",
+     "type": "Dungeon",
+     "quest": "Mourn in Passing",
+     "location": "The Dravanian Forelands (X:23, Y:19)",
+     "information": "Unlocks in the Main Scenario Quests"
+    },
+    {
+     "id": "thok-ast-thok-hard/lord-of-the-hive",
+     "level": "53",
+     "itemLevel": "",
+     "unlock": "Thok ast Thok (Hard)",
+     "type": "Trial",
+     "quest": "Lord of the Hive",
+     "location": "The Dravanian Forelands (X:30, Y:37)",
+     "information": "Unlocks in the Main Scenario Quests"
+    },
+    {
+     "id": "clan-hunt/let-the-clan-hunt-begin",
+     "level": "53",
+     "itemLevel": "",
+     "unlock": "Clan Hunt",
+     "type": "Game Mechanic",
+     "quest": "Let the Clan Hunt Begin",
+     "location": "Foundation (X:12, Y:11)",
+     "information": "Speak with Aytienne"
+    },
+    {
+     "id": "the-aery/into-the-aery",
+     "level": "55",
+     "itemLevel": "",
+     "unlock": "The Aery",
+     "type": "Dungeon",
+     "quest": "Into the Aery",
+     "location": "Foundation (X:12, Y:10)",
+     "information": "Unlocks in the Main Scenario Quests"
+    },
+    {
+     "id": "moogle-daily-quests/tricks-and-stones",
+     "level": "56",
+     "itemLevel": "",
+     "unlock": "Moogle Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Tricks and Stones",
+     "location": "The Churning Mists (X:27.2, Y:34.5)",
+     "information": "Daily quests for Moogle. Has a large number of prerequisite quests, and requires He Who Would Not Be Denied"
+    },
+    {
+     "id": "level-2-clan-marks/better-bill-hunting",
+     "level": "56",
+     "itemLevel": "",
+     "unlock": "Level 2 Clan marks",
+     "type": "Game Mechanic",
+     "quest": "Better Bill Hunting",
+     "location": "Foundation (X:12, Y:11)",
+     "information": "Speak with Eustacia"
+    },
+    {
+     "id": "scholasticate-quests/keeping-the-ledger",
+     "level": "56-60",
+     "itemLevel": "",
+     "unlock": "Scholasticate Quests",
+     "type": "Side Quests",
+     "quest": "Keeping the Ledger",
+     "location": "The Pillars (X:6, Y:9)",
+     "information": "Speak with Mathye. Also requires clearing the Hildibrand Adventures quest Her Last Vow."
+    },
+    {
+     "id": "the-vault/a-knights-calling",
+     "level": "57",
+     "itemLevel": "",
+     "unlock": "The Vault",
+     "type": "Dungeon",
+     "quest": "A Knight's Calling",
+     "location": "Foundation (X:12, Y:11)",
+     "information": "Unlocks in the Main Scenario Quests"
+    },
+    {
+     "id": "the-limitless-blue-hard/bolt-chain-and-island",
+     "level": "57",
+     "itemLevel": "",
+     "unlock": "The Limitless Blue (Hard)",
+     "type": "Trial",
+     "quest": "Bolt, Chain, and Island",
+     "location": "The Sea of Clouds (X:10, Y:13)",
+     "information": "Unlocks in the Main Scenario Quests"
+    },
+    {
+     "id": "vanu-vanu-daily-quests/three-beaks-to-the-wind",
+     "level": "57",
+     "itemLevel": "",
+     "unlock": "Vanu Vanu Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Three Beaks to the Wind",
+     "location": "The Sea of Clouds (X:11.7, Y:14.8)",
+     "information": "Daily quests for Vanu Vanu. Requires A Difference of Opinion"
+    },
+    {
+     "id": "the-great-gubal-library/forbidden-knowledge",
+     "level": "59",
+     "itemLevel": "",
+     "unlock": "The Great Gubal Library",
+     "type": "Dungeon",
+     "quest": "Forbidden Knowledge",
+     "location": "Matoya's Cave (X:6, Y:5)",
+     "information": "Unlocks in the Main Scenario Quests"
+    },
+    {
+     "id": "level-3-clan-marks/top-marks",
+     "level": "59",
+     "itemLevel": "",
+     "unlock": "Level 3 Clan marks",
+     "type": "Game Mechanic",
+     "quest": "Top Marks",
+     "location": "Idyllshire (X:6, Y:6)",
+     "information": "Speak with Yloise"
+    },
+    {
+     "id": "heavensward-elite-marks/elite-and-dangerous",
+     "level": "60",
+     "itemLevel": "",
+     "unlock": "Heavensward Elite Marks",
+     "type": "Game Mechanic",
+     "quest": "Elite and Dangerous",
+     "location": "Foundation (X:13, Y:11)",
+     "information": "Speak with Ardolain"
+    },
+    {
+     "id": "further-hildibrand-adventures/a-gentleman-falls-rather-than-flies",
+     "level": "60",
+     "itemLevel": "",
+     "unlock": "Further Hildibrand Adventures",
+     "type": "Side Quests",
+     "quest": "A Gentleman Falls, Rather than Flies",
+     "location": "The Pillars (X:5, Y:9)",
+     "information": "Speak with Nashu Mhakaracca"
+    },
+    {
+     "id": "anima-weapons/an-unexpected-proposal",
+     "level": "60",
+     "itemLevel": "",
+     "unlock": "Anima Weapons",
+     "type": "Relic Weapons",
+     "quest": "An Unexpected Proposal",
+     "location": "Idyllshire (X:5, Y:5)",
+     "information": "Speak with Rowena"
+    },
+    {
+     "id": "tales-of-the-dragonsong-war-quests/the-paths-we-walk",
+     "level": "60",
+     "itemLevel": "",
+     "unlock": "Tales of the Dragonsong War Quests",
+     "type": "Side Quests",
+     "quest": "The Paths We Walk",
+     "location": "Fortemps Manor (X:6.0, Y:6.0)",
+     "information": "Speak with House Fortemps Manservant. Unlocks after Main Scenario Quest Litany of Peace"
+    },
+    {
+     "id": "stone-sky-sea/a-striking-opportunity",
+     "level": "60",
+     "itemLevel": "",
+     "unlock": "Stone, Sky, Sea",
+     "type": "Game Mechanic",
+     "quest": "A Striking Opportunity",
+     "location": "Idyllshire (X:7, Y:6)",
+     "information": "DPS Check for various Raids and Trials"
+    },
+    {
+     "id": "custom-deliveries/arms-wide-open",
+     "level": "60",
+     "itemLevel": "",
+     "unlock": "Custom Deliveries",
+     "type": "Game Mechanic",
+     "quest": "Arms Wide Open",
+     "location": "Idyllshire (X:5.8, Y:6.9)",
+     "information": "Custom Deliveries for Zhloe Aliapoh (the first of several clients)"
+    }
+   ]
+  },
+  {
+   "id": "hw-levelCap",
+   "expansionId": "hw",
+   "kind": "levelCap",
+   "heading": "Level 60",
+   "entries": [
+    {
+     "id": "gunbreaker/the-makings-of-a-gunbreaker",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Gunbreaker",
+     "type": "Job Unlock",
+     "quest": "The Makings of a Gunbreaker",
+     "location": "New Gridania (X:11.5, Y:11.9)",
+     "information": "Once unlocked, job starts at level 60."
+    },
+    {
+     "id": "dancer/shall-we-dance",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Dancer",
+     "type": "Job Unlock",
+     "quest": "Shall We Dance",
+     "location": "Limsa Lominsa Lower Decks (X:9.8, Y:12.0)",
+     "information": "Once unlocked, job starts at level 60."
+    },
+    {
+     "id": "the-aetherochemical-research-facility/heavensward",
+     "level": "",
+     "itemLevel": "142",
+     "unlock": "The Aetherochemical Research Facility",
+     "type": "Dungeon",
+     "quest": "Heavensward",
+     "location": "Azys Lla (X:15, Y:21)",
+     "information": "Speak with Guidance Node, Unlocks in the Main Scenario Quests"
+    },
+    {
+     "id": "the-singularity-reactor/heavensward",
+     "level": "",
+     "itemLevel": "142",
+     "unlock": "The Singularity Reactor",
+     "type": "Trial",
+     "quest": "Heavensward",
+     "location": "Azys Lla (X:15, Y:21)",
+     "information": "Follows directly on from The Aetherochemical Research Facility during the Main Scenario Quests"
+    },
+    {
+     "id": "neverreap/reap-what-you-sow",
+     "level": "",
+     "itemLevel": "145",
+     "unlock": "Neverreap",
+     "type": "Dungeon",
+     "quest": "Reap What You Sow",
+     "location": "The Sea of Clouds (X:11, Y:14)",
+     "information": "Speak with Sanu Vanu"
+    },
+    {
+     "id": "the-fractal-continuum/do-it-for-gilly",
+     "level": "",
+     "itemLevel": "145",
+     "unlock": "The Fractal Continuum",
+     "type": "Dungeon",
+     "quest": "Do It for Gilly",
+     "location": "The Pillars (X:14, Y:11)",
+     "information": "Speak with Notrelchamps"
+    },
+    {
+     "id": "the-limitless-blue-extreme/the-diabolical-bismarck",
+     "level": "",
+     "itemLevel": "165",
+     "unlock": "The Limitless Blue (Extreme)",
+     "type": "Trial",
+     "quest": "The Diabolical Bismarck",
+     "location": "The Rising Stones (X:6, Y:5)",
+     "information": "(Optional challenge content) Speak with Unukalhai"
+    },
+    {
+     "id": "alexander-gordias/disarmed",
+     "level": "",
+     "itemLevel": "170",
+     "unlock": "Alexander: Gordias",
+     "type": "Raid",
+     "quest": "Disarmed",
+     "location": "Idyllshire (X:7, Y:6)",
+     "information": "Speak with Slowfix; part of Alexander Quests"
+    },
+    {
+     "id": "saint-mociannes-arboretum/an-overgrown-ambition",
+     "level": "",
+     "itemLevel": "170",
+     "unlock": "Saint Mocianne's Arboretum",
+     "type": "Dungeon",
+     "quest": "An Overgrown Ambition",
+     "location": "The Dravanian Hinterlands (X:12, Y:19)",
+     "information": "Speak with Tetchy Treasure Hunter"
+    },
+    {
+     "id": "pharos-sirius-hard/things-are-getting-sirius",
+     "level": "",
+     "itemLevel": "170",
+     "unlock": "Pharos Sirius (Hard)",
+     "type": "Dungeon",
+     "quest": "Things Are Getting Sirius",
+     "location": "Limsa Lominsa Upper Decks (X:13, Y:13)",
+     "information": "Speak with Trachraet, requires completing Why So Sirius after clearing Pharos Sirius"
+    },
+    {
+     "id": "thok-ast-thok-extreme/thok-around-the-clock",
+     "level": "",
+     "itemLevel": "175",
+     "unlock": "Thok ast Thok (Extreme)",
+     "type": "Trial",
+     "quest": "Thok Around the Clock",
+     "location": "The Rising Stones (X:6, Y:5)",
+     "information": "(Optional challenge content) Speak with Unukalhai"
+    },
+    {
+     "id": "the-void-ark/to-rule-the-skies",
+     "level": "",
+     "itemLevel": "175",
+     "unlock": "The Void Ark",
+     "type": "Alliance Raid",
+     "quest": "To Rule the Skies",
+     "location": "The Sea of Clouds (X:25, Y:5)",
+     "information": "Speak with Utata; part of Shadow of Mhach"
+    },
+    {
+     "id": "the-antitower/the-word-of-the-mother",
+     "level": "",
+     "itemLevel": "180",
+     "unlock": "The Antitower",
+     "type": "Dungeon",
+     "quest": "The Word of the Mother",
+     "location": "The Rising Stones (X:6, Y:6)",
+     "information": "Speak with Alphinaud, Unlocks as part of the Patch 3.2 main quests."
+    },
+    {
+     "id": "the-lost-city-of-amdapor-hard/one-more-night-in-amdapor",
+     "level": "",
+     "itemLevel": "180",
+     "unlock": "The Lost City of Amdapor (Hard)",
+     "type": "Dungeon",
+     "quest": "One More Night in Amdapor",
+     "location": "Old Gridania (X:6.0, Y:10.6)",
+     "information": "Speak with E-Sumi-Yan, requires completing One Night in Amdapor. Note: Does not require clearing The Lost City of Amdapor."
+    },
+    {
+     "id": "alexander-gordias-savage/a-song-of-steam-and-steel",
+     "level": "",
+     "itemLevel": "190",
+     "unlock": "Alexander: Gordias (Savage)",
+     "type": "Raid",
+     "quest": "A Song of Steam and Steel",
+     "location": "Mor Dhona (X:21, Y:8)",
+     "information": "(Optional challenge content) Speak with Wandering Minstrel"
+    },
+    {
+     "id": "the-minstrels-ballad-thordans-reign/thordans-reign",
+     "level": "",
+     "itemLevel": "190",
+     "unlock": "The Minstrel's Ballad: Thordan's Reign",
+     "type": "Trial",
+     "quest": "Thordan's Reign",
+     "location": "Mor Dhona (X:21, Y:8)",
+     "information": "(Optional challenge content) Speak with Alys"
+    },
+    {
+     "id": "containment-bay-s1t7/when-the-bough-wakes",
+     "level": "",
+     "itemLevel": "190",
+     "unlock": "Containment Bay S1T7",
+     "type": "Trial",
+     "quest": "When the Bough Wakes",
+     "location": "The Rising Stones (X:6, Y:5)",
+     "information": "Speak with Unukalhai; part of the Warring Triad."
+    },
+    {
+     "id": "alexander-midas/rearmed",
+     "level": "",
+     "itemLevel": "200",
+     "unlock": "Alexander: Midas",
+     "type": "Raid",
+     "quest": "Rearmed",
+     "location": "The Dravanian Hinterlands (X:22, Y:19)",
+     "information": "Speak with Roundrox; part of Alexander Quests"
+    },
+    {
+     "id": "sohr-khai/winning-over-the-wyrm",
+     "level": "",
+     "itemLevel": "200",
+     "unlock": "Sohr Khai",
+     "type": "Dungeon",
+     "quest": "Winning Over the Wyrm",
+     "location": "The Churning Mists (X:16.7, Y:23.2)",
+     "information": "Speak with Alphinaud, Unlocks as part of the Patch 3.3 main quests."
+    },
+    {
+     "id": "hullbreaker-isle-hard/storming-the-hull",
+     "level": "",
+     "itemLevel": "200",
+     "unlock": "Hullbreaker Isle (Hard)",
+     "type": "Dungeon",
+     "quest": "Storming the Hull",
+     "location": "Limsa Lominsa Upper Decks (X:11, Y:10)",
+     "information": "Speak with Denston, requires completing King of the Hull after clearing Hullbreaker Isle"
+    },
+    {
+     "id": "containment-bay-s1t7-extreme/a-fiendish-likeness",
+     "level": "",
+     "itemLevel": "205",
+     "unlock": "Containment Bay S1T7 (Extreme)",
+     "type": "Trial",
+     "quest": "A Fiendish Likeness",
+     "location": "The Rising Stones (X:6, Y:5)",
+     "information": "(Optional challenge content) Speak with Unukalhai"
+    },
+    {
+     "id": "the-final-steps-of-faith/an-end-to-the-song",
+     "level": "",
+     "itemLevel": "205",
+     "unlock": "The Final Steps of Faith",
+     "type": "Trial",
+     "quest": "An End to the Song",
+     "location": "The Churning Mists (X:7, Y:27)",
+     "information": "Speak with Aymeric, Unlocks as part of the Patch 3.3 main quests."
+    },
+    {
+     "id": "ishgardian-restoration/towards-the-firmament",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Ishgardian Restoration",
+     "type": "Crafting mechanic",
+     "quest": "Towards the Firmament",
+     "location": "Foundation (X:9.7, Y:11.5)",
+     "information": "Requires Main Scenario Quest Litany of Peace"
+    },
+    {
+     "id": "empyreum-access/ascending-to-empyreum",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Empyreum access",
+     "type": "Housing",
+     "quest": "Ascending to Empyreum",
+     "location": "Foundation (X:9.9, Y:11.8)",
+     "information": "Requires Main Scenario Quest Litany of Peace"
+    },
+    {
+     "id": "the-weeping-city-of-mhach/the-weeping-city",
+     "level": "",
+     "itemLevel": "205",
+     "unlock": "The Weeping City of Mhach",
+     "type": "Alliance Raid",
+     "quest": "The Weeping City",
+     "location": "The Sea of Clouds (X:6, Y:6)",
+     "information": "Speak with Stacia; part of Shadow of Mhach"
+    },
+    {
+     "id": "xelphatol/shadows-of-the-first",
+     "level": "",
+     "itemLevel": "210",
+     "unlock": "Xelphatol",
+     "type": "Dungeon",
+     "quest": "Shadows of the First",
+     "location": "Coerthas Central Highlands (X:33.5, Y:15.4)",
+     "information": "Speak with Steadfast Temple Knight, Unlocks as part of the Patch 3.4 main quests."
+    },
+    {
+     "id": "the-great-gubal-library-hard/let-me-gubal-that-for-you",
+     "level": "",
+     "itemLevel": "210",
+     "unlock": "The Great Gubal Library (Hard)",
+     "type": "Dungeon",
+     "quest": "Let Me Gubal That for You",
+     "location": "Idyllshire (X:5.5, Y:6.6)",
+     "information": "Speak with Midnight Dew"
+    },
+    {
+     "id": "containment-bay-p1t6/the-fate-of-stars",
+     "level": "",
+     "itemLevel": "220",
+     "unlock": "Containment Bay P1T6",
+     "type": "Trial",
+     "quest": "The Fate of Stars",
+     "location": "The Rising Stones (X:6.1, Y:5.2)",
+     "information": "Speak with Unukalhai; part of the Warring Triad."
+    },
+    {
+     "id": "the-minstrels-ballad-nidhoggs-rage/nidhoggs-rage",
+     "level": "",
+     "itemLevel": "220",
+     "unlock": "The Minstrel's Ballad: Nidhogg's Rage",
+     "type": "Trial",
+     "quest": "Nidhogg's Rage",
+     "location": "Mor Dhona (X:21.7, Y:8.6)",
+     "information": "(Optional challenge content) Speak with Alys"
+    },
+    {
+     "id": "alexander-midas-savage/a-refrain-for-the-undaunted",
+     "level": "",
+     "itemLevel": "225",
+     "unlock": "Alexander: Midas (Savage)",
+     "type": "Raid",
+     "quest": "A Refrain for the Undaunted",
+     "location": "Mor Dhona (X:22, Y:9)",
+     "information": "(Optional challenge content) Speak with Wandering Minstrel"
+    },
+    {
+     "id": "baelsars-wall/griffin-griffin-on-the-wall",
+     "level": "",
+     "itemLevel": "230",
+     "unlock": "Baelsar's Wall",
+     "type": "Dungeon",
+     "quest": "Griffin, Griffin on the Wall",
+     "location": "East Shroud (X:22.3, Y:31.3)",
+     "information": "Speak with Alphinaud, Unlocks as part of the Patch 3.5 main quests."
+    },
+    {
+     "id": "sohm-al-hard/the-fires-of-sohm-al",
+     "level": "",
+     "itemLevel": "230",
+     "unlock": "Sohm Al (Hard)",
+     "type": "Dungeon",
+     "quest": "The Fires of Sohm Al",
+     "location": "Idyllshire (X:4.6, Y:8.4)",
+     "information": "Speak with Gossamer Moogle"
+    },
+    {
+     "id": "alexander-the-creator/the-coeurl-and-the-colossus",
+     "level": "",
+     "itemLevel": "230",
+     "unlock": "Alexander: The Creator",
+     "type": "Raid",
+     "quest": "The Coeurl and the Colossus",
+     "location": "The Dravanian Hinterlands (X:22, Y:19)",
+     "information": "Speak with Mide; part of Alexander Quests"
+    },
+    {
+     "id": "containment-bay-p1t6-extreme/balance-unto-all",
+     "level": "",
+     "itemLevel": "235",
+     "unlock": "Containment Bay P1T6 (Extreme)",
+     "type": "Trial",
+     "quest": "Balance unto All",
+     "location": "The Rising Stones (X:6.1, Y:5.2)",
+     "information": "(Optional challenge content) Speak with Unukalhai"
+    },
+    {
+     "id": "containment-bay-z1t9/the-last-pillar-to-fall",
+     "level": "",
+     "itemLevel": "235",
+     "unlock": "Containment Bay Z1T9",
+     "type": "Trial",
+     "quest": "The Last Pillar to Fall",
+     "location": "The Rising Stones (X:6.1, Y:5.2)",
+     "information": "Speak with Unukalhai; part of the Warring Triad."
+    },
+    {
+     "id": "dun-scaith/where-shadows-reign",
+     "level": "",
+     "itemLevel": "235",
+     "unlock": "Dun Scaith",
+     "type": "Alliance Raid",
+     "quest": "Where Shadows Reign",
+     "location": "The Sea of Clouds (X:6.2, Y:5.8)",
+     "information": "Speak with Stacia; part of Shadow of Mhach"
+    },
+    {
+     "id": "alexander-the-creator-savage/who-lives-who-dies-who-retells-your-story",
+     "level": "",
+     "itemLevel": "245",
+     "unlock": "Alexander: The Creator (Savage)",
+     "type": "Raid",
+     "quest": "Who Lives, Who Dies, Who Retells Your Story",
+     "location": "Mor Dhona (X:22, Y:9)",
+     "information": "(Optional challenge content) Speak with Wandering Minstrel"
+    },
+    {
+     "id": "containment-bay-z1t9-extreme/a-demonic-duplicate",
+     "level": "",
+     "itemLevel": "250",
+     "unlock": "Containment Bay Z1T9 (Extreme)",
+     "type": "Trial",
+     "quest": "A Demonic Duplicate",
+     "location": "The Rising Stones (X:6.1, Y:5.2)",
+     "information": "(Optional challenge content) Speak with Unukalhai"
+    }
+   ]
+  },
+  {
+   "id": "sb-levelling",
+   "expansionId": "sb",
+   "kind": "levelling",
+   "heading": "Level 61 - 70",
+   "entries": [
+    {
+     "id": "the-sirensong-sea/not-without-incident",
+     "level": "61",
+     "itemLevel": "240",
+     "unlock": "The Sirensong Sea",
+     "type": "Dungeon",
+     "quest": "Not without Incident",
+     "location": "Mor Dhona (X:22.2, Y:8.5)",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "heavenonhigh/knocking-on-heavens-door",
+     "level": "61",
+     "itemLevel": "",
+     "unlock": "Heaven-on-High",
+     "type": "Deep Dungeon",
+     "quest": "Knocking on Heaven's Door",
+     "location": "The Ruby Sea (X:6.2, Y:11.7)",
+     "information": "Must have cleared Palace of the Dead floor 50"
+    },
+    {
+     "id": "shirogane-access/i-dream-of-shirogane",
+     "level": "61",
+     "itemLevel": "",
+     "unlock": "Shirogane access",
+     "type": "Housing",
+     "quest": "I Dream of Shirogane",
+     "location": "Kugane (X:12.0, Y:9.9)",
+     "information": "Requires By the Grace of Lord Lolorito"
+    },
+    {
+     "id": "veteran-clan-hunt/onestar-veteran-clan-hunt",
+     "level": "61",
+     "itemLevel": "",
+     "unlock": "Veteran Clan Hunt",
+     "type": "Game Mechanic",
+     "quest": "One-star Veteran Clan Hunt",
+     "location": "Kugane (X:10.3, Y:10.2)",
+     "information": "Speak with Estrild"
+    },
+    {
+     "id": "shisui-of-the-violet-tides/the-palace-of-lost-souls",
+     "level": "63",
+     "itemLevel": "245",
+     "unlock": "Shisui of the Violet Tides",
+     "type": "Dungeon",
+     "quest": "The Palace of Lost Souls",
+     "location": "The Ruby Sea (X:20.2, Y:20.1)",
+     "information": "Unlocked as Aether Currents quest."
+    },
+    {
+     "id": "the-pool-of-tribute/the-lord-of-the-revel",
+     "level": "63",
+     "itemLevel": "",
+     "unlock": "The Pool of Tribute",
+     "type": "Trial",
+     "quest": "The Lord of the Revel",
+     "location": "The Ruby Sea (X:5.5, Y:24.4)",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "kojin-daily-quests/heavensent",
+     "level": "63",
+     "itemLevel": "",
+     "unlock": "Kojin Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Heaven-sent",
+     "location": "The Ruby Sea (X:6.8, Y:13.3)",
+     "information": "Daily quests for Kojin. Requires Tide Goes in, Imperials Go Out"
+    },
+    {
+     "id": "twostar-veteran-clan-mark-bills/twostar-veteran-clan-hunt",
+     "level": "63",
+     "itemLevel": "",
+     "unlock": "Two-star Veteran Clan mark bills",
+     "type": "Game Mechanic",
+     "quest": "Two-star Veteran Clan Hunt",
+     "location": "Kugane (X:10.3, Y:10.2)",
+     "information": "Speak with Estrild"
+    },
+    {
+     "id": "bardams-mettle/in-the-footsteps-of-bardam-the-brave",
+     "level": "65",
+     "itemLevel": "250",
+     "unlock": "Bardam's Mettle",
+     "type": "Dungeon",
+     "quest": "In the Footsteps of Bardam the Brave",
+     "location": "The Azim Steppe(X:11.3, Y:11.2)",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "namazu-daily-quests/something-fishy-this-way-comes",
+     "level": "66",
+     "itemLevel": "",
+     "unlock": "Namazu Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Something Fishy This Way Comes",
+     "location": "The Azim Steppe (X:17.4, Y:37.5)",
+     "information": "Daily quests for Namazu. Has a large number of prerequisite quests, and requires In Crimson They Walked"
+    },
+    {
+     "id": "threestar-veteran-clan-mark-bills/threestar-veteran-clan-hunt",
+     "level": "66",
+     "itemLevel": "",
+     "unlock": "Three-star Veteran Clan mark bills",
+     "type": "Game Mechanic",
+     "quest": "Three-star Veteran Clan Hunt",
+     "location": "Kugane (X:10.3, Y:10.2)",
+     "information": "Speak with Estrild"
+    },
+    {
+     "id": "doma-castle/the-die-is-cast",
+     "level": "67",
+     "itemLevel": "255",
+     "unlock": "Doma Castle",
+     "type": "Dungeon",
+     "quest": "The Die Is Cast",
+     "location": "Yanxia (X:24.9, Y:12.8)",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "emanation/the-lady-of-bliss",
+     "level": "67",
+     "itemLevel": "",
+     "unlock": "Emanation",
+     "type": "Trial",
+     "quest": "The Lady of Bliss",
+     "location": "The Fringes (X:28.1, Y:19.4)",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "ananta-daily-quests/brooding-broodmother",
+     "level": "67",
+     "itemLevel": "",
+     "unlock": "Ananta Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Brooding Broodmother",
+     "location": "The Fringes (X:30.2, Y:25.7)",
+     "information": "Daily quests for Ananta. Unlock quest is conclusion of split questline. Requires The Silence of the Gods"
+    },
+    {
+     "id": "castrum-abania/the-price-of-freedom",
+     "level": "69",
+     "itemLevel": "260",
+     "unlock": "Castrum Abania",
+     "type": "Dungeon",
+     "quest": "The Price of Freedom",
+     "location": "The Peaks (X:26.7, Y:29.8)",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "the-circles-of-answering/another-striking-opportunity",
+     "level": "70",
+     "itemLevel": "",
+     "unlock": "The Circles of Answering",
+     "type": "Game Mechanic",
+     "quest": "Another Striking Opportunity",
+     "location": "Rhalgr's Reach (X:12.3, Y:13.1)",
+     "information": "DPS Check for various Raids and Trials"
+    },
+    {
+     "id": "stormblood-elite-marks/elite-veteran-clan-hunt",
+     "level": "70",
+     "itemLevel": "",
+     "unlock": "Stormblood Elite Marks",
+     "type": "Game Mechanic",
+     "quest": "Elite Veteran Clan Hunt",
+     "location": "Kugane (X:10.3, Y:10.2)",
+     "information": "Speak with Estrild"
+    }
+   ]
+  },
+  {
+   "id": "sb-levelCap",
+   "expansionId": "sb",
+   "kind": "levelCap",
+   "heading": "Level 70",
+   "entries": [
+    {
+     "id": "reaper/the-killer-instinct",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Reaper",
+     "type": "Job Unlock",
+     "quest": "The Killer Instinct",
+     "location": "Ul'dah - Steps of Nald (X:13, Y:9)",
+     "information": "Requires the expansion Endwalker to accept the quest in Ul'dah."
+    },
+    {
+     "id": "sage/sages-path",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Sage",
+     "type": "Job Unlock",
+     "quest": "Sage's Path",
+     "location": "Limsa Lominsa Lower Decks (X:9.4, Y:12.9)",
+     "information": "Requires the expansion Endwalker to accept the quest in Limsa Lominsa."
+    },
+    {
+     "id": "ala-mhigo/stormblood",
+     "level": "",
+     "itemLevel": "280",
+     "unlock": "Ala Mhigo",
+     "type": "Dungeon",
+     "quest": "Stormblood",
+     "location": "The Lochs (x33.1-22.8)",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "the-royal-menagerie/stormblood",
+     "level": "",
+     "itemLevel": "280",
+     "unlock": "The Royal Menagerie",
+     "type": "Trial",
+     "quest": "Stormblood",
+     "location": "The Lochs",
+     "information": "Unlocks as part of the main Stormblood quests"
+    },
+    {
+     "id": "the-forbidden-land-eureka/and-we-shall-call-it-eureka",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "The Forbidden Land, Eureka",
+     "type": "Field Operations\n144 Players",
+     "quest": "And We Shall Call it Eureka",
+     "location": "Rhalgr's Reach (X:9.8, Y:12.5)",
+     "information": "Requires Stormblood"
+    },
+    {
+     "id": "even-further-hildibrand-adventures/a-hingan-tale-nashu-goes-east",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Even Further Hildibrand Adventures",
+     "type": "Side Quests",
+     "quest": "A Hingan Tale: Nashu Goes East",
+     "location": "Kugane (X:10.6, Y:9.8)",
+     "information": "Speak with Conspicuously Inconspicuous Man"
+    },
+    {
+     "id": "kugane-castle/king-of-the-castle",
+     "level": "",
+     "itemLevel": "280",
+     "unlock": "Kugane Castle",
+     "type": "Dungeon",
+     "quest": "King of the Castle",
+     "location": "Kugane (X:13.9, Y:13.4)",
+     "information": "Talk to East Aldenard Trading Company Associate"
+    },
+    {
+     "id": "the-temple-of-the-fist/to-kill-a-coeurl",
+     "level": "",
+     "itemLevel": "280",
+     "unlock": "The Temple of the Fist",
+     "type": "Dungeon",
+     "quest": "To Kill a Coeurl",
+     "location": "Rhalgr's Reach (X:12.9, Y:12.8)",
+     "information": "Talk to Ortwin"
+    },
+    {
+     "id": "omega-deltascape/the-hunt-for-omega",
+     "level": "",
+     "itemLevel": "295",
+     "unlock": "Omega: Deltascape",
+     "type": "Raid",
+     "quest": "The Hunt for Omega",
+     "location": "Rhalgr's Reach (X:12.6, Y:12.4)",
+     "information": "Speak with Wedge; part of Omega Quests"
+    },
+    {
+     "id": "the-drowned-city-of-skalla/the-mad-kings-trove",
+     "level": "",
+     "itemLevel": "300",
+     "unlock": "The Drowned City of Skalla",
+     "type": "Dungeon",
+     "quest": "The Mad King's Trove",
+     "location": "The Lochs (X:32.0, Y:33.0)",
+     "information": "Unlocks as part of the Patch 4.1 main quests."
+    },
+    {
+     "id": "the-pool-of-tribute-extreme/songs-in-the-key-of-kugane",
+     "level": "",
+     "itemLevel": "300",
+     "unlock": "The Pool of Tribute (Extreme)",
+     "type": "Trial",
+     "quest": "Songs in the Key of Kugane",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel"
+    },
+    {
+     "id": "emanation-extreme/songs-in-the-key-of-kugane",
+     "level": "",
+     "itemLevel": "300",
+     "unlock": "Emanation (Extreme)",
+     "type": "Trial",
+     "quest": "Songs in the Key of Kugane",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel"
+    },
+    {
+     "id": "the-royal-city-of-rabanastre/a-city-fallen",
+     "level": "",
+     "itemLevel": "305",
+     "unlock": "The Royal City of Rabanastre",
+     "type": "Alliance Raid",
+     "quest": "A City Fallen",
+     "location": "Kugane (X:5.8, Y:6.0)",
+     "information": "Talk to Ramza bas Lexentale; part of Return to Ivalice"
+    },
+    {
+     "id": "hells-lid/an-auspicious-encounter",
+     "level": "",
+     "itemLevel": "310",
+     "unlock": "Hells' Lid",
+     "type": "Dungeon",
+     "quest": "An Auspicious Encounter",
+     "location": "The Ruby Sea (X:5.7, Y:15.7)",
+     "information": "Talk to Soroban; part of The Four Lords."
+    },
+    {
+     "id": "the-fractal-continuum-hard/an-unwanted-truth",
+     "level": "",
+     "itemLevel": "310",
+     "unlock": "The Fractal Continuum (Hard)",
+     "type": "Dungeon",
+     "quest": "An Unwanted Truth",
+     "location": "Rhalgr's Reach (X:13.2, Y:12.2)",
+     "information": "Talk to Philiot, requires clearing The Fractal Continuum"
+    },
+    {
+     "id": "omega-deltascape-savage",
+     "level": "",
+     "itemLevel": "310-320",
+     "unlock": "Omega: Deltascape (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Rhalgr's Reach (X:13.5, Y:12.4)",
+     "information": "(Optional challenge content) Access the Magitek Terminal; requires The Anomaly"
+    },
+    {
+     "id": "the-great-hunt/the-new-king-on-the-block",
+     "level": "",
+     "itemLevel": "320",
+     "unlock": "The Great Hunt",
+     "type": "Trial",
+     "quest": "The New King on the Block",
+     "location": "Kugane (X:9.7, Y:8.9)",
+     "information": "Talk to the Hearty Hunter; requires Stormblood"
+    },
+    {
+     "id": "the-minstrels-ballad-shinryus-domain/songs-in-the-key-of-kugane",
+     "level": "",
+     "itemLevel": "320",
+     "unlock": "The Minstrel's Ballad: Shinryu's Domain",
+     "type": "Trial",
+     "quest": "Songs in the Key of Kugane",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel"
+    },
+    {
+     "id": "the-unending-coil-of-bahamut-ultimate",
+     "level": "",
+     "itemLevel": "320",
+     "unlock": "The Unending Coil of Bahamut (Ultimate)",
+     "type": "Ultimate Raid",
+     "quest": "",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Deltascape V4.0 (Savage)"
+    },
+    {
+     "id": "the-jade-stoa/an-auspicious-encounter",
+     "level": "",
+     "itemLevel": "325",
+     "unlock": "The Jade Stoa",
+     "type": "Trial",
+     "quest": "An Auspicious Encounter",
+     "location": "The Ruby Sea (X:5.7, Y:15.7)",
+     "information": "Talk to Soroban; part of The Four Lords."
+    },
+    {
+     "id": "omega-sigmascape/return-to-the-rift",
+     "level": "",
+     "itemLevel": "325",
+     "unlock": "Omega: Sigmascape",
+     "type": "Raid",
+     "quest": "Return to the Rift",
+     "location": "Rhalgr's Reach (X:13.4, Y:12.4)",
+     "information": "Speak with Jessie; part of Omega Quests"
+    },
+    {
+     "id": "the-swallows-compass/tortoise-in-time",
+     "level": "",
+     "itemLevel": "330",
+     "unlock": "The Swallow's Compass",
+     "type": "Dungeon",
+     "quest": "Tortoise in Time",
+     "location": "The Ruby Sea (X:27.9, Y:16.4)",
+     "information": "Talk to Bunchin; part of The Four Lords."
+    },
+    {
+     "id": "castrum-fluminis/the-primary-agreement",
+     "level": "",
+     "itemLevel": "335",
+     "unlock": "Castrum Fluminis",
+     "type": "Trial",
+     "quest": "The Primary Agreement",
+     "location": "Kienkan (X:6.1, Y:6.0)",
+     "information": "Unlocks as part of the Patch 4.3 main quests."
+    },
+    {
+     "id": "the-ridorana-lighthouse/annihilation",
+     "level": "",
+     "itemLevel": "335",
+     "unlock": "The Ridorana Lighthouse",
+     "type": "Alliance Raid",
+     "quest": "Annihilation",
+     "location": "The Prima Vista Bridge (X:6.1, Y:5.9)",
+     "information": "Talk to Jenomis cen Lexentale; part of Return to Ivalice"
+    },
+    {
+     "id": "the-burn/feel-the-burn",
+     "level": "",
+     "itemLevel": "340",
+     "unlock": "The Burn",
+     "type": "Dungeon",
+     "quest": "Feel the Burn",
+     "location": "Kienkan (X:6.1, Y:6.0)",
+     "information": "Unlocks as part of the Patch 4.4 main quests."
+    },
+    {
+     "id": "saint-mociannes-arboretum-hard/secret-of-the-ooze",
+     "level": "",
+     "itemLevel": "340",
+     "unlock": "Saint Mocianne's Arboretum (Hard)",
+     "type": "Dungeon",
+     "quest": "Secret of the Ooze",
+     "location": "Rhalgr's Reach (X:13.4, Y:12.4)",
+     "information": "Talk to Sawney, requires completing An Overgrown Ambition after clearing Saint Mocianne's Arboretum"
+    },
+    {
+     "id": "the-jade-stoa-extreme/songs-in-the-key-of-kugane",
+     "level": "",
+     "itemLevel": "340",
+     "unlock": "The Jade Stoa (Extreme)",
+     "type": "Trial",
+     "quest": "Songs in the Key of Kugane",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel"
+    },
+    {
+     "id": "omega-sigmascape-savage",
+     "level": "",
+     "itemLevel": "340-350",
+     "unlock": "Omega: Sigmascape (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Rhalgr's Reach (X:13.5, Y:12.4)",
+     "information": "(Optional challenge content) Access the Magitek Terminal; requires Test World of Ruin"
+    },
+    {
+     "id": "the-minstrels-ballad-tsukuyomis-pain/songs-in-the-key-of-kugane",
+     "level": "",
+     "itemLevel": "350",
+     "unlock": "The Minstrel's Ballad: Tsukuyomi's Pain",
+     "type": "Trial",
+     "quest": "Songs in the Key of Kugane",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel"
+    },
+    {
+     "id": "the-great-hunt-extreme/the-newer-king-on-the-block",
+     "level": "",
+     "itemLevel": "350",
+     "unlock": "The Great Hunt (Extreme)",
+     "type": "Trial",
+     "quest": "The Newer King on the Block",
+     "location": "Kugane (X:9.7, Y:8.9)",
+     "information": "(Optional challenge content) Talk to the Hearty Hunter; requires Stormblood"
+    },
+    {
+     "id": "the-weapons-refrain-ultimate",
+     "level": "",
+     "itemLevel": "350",
+     "unlock": "The Weapon's Refrain (Ultimate)",
+     "type": "Ultimate Raid",
+     "quest": "",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Sigmascape V4.0 (Savage)"
+    },
+    {
+     "id": "hells-kier/the-firebird-down-below",
+     "level": "",
+     "itemLevel": "355",
+     "unlock": "Hells' Kier",
+     "type": "Trial",
+     "quest": "The Fire-bird Down Below",
+     "location": "The Ruby Sea (X:27.8, Y:16.4)",
+     "information": "Talk to Bunchin; part of The Four Lords."
+    },
+    {
+     "id": "omega-alphascape/in-the-beginning-there-was-chaos",
+     "level": "",
+     "itemLevel": "355",
+     "unlock": "Omega: Alphascape",
+     "type": "Raid",
+     "quest": "In the Beginning, There Was Chaos",
+     "location": "Rhalgr's Reach (X:13.4, Y:12.4)",
+     "information": "Speak with Jessie; part of Omega Quests"
+    },
+    {
+     "id": "the-ghimlyt-dark/the-face-of-war",
+     "level": "",
+     "itemLevel": "360",
+     "unlock": "The Ghimlyt Dark",
+     "type": "Dungeon",
+     "quest": "The Face of War",
+     "location": "Eorzean Alliance Headquarters (X:6.3, Y:6.1)",
+     "information": "Unlocks as part of the Patch 4.5 main quests."
+    },
+    {
+     "id": "the-wreath-of-snakes/surpassing-the-samurai",
+     "level": "",
+     "itemLevel": "365",
+     "unlock": "The Wreath of Snakes",
+     "type": "Trial",
+     "quest": "Surpassing the Samurai",
+     "location": "The Ruby Sea (X:27.8, Y:16.4)",
+     "information": "Talk to Bunchin; part of The Four Lords."
+    },
+    {
+     "id": "kugane-ohashi/the-past-is-never-past",
+     "level": "",
+     "itemLevel": "365",
+     "unlock": "Kugane Ohashi",
+     "type": "Trial",
+     "quest": "The Past Is Never Past",
+     "location": "Kugane (X:10.4, Y:8.2)",
+     "information": "Part of Even Further Hildibrand Adventures"
+    },
+    {
+     "id": "the-orbonne-monastery/the-city-of-lost-angels",
+     "level": "",
+     "itemLevel": "365",
+     "unlock": "The Orbonne Monastery",
+     "type": "Alliance Raid",
+     "quest": "The City of Lost Angels",
+     "location": "The Prima Vista Tiring Room (X:5.9, Y:5.9)",
+     "information": "Talk to Jenomis cen Lexentale; part of Return to Ivalice"
+    },
+    {
+     "id": "hells-kier-extreme/songs-in-the-key-of-kugane",
+     "level": "",
+     "itemLevel": "370",
+     "unlock": "Hells' Kier (Extreme)",
+     "type": "Trial",
+     "quest": "Songs in the Key of Kugane",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel"
+    },
+    {
+     "id": "the-wreath-of-snakes-extreme/songs-in-the-key-of-kugane",
+     "level": "",
+     "itemLevel": "370",
+     "unlock": "The Wreath of Snakes (Extreme)",
+     "type": "Trial",
+     "quest": "Songs in the Key of Kugane",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel"
+    },
+    {
+     "id": "omega-alphascape-savage",
+     "level": "",
+     "itemLevel": "370-380",
+     "unlock": "Omega: Alphascape (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Rhalgr's Reach (X:13.5, Y:12.4)",
+     "information": "(Optional challenge content) Access the Magitek Terminal"
+    }
+   ]
+  },
+  {
+   "id": "shb-levelling",
+   "expansionId": "shb",
+   "kind": "levelling",
+   "heading": "Level 71 - 80",
+   "entries": [
+    {
+     "id": "nutsy-clan-hunt/nuts-to-you",
+     "level": "70",
+     "itemLevel": "",
+     "unlock": "Nutsy Clan Hunt",
+     "type": "Game Mechanic",
+     "quest": "Nuts to You",
+     "location": "The Crystarium (X:12.1, Y:15.0)",
+     "information": "Speak with Hume Lout, requires Travelers of Norvrandt"
+    },
+    {
+     "id": "holminster-switch/the-lightwardens",
+     "level": "71",
+     "itemLevel": "370",
+     "unlock": "Holminster Switch",
+     "type": "Dungeon",
+     "quest": "The Lightwardens",
+     "location": "The Ocular (X:6.1, Y:5.9)",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "dohn-mheg/the-key-to-the-castle",
+     "level": "73",
+     "itemLevel": "375",
+     "unlock": "Dohn Mheg",
+     "type": "Dungeon",
+     "quest": "The Key to the Castle",
+     "location": "Il Mheg (X:14.3, Y:31.1)",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "the-dancing-plague/achtla-ormh-inn",
+     "level": "73",
+     "itemLevel": "",
+     "unlock": "The Dancing Plague",
+     "type": "Trial",
+     "quest": "Acht-la Ormh Inn",
+     "location": "Il Mheg (X:30.5, Y:7.6)",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "pixie-daily-quests/manic-pixie-dream-realm",
+     "level": "73",
+     "itemLevel": "",
+     "unlock": "Pixie Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Manic Pixie Dream Realm",
+     "location": "The Crystarium (X:13.1, Y:15.3)",
+     "information": "Daily quests for Pixies. Requires The Wheel Turns"
+    },
+    {
+     "id": "twonut-clan-mark-bills/two-nuts-too-nutty",
+     "level": "73",
+     "itemLevel": "",
+     "unlock": "Two-nut Clan mark bills",
+     "type": "Game Mechanic",
+     "quest": "Two Nuts Too Nutty",
+     "location": "The Crystarium (X:9.5, Y:9.3)",
+     "information": "Speak with Halldor"
+    },
+    {
+     "id": "the-qitana-ravel/the-burden-of-knowledge",
+     "level": "75",
+     "itemLevel": "380",
+     "unlock": "The Qitana Ravel",
+     "type": "Dungeon",
+     "quest": "The Burden of Knowledge",
+     "location": "The Rak'tika Greatwood (X:30.5, Y:17.4)",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "qitari-daily-quests/the-stewards-of-note",
+     "level": "75",
+     "itemLevel": "",
+     "unlock": "Qitari Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "The Stewards of Note",
+     "location": "The Rak'tika Greatwood (X:21.0, Y:27.6)",
+     "information": "Daily quests for Qitari. Unlock quest is conclusion of split questline. Requires Bearing With It"
+    },
+    {
+     "id": "threenut-clan-mark-bills/how-do-you-like-three-nuts",
+     "level": "76",
+     "itemLevel": "",
+     "unlock": "Three-nut Clan mark bills",
+     "type": "Game Mechanic",
+     "quest": "How Do You Like Three Nuts",
+     "location": "The Crystarium (X:9.5, Y:9.3)",
+     "information": "Speak with Halldor"
+    },
+    {
+     "id": "malikahs-well/a-fresh-start",
+     "level": "77",
+     "itemLevel": "385",
+     "unlock": "Malikah's Well",
+     "type": "Dungeon",
+     "quest": "A Fresh Start",
+     "location": "Amh Araeng (X:15.8, Y:29.1)",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "dwarf-daily-quests/its-dwarfin-time",
+     "level": "78",
+     "itemLevel": "",
+     "unlock": "Dwarf Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "It's Dwarfin' Time",
+     "location": "Kholusia (X:15.7, Y:30.3)",
+     "information": "Daily quests for Dwarves. Unlock quest is conclusion of split questline. Requires Meet the Tholls"
+    },
+    {
+     "id": "mt-gulg/extinguishing-the-last-light",
+     "level": "79",
+     "itemLevel": "390",
+     "unlock": "Mt. Gulg",
+     "type": "Dungeon",
+     "quest": "Extinguishing the Last Light",
+     "location": "Kholusia (X:18.6, Y:17.7)",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "the-crown-of-the-immaculate/extinguishing-the-last-light",
+     "level": "79",
+     "itemLevel": "",
+     "unlock": "The Crown of the Immaculate",
+     "type": "Trial",
+     "quest": "Extinguishing the Last Light",
+     "location": "Mt Gulg",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "the-lawns/yet-another-striking-opportunity",
+     "level": "80",
+     "itemLevel": "",
+     "unlock": "The Lawns",
+     "type": "Game Mechanic",
+     "quest": "Yet Another Striking Opportunity",
+     "location": "Eulmore (X:9.2, Y:9.9)",
+     "information": "DPS Check for various Raids and Trials"
+    },
+    {
+     "id": "shadowbringers-elite-marks/too-many-nutters",
+     "level": "80",
+     "itemLevel": "",
+     "unlock": "Shadowbringers Elite Marks",
+     "type": "Game Mechanic",
+     "quest": "Too Many Nutters",
+     "location": "The Crystarium (X:9.5, Y:9.3)",
+     "information": "Speak with Halldor"
+    }
+   ]
+  },
+  {
+   "id": "shb-levelCap",
+   "expansionId": "shb",
+   "kind": "levelCap",
+   "heading": "Level 80",
+   "entries": [
+    {
+     "id": "viper/enter-the-viper",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Viper",
+     "type": "Job Unlock",
+     "quest": "Enter the Viper",
+     "location": "Ul'dah - Steps of Nald (X:9.3, Y:9.2)",
+     "information": "Requires the expansion Dawntrail to accept the quest in Ul'dah."
+    },
+    {
+     "id": "pictomancer/the-joy-of-pictomancy",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Pictomancer",
+     "type": "Job Unlock",
+     "quest": "The Joy of Pictomancy",
+     "location": "Old Gridania (X:8.0, Y:10.3)",
+     "information": "Requires the expansion Dawntrail to accept the quest in Gridania."
+    },
+    {
+     "id": "amaurot/shadowbringers",
+     "level": "",
+     "itemLevel": "410",
+     "unlock": "Amaurot",
+     "type": "Dungeon",
+     "quest": "Shadowbringers",
+     "location": "The Tempest (X:16.5, Y:30.4)",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "the-dying-gasp/shadowbringers",
+     "level": "",
+     "itemLevel": "410",
+     "unlock": "The Dying Gasp",
+     "type": "Trial",
+     "quest": "Shadowbringers",
+     "location": "Amaurot",
+     "information": "Unlocks as part of the main Shadowbringers quests"
+    },
+    {
+     "id": "akadaemia-anyder/akadaemia-anyder",
+     "level": "",
+     "itemLevel": "410",
+     "unlock": "Akadaemia Anyder",
+     "type": "Dungeon",
+     "quest": "Akadaemia Anyder",
+     "location": "Eulmore",
+     "information": "Speak to Overwrought Ondo at the Derelicts in Eulmore."
+    },
+    {
+     "id": "the-twinning/by-the-time-you-hear-this",
+     "level": "",
+     "itemLevel": "410",
+     "unlock": "The Twinning",
+     "type": "Dungeon",
+     "quest": "By the Time You Hear This",
+     "location": "The Crystarium",
+     "information": "Speak to Bethana in the Crystarium."
+    },
+    {
+     "id": "edens-gate/in-the-middle-of-nowhere",
+     "level": "",
+     "itemLevel": "425",
+     "unlock": "Eden's Gate",
+     "type": "Raid",
+     "quest": "In the Middle of Nowhere",
+     "location": "The Crystarium (X:9.7, Y:12.3)",
+     "information": "Speak with Anxious Crystarium Guard; part of Eden Quests"
+    },
+    {
+     "id": "the-grand-cosmos/a-grand-adventure",
+     "level": "",
+     "itemLevel": "430",
+     "unlock": "The Grand Cosmos",
+     "type": "Dungeon",
+     "quest": "A Grand Adventure",
+     "location": "The Rising Stones",
+     "information": "Speak to the Crystal Exarch in Sullen, Unlocks as part of the Patch 5.1 main quests."
+    },
+    {
+     "id": "the-bozjan-southern-front/where-eagles-nest",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "The Bozjan Southern Front",
+     "type": "Field Operations\n72 players",
+     "quest": "Where Eagles Nest",
+     "location": "Gangos (X:5.5, Y:5.4)",
+     "information": "Requires Vows of Virtue, Deeds of Cruelty, The Bozja Incident, and Fire in the Forge."
+    },
+    {
+     "id": "the-dancing-plague-extreme/minstrel-from-another-mother",
+     "level": "",
+     "itemLevel": "430",
+     "unlock": "The Dancing Plague (Extreme)",
+     "type": "Trial",
+     "quest": "Minstrel from Another Mother",
+     "location": "The Crystarium (X:7.5, Y:12.5)",
+     "information": "(Optional challenge content) Speak to the Minstreling Wanderer"
+    },
+    {
+     "id": "the-crown-of-the-immaculate-extreme/minstrel-from-another-mother",
+     "level": "",
+     "itemLevel": "430",
+     "unlock": "The Crown of the Immaculate (Extreme)",
+     "type": "Trial",
+     "quest": "Minstrel from Another Mother",
+     "location": "The Crystarium (X:7.5, Y:12.5)",
+     "information": "(Optional challenge content) Speak to the Minstreling Wanderer"
+    },
+    {
+     "id": "the-copied-factory/on-the-threshold",
+     "level": "",
+     "itemLevel": "435",
+     "unlock": "The Copied Factory",
+     "type": "Alliance Raid",
+     "quest": "On the Threshold",
+     "location": "Kholusia (X:34.7, Y:18.2)",
+     "information": "Speak with the Dig Site Chief; part of YoRHa: Dark Apocalypse"
+    },
+    {
+     "id": "anamnesis-anyder/beneath-the-surface",
+     "level": "",
+     "itemLevel": "440",
+     "unlock": "Anamnesis Anyder",
+     "type": "Dungeon",
+     "quest": "Beneath the Surface",
+     "location": "Lakeland (X:26.1, Y:32.5)",
+     "information": "Speak with Urianger at the Split Hull, Unlocks as part of the Patch 5.2 main quests."
+    },
+    {
+     "id": "edens-gate-savage",
+     "level": "",
+     "itemLevel": "440-450",
+     "unlock": "Eden's Gate (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Amh Araeng (X:26.8, Y:16.4)",
+     "information": "(Optional challenge content) Speak with Lewrey"
+    },
+    {
+     "id": "the-minstrels-ballad-hadess-elegy/minstrel-from-another-mother",
+     "level": "",
+     "itemLevel": "450",
+     "unlock": "The Minstrel's Ballad: Hades's Elegy",
+     "type": "Trial",
+     "quest": "Minstrel from Another Mother",
+     "location": "The Crystarium (X:7.5, Y:12.5)",
+     "information": "(Optional challenge content) Speak to the Minstreling Wanderer."
+    },
+    {
+     "id": "edens-verse/blood-and-thunder",
+     "level": "",
+     "itemLevel": "455",
+     "unlock": "Eden's Verse",
+     "type": "Raid",
+     "quest": "Blood and Thunder",
+     "location": "The Crystarium (X:9.7, Y:12.3)",
+     "information": "Requires Away with the Faerie; part of Eden Quests"
+    },
+    {
+     "id": "cinder-drift/ruby-doomsday",
+     "level": "",
+     "itemLevel": "455",
+     "unlock": "Cinder Drift",
+     "type": "Trial",
+     "quest": "Ruby Doomsday",
+     "location": "The Lochs (X:36.4, Y:31.8)",
+     "information": "Speak to the Warmachina Fanatic; part of The Sorrow of Werlyt."
+    },
+    {
+     "id": "the-heroes-gauntlet/the-converging-light",
+     "level": "",
+     "itemLevel": "460",
+     "unlock": "The Heroes' Gauntlet",
+     "type": "Dungeon",
+     "quest": "The Converging Light",
+     "location": "Kholusia (X:11.5, Y:33.1)",
+     "information": "Speak with Y'shtola in Eulmore, Unlocks as part of the Patch 5.3 main quests."
+    },
+    {
+     "id": "the-seat-of-sacrifice/hopes-confluence",
+     "level": "",
+     "itemLevel": "465",
+     "unlock": "The Seat of Sacrifice",
+     "type": "Trial",
+     "quest": "Hope's Confluence",
+     "location": "The Crystarium (X:12.7, Y:11.2)",
+     "information": "Speak with The Crystal Exarch, Unlocks as part of the Patch 5.3 main quests."
+    },
+    {
+     "id": "the-puppets-bunker/everything-you-know-is-wrong",
+     "level": "",
+     "itemLevel": "465",
+     "unlock": "The Puppets' Bunker",
+     "type": "Alliance Raid",
+     "quest": "Everything You Know Is Wrong",
+     "location": "Excavation Tunnels (X:5.9, Y:4.7)",
+     "information": "Speak with Anogg; part of YoRHa: Dark Apocalypse"
+    },
+    {
+     "id": "matoyas-relict/like-master-like-pupil",
+     "level": "",
+     "itemLevel": "470",
+     "unlock": "Matoya's Relict",
+     "type": "Dungeon",
+     "quest": "Like Master, Like Pupil",
+     "location": "Limsa Lominsa Upper Decks (X:9.0, Y:13.5)",
+     "information": "Speak with Y'shtola at Maelstrom Command, Unlocks as part of the Patch 5.4 main quests."
+    },
+    {
+     "id": "cinder-drift-extreme/ruby-doomsday",
+     "level": "",
+     "itemLevel": "470",
+     "unlock": "Cinder Drift (Extreme)",
+     "type": "Trial",
+     "quest": "Ruby Doomsday",
+     "location": "The Lochs (X:36.4, Y:31.8)",
+     "information": "(Optional challenge content) Speak to the Warmachina Fanatic"
+    },
+    {
+     "id": "memoria-misera-extreme/the-bozja-incident",
+     "level": "",
+     "itemLevel": "470",
+     "unlock": "Memoria Misera (Extreme)",
+     "type": "Trial",
+     "quest": "The Bozja Incident",
+     "location": "Gangos (X:6.8, Y:5.2)",
+     "information": "(Optional challenge content) Speak to the Wandering Dramaturge. No normal mode equivalent"
+    },
+    {
+     "id": "the-epic-of-alexander-ultimate",
+     "level": "",
+     "itemLevel": "475",
+     "unlock": "The Epic of Alexander (Ultimate)",
+     "type": "Ultimate Raid",
+     "quest": "",
+     "location": "Kugane (X:11.6, Y:12.6)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Eden's Gate: Sepulture (Savage)"
+    },
+    {
+     "id": "the-seat-of-sacrifice-extreme/hopes-confluence",
+     "level": "",
+     "itemLevel": "480",
+     "unlock": "The Seat of Sacrifice (Extreme)",
+     "type": "Trial",
+     "quest": "Hope's Confluence",
+     "location": "The Crystarium (X:7.5, Y:12.5)",
+     "information": "(Optional challenge content) Speak to the Minstreling Wanderer."
+    },
+    {
+     "id": "edens-verse-savage",
+     "level": "",
+     "itemLevel": "480-490",
+     "unlock": "Eden's Verse (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Amh Araeng (X:26.8, Y:16.4)",
+     "information": "(Optional challenge content) Speak with Lewrey"
+    },
+    {
+     "id": "castrum-marinum/blood-of-emerald",
+     "level": "",
+     "itemLevel": "485",
+     "unlock": "Castrum Marinum",
+     "type": "Trial",
+     "quest": "Blood of Emerald",
+     "location": "The Lochs (X:11.3, Y:22.5)",
+     "information": "Speak with the Resistance Officer; part of The Sorrow of Werlyt."
+    },
+    {
+     "id": "edens-promise/fear-of-the-dark",
+     "level": "",
+     "itemLevel": "485",
+     "unlock": "Eden's Promise",
+     "type": "Raid",
+     "quest": "Fear of the Dark",
+     "location": "Amh Araeng (X:26.7, Y:16.7)",
+     "information": "Speak with Yalfort; part of Eden Quests"
+    },
+    {
+     "id": "paglthan/the-flames-of-war",
+     "level": "",
+     "itemLevel": "490",
+     "unlock": "Paglth'an",
+     "type": "Dungeon",
+     "quest": "The Flames of War",
+     "location": "Ul'dah (X:10.8, Y:11.4)",
+     "information": "Speak with the Immortal Flames pilot at the airship landing in Ul'dah.\nUnlocks as part of the Patch 5.5 main quests."
+    },
+    {
+     "id": "the-cloud-deck/duty-in-the-sky-with-diamond",
+     "level": "",
+     "itemLevel": "495",
+     "unlock": "The Cloud Deck",
+     "type": "Trial",
+     "quest": "Duty in the Sky with Diamond",
+     "location": "The Lochs (X:11.3, Y:22.5)",
+     "information": "Speak with the Resistance Officer; part of The Sorrow of Werlyt."
+    },
+    {
+     "id": "tower-at-paradigms-breach/brave-new-world",
+     "level": "",
+     "itemLevel": "495",
+     "unlock": "Tower at Paradigm's Breach",
+     "type": "Alliance Raid",
+     "quest": "Brave New World",
+     "location": "The Puppets' Bunker (X:9.8, Y:14.3)",
+     "information": "Speak with Dig Site Chief; requires Konogg, Alone. Part of YoRHa: Dark Apocalypse"
+    },
+    {
+     "id": "castrum-marinum-extreme",
+     "level": "",
+     "itemLevel": "500",
+     "unlock": "Castrum Marinum (Extreme)",
+     "type": "Trial",
+     "quest": "",
+     "location": "The Lochs (X:11.3, Y:22.5)",
+     "information": "(Optional challenge content) Speak with the Resistance Officer after clearing normal mode."
+    },
+    {
+     "id": "edens-promise-savage",
+     "level": "",
+     "itemLevel": "500-510",
+     "unlock": "Eden's Promise (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Amh Araeng (X:26.8, Y:16.4)",
+     "information": "(Optional challenge content) Speak with Lewrey"
+    },
+    {
+     "id": "the-cloud-deck-extreme",
+     "level": "",
+     "itemLevel": "510",
+     "unlock": "The Cloud Deck (Extreme)",
+     "type": "Trial",
+     "quest": "",
+     "location": "The Lochs (X:11.3, Y:22.5)",
+     "information": "(Optional challenge content) Speak with the Resistance Officer after clearing normal mode."
+    }
+   ]
+  },
+  {
+   "id": "ew-levelling",
+   "expansionId": "ew",
+   "kind": "levelling",
+   "heading": "Level 81 - 90",
+   "entries": [
+    {
+     "id": "guildship-hunt/the-hunt-for-specimens",
+     "level": "80",
+     "itemLevel": "",
+     "unlock": "Guildship Hunt",
+     "type": "Game Mechanic",
+     "quest": "The Hunt for Specimens",
+     "location": "Old Sharlayan (X:11.2, Y:12.0)",
+     "information": "Speak with Diminutive Gleaner, requires Old Sharlayan, New to You"
+    },
+    {
+     "id": "the-tower-of-zot/in-the-dark-of-the-tower",
+     "level": "81",
+     "itemLevel": "",
+     "unlock": "The Tower of Zot",
+     "type": "Dungeon",
+     "quest": "In the Dark of the Tower",
+     "location": "Thavnair (X:8.7, Y:8.2)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "the-tower-of-babil/gateway-of-the-gods",
+     "level": "83",
+     "itemLevel": "",
+     "unlock": "The Tower of Babil",
+     "type": "Dungeon",
+     "quest": "Gateway of the Gods",
+     "location": "The Enceladeum (X:10.9, Y:7.9)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "the-dark-inside/the-martyr",
+     "level": "83",
+     "itemLevel": "",
+     "unlock": "The Dark Inside",
+     "type": "Trial",
+     "quest": "The Martyr",
+     "location": "",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "associate-guildship-mark-bills/that-specimen-came-from-the-moon",
+     "level": "83",
+     "itemLevel": "",
+     "unlock": "Associate guildship mark bills",
+     "type": "Game Mechanic",
+     "quest": "That Specimen Came from the Moon",
+     "location": "Old Sharlayan (X:11.7, Y:13.2)",
+     "information": "Speak with Northota, requires A Trip to the Moon"
+    },
+    {
+     "id": "vanaspati/skies-aflame",
+     "level": "85",
+     "itemLevel": "",
+     "unlock": "Vanaspati",
+     "type": "Dungeon",
+     "quest": "Skies Aflame",
+     "location": "Thavnair (X:25.5, Y:36.7)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "ktisis-hyperboreia/caging-the-messenger",
+     "level": "87",
+     "itemLevel": "",
+     "unlock": "Ktisis Hyperboreia",
+     "type": "Dungeon",
+     "quest": "Caging the Messenger",
+     "location": "Elpis (X:13.2, Y:6.1)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "the-aitiascope/her-children-one-and-all",
+     "level": "89",
+     "itemLevel": "",
+     "unlock": "The Aitiascope",
+     "type": "Dungeon",
+     "quest": "Her Children, One and All",
+     "location": "Labyrinthos (X:16.7, Y:28.3)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "the-mothercrystal/her-children-one-and-all",
+     "level": "89",
+     "itemLevel": "",
+     "unlock": "The Mothercrystal",
+     "type": "Trial",
+     "quest": "Her Children, One and All",
+     "location": "The Mothercrystal (X:6.1, Y:6.1)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "senior-guildship-mark-bills/a-hunt-for-the-ages",
+     "level": "89",
+     "itemLevel": "",
+     "unlock": "Senior guildship mark bills",
+     "type": "Game Mechanic",
+     "quest": "A Hunt for the Ages",
+     "location": "Old Sharlayan (X:11.7, Y:13.2)",
+     "information": "Speak with Northota, requires Unto the Heavens"
+    },
+    {
+     "id": "the-burning-field/a-place-to-train",
+     "level": "90",
+     "itemLevel": "",
+     "unlock": "The Burning Field",
+     "type": "Game Mechanic",
+     "quest": "A Place to Train",
+     "location": "Radz-at-Han (X:12.3, Y:10.7)",
+     "information": "DPS Check for various Raids and Trials"
+    },
+    {
+     "id": "endwalker-elite-marks/perfect-specimens",
+     "level": "90",
+     "itemLevel": "",
+     "unlock": "Endwalker Elite Marks",
+     "type": "Game Mechanic",
+     "quest": "Perfect Specimens",
+     "location": "Old Sharlayan (X:11.7, Y:13.2)",
+     "information": "Speak with Northota"
+    }
+   ]
+  },
+  {
+   "id": "ew-levelCap",
+   "expansionId": "ew",
+   "kind": "levelCap",
+   "heading": "Level 90",
+   "entries": [
+    {
+     "id": "the-dead-ends/endwalker",
+     "level": "",
+     "itemLevel": "540",
+     "unlock": "The Dead Ends",
+     "type": "Dungeon",
+     "quest": "Endwalker",
+     "location": "Ultima Thule (X:21.4, Y:21.2)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "the-final-day/endwalker",
+     "level": "",
+     "itemLevel": "540",
+     "unlock": "The Final Day",
+     "type": "Trial",
+     "quest": "Endwalker",
+     "location": "The Final Day (X:6.1, Y:6.2)",
+     "information": "Unlocks as part of the main Endwalker quests"
+    },
+    {
+     "id": "arkasodara-daily-quests/hippos-born-to-run",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Arkasodara Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Hippos Born to Run",
+     "location": "Thavnair (X:25.3, Y:31.2)",
+     "information": "Daily quests for Arkasodara. Unlock quest is conclusion of split questline. Requires Endwalker"
+    },
+    {
+     "id": "omicron-daily-quests/the-café-at-the-end-of-the-universe",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Omicron Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "The Café at the End of the Universe",
+     "location": "Ultima Thule (X:25.4, Y:26.3)",
+     "information": "Daily quests for Omicrons. Requires Endwalker"
+    },
+    {
+     "id": "loporrit-daily-quests/must-be-dreamingway",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Loporrit Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Must Be Dreaming(way)",
+     "location": "Old Sharlayan (X:11.7, Y:10.9)",
+     "information": "Daily quests for Loporrits. Requires Endwalker"
+    },
+    {
+     "id": "eureka-orthos/delve-into-myth",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Eureka Orthos",
+     "type": "Deep Dungeon",
+     "quest": "Delve into Myth",
+     "location": "Mor Dhona (X:34.8, Y:19.2)",
+     "information": "Requires Endwalker, and must have cleared Palace of the Dead floor 50"
+    },
+    {
+     "id": "somehow-further-hildibrand-adventures/the-sleeping-gentleman",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Somehow Further Hildibrand Adventures",
+     "type": "Side Quests",
+     "quest": "The Sleeping Gentleman",
+     "location": "Radz-at-Han (X:11.8, Y:11.2)",
+     "information": "Speak with Excitable Youth"
+    },
+    {
+     "id": "island-sanctuary/seeking-sanctuary",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Island Sanctuary",
+     "type": "Lifestyle Content",
+     "quest": "Seeking Sanctuary",
+     "location": "Old Sharlayan (X:11.9, Y:11.0)",
+     "information": "Requires Endwalker"
+    },
+    {
+     "id": "cosmic-exploration/a-cosmic-homecoming",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Cosmic Exploration",
+     "type": "Lifestyle Content",
+     "quest": "A Cosmic Homecoming",
+     "location": "Old Sharlayan (X:12.6, Y:13.6)",
+     "information": "Requires Endwalker and a level 10+ Disciple of the Hand or Land"
+    },
+    {
+     "id": "manderville-weapons/make-it-a-manderville",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Manderville Weapons",
+     "type": "Relic Weapons",
+     "quest": "Make It a Manderville",
+     "location": "Radz-At-Han (X:11.8, Y:11.2)",
+     "information": "Speak with House Manderville Manservant. Requires some progress in the Somehow Further Hildibrand Adventures."
+    },
+    {
+     "id": "the-merchants-tale/a-spellbinding-read",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "The Merchant's Tale",
+     "type": "Variant Dungeon",
+     "quest": "A Spellbinding Read",
+     "location": "Old Sharlayan (X:12.0, Y:13.4)",
+     "information": "Speak with Shallow Moor."
+    },
+    {
+     "id": "smileton/cutting-the-cheese",
+     "level": "",
+     "itemLevel": "540",
+     "unlock": "Smileton",
+     "type": "Dungeon",
+     "quest": "Cutting the Cheese",
+     "location": "Mare Lamentorum (X:11.8, Y:22.6)",
+     "information": "Speak to Panic-stricken Loporrit in Old Sharlayan."
+    },
+    {
+     "id": "the-stigma-dreamscape/where-no-loporrit-has-gone-before",
+     "level": "",
+     "itemLevel": "540",
+     "unlock": "The Stigma Dreamscape",
+     "type": "Dungeon",
+     "quest": "Where No Loporrit Has Gone Before",
+     "location": "Ultima Thule (X:34.8, Y:28.8)",
+     "information": "Speak to Jammingway in Old Sharlayan."
+    },
+    {
+     "id": "alzadaals-legacy/alzadaals-legacy",
+     "level": "",
+     "itemLevel": "560",
+     "unlock": "Alzadaal's Legacy",
+     "type": "Dungeon",
+     "quest": "Alzadaal's Legacy",
+     "location": "Thavnair (X:16.0, Y:33.6)",
+     "information": "Speak to the Y'shtola in Thavnair, Unlocks as part of the Patch 6.1 main quests."
+    },
+    {
+     "id": "the-minstrels-ballad-zodiarks-fall/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "560",
+     "unlock": "The Minstrel's Ballad: Zodiark's Fall",
+     "type": "Trial",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "the-minstrels-ballad-hydaelyns-call/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "560",
+     "unlock": "The Minstrel's Ballad: Hydaelyn's Call",
+     "type": "Trial",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "asphodelos/the-crystal-from-beyond",
+     "level": "",
+     "itemLevel": "565",
+     "unlock": "Asphodelos",
+     "type": "Raid",
+     "quest": "The Crystal from Beyond",
+     "location": "Old Sharlayan (X:9.6, Y:11.9)",
+     "information": "Speak with Nemjiji; part of Pandaemonium Quests"
+    },
+    {
+     "id": "aglaia/the-realm-of-the-gods",
+     "level": "",
+     "itemLevel": "565",
+     "unlock": "Aglaia",
+     "type": "Alliance Raid",
+     "quest": "The Realm of the Gods",
+     "location": "The Omphalos (X:8.2, Y:6.3)",
+     "information": "Speak with G'raha Tia; part of Myths of the Realm"
+    },
+    {
+     "id": "asphodelos-savage",
+     "level": "",
+     "itemLevel": "570-580",
+     "unlock": "Asphodelos (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Labyrinthos (X:8.4, Y:27.4)",
+     "information": "(Optional challenge content) Speak with Nemjiji after completing Who Wards the Warders?"
+    },
+    {
+     "id": "the-fell-court-of-troia/in-search-of-azdaja",
+     "level": "",
+     "itemLevel": "575",
+     "unlock": "The Fell Court of Troia",
+     "type": "Dungeon",
+     "quest": "In Search of Azdaja",
+     "location": "Alzadaal's Legacy (Zone) (X:13.1, Y:9.5)",
+     "information": "Speak to Varshahn in Alzadaal's Legacy; unlocks as part of the Patch 6.2 main quests."
+    },
+    {
+     "id": "the-sildihn-subterrane/a-key-to-the-past",
+     "level": "",
+     "itemLevel": "575",
+     "unlock": "The Sil'dihn Subterrane",
+     "type": "Variant Dungeon",
+     "quest": "A Key to the Past",
+     "location": "Central Thanalan (X:16.8, Y:23.6)",
+     "information": "Speak with the Sil'dihn Subterrane foreman at the Sil'dih excavation site."
+    },
+    {
+     "id": "the-minstrels-ballad-endsingers-aria/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "580",
+     "unlock": "The Minstrel's Ballad: Endsinger's Aria",
+     "type": "Trial",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "storms-crown/the-wind-rises",
+     "level": "",
+     "itemLevel": "585",
+     "unlock": "Storm's Crown",
+     "type": "Trial",
+     "quest": "The Wind Rises",
+     "location": "Zero's Domain (X:5.8, Y:4.7)",
+     "information": "Speak to Zero; unlocks as part of the Patch 6.2 main quests."
+    },
+    {
+     "id": "abyssos/an-unwelcome-visitor",
+     "level": "",
+     "itemLevel": "585",
+     "unlock": "Abyssos",
+     "type": "Raid",
+     "quest": "An Unwelcome Visitor",
+     "location": "Labyrinthos (X:8.6, Y:27.5)",
+     "information": "Speak with Claudien; part of Pandaemonium Quests"
+    },
+    {
+     "id": "lapis-manalis/king-of-the-mountain",
+     "level": "",
+     "itemLevel": "590",
+     "unlock": "Lapis Manalis",
+     "type": "Dungeon",
+     "quest": "King of the Mountain",
+     "location": "Garlemald (X:32, Y:16.6)",
+     "information": "Speak to Alphinaud; unlocks as part of the Patch 6.3 main quests."
+    },
+    {
+     "id": "mount-ordeals/desires-untold",
+     "level": "",
+     "itemLevel": "595",
+     "unlock": "Mount Ordeals",
+     "type": "Trial",
+     "quest": "Desires Untold",
+     "location": "Thavnair (X:10.1, Y:10.1)",
+     "information": "Speak to Nahbdeen; unlocks as part of the Patch 6.3 main quests."
+    },
+    {
+     "id": "euphrosyne/return-to-the-phantom-realm",
+     "level": "",
+     "itemLevel": "595",
+     "unlock": "Euphrosyne",
+     "type": "Alliance Raid",
+     "quest": "Return to the Phantom Realm",
+     "location": "Mor Dhona (X:23.9, Y:9.1)",
+     "information": "Speak with Deryk; part of Myths of the Realm"
+    },
+    {
+     "id": "storms-crown-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "600",
+     "unlock": "Storm's Crown (Extreme)",
+     "type": "Trial",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "the-aetherfont/going-haam",
+     "level": "",
+     "itemLevel": "605",
+     "unlock": "The Aetherfont",
+     "type": "Dungeon",
+     "quest": "Going Haam",
+     "location": "Old Sharlayan (X:13.9, Y:16.0)",
+     "information": "Speak to the cheery captain in Old Sharlayan; unlocks as part of the Patch 6.4 main quests."
+    },
+    {
+     "id": "dragonsongs-reprise-ultimate/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "605",
+     "unlock": "Dragonsong's Reprise (Ultimate)",
+     "type": "Ultimate Raid",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Asphodelos: The Fourth Circle (Savage)"
+    },
+    {
+     "id": "abyssos-savage",
+     "level": "",
+     "itemLevel": "600–610",
+     "unlock": "Abyssos (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Labyrinthos (X:8.4, Y:27.4)",
+     "information": "(Optional challenge content) Speak with Nemjiji after completing Truth Imperfect"
+    },
+    {
+     "id": "mount-rokkon/mononoke-aware",
+     "level": "",
+     "itemLevel": "605",
+     "unlock": "Mount Rokkon",
+     "type": "Variant Dungeon",
+     "quest": "Mononoke Aware",
+     "location": "Kugane (X:8.9, Y:8.8)",
+     "information": "Speak with Tsubaki in Kugane."
+    },
+    {
+     "id": "aloalo-island/stranger-from-paradise",
+     "level": "",
+     "itemLevel": "605",
+     "unlock": "Aloalo Island",
+     "type": "Variant Dungeon",
+     "quest": "Stranger from Paradise",
+     "location": "Thavnair (X:? Y:?)",
+     "information": "Speak with Pasasun in Thavnair."
+    },
+    {
+     "id": "another-sildihn-subterrane",
+     "level": "",
+     "itemLevel": "610",
+     "unlock": "Another Sil'dihn Subterrane",
+     "type": "Criterion Dungeon",
+     "quest": "",
+     "location": "Old Sharlayan (X:11.9, Y:13.3)",
+     "information": "(Optional challenge content) Speak with Osmon after completing A Key to the Past."
+    },
+    {
+     "id": "mount-ordeals-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "610",
+     "unlock": "Mount Ordeals (Extreme)",
+     "type": "Trial",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "the-voidcast-dais/abyssal-dark",
+     "level": "",
+     "itemLevel": "615",
+     "unlock": "The Voidcast Dais",
+     "type": "Trial",
+     "quest": "Abyssal Dark",
+     "location": "The Red Moon (X:5.8, Y:2.7)",
+     "information": "Unlocks as part of the Patch 6.4 main quests."
+    },
+    {
+     "id": "anabaseios/eater-of-souls",
+     "level": "",
+     "itemLevel": "615",
+     "unlock": "Anabaseios",
+     "type": "Raid",
+     "quest": "Eater of Souls",
+     "location": "Labyrinthos (X:8.6, Y:27.5)",
+     "information": "Speak with Ruissenaud; part of Pandaemonium Quests"
+    },
+    {
+     "id": "the-lunar-subterrane/down-in-the-dark",
+     "level": "",
+     "itemLevel": "620",
+     "unlock": "The Lunar Subterrane",
+     "type": "Dungeon",
+     "quest": "Down in the Dark",
+     "location": "The Red Moon (X:6.0, Y:2.9)",
+     "information": "Speak to Varshahn at The Red Moon (X:6.1, Y:3.5); unlocks as part of the Patch 6.5 main quests."
+    },
+    {
+     "id": "the-abyssal-fracture/down-in-the-dark",
+     "level": "",
+     "itemLevel": "625",
+     "unlock": "The Abyssal Fracture",
+     "type": "Trial",
+     "quest": "Down in the Dark",
+     "location": "The Red Moon (X:6.1, Y:3.5)",
+     "information": "Unlocks as part of the Patch 6.5 main quests."
+    },
+    {
+     "id": "thaleia/the-heart-of-the-myth",
+     "level": "",
+     "itemLevel": "625",
+     "unlock": "Thaleia",
+     "type": "Alliance Raid",
+     "quest": "The Heart of the Myth",
+     "location": "The Omphalos (X:6.8, Y:8.4)",
+     "information": "Speak with Deryk in Mor Dhona (X:23.9, Y:9.1); part of Myths of the Realm"
+    },
+    {
+     "id": "the-gilded-araya/gentlemen-at-heart",
+     "level": "",
+     "itemLevel": "625",
+     "unlock": "The Gilded Araya",
+     "type": "Trial",
+     "quest": "Gentlemen at Heart",
+     "location": "Thavnair (X:22, Y:34)",
+     "information": "Part of Somehow Further Hildibrand Adventures"
+    },
+    {
+     "id": "the-voidcast-dais-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "630",
+     "unlock": "The Voidcast Dais (Extreme)",
+     "type": "Trial",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "another-sildihn-subterrane-savage",
+     "level": "",
+     "itemLevel": "635",
+     "unlock": "Another Sil'dihn Subterrane (Savage)",
+     "type": "Criterion Dungeon",
+     "quest": "",
+     "location": "Old Sharlayan (X:11.9, Y:13.3)",
+     "information": "(Optional challenge content) Speak with Osmon after completing Another Sil'dihn Subterrane."
+    },
+    {
+     "id": "the-omega-protocol-ultimate/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "635",
+     "unlock": "The Omega Protocol (Ultimate)",
+     "type": "Ultimate Raid",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Abyssos: The Eighth Circle (Savage)"
+    },
+    {
+     "id": "anabaseios-savage",
+     "level": "",
+     "itemLevel": "630–640",
+     "unlock": "Anabaseios (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Labyrinthos (X:8.4, Y:27.4)",
+     "information": "(Optional challenge content) Speak with Nemjiji after completing Guided by the Past"
+    },
+    {
+     "id": "another-mount-rokkon",
+     "level": "",
+     "itemLevel": "640",
+     "unlock": "Another Mount Rokkon",
+     "type": "Criterion Dungeon",
+     "quest": "",
+     "location": "Old Sharlayan (X:11.9, Y:13.3)",
+     "information": "(Optional challenge content) Speak with Osmon after completing Mononoke Aware."
+    },
+    {
+     "id": "the-abyssal-fracture-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "level": "",
+     "itemLevel": "640",
+     "unlock": "The Abyssal Fracture (Extreme)",
+     "type": "Trial",
+     "quest": "I Wandered Sharlayan as a Minstrel",
+     "location": "Old Sharlayan (X:12.7, Y:14.3)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "another-aloalo-island",
+     "level": "",
+     "itemLevel": "640",
+     "unlock": "Another Aloalo Island",
+     "type": "Criterion Dungeon",
+     "quest": "",
+     "location": "Old Sharlayan (X:11.9, Y:13.3)",
+     "information": "(Optional challenge content) Speak with Osmon after completing Stranger from Paradise."
+    },
+    {
+     "id": "another-mount-rokkon-savage",
+     "level": "",
+     "itemLevel": "665",
+     "unlock": "Another Mount Rokkon (Savage)",
+     "type": "Criterion Dungeon",
+     "quest": "",
+     "location": "Old Sharlayan (X:11.9, Y:13.3)",
+     "information": "(Optional challenge content) Speak with Osmon after completing Another Mount Rokkon."
+    },
+    {
+     "id": "another-aloalo-island-savage",
+     "level": "",
+     "itemLevel": "665",
+     "unlock": "Another Aloalo Island (Savage)",
+     "type": "Criterion Dungeon",
+     "quest": "",
+     "location": "Old Sharlayan (X:11.9, Y:13.3)",
+     "information": "(Optional challenge content) Speak with Osmon after completing Another Aloalo Island."
+    }
+   ]
+  },
+  {
+   "id": "dt-levelling",
+   "expansionId": "dt",
+   "kind": "levelling",
+   "heading": "Level 91 - 100",
+   "entries": [
+    {
+     "id": "dawn-hunt/a-new-dawn-a-new-hunt",
+     "level": "90",
+     "itemLevel": "",
+     "unlock": "Dawn Hunt",
+     "type": "Game Mechanic",
+     "quest": "A New Dawn, a New Hunt",
+     "location": "Tuliyollal (X:11.8, Y:13.7)",
+     "information": "Speak with Wing of Protection Scout, requires The Rite of Succession"
+    },
+    {
+     "id": "ihuykatumu/for-all-turali",
+     "level": "91",
+     "itemLevel": "",
+     "unlock": "Ihuykatumu",
+     "type": "Dungeon",
+     "quest": "For All Turali",
+     "location": "Tuliyollal (X:11.1, Y:15.0)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests"
+    },
+    {
+     "id": "pilgrims-traverse/pilgrimage-of-light",
+     "level": "91",
+     "itemLevel": "",
+     "unlock": "Pilgrim's Traverse",
+     "type": "Deep Dungeon",
+     "quest": "Pilgrimage of Light",
+     "location": "The Crystarium (X:10.3, Y:10.7)",
+     "information": "Requires Endwalker, and must have cleared Palace of the Dead floor 50"
+    },
+    {
+     "id": "the-final-verse",
+     "level": "91",
+     "itemLevel": "",
+     "unlock": "The Final Verse",
+     "type": "Deep Dungeon",
+     "quest": "",
+     "location": "Il Mheg (X:29.9, Y:6.0)",
+     "information": "Talk to Vanthau after reaching stone 99 of Pilgrim's Traverse"
+    },
+    {
+     "id": "dawntrail-role-quests/uncouth-customers",
+     "level": "92",
+     "itemLevel": "",
+     "unlock": "Dawntrail Role Quests",
+     "type": "Side Quests",
+     "quest": "Uncouth Customers",
+     "location": "Tuliyollal (X:12.4, Y:14.5)",
+     "information": "Speak with Br'uk Evu, requires The Feat of Pots"
+    },
+    {
+     "id": "wachumeqimeqi-deliveries/wrought-in-wachumeqimeqi",
+     "level": "92",
+     "itemLevel": "",
+     "unlock": "Wachumeqimeqi Deliveries",
+     "type": "Side Quests",
+     "quest": "Wrought in Wachumeqimeqi",
+     "location": "Tuliyollal (X:16.1, Y:11.1)",
+     "information": "Speak with Ropli, requires The Feat of Pots"
+    },
+    {
+     "id": "worqor-zormor/the-high-luminary",
+     "level": "93",
+     "itemLevel": "",
+     "unlock": "Worqor Zormor",
+     "type": "Dungeon",
+     "quest": "The High Luminary",
+     "location": "Urqopacha (X:13.2, Y:32.4)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests"
+    },
+    {
+     "id": "worqor-lar-dor/the-skyruin",
+     "level": "93",
+     "itemLevel": "",
+     "unlock": "Worqor Lar Dor",
+     "type": "Trial",
+     "quest": "The Skyruin",
+     "location": "Urqopacha (X:32.9, Y:28.6)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests"
+    },
+    {
+     "id": "intermediate-dawn-mark-bills/why-we-hunt",
+     "level": "94",
+     "itemLevel": "",
+     "unlock": "Intermediate Dawn mark bills",
+     "type": "Game Mechanic",
+     "quest": "Why We Hunt",
+     "location": "Tuliyollal (X:13.9, Y:13.7)",
+     "information": "Speak with Bol Ogaw, requires The Leap to Yak T'el"
+    },
+    {
+     "id": "the-skydeep-cenote/road-to-the-golden-city",
+     "level": "95",
+     "itemLevel": "",
+     "unlock": "The Skydeep Cenote",
+     "type": "Dungeon",
+     "quest": "Road to the Golden City",
+     "location": "Yak T'el (X:31.5, Y:32.6)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests"
+    },
+    {
+     "id": "vanguard/all-aboard",
+     "level": "97",
+     "itemLevel": "",
+     "unlock": "Vanguard",
+     "type": "Dungeon",
+     "quest": "All Aboard",
+     "location": "Shaaloani (X:18.6, Y:13.8)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests"
+    },
+    {
+     "id": "origenics/the-resilient-son",
+     "level": "99",
+     "itemLevel": "",
+     "unlock": "Origenics",
+     "type": "Dungeon",
+     "quest": "The Resilient Son",
+     "location": "Heritage Found (X:15.6, Y:5.1)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests"
+    },
+    {
+     "id": "everkeep/the-resilient-son",
+     "level": "99",
+     "itemLevel": "",
+     "unlock": "Everkeep",
+     "type": "Trial",
+     "quest": "The Resilient Son",
+     "location": "Heritage Found (X:15.6, Y:5.1)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests after completing Origenics"
+    },
+    {
+     "id": "artifact-weapons-dawntrail-artifact-armor-dawntrail/in-pursuit-of-sphene",
+     "level": "99",
+     "itemLevel": "",
+     "unlock": "Artifact Weapons (Dawntrail)\nArtifact Armor (Dawntrail)",
+     "type": "Artifact Armor",
+     "quest": "In Pursuit of Sphene",
+     "location": "Tuliyollal (X:12.4, Y:12.9)",
+     "information": "Speak with Mewazunte. Unlocks as part of the Dawntrail Main Scenario Quests."
+    },
+    {
+     "id": "advanced-dawn-mark-bills/hunting-the-hunter",
+     "level": "99",
+     "itemLevel": "",
+     "unlock": "Advanced Dawn mark bills",
+     "type": "Game Mechanic",
+     "quest": "Hunting the Hunter",
+     "location": "Tuliyollal (X:13.9, Y:13.7)",
+     "information": "Speak with Bol Ogaw, requires Through the Gate of Gold"
+    },
+    {
+     "id": "dawntrail-elite-marks/the-hunt-goes-on",
+     "level": "100",
+     "itemLevel": "",
+     "unlock": "Dawntrail Elite Marks",
+     "type": "Game Mechanic",
+     "quest": "The Hunt Goes On",
+     "location": "Tuliyollal (X:13.9, Y:13.7)",
+     "information": "Speak with Bol Ogaw"
+    }
+   ]
+  },
+  {
+   "id": "dt-levelCap",
+   "expansionId": "dt",
+   "kind": "levelCap",
+   "heading": "Level 100",
+   "entries": [
+    {
+     "id": "alexandria/dawntrail",
+     "level": "",
+     "itemLevel": "670",
+     "unlock": "Alexandria",
+     "type": "Dungeon",
+     "quest": "Dawntrail",
+     "location": "Living Memory (X:11.4, Y:4.6)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests."
+    },
+    {
+     "id": "the-interphos/dawntrail",
+     "level": "",
+     "itemLevel": "670",
+     "unlock": "The Interphos",
+     "type": "Trial",
+     "quest": "Dawntrail",
+     "location": "Living Memory (X:11.4, Y:4.6)",
+     "information": "Unlocks as part of the Dawntrail Main Scenario Quests after completing Alexandria."
+    },
+    {
+     "id": "the-spire-of-trial/trial-by-spire",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "The Spire of Trial",
+     "type": "Game Mechanic",
+     "quest": "Trial by Spire",
+     "location": "Solution Nine (X:19.9, Y:17.1)",
+     "information": "Requires Dawntrail and A Striking Opportunity. DPS Check for various Raids and Trials"
+    },
+    {
+     "id": "pelupelu-daily-quests/an-intrepid-new-enterprise",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Pelupelu Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "An Intrepid New Enterprise",
+     "location": "Tuliyollal (X:13.6, Y:12.9)",
+     "information": "Daily quests for Pelupelu. Requires Dawntrail"
+    },
+    {
+     "id": "mamool-ja-daily-quests/cultivating-hope",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Mamool Ja Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Cultivating Hope",
+     "location": "Yak T'el (X:35.6, Y:32.0)",
+     "information": "Daily quests for Mamool Ja. Requires Dawntrail and One Forest."
+    },
+    {
+     "id": "yok-huy-daily-quests/frosty-neighbors",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Yok Huy Daily Quests",
+     "type": "Allied Society Quests",
+     "quest": "Frosty Neighbors",
+     "location": "Urqopacha (X:32.1, Y:34.3)",
+     "information": "Daily quests for Yok Huy. Requires Dawntrail and Brains and Brawn."
+    },
+    {
+     "id": "inconceivably-further-hildibrand-adventures/the-case-of-the-displaced-inspector",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "Inconceivably Further Hildibrand Adventures",
+     "type": "Side Quests",
+     "quest": "The Case of the Displaced Inspector",
+     "location": "Tuliyollal (X:14.5, Y:12.5)",
+     "information": "Speak with Nashu Mhakaracca"
+    },
+    {
+     "id": "the-final-verse-quantum/a-branch-and-their-sapling",
+     "level": "",
+     "itemLevel": "",
+     "unlock": "The Final Verse (Quantum)",
+     "type": "Deep Dungeon",
+     "quest": "A Branch and Their Sapling",
+     "location": "Il Mheg (X:29.8, Y:5.9)",
+     "information": "(Optional challenge content) Requires clearing stone 100 of Pilgrim's Traverse"
+    },
+    {
+     "id": "tender-valley/it-belongs-in-a-museum",
+     "level": "",
+     "itemLevel": "670",
+     "unlock": "Tender Valley",
+     "type": "Dungeon",
+     "quest": "It Belongs in a Museum",
+     "location": "Tuliyollal (X:14.0, Y:12.5)",
+     "information": "Speak with Zeycihan in Tuliyollal."
+    },
+    {
+     "id": "the-strayborough-deadwalk/something-stray-in-the-neighborhood",
+     "level": "",
+     "itemLevel": "670",
+     "unlock": "The Strayborough Deadwalk",
+     "type": "Dungeon",
+     "quest": "Something Stray in the Neighborhood",
+     "location": "Solution Nine (X:18.5, Y:18.2)",
+     "information": "Speak with Nostalgia in Solution Nine."
+    },
+    {
+     "id": "aac-lightheavyweight-tier/a-new-challenger-appears",
+     "level": "",
+     "itemLevel": "685",
+     "unlock": "AAC Light-heavyweight Tier",
+     "type": "Raid",
+     "quest": "A New Challenger Appears",
+     "location": "Solution Nine (X:19.1, Y:18.8)",
+     "information": "Speak with Metem; part of The Arcadion Quests"
+    },
+    {
+     "id": "worqor-lar-dor-extreme/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "690",
+     "unlock": "Worqor Lar Dor (Extreme)",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "everkeep-extreme/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "690",
+     "unlock": "Everkeep (Extreme)",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "shinryus-domain-unreal/fantastic-mr-faux",
+     "level": "",
+     "itemLevel": "690",
+     "unlock": "Shinryu's Domain (Unreal)",
+     "type": "Trial",
+     "quest": "Fantastic Mr. Faux",
+     "location": "Idyllshire (X:7.0, Y:5.9)",
+     "information": "(Optional challenge content) Speak with the Painfully Ishgardian Man. Part of Faux Hollows; only available in 7.5x"
+    },
+    {
+     "id": "occult-crescent/one-last-hurrah",
+     "level": "",
+     "itemLevel": "690",
+     "unlock": "Occult Crescent",
+     "type": "Field Operations",
+     "quest": "One Last Hurrah",
+     "location": "Tuliyollal (X:17.1, Y:11.8)",
+     "information": "Speak with the Expedition Messenger; requires Dawntrail"
+    },
+    {
+     "id": "phantom-weapons/arcane-artistry",
+     "level": "",
+     "itemLevel": "690",
+     "unlock": "Phantom Weapons",
+     "type": "Relic Weapons",
+     "quest": "Arcane Artistry",
+     "location": "The Phantom Village (X:6.6, Y:7.1)",
+     "information": "Speak with Lydirceil; requires Unfamiliar Territory"
+    },
+    {
+     "id": "yuweyawata-field-station/in-search-of-the-past",
+     "level": "",
+     "itemLevel": "690",
+     "unlock": "Yuweyawata Field Station",
+     "type": "Dungeon",
+     "quest": "In Search of the Past",
+     "location": "Solution Nine (X:6.2, Y:15.2)",
+     "information": "Unlocks as part of the Post-Dawntrail Main Scenario Quests."
+    },
+    {
+     "id": "jeuno-the-first-walk/an-otherworldly-encounter",
+     "level": "",
+     "itemLevel": "695",
+     "unlock": "Jeuno: The First Walk",
+     "type": "Alliance Raid",
+     "quest": "An Otherworldly Encounter",
+     "location": "Tuliyollal (X:13.0, Y:11.6)",
+     "information": "Part of Echoes of Vana'diel"
+    },
+    {
+     "id": "the-underkeep/descent-to-the-foundation",
+     "level": "",
+     "itemLevel": "705",
+     "unlock": "The Underkeep",
+     "type": "Dungeon",
+     "quest": "Descent to the Foundation",
+     "location": "The Backroom (X:6.0, Y:6.3)",
+     "information": "Unlocks as part of the Patch 7.2 main quests."
+    },
+    {
+     "id": "aac-lightheavyweight-tier-savage",
+     "level": "",
+     "itemLevel": "700-710",
+     "unlock": "AAC Light-heavyweight Tier (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Solution Nine (X:22.4, Y:17.1)",
+     "information": "(Optional challenge content) Speak with Gabbro after completing The Neoteric Witch"
+    },
+    {
+     "id": "the-minstrels-ballad-sphenes-burden/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "710",
+     "unlock": "The Minstrel's Ballad: Sphene's Burden",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "the-cloud-of-darkness-chaotic/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "710",
+     "unlock": "The Cloud of Darkness (Chaotic)",
+     "type": "Chaotic Alliance Raid",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel"
+    },
+    {
+     "id": "recollection/descent-to-the-foundation",
+     "level": "",
+     "itemLevel": "715",
+     "unlock": "Recollection",
+     "type": "Trial",
+     "quest": "Descent to the Foundation",
+     "location": "The Backroom (X:6.0, Y:6.3)",
+     "information": "Unlocks as part of the Patch 7.2 main quests."
+    },
+    {
+     "id": "aac-cruiserweight-tier/souls-under-siege",
+     "level": "",
+     "itemLevel": "715",
+     "unlock": "AAC Cruiserweight Tier",
+     "type": "Raid",
+     "quest": "Souls under Siege",
+     "location": "Solution Nine (X:22.2, Y:16.6)",
+     "information": "Speak with Yaana; part of The Arcadion Quests"
+    },
+    {
+     "id": "the-meso-terminal/a-terminal-invitation",
+     "level": "",
+     "itemLevel": "720",
+     "unlock": "The Meso Terminal",
+     "type": "Dungeon",
+     "quest": "A Terminal Invitation",
+     "location": "Living Memory (X:21.5, Y:36.9)",
+     "information": "Unlocks as part of the Patch 7.3 main quests."
+    },
+    {
+     "id": "the-ageless-necropolis/a-terminal-invitation",
+     "level": "",
+     "itemLevel": "725",
+     "unlock": "The Ageless Necropolis",
+     "type": "Trial",
+     "quest": "A Terminal Invitation",
+     "location": "Living Memory (X:21.5, Y:36.9)",
+     "information": "Unlocks as part of the Patch 7.3 main quests."
+    },
+    {
+     "id": "san-doria-the-second-walk/dreams-of-paradise",
+     "level": "",
+     "itemLevel": "725",
+     "unlock": "San d'Oria: The Second Walk",
+     "type": "Alliance Raid",
+     "quest": "Dreams of Paradise",
+     "location": "Tuliyollal (X:16.2, Y:3.9)",
+     "information": "Part of Echoes of Vana'diel"
+    },
+    {
+     "id": "the-windward-wilds/the-white-wanderer",
+     "level": "",
+     "itemLevel": "725",
+     "unlock": "The Windward Wilds",
+     "type": "Trial",
+     "quest": "The White Wanderer",
+     "location": "Tuliyollal (X:13.4, Y:13.1)",
+     "information": "Part of Guardian Arkveld Descends!"
+    },
+    {
+     "id": "recollection-extreme/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "730",
+     "unlock": "Recollection (Extreme)",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing Descent to the Foundation"
+    },
+    {
+     "id": "futures-rewritten-ultimate/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "735",
+     "unlock": "Futures Rewritten (Ultimate)",
+     "type": "Ultimate Raid",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel; requires completing AAC Light-heavyweight M4 (Savage)"
+    },
+    {
+     "id": "mistwake/beyond-the-mountains",
+     "level": "",
+     "itemLevel": "735",
+     "unlock": "Mistwake",
+     "type": "Dungeon",
+     "quest": "Beyond the Mountains",
+     "location": "Alexandria Crater (X:5.9, Y:6.5)",
+     "information": "Unlocks as part of the Patch 7.4 main quests."
+    },
+    {
+     "id": "aac-cruiserweight-tier-savage",
+     "level": "",
+     "itemLevel": "730-740",
+     "unlock": "AAC Cruiserweight Tier (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Solution Nine (X:22.4, Y:17.1)",
+     "information": "(Optional challenge content) Speak with Gabbro after completing The Lone Wolf"
+    },
+    {
+     "id": "the-minstrels-ballad-necrons-embrace/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "740",
+     "unlock": "The Minstrel's Ballad: Necron's Embrace",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing A Terminal Invitation"
+    },
+    {
+     "id": "the-windward-wilds-extreme/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "740",
+     "unlock": "The Windward Wilds (Extreme)",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing The White Wanderer"
+    },
+    {
+     "id": "hell-on-rails/where-we-call-home",
+     "level": "",
+     "itemLevel": "745",
+     "unlock": "Hell on Rails",
+     "type": "Trial",
+     "quest": "Where We Call Home",
+     "location": "Treno (X:11.8, Y:15.1)",
+     "information": "Unlocks as part of the Patch 7.4 main quests."
+    },
+    {
+     "id": "aac-heavyweight-tier/feral-fandom",
+     "level": "",
+     "itemLevel": "745",
+     "unlock": "AAC Heavyweight Tier",
+     "type": "Raid",
+     "quest": "Feral Fandom",
+     "location": "Solution Nine (X:22.2, Y:16.6)",
+     "information": "Speak with Yaana; part of The Arcadion Quests"
+    },
+    {
+     "id": "the-clyteum/two-worlds-entwined",
+     "level": "",
+     "itemLevel": "750",
+     "unlock": "The Clyteum",
+     "type": "Dungeon",
+     "quest": "Two Worlds Entwined",
+     "location": "Main Hall (X:6.1, Y:6.1)",
+     "information": "Unlocks as part of the Patch 7.5 main quests."
+    },
+    {
+     "id": "the-unmaking/where-we-call-home",
+     "level": "",
+     "itemLevel": "755",
+     "unlock": "The Unmaking",
+     "type": "Trial",
+     "quest": "Where We Call Home",
+     "location": "Garlemald (X:32.1, Y:16.8)",
+     "information": "Unlocks as part of the Patch 7.5 main quests."
+    },
+    {
+     "id": "windurst-the-third-walk/the-hollow-promise",
+     "level": "",
+     "itemLevel": "755",
+     "unlock": "Windurst: The Third Walk",
+     "type": "Alliance Raid",
+     "quest": "The Hollow Promise",
+     "location": "Tuliyollal (X:16.2, Y:3.9)",
+     "information": "Part of Echoes of Vana'diel"
+    },
+    {
+     "id": "hell-on-rails-extreme/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "760",
+     "unlock": "Hell on Rails (Extreme)",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing Where We Call Home"
+    },
+    {
+     "id": "the-merchants-tale-advanced/abridged-too-far",
+     "level": "",
+     "itemLevel": "760",
+     "unlock": "The Merchant's Tale (Advanced)",
+     "type": "Variant Dungeon (Advanced)",
+     "quest": "Abridged Too Far",
+     "location": "Old Sharlayan (X:11.9, Y:13.4)",
+     "information": "(Optional challenge content) Speak with Memolivia after defeating three unique final bosses in The Merchant's Tale."
+    },
+    {
+     "id": "aac-heavyweight-tier-savage",
+     "level": "",
+     "itemLevel": "760-770",
+     "unlock": "AAC Heavyweight Tier (Savage)",
+     "type": "Raid",
+     "quest": "",
+     "location": "Solution Nine (X:22.4, Y:17.1)",
+     "information": "(Optional challenge content) Speak with Gabbro after completing Glory Incarnate."
+    },
+    {
+     "id": "another-merchants-tale",
+     "level": "",
+     "itemLevel": "770",
+     "unlock": "Another Merchant's Tale",
+     "type": "Criterion Dungeon",
+     "quest": "",
+     "location": "Old Sharlayan (X:12.0, Y:13.4)",
+     "information": "(Optional challenge content) Speak with Osmon after defeating all bosses in The Merchant's Tale (Advanced)."
+    },
+    {
+     "id": "the-unmaking-extreme/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "770",
+     "unlock": "The Unmaking (Extreme)",
+     "type": "Trial",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing A Grave Presentiment"
+    },
+    {
+     "id": "dancing-mad-ultimate/how-the-west-was-sung",
+     "level": "",
+     "itemLevel": "795",
+     "unlock": "Dancing Mad (Ultimate)",
+     "type": "Ultimate Raid",
+     "quest": "How the West Was Sung",
+     "location": "Tuliyollal (X:11.2, Y:14.7)",
+     "information": "(Optional challenge content) Speak to the Wandering Minstrel; requires completing AAC Heavyweight M4 (Savage)"
+    }
+   ]
+  }
+ ]
+}
