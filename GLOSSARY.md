@@ -1,0 +1,87 @@
+# Content Unlock Log
+
+A personal checklist of Final Fantasy XIV content unlocks, built from the community wiki's Content Unlock page, where a player records which entries each of their characters has done.
+
+## Content
+
+**Log**:
+The whole checklist: every entry, grouped by expansion and section.
+_Avoid_: List, checklist (in code and docs)
+
+**Entry**:
+One row of the log, exactly as the wiki lists it: the content it unlocks, the quests that unlock it, and its level, location and notes. A row naming several unlocks is still one entry.
+_Avoid_: Unlock (as a noun for a row), item, content (for a single row)
+
+**Section**:
+One level-band table of the log, either an expansion's levelling section (e.g. Level 51–60) or its level-cap section (e.g. Level 60).
+_Avoid_: Level band, table, category
+
+**Expansion**:
+A major release of the game that raises the level cap (A Realm Reborn to Dawntrail); it groups exactly two sections.
+
+**Unlock**:
+The in-game act of gaining access to a piece of content, usually by completing a quest. A verb or event, never a row.
+
+**Optional challenge**:
+An entry the wiki tags as "Optional challenge content", such as Extreme trials, Savage raids and Ultimates. Entries the wiki merely describes as optional are not optional challenges.
+
+**Item level**:
+The average gear level a level-cap entry requires. Shown on the entry, never tracked for a character.
+_Avoid_: iLvl, gear score
+
+**Level cap**:
+The highest character level in an expansion. Every entry in a level-cap section requires it.
+
+**Patch**:
+A game update. The log is labelled with the patch the wiki says it is current to.
+
+## Characters
+
+**Character**:
+One of the player's in-game characters, with its own separate progress. Shown as "Name (World)".
+_Avoid_: Profile, user, account, alt (except when talking about a secondary character)
+
+**World**:
+A game server. A character's name is unique on its World; a character with no World set is treated as being on a World of its own.
+_Avoid_: Server
+
+**Data Center**:
+A group of Worlds, for example Aether or Chaos.
+
+**Job**:
+A character's class, for example Paladin or White Mage. Each job levels separately.
+_Avoid_: Class (except for the game's starting classes)
+
+**Character level**:
+The character's highest job level, used to decide what is available now.
+
+**MSQ**:
+Main Scenario Quests: the game's main story, which gates much of the content. Not tracked by the log.
+
+**Sync**:
+Keeping one owner's progress the same across their devices automatically. There is only ever one owner, never other users.
+
+## Progress
+
+**Entry status**:
+Where one character stands on one entry: exactly one of Unmarked, Completed or Not interested.
+
+**Unmarked**:
+The default entry status: the character has neither completed the entry nor set it aside.
+
+**Completed**:
+The entry status for content the character has unlocked.
+_Avoid_: Done, ticked, checked
+
+**Not interested**:
+The entry status for content the player has set aside for that character; it is left out of every progress count.
+_Avoid_: Hidden, skipped, ignored
+
+**Available now**:
+The entries a character could unlock at their character level and has not yet marked: levelling entries at or below that level, and level-cap entries once the character has reached the cap.
+
+**Orphaned status**:
+An entry status whose entry no longer appears in the log after an update. It is kept, and reattaches if the entry returns.
+
+**Suggested match**:
+A proposal, shown during an update, that an entry new in that update is a reworded version of an entry orphaned by it, in the same expansion. The player accepts or declines it; a declined pair is never suggested again.
