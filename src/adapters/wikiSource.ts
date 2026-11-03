@@ -1,4 +1,4 @@
-import type { WikiPage } from "../log/content";
+import type { WikiPage } from "../log";
 
 const API_URL = "https://ffxiv.consolegameswiki.com/mediawiki/api.php";
 export const CONTENT_UNLOCK_PAGE = "Content_Unlock";

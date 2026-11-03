@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { WikiPage } from "./index";
+import { parseContentUnlockPage, type WikiPage } from "./index";
 import { editRow, editedPage, fixedClock, insertRowAtTopOf, openLog, realPage, rowOf } from "./test/harness";
 
 describe("content from the real Content Unlock page", () => {
@@ -138,18 +138,31 @@ describe("entry IDs", () => {
     expect(idOf(page, "Sastasha (Normal)")).not.toEqual([originalSastashaId()]);
   });
 
-  it("tell apart duplicate rows by expansion, then by order of appearance, the first keeping the plain ID", () => {
+  it("tell apart duplicate rows by expansion, then by order of appearance", () => {
     const page = editedPage((html) => {
       const row = rowOf(html, SASTASHA);
       const withRepeats = editRow(html, SASTASHA, (r) => `${r}\n${row}\n${row}`);
       return insertRowAtTopOf(withRepeats, "Level 51 - 60", row);
     });
     expect(idOf(page, "Sastasha")).toEqual([
-      "sastasha/its-probably-pirates",
+      "sastasha/its-probably-pirates@arr",
       "sastasha/its-probably-pirates@arr#2",
       "sastasha/its-probably-pirates@arr#3",
       "sastasha/its-probably-pirates@hw",
     ]);
+  });
+
+  it("never hand an entry's ID to a duplicate added in an earlier expansion", () => {
+    const row = rowOf(realPage.html, SASTASHA);
+    const movedToHeavensward = row.replace("<td>15</td>", "<td>55</td>");
+    const original = editedPage((html) => insertRowAtTopOf(html.replace(row, ""), "Level 51 - 60", movedToHeavensward));
+    const withEarlierDuplicate = editedPage(() => insertRowAtTopOf(original.html, "Level 1 - 50", row));
+    const levelOf = (page: WikiPage, id: string) =>
+      openLog({ page }).log.sections().flatMap((s) => s.entries).find((e) => e.id === id)?.level;
+
+    const [idBefore] = idOf(original, "Sastasha");
+    expect(levelOf(original, idBefore)).toBe("55");
+    expect(levelOf(withEarlierDuplicate, idBefore) ?? "orphaned").not.toBe("15");
   });
 });
 
@@ -263,5 +276,12 @@ describe("section progress", () => {
     const { log } = openLog();
     log.cycleEntryStatus(SASTASHA);
     expect(log.sectionProgress("arr-levelCap")).toEqual({ completed: 0, total: 51 });
+  });
+});
+
+describe("the bundled content", () => {
+  it("is the saved wiki page, parsed (run `npm run snapshot` to refresh both together)", async () => {
+    const bundled = (await import("../content/bundled-content.json")).default;
+    expect(bundled).toEqual(parseContentUnlockPage(realPage));
   });
 });

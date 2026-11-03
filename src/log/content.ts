@@ -30,6 +30,9 @@ export type Section = {
   entries: Entry[];
 };
 
+/** A section as read from the page, before its rows are given entry IDs. */
+type ParsedSection = Omit<Section, "entries"> & { rows: Row[] };
+
 export type Content = {
   revisionId: number;
   expansions: Expansion[];
@@ -39,7 +42,7 @@ export type Content = {
 /** Turns the wiki's Content Unlock page into expansions, sections and entries. */
 export function parseContentUnlockPage(page: WikiPage): Content {
   const root = parse(page.html);
-  const sections: Array<Omit<Section, "entries"> & { rows: Row[] }> = [];
+  const sections: ParsedSection[] = [];
   for (const heading of root.querySelectorAll("h2")) {
     const table = tableAfter(heading);
     if (!table) continue;
@@ -66,21 +69,25 @@ export function parseContentUnlockPage(page: WikiPage): Content {
 
 /**
  * Gives each row its entry ID: the normalised unlock name plus quest names. Rows that share one are
- * told apart by expansion, then by order of appearance; the first on the page keeps the plain ID.
+ * told apart by expansion, then by order of appearance within it. Every row of a shared name is
+ * qualified, so a duplicate added elsewhere on the page never takes over an existing entry's ID.
  */
-function withEntryIds(sections: Array<Omit<Section, "entries"> & { rows: Row[] }>): Section[] {
-  const seen = new Map<string, number>();
+function withEntryIds(sections: ParsedSection[]): Section[] {
+  const nameOf = (row: Row) => [row.unlock, row.quest].map(normalise).filter(Boolean).join("/");
+  const rowsPerName = new Map<string, number>();
+  for (const row of sections.flatMap((s) => s.rows)) {
+    rowsPerName.set(nameOf(row), (rowsPerName.get(nameOf(row)) ?? 0) + 1);
+  }
+  const seenInExpansion = new Map<string, number>();
   return sections.map(({ rows, ...section }) => ({
     ...section,
     entries: rows.map((row) => {
-      const base = [row.unlock, row.quest].map(normalise).filter(Boolean).join("/");
-      const firstOnPage = !seen.has(base);
-      const key = `${base}@${section.expansionId}`;
-      const inExpansion = (seen.get(key) ?? 0) + 1;
-      seen.set(base, 1);
-      seen.set(key, inExpansion);
-      const id = firstOnPage ? base : inExpansion === 1 ? key : `${key}#${inExpansion}`;
-      return { id, ...row };
+      const name = nameOf(row);
+      if (rowsPerName.get(name) === 1) return { id: name, ...row };
+      const inExpansion = `${name}@${section.expansionId}`;
+      const position = (seenInExpansion.get(inExpansion) ?? 0) + 1;
+      seenInExpansion.set(inExpansion, position);
+      return { id: position === 1 ? inExpansion : `${inExpansion}#${position}`, ...row };
     }),
   }));
 }
@@ -113,21 +120,11 @@ function readRows(table: HTMLElement): Row[] {
   return rows.slice(1).flatMap((row) => {
     const cells = row.querySelectorAll("td");
     if (cells.length === 0) return [];
-    const field = (key: keyof Row) => {
-      const cell = cells[headers.indexOf(COLUMNS[key])];
+    const field = (header: string) => {
+      const cell = cells[headers.indexOf(header)];
       return cell ? cellText(cell) : "";
     };
-    return [
-      {
-        level: field("level"),
-        itemLevel: field("itemLevel"),
-        unlock: field("unlock"),
-        type: field("type"),
-        quest: field("quest"),
-        location: field("location"),
-        information: field("information"),
-      },
-    ];
+    return [Object.fromEntries(Object.entries(COLUMNS).map(([key, header]) => [key, field(header)])) as Row];
   });
 }
 
