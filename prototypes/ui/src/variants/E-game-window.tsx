@@ -9,7 +9,7 @@ import { Pictogram } from '../shared';
 /** Crafting-window style bar: recessed track, glossy fill running from blue towards yellow-green. */
 function Bar({ p, thin }: { p: Progress; thin?: boolean }) {
   return (
-    <div className={`ve-bar ${thin ? 'thin' : ''}`} role="progressbar" aria-valuemin={0} aria-valuemax={p.total} aria-valuenow={p.done}>
+    <div className={`ve-bar ${thin ? 'thin' : ''} ${p.total > 0 && p.done === p.total ? 'full' : ''}`} role="progressbar" aria-valuemin={0} aria-valuemax={p.total} aria-valuenow={p.done}>
       <div style={{ width: `${p.pct * 100}%`, ['--h' as string]: 200 - 120 * p.pct }} />
     </div>
   );
@@ -157,7 +157,6 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                 <button key={x.id} className={`ve-navitem ${log.expansion === x.id && !log.newOnly ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id} title={railCollapsed ? `${x.name} · Level ${x.levels} · ${p.done}/${p.total}` : undefined}>
                   <span className="ve-tile">
                     <Pictogram name={x.id} size={26} />
-                    {done && <i className="ve-done">✓</i>}
                     {hasNew && <i className="ve-tile-new" title="Has new entries">NEW</i>}
                   </span>
                   <span className="ve-nav-text">

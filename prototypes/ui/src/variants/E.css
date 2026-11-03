@@ -71,6 +71,11 @@
   background:
     linear-gradient(rgba(255,255,255,.45), rgba(255,255,255,.08) 50%, rgba(0,0,0,.12)),
     linear-gradient(90deg, hsl(calc(var(--h) + 30) 70% 38%), hsl(var(--h) 85% 58%)); }
+/* Complete: the crafting window's blue "Quality" fill instead of the blue-to-green progress fill */
+.ve-bar.full > div {
+  background:
+    linear-gradient(rgba(255,255,255,.45), rgba(255,255,255,.08) 50%, rgba(0,0,0,.12)),
+    linear-gradient(90deg, #2448b8, #2f7fd8 45%, #3fc0dc 80%, #57dcc8); }
 
 .ve-body { display: grid; grid-template-columns: 214px 1fr; min-height: 0; }
 
@@ -124,7 +129,6 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.6); white-space: nowrap; }
 .ve-notice button:hover { background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b); }
 
-.ve-done { position: absolute; top: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: var(--e-yellow); color: #2a1a00; font: 700 10px/16px sans-serif; font-style: normal; text-align: center; box-shadow: 0 0 0 1px #000; }
 
 .ve-main { min-width: 0; display: flex; flex-direction: column; padding: 8px 10px 0 10px; }
 
