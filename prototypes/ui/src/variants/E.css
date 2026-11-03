@@ -110,18 +110,20 @@
 
 .ve-main { min-width: 0; display: flex; flex-direction: column; padding: 8px 10px 0 10px; }
 
-/* Chained parallelogram tabs with the small yellow mark on the active one */
-.ve-tabs { display: flex; gap: 2px; padding: 0 14px 0 20px; margin-bottom: 4px; }
-.ve-tabs button { position: relative; flex: 1; min-width: 0; height: 24px; border: 0; padding: 0 6px; background: none; color: #f2f2f2; font-size: 13.5px; z-index: 0; }
-.ve-tabs button::before { content: ''; position: absolute; inset: 0 -5px; z-index: -1; transform: skewX(-32deg); border-radius: 2px;
-  background: linear-gradient(#6c6c6c, #4c4c4c 55%, #3f3f3f); box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 0 0 1px #000; }
+/* Separate parallelogram tab buttons side by side (as in the configuration windows), with the yellow mark on the active one */
+.ve-tabs { display: flex; gap: 12px; padding: 0 14px 0 18px; margin-bottom: 6px; }
+.ve-tabs button { position: relative; flex: 0 1 160px; min-width: 0; height: 24px; border: 0; padding: 0 12px; background: none; color: #f2f2f2; font-size: 13.5px; z-index: 0; }
+.ve-tabs button::before { content: ''; position: absolute; inset: 0; z-index: -1; transform: skewX(-32deg); border-radius: 2px;
+  background: linear-gradient(#6c6c6c, #4c4c4c 55%, #3f3f3f);
+  /* black outline plus a pale bevel all round, so each tab reads as its own button */
+  box-shadow: 0 0 0 1px #000, inset 0 0 0 1px rgba(255,255,255,.14), inset 0 1px 0 rgba(255,255,255,.3); }
 .ve-tabs button:hover::before { background: linear-gradient(#787878, #575757 55%, #474747); }
 /* The yellow mark is a layer of the skewed tab background itself, so it sits exactly in the bottom-left corner */
 .ve-tabs button.on::before {
   background:
     linear-gradient(to top right, var(--e-yellow) 0 48%, rgba(246,185,59,.35) 48% 56%, transparent 56%) left bottom / 11px 11px no-repeat,
     linear-gradient(#9b9b9b, #767676 55%, #666);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 1px #000; }
+  box-shadow: 0 0 0 1px #000, inset 0 0 0 1px rgba(255,255,255,.2), inset 0 1px 0 rgba(255,255,255,.45); }
 .ve-tabs button > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; text-shadow: 0 1px 1px #000; }
 .ve-tabs small { color: #d4d4d4; font-size: 12px; font-variant-numeric: tabular-nums; }
 .ve-tabs.single button { flex: 0 1 240px; cursor: default; }
@@ -255,8 +257,9 @@
   .ve-nav-text .prog { width: 100%; padding: 0 4px; }
   .ve-nav-text .prog .ve-num { display: none; }
   .ve-main { padding: 0 8px; }
-  .ve-tabs { padding: 0 6px; }
-  .ve-tabs button { font-size: 12.5px; height: 30px; }
+  .ve-tabs { padding: 0 12px; gap: 9px; }
+  .ve-tabs button { flex: 1 1 auto; padding: 0 5px; font-size: 12.5px; height: 30px; }
+  .ve-tabs small { font-size: 11.5px; }
   .ve-scroll { max-height: none; overflow: visible; padding-right: 0; }
   .ve-options { padding-left: 4px; flex-direction: column; }
   .ve-panel-head { flex-wrap: wrap; gap: 6px 10px; }
