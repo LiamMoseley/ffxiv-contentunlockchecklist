@@ -140,7 +140,7 @@ export function VariantC({ log, confirm }: { log: Log; confirm: (t: string, b: s
                         <span className="type">
                           <Pictogram name={e.type} size={14} /> {e.type}
                         </span>
-                        <span className="lv">{s.kind === 'cap' ? (e.level ? `iLvl ${e.level}` : 'Level cap') : `Lv ${levelLabel(e, s)}`}</span>
+                        <span className="lv">{s.kind === 'cap' ? (e.level !== '-' ? `iLvl ${e.level}` : 'Level cap') : `Lv ${levelLabel(e, s)}`}</span>
                       </div>
                       <h3>
                         {e.unlock}

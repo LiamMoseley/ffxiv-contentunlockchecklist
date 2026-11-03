@@ -13,8 +13,8 @@ export interface Progress {
 }
 
 const seed: Record<string, Record<string, Status>> = {
-  c1: { e1: 'completed', e2: 'completed', e3: 'completed', e4: 'completed', e5: 'completed', e6: 'notInterested', e7: 'completed', e8: 'notInterested', e11: 'completed', e12: 'completed', e13: 'completed', e14: 'completed', e15: 'completed', e19: 'notInterested' },
-  c2: { e1: 'completed', e2: 'completed', e11: 'completed' },
+  c1: { e1: 'completed', e2: 'notInterested', e3: 'completed', e4: 'completed', e5: 'completed', e6: 'completed', e7: 'completed', e8: 'completed', e10: 'notInterested', e11: 'notInterested', e12: 'completed', e13: 'completed', e14: 'completed', e15: 'notInterested', e16: 'completed', e18: 'completed', e19: 'completed', e22: 'notInterested' },
+  c2: { e1: 'completed', e3: 'completed', e12: 'completed' },
 };
 
 export function progressOf(list: Entry[], status: (id: string) => Status): Progress {
@@ -66,6 +66,9 @@ export function useLog() {
   const toggleCompleted = (id: string) => setMany([id], status(id) === 'completed' ? 'unmarked' : 'completed');
   const toggleNotInterested = (id: string) => setMany([id], status(id) === 'notInterested' ? 'unmarked' : 'notInterested');
   const setStatus = (id: string, s: Status) => setMany([id], s);
+  // Variant E: one control steps Unmarked → Completed → Not interested → Unmarked
+  const cycleStatus = (id: string) =>
+    setMany([id], ({ unmarked: 'completed', completed: 'notInterested', notInterested: 'unmarked' } as const)[status(id)]);
 
   // Sections currently in view for the expansion + tab choice (US-2, US-3)
   const visibleSections: Section[] = sections.filter((s) => {
@@ -110,6 +113,7 @@ export function useLog() {
     toggleCompleted,
     toggleNotInterested,
     setStatus,
+    cycleStatus,
     visibleSections,
     shownIn: (s: Section) => entries.filter((e) => e.sectionId === s.id && isShown(e)),
     entriesIn: (s: Section) => entries.filter((e) => e.sectionId === s.id),
@@ -146,9 +150,8 @@ export function expansionOf(s: Section) {
   return expansions.find((x) => x.id === s.expansionId)!;
 }
 
-export function levelLabel(e: Entry, s: Section) {
-  if (!e.level) return '—';
-  return s.kind === 'cap' ? `i${e.level}` : String(e.level);
+export function levelLabel(e: Entry, _s?: Section) {
+  return e.level === '-' ? '—' : e.level;
 }
 
 /** Blue → yellow-green, as the PRD's progress bar asks. */

@@ -13,8 +13,10 @@ Five variations of the main window, switchable via `?variant=A|B|C|D|E`, the flo
 | D | Split pane | Desktop app: navigation tree (replaces tiles and tabs), compact list with a one-tap status cycle, detail pane that becomes a bottom sheet on mobile |
 | E | Game window | A refined against the user's reference screenshots of the game's configuration, Actions & Traits and crafting windows: bevelled grey window, recessed icon rail, chained slanted tabs, settings-style checkboxes, crafting-style bars, DISPLAY MODE list/card toggle |
 
-About 20 hand-written sample entries across Stormblood and Shadowbringers (details illustrative, not checked against the wiki).
-State is in memory only. Pictograms are plain geometric shapes, not game artwork.
+22 sample entries copied from the wiki's Stormblood and Shadowbringers tables (Patch 7.4). State is in memory only.
+Variant E shows the wiki's own type, quest and job icons, hotlinked with `referrerpolicy="no-referrer"` because the
+wiki refuses image requests that carry another site's referrer. The real app should bundle them with its content snapshot.
+Everything else (window chrome, expansion tiles, pictograms in A–D) is drawn in CSS/SVG, not taken from the game.
 
 ## Run
 

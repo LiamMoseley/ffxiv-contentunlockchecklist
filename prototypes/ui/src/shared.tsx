@@ -1,7 +1,6 @@
 // PROTOTYPE shared bits: variant switcher, confirm dialog, simple pictograms.
 // Pictograms are plain geometric shapes drawn here, not game artwork.
 import { useEffect, useState, type ReactNode } from 'react';
-import type { EntryType } from './data';
 
 export function Pictogram({ name, size = 20 }: { name: string; size?: number }) {
   const p: Record<string, ReactNode> = {
@@ -16,12 +15,10 @@ export function Pictogram({ name, size = 20 }: { name: string; size?: number }) 
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      {p[name]}
+      {p[name] ?? (name.includes('Raid') ? p.Raid : name.includes('Dungeon') ? p.Dungeon : p['Game Mechanic'])}
     </svg>
   );
 }
-
-export const typeName = (t: EntryType) => t;
 
 export function useConfirm() {
   const [pending, setPending] = useState<{ title: string; body: string; ok: () => void } | null>(null);

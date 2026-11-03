@@ -1,17 +1,29 @@
 // PROTOTYPE Variant E, "Game window": Variant A refined against the user's reference screenshots of the
-// game's Character/System Configuration, Actions & Traits and crafting windows. Shapes and colours are
-// matched by eye; every icon and frame is drawn here in CSS/SVG, nothing is copied from the game.
+// game's Character/System Configuration, Actions & Traits and crafting windows. The window chrome is drawn
+// in CSS; the icons inside the cells are the wiki's own icons, hotlinked for the prototype.
 import { useState } from 'react';
-import { expansionOf, levelLabel, type Log, type Progress, type TabPick } from '../model';
+import type { Entry } from '../data';
+import { expansionOf, levelLabel, type Log, type Progress, type Status, type TabPick } from '../model';
 import { Pictogram } from '../shared';
 
-/** Crafting-window style bar: recessed track, glossy fill. Blue "Quality" fill becomes green "Progress" at 100%. */
+/** Crafting-window style bar: recessed track, glossy fill running from blue towards yellow-green. */
 function Bar({ p, thin }: { p: Progress; thin?: boolean }) {
   return (
-    <div className={`ve-bar ${thin ? 'thin' : ''} ${p.total && p.done === p.total ? 'full' : ''}`} role="progressbar" aria-valuemin={0} aria-valuemax={p.total} aria-valuenow={p.done}>
+    <div className={`ve-bar ${thin ? 'thin' : ''}`} role="progressbar" aria-valuemin={0} aria-valuemax={p.total} aria-valuenow={p.done}>
       <div style={{ width: `${p.pct * 100}%`, ['--h' as string]: 200 - 120 * p.pct }} />
     </div>
   );
+}
+
+function WikiIcon({ src, size = 20 }: { src?: string; size?: number }) {
+  return src ? <img className="ve-wiki" src={src} width={size} height={size} alt="" loading="lazy" referrerPolicy="no-referrer" /> : null;
+}
+
+const statusWord: Record<Status, string> = { unmarked: 'Unmarked', completed: 'Completed', notInterested: 'Not interested' };
+
+/** Tri-state tick-box: empty → yellow (Completed) → grey with a stroke (Not interested). */
+function StatusBox({ st }: { st: Status }) {
+  return <span className={`box ${st}`} aria-hidden="true" />;
 }
 
 export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: string, ok: () => void) => void }) {
@@ -26,9 +38,20 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
           { k: 'all', label: 'All' },
         ];
 
-  const onRowKey = (k: React.KeyboardEvent, id: string) => {
-    if (k.key === ' ' || k.key === 'Enter') { k.preventDefault(); log.toggleCompleted(id); }
+  const onKey = (k: React.KeyboardEvent, id: string) => {
+    if (k.key === ' ' || k.key === 'Enter') { k.preventDefault(); log.cycleStatus(id); }
     if (k.key.toLowerCase() === 'x') log.toggleNotInterested(id);
+  };
+  const rowProps = (e: Entry) => {
+    const st = log.status(e.id);
+    return {
+      tabIndex: 0,
+      role: 'checkbox' as const,
+      'aria-checked': st === 'completed' ? (true as const) : st === 'notInterested' ? ('mixed' as const) : (false as const),
+      'aria-label': `${e.unlock}: ${statusWord[st]}`,
+      onClick: () => log.cycleStatus(e.id),
+      onKeyDown: (k: React.KeyboardEvent) => onKey(k, e.id),
+    };
   };
 
   return (
@@ -36,7 +59,8 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
       <div className="ve-window">
         <header className="ve-title">
           <h1>Content Unlock Log</h1>
-          <div className="ve-overall" title="Overall progress">
+          <div className="ve-overall" title="Completed entries across every expansion. Not-interested entries are left out of the count.">
+            <span className="ve-overall-label">Overall Progress</span>
             <Bar p={log.overall} thin />
             <span className="ve-num">{log.overall.done}/{log.overall.total}</span>
           </div>
@@ -65,19 +89,29 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
 
         <div className="ve-body">
           <nav className="ve-rail" aria-label="Expansions">
-            <button className={`ve-tile all ${log.expansion === 'all' ? 'on' : ''}`} onClick={() => log.setExpansion('all')} aria-pressed={log.expansion === 'all'} title={`All · ${log.overall.done}/${log.overall.total}`}>
-              <Pictogram name="all" size={22} />
-              <span className="ve-tile-label">All</span>
+            <button className={`ve-navitem all ${log.expansion === 'all' ? 'on' : ''}`} onClick={() => log.setExpansion('all')} aria-pressed={log.expansion === 'all'}>
+              <span className="ve-tile"><Pictogram name="all" size={26} /></span>
+              <span className="ve-nav-text">
+                <span className="nm">All</span>
+                <span className="sub">Every expansion</span>
+                <span className="prog"><Bar p={log.overall} thin /><span className="ve-num sm">{log.overall.done}/{log.overall.total}</span></span>
+              </span>
             </button>
             <div className="ve-rail-gap" />
             {log.expansions.map((x) => {
               const p = log.progressOfExpansion(x.id);
+              const done = p.done === p.total;
               return (
-                <button key={x.id} className={`ve-tile ${log.expansion === x.id ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id} title={`${x.name} · Lv ${x.levels} · ${p.done}/${p.total}`}>
-                  <Pictogram name={x.id} size={22} />
-                  {p.done === p.total && <i className="ve-done">✓</i>}
-                  <span className="ve-tile-label">{x.short}</span>
-                  <span className="ve-tile-bar"><Bar p={p} thin /></span>
+                <button key={x.id} className={`ve-navitem ${log.expansion === x.id ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id}>
+                  <span className="ve-tile">
+                    <Pictogram name={x.id} size={26} />
+                    {done && <i className="ve-done">✓</i>}
+                  </span>
+                  <span className="ve-nav-text">
+                    <span className="nm"><span className="long">{x.name}</span><span className="short">{x.short}</span></span>
+                    <span className="sub">Level {x.levels}{done ? ' · Complete' : ''}</span>
+                    <span className="prog"><Bar p={p} thin /><span className="ve-num sm">{p.done}/{p.total}</span></span>
+                  </span>
                 </button>
               );
             })}
@@ -115,7 +149,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
               {log.visibleSections.map((s) => {
                 const p = log.progressOfSection(s);
                 const shown = log.shownIn(s);
-                const lvHead = s.kind === 'cap' ? 'iLvl' : 'Lv.';
+                const lvHead = s.kind === 'cap' ? 'iLevel' : 'Level';
                 return (
                   <section key={s.id} className="ve-section">
                     <div className="ve-panel-head">
@@ -137,26 +171,32 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                           <span>Type</span>
                           <span>Quest</span>
                           <span>Location</span>
-                          <span>Notes</span>
-                          <span />
+                          <span>Information</span>
                         </div>
                         {shown.map((e) => {
                           const st = log.status(e.id);
                           return (
-                            <div key={e.id} role="row" tabIndex={0} className={`ve-row ${st}`} onClick={() => log.toggleCompleted(e.id)} onKeyDown={(k) => onRowKey(k, e.id)}>
-                              <span className="cb"><span className={`box ${st === 'completed' ? 'on' : ''}`} /></span>
-                              <span data-l={lvHead} className="lv">{levelLabel(e, s)}</span>
+                            <div key={e.id} className={`ve-row ${st}`} {...rowProps(e)}>
+                              <span className="cb"><StatusBox st={st} /></span>
+                              <span data-l={lvHead} className="lv">
+                                <span>
+                                  {levelLabel(e)}
+                                  {e.itemLevel && <small> · iLevel {e.itemLevel}</small>}
+                                </span>
+                              </span>
                               <span data-l="Unlock" className="unlock">
+                                <WikiIcon src={e.unlockIcon} />
                                 <a href="#" onClick={(ev) => ev.stopPropagation()}>{e.unlock}</a>
                                 {e.isNew && <em className="ve-new">NEW</em>}
                               </span>
-                              <span data-l="Type" className="type"><span><i className={`ve-icon t-${e.type.replace(' ', '')}`}><Pictogram name={e.type} size={11} /></i>{e.type}</span></span>
-                              <span data-l="Quest">{e.quest}</span>
+                              <span data-l="Type" className="type"><span><WikiIcon src={e.typeIcon} />{e.type}</span></span>
+                              <span data-l="Quest" className="quest">
+                                {e.quest ? <span><WikiIcon src={e.questIcon} /><a href="#" onClick={(ev) => ev.stopPropagation()}>{e.quest}</a></span> : <span className="none">—</span>}
+                              </span>
                               <span data-l="Location">{e.location}</span>
-                              <span data-l="Notes" className="notes">{e.notes ?? ''}</span>
-                              <button className={`ve-ni ${st === 'notInterested' ? 'on' : ''}`} title="Not interested (X)" aria-pressed={st === 'notInterested'} onClick={(ev) => { ev.stopPropagation(); log.toggleNotInterested(e.id); }}>
-                                <span className="dot" /><span className="lbl">Not interested</span>
-                              </button>
+                              <span data-l="Information" className={`notes ${e.notes ? '' : 'empty'}`}>
+                                <span>{e.noteIcons?.map((src, i) => <WikiIcon key={i} src={src} size={16} />)}{e.notes ?? ''}</span>
+                              </span>
                             </div>
                           );
                         })}
@@ -167,17 +207,15 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                       <div className="ve-grid">
                         {shown.map((e) => {
                           const st = log.status(e.id);
+                          const big = e.unlockIcon ?? e.typeIcon;
                           return (
-                            <div key={e.id} tabIndex={0} role="checkbox" aria-checked={st === 'completed'} className={`ve-card ${st}`} onClick={() => log.toggleCompleted(e.id)} onKeyDown={(k) => onRowKey(k, e.id)} title={`${e.quest} · ${e.location}${e.notes ? ' · ' + e.notes : ''}`}>
-                              <i className={`ve-icon big t-${e.type.replace(' ', '')}`}><Pictogram name={e.type} size={22} /></i>
+                            <div key={e.id} className={`ve-card ${st}`} title={`${e.quest ?? ''} · ${e.location}${e.notes ? ' · ' + e.notes : ''}`} {...rowProps(e)}>
+                              <span className="ve-card-icon">{big ? <WikiIcon src={big} size={36} /> : <Pictogram name={e.type} size={22} />}</span>
                               <span className="txt">
                                 <b>{e.unlock}{e.isNew && <em className="ve-new">NEW</em>}</b>
-                                <small>{lvHead} {levelLabel(e, s)} · {e.type}</small>
+                                <small>{s.kind === 'cap' ? 'iLv.' : 'Lv.'} {levelLabel(e)} · {e.type}</small>
                               </span>
-                              <span className="cardcb"><span className={`box ${st === 'completed' ? 'on' : ''}`} /></span>
-                              <button className={`ve-ni ${st === 'notInterested' ? 'on' : ''}`} title="Not interested (X)" aria-pressed={st === 'notInterested'} onClick={(ev) => { ev.stopPropagation(); log.toggleNotInterested(e.id); }}>
-                                <span className="dot" />
-                              </button>
+                              <span className="cardcb"><StatusBox st={st} /></span>
                             </div>
                           );
                         })}
@@ -186,14 +224,19 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                   </section>
                 );
               })}
-              <p className="ve-credit">Patch 7.4 · Data from the community wiki · Unofficial fan tool</p>
+              <p className="ve-credit">Patch 7.4 · Data and icons from the community wiki · Unofficial fan tool</p>
             </div>
           </main>
         </div>
 
         <div className="ve-hintbar">
           <span className="ve-help">?</span>
-          <span className="hint">Click an entry to mark it completed. Press X for not interested.</span>
+          <span className="hint">
+            Click an entry to change its status:
+            <span className="legend"><StatusBox st="unmarked" /> Unmarked</span>
+            <span className="legend"><StatusBox st="completed" /> Completed</span>
+            <span className="legend"><StatusBox st="notInterested" /> Not interested</span>
+          </span>
           <span className="ve-display">
             <span className="ve-display-label">Display Mode</span>
             <button className={mode === 'list' ? 'on' : ''} aria-pressed={mode === 'list'} onClick={() => setMode('list')} title="List">
