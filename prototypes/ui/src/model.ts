@@ -33,6 +33,8 @@ export function useLog() {
   const [toast, setToast] = useState<string | null>(null);
   // Entries tagged NEW by the last update, until the player marks them as seen. Belongs to the log, not a character.
   const [newIds, setNewIds] = useState(() => new Set(entries.filter((e) => e.isNew).map((e) => e.id)));
+  // "Show" on the new-entries notice: every section, NEW entries only. Picking an expansion or tab leaves this view.
+  const [newOnly, setNewOnly] = useState(false);
 
   const statuses = byChar[characterId] ?? {};
   const status = (id: string): Status => statuses[id] ?? 'unmarked';
@@ -74,12 +76,14 @@ export function useLog() {
 
   // Sections currently in view for the expansion + tab choice (US-2, US-3)
   const visibleSections: Section[] = sections.filter((s) => {
+    if (newOnly) return entries.some((e) => e.sectionId === s.id && newIds.has(e.id));
     if (expansion !== 'all' && s.expansionId !== expansion) return false;
     if (expansion !== 'all' && tab !== 'all' && s.kind !== tab) return false;
     return true;
   });
 
   const isShown = (e: Entry) => {
+    if (newOnly && !newIds.has(e.id)) return false;
     const st = status(e.id);
     if (hideCompleted && st === 'completed') return false;
     if (hideNotInterested && st === 'notInterested') return false;
@@ -89,7 +93,7 @@ export function useLog() {
   const shownEntries = useMemo(
     () => visibleSections.flatMap((s) => entries.filter((e) => e.sectionId === s.id && isShown(e))),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [visibleSections.map((s) => s.id).join(), hideCompleted, hideNotInterested, statuses],
+    [visibleSections.map((s) => s.id).join(), hideCompleted, hideNotInterested, statuses, newOnly, newIds],
   );
 
   const toComplete = shownEntries.filter((e) => status(e.id) === 'unmarked').map((e) => e.id);
@@ -104,9 +108,12 @@ export function useLog() {
     sections,
     entries,
     expansion,
-    setExpansion,
+    setExpansion: (x: ExpansionPick) => { setNewOnly(false); setExpansion(x); },
     tab,
-    setTab,
+    setTab: (t: TabPick) => { setNewOnly(false); setTab(t); },
+    newOnly,
+    showNewOnly: () => setNewOnly(true),
+    showAll: () => setNewOnly(false),
     hideCompleted,
     setHideCompleted,
     hideNotInterested,
@@ -121,6 +128,7 @@ export function useLog() {
     acknowledgeNew: () => {
       const n = newIds.size;
       setNewIds(new Set());
+      setNewOnly(false);
       flash(`${n} new ${n === 1 ? 'entry' : 'entries'} marked as seen`);
     },
     visibleSections,

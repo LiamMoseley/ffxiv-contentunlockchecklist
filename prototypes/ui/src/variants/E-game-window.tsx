@@ -44,6 +44,36 @@ function Linked({ text, phrases = [] }: { text: string; phrases?: string[] }) {
   return <>{parts}</>;
 }
 
+/**
+ * Shown only while the last update left NEW entries. Names up to three, then "and N more".
+ * Show switches to a filter of every NEW entry across all expansions; Mark as seen clears them all.
+ */
+function NewNotice({ log }: { log: Log }) {
+  const list = log.newEntries;
+  const n = list.length;
+  // " · " rather than ", " because some unlock names contain commas ("The Forbidden Land, Eureka")
+  const names = list.slice(0, 3).map((e) => e.unlock).join(' · ');
+  return (
+    <div className="ve-notice" role="status">
+      <span className="ve-new">NEW</span>
+      {log.newOnly ? (
+        <span className="msg">
+          Showing {n === 1 ? 'the 1 new entry' : `all ${n} new entries`} from the last update, across every expansion.
+        </span>
+      ) : (
+        <span className="msg">
+          {n === 1 ? '1 entry was' : `${n} entries were`} added by the last update: <b>{names}</b>
+          {n > 3 && <> and {n - 3} more</>}
+        </span>
+      )}
+      <span className="acts">
+        {log.newOnly ? <button onClick={log.showAll}>Show all entries</button> : <button onClick={log.showNewOnly}>Show</button>}
+        <button onClick={log.acknowledgeNew}>Mark as seen</button>
+      </span>
+    </div>
+  );
+}
+
 const statusWord: Record<Status, string> = { unmarked: 'Unmarked', completed: 'Completed', notInterested: 'Not interested' };
 
 /** Tri-state tick-box: empty → yellow (Completed) → grey with a stroke (Not interested). */
@@ -110,7 +140,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
 
         <div className={`ve-body ${railCollapsed ? 'collapsed' : ''}`}>
           <nav className="ve-rail" aria-label="Expansions">
-            <button className={`ve-navitem all ${log.expansion === 'all' ? 'on' : ''}`} onClick={() => log.setExpansion('all')} aria-pressed={log.expansion === 'all'} title={railCollapsed ? `All · ${log.overall.done}/${log.overall.total}` : undefined}>
+            <button className={`ve-navitem all ${log.expansion === 'all' && !log.newOnly ? 'on' : ''}`} onClick={() => log.setExpansion('all')} aria-pressed={log.expansion === 'all'} title={railCollapsed ? `All · ${log.overall.done}/${log.overall.total}` : undefined}>
               <span className="ve-tile"><Pictogram name="all" size={26} /></span>
               <span className="ve-nav-text">
                 <span className="nm">All</span>
@@ -124,7 +154,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
               const done = p.done === p.total;
               const hasNew = log.newEntries.some((e) => log.sections.find((s) => s.id === e.sectionId)!.expansionId === x.id);
               return (
-                <button key={x.id} className={`ve-navitem ${log.expansion === x.id ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id} title={railCollapsed ? `${x.name} · Level ${x.levels} · ${p.done}/${p.total}` : undefined}>
+                <button key={x.id} className={`ve-navitem ${log.expansion === x.id && !log.newOnly ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id} title={railCollapsed ? `${x.name} · Level ${x.levels} · ${p.done}/${p.total}` : undefined}>
                   <span className="ve-tile">
                     <Pictogram name={x.id} size={26} />
                     {done && <i className="ve-done">✓</i>}
@@ -146,7 +176,9 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
           </nav>
 
           <main className="ve-main">
-            {tabs.length > 0 ? (
+            {log.newOnly ? (
+              <div className="ve-tabs single"><button className="on"><span>New entries <small>{log.newEntries.length}</small></span></button></div>
+            ) : tabs.length > 0 ? (
               <div className="ve-tabs" role="tablist">
                 {tabs.map((t) => {
                   const p = log.progressOfTab(t.k);
@@ -162,27 +194,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
             )}
 
             <div className="ve-scroll">
-              {log.newEntries.length > 0 && (
-                <div className="ve-notice" role="status">
-                  <span className="ve-new">NEW</span>
-                  <span className="msg">
-                    {log.newEntries.length === 1 ? '1 entry was' : `${log.newEntries.length} entries were`} added by the last update:{' '}
-                    <b>{log.newEntries.map((e) => e.unlock).join(', ')}</b>
-                  </span>
-                  <span className="acts">
-                    <button
-                      onClick={() => {
-                        const s = log.sections.find((x) => x.id === log.newEntries[0].sectionId)!;
-                        log.setExpansion(s.expansionId);
-                        log.setTab(s.kind);
-                      }}
-                    >
-                      Show
-                    </button>
-                    <button onClick={log.acknowledgeNew}>Mark as seen</button>
-                  </span>
-                </div>
-              )}
+              {log.newEntries.length > 0 && <NewNotice log={log} />}
               <div className="ve-group-title">Filters</div>
               <div className="ve-options">
                 <label className="ve-check">
