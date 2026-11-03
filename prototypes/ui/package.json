@@ -1,0 +1,21 @@
+{
+  "name": "content-unlock-log-ui-prototype",
+  "private": true,
+  "description": "PROTOTYPE - throwaway UI variations for the Content Unlock Log. Not app code.",
+  "type": "module",
+  "scripts": {
+    "start": "npm install --no-audit --no-fund && vite --open",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.0"
+  }
+}
