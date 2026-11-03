@@ -179,7 +179,7 @@ export function VariantA({ log, confirm }: { log: Log; confirm: (t: string, b: s
         </div>
 
         <footer className="va-foot">
-          <small>Patch 7.4 · data from the community wiki · unofficial fan tool</small>
+          <small>data from the community wiki · unofficial fan tool</small>
           <div>
             <button disabled={!log.toComplete.length} onClick={() => confirm('Complete Shown', `Mark ${log.toComplete.length} shown entries as completed?`, log.completeShown)}>
               Complete Shown

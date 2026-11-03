@@ -65,7 +65,7 @@ export function VariantD({ log, confirm }: { log: Log; confirm: (t: string, b: s
           </div>
         );
       })}
-      <div className="vd-tree-foot">Patch 7.4 · community wiki · unofficial</div>
+      <div className="vd-tree-foot">community wiki · unofficial</div>
     </nav>
   );
 

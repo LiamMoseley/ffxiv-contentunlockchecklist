@@ -1,5 +1,5 @@
 // PROTOTYPE sample data: 22 rows copied by hand from the community wiki's Content Unlock page
-// (Stormblood and Shadowbringers tables, Patch 7.4). Icons are hotlinked from the wiki for the prototype only.
+// (Stormblood and Shadowbringers tables, copied 2026-11-03). Icons are hotlinked from the wiki for the prototype only.
 
 export interface Entry {
   id: string;
@@ -34,8 +34,6 @@ export interface Expansion {
   levels: string;
   cap: number;
 }
-
-export const PATCH = '7.4';
 
 const W = 'https://ffxiv.consolegameswiki.com/mediawiki/images/';
 export const icon = {

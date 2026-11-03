@@ -54,6 +54,7 @@ function StatusBox({ st }: { st: Status }) {
 export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: string, ok: () => void) => void }) {
   const [mode, setMode] = useState<'list' | 'grid'>('list');
   const [charOpen, setCharOpen] = useState(false);
+  const [railCollapsed, setRailCollapsed] = useState(false);
 
   const tabs: { k: TabPick; label: string }[] =
     log.expansion === 'all'
@@ -107,9 +108,9 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
           </div>
         </header>
 
-        <div className="ve-body">
+        <div className={`ve-body ${railCollapsed ? 'collapsed' : ''}`}>
           <nav className="ve-rail" aria-label="Expansions">
-            <button className={`ve-navitem all ${log.expansion === 'all' ? 'on' : ''}`} onClick={() => log.setExpansion('all')} aria-pressed={log.expansion === 'all'}>
+            <button className={`ve-navitem all ${log.expansion === 'all' ? 'on' : ''}`} onClick={() => log.setExpansion('all')} aria-pressed={log.expansion === 'all'} title={railCollapsed ? `All · ${log.overall.done}/${log.overall.total}` : undefined}>
               <span className="ve-tile"><Pictogram name="all" size={26} /></span>
               <span className="ve-nav-text">
                 <span className="nm">All</span>
@@ -122,7 +123,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
               const p = log.progressOfExpansion(x.id);
               const done = p.done === p.total;
               return (
-                <button key={x.id} className={`ve-navitem ${log.expansion === x.id ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id}>
+                <button key={x.id} className={`ve-navitem ${log.expansion === x.id ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id} title={railCollapsed ? `${x.name} · Level ${x.levels} · ${p.done}/${p.total}` : undefined}>
                   <span className="ve-tile">
                     <Pictogram name={x.id} size={26} />
                     {done && <i className="ve-done">✓</i>}
@@ -135,6 +136,11 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                 </button>
               );
             })}
+            <button className="ve-collapse" onClick={() => setRailCollapsed(!railCollapsed)} aria-expanded={!railCollapsed} aria-label={railCollapsed ? 'Expand expansion list' : 'Collapse expansion list'} title={railCollapsed ? 'Expand' : 'Collapse'}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                {railCollapsed ? <path d="M2 1l5 5-5 5V1zm4 0l5 5-5 5V1z" /> : <path d="M10 1L5 6l5 5V1zM6 1L1 6l5 5V1z" />}
+              </svg>
+            </button>
           </nav>
 
           <main className="ve-main">
@@ -249,7 +255,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                   </section>
                 );
               })}
-              <p className="ve-credit">Patch 7.4 · Data and icons from the community wiki · Unofficial fan tool</p>
+              <p className="ve-credit">Data and icons from the community wiki · Unofficial fan tool</p>
             </div>
           </main>
         </div>

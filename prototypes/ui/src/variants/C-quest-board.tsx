@@ -18,7 +18,7 @@ export function VariantC({ log, confirm }: { log: Log; confirm: (t: string, b: s
       <header className="vc-head">
         <div>
           <h1>Content Unlock Log</h1>
-          <p>Patch 7.4 · unofficial fan tool · data from the community wiki</p>
+          <p>unofficial fan tool · data from the community wiki</p>
         </div>
         <div className="vc-chars" role="radiogroup" aria-label="Character">
           {log.characters.map((c) => {

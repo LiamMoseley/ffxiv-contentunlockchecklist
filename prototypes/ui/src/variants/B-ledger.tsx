@@ -142,7 +142,7 @@ export function VariantB({ log, confirm }: { log: Log; confirm: (t: string, b: s
             </section>
           );
         })}
-        <p className="vb-credit">Patch 7.4 · data from the community wiki · unofficial fan tool</p>
+        <p className="vb-credit">data from the community wiki · unofficial fan tool</p>
       </main>
 
       <footer className="vb-bar">
