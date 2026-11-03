@@ -14,6 +14,14 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
+## Acceptance criteria
+
+A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticket body is the record of which ones were met. When implementing a ticket, after `/code-review`'s Spec axis has passed:
+
+- Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran) by editing the issue body: `gh issue view <n> --json body --jq .body`, change `- [ ]` to `- [x]` on those lines only, then `gh issue edit <n> --body-file <file>`. Never change a criterion's wording.
+- Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body. The owner ticks them after checking.
+- List any criterion the branch does not meet in the PR body, and leave it unticked.
+
 ## Repository settings
 
 Read a setting's current state before telling the owner to change it: `gh api repos/<owner>/<repo>/pages` (Pages source and URL), `.../branches/main/protection`, `.../environments`. A 404 means the setting is off. Changing settings stays with the owner.
