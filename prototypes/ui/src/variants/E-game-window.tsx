@@ -122,11 +122,13 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
             {log.expansions.map((x) => {
               const p = log.progressOfExpansion(x.id);
               const done = p.done === p.total;
+              const hasNew = log.newEntries.some((e) => log.sections.find((s) => s.id === e.sectionId)!.expansionId === x.id);
               return (
                 <button key={x.id} className={`ve-navitem ${log.expansion === x.id ? 'on' : ''}`} onClick={() => log.setExpansion(x.id)} aria-pressed={log.expansion === x.id} title={railCollapsed ? `${x.name} · Level ${x.levels} · ${p.done}/${p.total}` : undefined}>
                   <span className="ve-tile">
                     <Pictogram name={x.id} size={26} />
                     {done && <i className="ve-done">✓</i>}
+                    {hasNew && <i className="ve-tile-new" title="Has new entries">NEW</i>}
                   </span>
                   <span className="ve-nav-text">
                     <span className="nm"><span className="long">{x.name}</span><span className="short">{x.short}</span></span>
@@ -160,6 +162,27 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
             )}
 
             <div className="ve-scroll">
+              {log.newEntries.length > 0 && (
+                <div className="ve-notice" role="status">
+                  <span className="ve-new">NEW</span>
+                  <span className="msg">
+                    {log.newEntries.length === 1 ? '1 entry was' : `${log.newEntries.length} entries were`} added by the last update:{' '}
+                    <b>{log.newEntries.map((e) => e.unlock).join(', ')}</b>
+                  </span>
+                  <span className="acts">
+                    <button
+                      onClick={() => {
+                        const s = log.sections.find((x) => x.id === log.newEntries[0].sectionId)!;
+                        log.setExpansion(s.expansionId);
+                        log.setTab(s.kind);
+                      }}
+                    >
+                      Show
+                    </button>
+                    <button onClick={log.acknowledgeNew}>Mark as seen</button>
+                  </span>
+                </div>
+              )}
               <div className="ve-group-title">Filters</div>
               <div className="ve-options">
                 <label className="ve-check">
@@ -213,7 +236,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                               <span data-l="Unlock" className="unlock">
                                 <WikiIcon src={e.unlockIcon} />
                                 <WikiLink>{e.unlock}</WikiLink>
-                                {e.isNew && <em className="ve-new">NEW</em>}
+                                {log.isNew(e.id) && <em className="ve-new">NEW</em>}
                               </span>
                               <span data-l="Type" className="type">
                                 <span>
@@ -243,7 +266,7 @@ export function VariantE({ log, confirm }: { log: Log; confirm: (t: string, b: s
                             <div key={e.id} className={`ve-card ${st}`} title={`${e.quest ?? ''} · ${e.location}${e.notes ? ' · ' + e.notes : ''}`} {...rowProps(e)}>
                               <span className="ve-card-icon">{big ? <WikiIcon src={big} size={36} /> : <Pictogram name={e.type} size={22} />}</span>
                               <span className="txt">
-                                <b>{e.unlock}{e.isNew && <em className="ve-new">NEW</em>}</b>
+                                <b>{e.unlock}{log.isNew(e.id) && <em className="ve-new">NEW</em>}</b>
                                 <small>{s.kind === 'cap' ? 'iLv.' : 'Lv.'} {levelLabel(e)} · {e.type}</small>
                               </span>
                               <span className="cardcb"><StatusBox st={st} /></span>

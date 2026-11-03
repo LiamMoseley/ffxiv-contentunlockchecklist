@@ -31,6 +31,8 @@ export function useLog() {
   const [hideCompleted, setHideCompleted] = useState(false);
   const [hideNotInterested, setHideNotInterested] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  // Entries tagged NEW by the last update, until the player marks them as seen. Belongs to the log, not a character.
+  const [newIds, setNewIds] = useState(() => new Set(entries.filter((e) => e.isNew).map((e) => e.id)));
 
   const statuses = byChar[characterId] ?? {};
   const status = (id: string): Status => statuses[id] ?? 'unmarked';
@@ -114,6 +116,13 @@ export function useLog() {
     toggleNotInterested,
     setStatus,
     cycleStatus,
+    isNew: (id: string) => newIds.has(id),
+    newEntries: entries.filter((e) => newIds.has(e.id)),
+    acknowledgeNew: () => {
+      const n = newIds.size;
+      setNewIds(new Set());
+      flash(`${n} new ${n === 1 ? 'entry' : 'entries'} marked as seen`);
+    },
     visibleSections,
     shownIn: (s: Section) => entries.filter((e) => e.sectionId === s.id && isShown(e)),
     entriesIn: (s: Section) => entries.filter((e) => e.sectionId === s.id),
