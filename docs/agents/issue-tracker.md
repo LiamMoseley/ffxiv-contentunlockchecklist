@@ -14,9 +14,11 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
+On this Windows machine run `gh` from PowerShell: from Bash it can exit 0 with no output.
+
 ## Acceptance criteria
 
-A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticket body is the record of which ones were met. When implementing a ticket, after `/code-review`'s Spec axis has passed:
+A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticket body is the record of which ones were met. When implementing a ticket, after `/code-review`'s Spec axis has passed. The axis passes only when every "implemented but wrong" finding is fixed or shown to be false; list any finding left over in the PR body:
 
 - Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran) by editing the issue body: `gh issue view <n> --json body --jq .body`, change `- [ ]` to `- [x]` on those lines only, then `gh issue edit <n> --body-file <file>`. Never change a criterion's wording.
 - Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body. The owner ticks them after checking. End your closing report to the owner with the same list, one line per criterion, so it reaches them outside the PR too.
