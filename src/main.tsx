@@ -7,14 +7,15 @@ import { createLog, type Content } from "./log";
 import { App } from "./ui/App";
 import "./ui/app.css";
 
+const storage = createBrowserStorage();
 const log = createLog({
   content: bundledContent as Content,
-  storage: createBrowserStorage(),
+  storage,
   clock: systemClock,
 });
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App log={log} />
+    <App log={log} preferences={storage} />
   </StrictMode>,
 );

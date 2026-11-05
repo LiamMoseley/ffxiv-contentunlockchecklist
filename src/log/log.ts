@@ -52,6 +52,15 @@ export function createLog({ content, storage, clock }: LogOptions) {
     return { completed: counted.filter((s) => s === "completed").length, total: counted.length };
   };
 
+  function setEntryStatus(entryId: string, status: EntryStatus) {
+    const characterId = currentCharacter().id;
+    progress.statuses[characterId] = {
+      ...progress.statuses[characterId],
+      [entryId]: { status, updatedAt: now() },
+    };
+    save();
+  }
+
   return {
     expansions: () => content.expansions,
     sections: () => content.sections,
@@ -71,13 +80,9 @@ export function createLog({ content, storage, clock }: LogOptions) {
     /** Progress across every section of the log. */
     overallProgress: (): ProgressCount => progressOf(content.sections),
     cycleEntryStatus(entryId: string) {
-      const characterId = currentCharacter().id;
-      progress.statuses[characterId] = {
-        ...progress.statuses[characterId],
-        [entryId]: { status: NEXT_STATUS[entryStatus(entryId)], updatedAt: now() },
-      };
-      save();
+      setEntryStatus(entryId, NEXT_STATUS[entryStatus(entryId)]);
     },
+    setEntryStatus,
   };
 }
 

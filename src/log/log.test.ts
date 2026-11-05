@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseContentUnlockPage, type WikiPage } from "./index";
+import { iconFile, iconsUsed, parseContentUnlockPage, type Segment, type WikiPage } from "./index";
 import { editRow, editedPage, fixedClock, insertRowAtTopOf, openLog, realPage, rowOf } from "./test/harness";
 
 describe("content from the real Content Unlock page", () => {
@@ -315,5 +315,98 @@ describe("the bundled content", () => {
   it("is the saved wiki page, parsed (run `npm run snapshot` to refresh both together)", async () => {
     const bundled = (await import("../content/bundled-content.json")).default;
     expect(bundled).toEqual(parseContentUnlockPage(realPage));
+  });
+});
+
+describe("wiki links and icons in entries", () => {
+  const entries = () => openLog().log.sections().flatMap((s) => s.entries);
+  const entryNamed = (unlock: string) => entries().filter((e) => e.unlock === unlock)[0];
+  const WIKI = "https://ffxiv.consolegameswiki.com/wiki/";
+  const linked = (lines: Segment[][]) =>
+    lines.flat().flatMap((s) => ("text" in s && s.href ? [[s.text, s.href]] : []));
+  const icons = (lines: Segment[][]) => lines.flat().filter((s) => "icon" in s);
+
+  it("links the unlock name and the quest to their wiki pages", () => {
+    const sastasha = entryNamed("Sastasha");
+    expect(linked(sastasha.rich.unlock)).toEqual([["Sastasha", `${WIKI}Sastasha`]]);
+    expect(linked(sastasha.rich.quest)).toEqual([["It's Probably Pirates", `${WIKI}It%27s_Probably_Pirates`]]);
+  });
+
+  it("links only the words the wiki links: 'Job' in 'Job Unlock'", () => {
+    expect(entryNamed("Samurai").rich.type).toEqual([[{ text: "Job", href: `${WIKI}Job` }, { text: " Unlock" }]]);
+  });
+
+  it("links the zone of a location but not its coordinates", () => {
+    expect(entryNamed("Sastasha").rich.location).toEqual([
+      [{ text: "Limsa Lominsa Upper Decks", href: `${WIKI}Limsa_Lominsa_Upper_Decks` }, { text: " (X:7, Y:5)" }],
+    ]);
+  });
+
+  it("links phrases inside the Information text, with plain words between them", () => {
+    expect(entryNamed("Sastasha").rich.information).toEqual([
+      [
+        { text: "Unlocks in the " },
+        { text: "Main Scenario Quest", href: `${WIKI}Main_Scenario_Quest` },
+        { text: "." },
+      ],
+    ]);
+  });
+
+  it("places an icon beside the quest name, as the wiki does", () => {
+    const [line] = entryNamed("Sastasha").rich.quest;
+    expect(line[0]).toMatchObject({ icon: expect.stringContaining("Main_Scenario_Quest_icon"), size: 24 });
+    expect(line.slice(1).every((s) => "text" in s)).toBe(true);
+  });
+
+  it("places an icon where the wiki has one inside Information text", () => {
+    const [line] = entryNamed("Level 1 Class Quest").rich.information;
+    expect(icons([line])).toHaveLength(1);
+    expect(line.map((s) => ("text" in s ? s.text : "[icon]")).join("")).toBe("This unlocks [icon] Hunting Log.");
+  });
+
+  it("gives an entry no icon where the wiki has none", () => {
+    const entry = entryNamed("Level 5 Class Quest");
+    expect(icons(Object.values(entry.rich).flat())).toEqual([]);
+  });
+
+  it("keeps the plain text fields free of markup", () => {
+    expect(entryNamed("Sastasha").location).toBe("Limsa Lominsa Upper Decks (X:7, Y:5)");
+  });
+
+  it("splits rich text into the same lines as the plain text", () => {
+    const guildhests = entryNamed("Guildhests");
+    expect(guildhests.rich.quest.map((line) => line.map((s) => ("text" in s ? s.text : "")).join("").trim())).toEqual(
+      guildhests.quest.split("\n"),
+    );
+  });
+
+  it("downloads each distinct icon once, from the wiki's image folder", () => {
+    const paths = iconsUsed(parseContentUnlockPage(realPage));
+    expect(new Set(paths).size).toBe(paths.length);
+    expect(paths.length).toBeGreaterThan(30);
+    expect(paths.every((p) => !p.startsWith("/") && !p.includes("://"))).toBe(true);
+  });
+
+  it("names a bundled icon file from the wiki path, safe for a URL", () => {
+    expect(iconFile("thumb/3/33/Housing_icon.png/48px-Housing_icon.png")).toBe("48px-Housing_icon.png");
+    expect(iconFile("thumb/7/7d/Inn_%28map_icon%29.png/48px-Inn_%28map_icon%29.png")).toBe("48px-Inn__map_icon_.png");
+  });
+
+  it("gives every icon in the content a bundled file name that is unique", () => {
+    const files = iconsUsed(parseContentUnlockPage(realPage)).map(iconFile);
+    expect(new Set(files).size).toBe(files.length);
+  });
+});
+
+describe("setting an entry status directly", () => {
+  it("sets Not interested from any status, as the X key does", () => {
+    const { log } = openLog();
+    const id = "sastasha/its-probably-pirates";
+    log.setEntryStatus(id, "notInterested");
+    expect(log.entryStatus(id)).toBe("notInterested");
+    log.cycleEntryStatus(id);
+    log.cycleEntryStatus(id);
+    log.setEntryStatus(id, "notInterested");
+    expect(log.entryStatus(id)).toBe("notInterested");
   });
 });
