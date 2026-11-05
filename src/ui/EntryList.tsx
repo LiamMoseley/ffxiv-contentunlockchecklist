@@ -192,7 +192,17 @@ export function EntryGrid({ entries, statusOf, actions }: EntryListProps) {
 }
 
 /** The hint bar: the three-state legend and the DISPLAY MODE toggle. */
-export function HintBar({ mode, onMode }: { mode: DisplayMode; onMode: (mode: DisplayMode) => void }) {
+export function HintBar({
+  mode,
+  onMode,
+  canUndo,
+  onUndo,
+}: {
+  mode: DisplayMode;
+  onMode: (mode: DisplayMode) => void;
+  canUndo: boolean;
+  onUndo: () => void;
+}) {
   return (
     <div className="hint-bar">
       <span className="hint-icon" aria-hidden="true">
@@ -205,6 +215,9 @@ export function HintBar({ mode, onMode }: { mode: DisplayMode; onMode: (mode: Di
           </li>
         ))}
       </ul>
+      <button type="button" className="undo" disabled={!canUndo} onClick={onUndo}>
+        Undo
+      </button>
       <div className="display-mode" role="group" aria-label="Display mode">
         <span className="display-mode-label">Display Mode</span>
         <button type="button" aria-pressed={mode === "list"} aria-label="List" title="List" onClick={() => onMode("list")}>

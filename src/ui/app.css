@@ -949,21 +949,46 @@ a.wiki-link:focus-visible {
   }
 }
 
-/* Bulk actions above the entries */
-.bulk-bar {
+/* Button footer: Clear Shown and Complete Shown, as the game's Default and Close */
+.button-footer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 6px 14px;
-  border-bottom: 1px solid var(--line-soft);
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px 10px;
+  border-top: 1px solid #1e1e1e;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
-/* Embossed pill: grey gradient, black edge, light top bevel and dark bottom bevel (no coloured border) */
-.bulk-bar button,
+.button-footer button {
+  min-width: 150px;
+}
+.chevron {
+  color: var(--gold);
+  font-size: 22px;
+  line-height: 1;
+  text-shadow: 0 0 6px rgba(240, 195, 90, 0.6);
+}
+@media (max-width: 760px) {
+  .button-footer button {
+    flex: 1;
+    min-width: 0;
+    padding: 0 8px;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+  .chevron {
+    display: none;
+  }
+}
+
+/* Embossed pill: grey gradient, light top bevel and dark bottom bevel, no edge line or coloured border */
+.button-footer button,
+.hint-bar .undo,
 .dialog-buttons button,
 .toast button {
   height: 26px;
   padding: 0 22px;
-  border: 1px solid #000;
+  border: 0;
   border-radius: 999px;
   background: linear-gradient(#626262, #474747 48%, #3b3b3b 52%, #333);
   box-shadow:
@@ -975,20 +1000,25 @@ a.wiki-link:focus-visible {
   font-size: 14px;
   text-shadow: 0 1px 1px #000;
 }
-.bulk-bar button:hover:not(:disabled),
-.dialog-buttons button:hover,
-.toast button:hover {
+.button-footer button:hover:not(:disabled),
+.hint-bar .undo:hover:not(:disabled),
+.dialog-buttons button:hover:not(:disabled),
+.toast button:hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
-.bulk-bar button:active:not(:disabled),
-.dialog-buttons button:active,
-.toast button:active {
+.button-footer button:active:not(:disabled),
+.hint-bar .undo:active:not(:disabled),
+.dialog-buttons button:active:not(:disabled),
+.toast button:active:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow:
     inset 0 1px 3px rgba(0, 0, 0, 0.7),
     0 1px 0 rgba(255, 255, 255, 0.07);
 }
-.bulk-bar button:disabled {
+.button-footer button:disabled,
+.hint-bar .undo:disabled,
+.dialog-buttons button:disabled,
+.toast button:disabled {
   color: #767676;
   text-shadow: none;
   background: linear-gradient(#3a3a3a, #2e2e2e);
@@ -997,11 +1027,16 @@ a.wiki-link:focus-visible {
     0 1px 0 rgba(255, 255, 255, 0.05);
   cursor: default;
 }
-.bulk-bar button:focus-visible,
+.button-footer button:focus-visible,
+.hint-bar .undo:focus-visible,
 .dialog-buttons button:focus-visible,
 .toast button:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
+}
+.hint-bar .undo {
+  padding: 0 14px;
+  font-size: 13px;
 }
 
 /* Brief messages and confirmations, framed in the window's bronze */
@@ -1054,4 +1089,10 @@ a.wiki-link:focus-visible {
 }
 .dialog-buttons .primary {
   color: #fff;
+}
+.hint-bar .undo {
+  margin-left: auto;
+}
+.hint-bar .undo + .display-mode {
+  margin-left: 6px;
 }

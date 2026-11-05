@@ -156,17 +156,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               onChoose={(key) => expansion !== "all" && setTab(key)}
               label="Sections"
             />
-            <div className="bulk-bar" role="group" aria-label="Shown entries">
-              <button type="button" disabled={completeCount === 0} onClick={() => setConfirming("complete")}>
-                Complete Shown
-              </button>
-              <button type="button" disabled={clearCount === 0} onClick={() => setConfirming("clear")}>
-                Clear Shown
-              </button>
-              <button type="button" disabled={!log.canUndo()} onClick={undo}>
-                Undo
-              </button>
-            </div>
             <div className="scroll">
               {shownSections.map((section) => (
                 <SectionPanel
@@ -197,7 +186,19 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           />
         )}
 
-        <HintBar mode={displayMode} onMode={chooseDisplayMode} />
+        <HintBar mode={displayMode} onMode={chooseDisplayMode} canUndo={log.canUndo()} onUndo={undo} />
+
+        <div className="button-footer" role="group" aria-label="Shown entries">
+          <button type="button" disabled={clearCount === 0} onClick={() => setConfirming("clear")}>
+            Clear Shown
+          </button>
+          <span className="chevron" aria-hidden="true">
+            ︾
+          </span>
+          <button type="button" disabled={completeCount === 0} onClick={() => setConfirming("complete")}>
+            Complete Shown
+          </button>
+        </div>
 
         <footer className="footer-bar">
           <span>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
