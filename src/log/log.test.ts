@@ -576,7 +576,7 @@ describe("finishing a section", () => {
 describe("adding characters", () => {
   it("adds a character with a name and optionally a World, Data Center and level", () => {
     const { log } = openLog();
-    const result = log.addCharacter({ name: "Alia", world: "Zodiark", dataCenter: "Light", level: 72 });
+    const result = log.addCharacter({ name: "Alia", world: "Zodiark", level: 72 });
 
     expect(result.ok).toBe(true);
     expect(log.characters().map((c) => [c.name, c.world, c.dataCenter, c.level])).toEqual([
@@ -610,14 +610,16 @@ describe("adding characters", () => {
     expect(log.addCharacter({ name: "Alia", world: "Zodiark" }).ok).toBe(true);
   });
 
-  it("fills in the Data Center of a known World, and accepts an unknown World as typed", () => {
+  it("takes the Data Center from the World, and only accepts a World from the Lodestone list", () => {
     const { log } = openLog();
-    const known = log.addCharacter({ name: "Alia", world: "Zodiark" });
-    const unknown = log.addCharacter({ name: "Bren", world: "Newworld", dataCenter: "Fresh" });
-    expect(known.ok && known.character.dataCenter).toBe("Light");
-    expect(unknown.ok && [unknown.character.world, unknown.character.dataCenter]).toEqual(["Newworld", "Fresh"]);
+    const known = log.addCharacter({ name: "Alia", world: "zodiark" });
+    expect(known.ok && [known.character.world, known.character.dataCenter]).toEqual(["Zodiark", "Light"]);
+    expect(log.addCharacter({ name: "Bren", world: "Newworld" })).toEqual({ ok: false, error: "unknownWorld" });
+    expect(log.characters()).toHaveLength(2);
     expect(log.dataCenterOf("Ragnarok")).toBe("Chaos");
     expect(log.dataCenterOf("Newworld")).toBeNull();
+    expect(log.worlds()).toContain("Zodiark");
+    expect(log.worlds()).toHaveLength(85);
   });
 
   it("shows a character as Name (World), or the name alone with no World", () => {

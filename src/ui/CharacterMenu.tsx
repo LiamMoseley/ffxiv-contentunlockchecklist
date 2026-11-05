@@ -6,6 +6,7 @@ import { Count, ProgressBar } from "./ProgressBar";
 const ERROR_TEXT: Record<CharacterError, string> = {
   nameRequired: "Enter a name.",
   invalidLevel: "Level must be a whole number from 1 to 100.",
+  unknownWorld: "Choose a World from the list.",
   nameTaken: "Another character already has this name on this World.",
   notFound: "That character no longer exists.",
 };
@@ -136,23 +137,14 @@ function CharacterForm({
 }) {
   const [name, setName] = useState(editing?.name ?? "");
   const [world, setWorld] = useState(editing?.world ?? "");
-  const [dataCenter, setDataCenter] = useState(editing?.dataCenter ?? "");
   const [level, setLevel] = useState(editing?.level?.toString() ?? "");
   const [error, setError] = useState<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   useEffect(() => nameRef.current?.select(), []);
 
-  const chooseWorld = (value: string) => {
-    // A Data Center that was filled in for the previous World goes when the World becomes unknown.
-    const known = log.dataCenterOf(value);
-    if (known) setDataCenter(known);
-    else if (dataCenter && dataCenter === log.dataCenterOf(world)) setDataCenter("");
-    setWorld(value);
-  };
-
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    const details = { name, world, dataCenter, level: level.trim() === "" ? null : Number(level) };
+    const details = { name, world, level: level.trim() === "" ? null : Number(level) };
     const result = editing ? log.editCharacter(editing.id, details) : log.addCharacter(details);
     if (result.ok) onSaved(result.character, !editing);
     else setError(ERROR_TEXT[result.error]);
@@ -173,17 +165,16 @@ function CharacterForm({
         </label>
         <label>
           World (optional)
-          <input value={world} onChange={(e) => chooseWorld(e.target.value)} list="known-worlds" autoComplete="off" />
-          <datalist id="known-worlds">
+          <select value={world} onChange={(e) => setWorld(e.target.value)}>
+            <option value="">No World</option>
             {log.worlds().map((w) => (
-              <option key={w} value={w} />
+              <option key={w} value={w}>
+                {w}
+              </option>
             ))}
-          </datalist>
+          </select>
         </label>
-        <label>
-          Data Center (optional)
-          <input value={dataCenter} onChange={(e) => setDataCenter(e.target.value)} autoComplete="off" />
-        </label>
+        <p className="form-data-center">Data Center: {log.dataCenterOf(world) ?? "none"}</p>
         <label>
           Level (optional)
           <input value={level} onChange={(e) => setLevel(e.target.value)} inputMode="numeric" autoComplete="off" />

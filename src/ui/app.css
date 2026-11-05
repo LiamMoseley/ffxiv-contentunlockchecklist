@@ -141,7 +141,7 @@ a:hover {
   white-space: nowrap;
 }
 .character-world {
-  font: 300 15px/1 var(--font-rail);
+  font: 400 14px/1 var(--font-body);
   color: var(--text-dim);
 }
 
@@ -1092,10 +1092,8 @@ a.wiki-link:focus-visible {
 .dialog-buttons .primary {
   color: #fff;
 }
-.character:hover,
 .character:focus-visible {
-  border-color: #a07c47;
-  background: rgba(255, 255, 255, 0.06);
+  outline: 2px solid #f0c35a;
 }
 .character-menu {
   width: min(520px, calc(100vw - 24px));
@@ -1149,6 +1147,12 @@ a.wiki-link:focus-visible {
   font-size: 13px;
   color: var(--text-dim);
 }
+.character-form .form-data-center {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.character-form select,
 .character-form input {
   display: block;
   width: 100%;
@@ -1161,6 +1165,7 @@ a.wiki-link:focus-visible {
   font: inherit;
   font-size: 14px;
 }
+.character-form select:focus-visible,
 .character-form input:focus-visible {
   outline: 2px solid #f0c35a;
 }

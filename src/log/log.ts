@@ -1,5 +1,5 @@
 import type { Content, Section } from "./content";
-import { dataCenterOfWorld, WORLDS } from "./worlds";
+import { dataCenterOfWorld, knownWorld, WORLDS } from "./worlds";
 import { characterLabel, newProgress, type Character, type EntryStatus, type Progress } from "./progress";
 
 /** Storage adapter: persists strings by key. Browser storage in the app, in-memory in tests. */
@@ -19,10 +19,10 @@ export type ChangeResult = { changed: number; sectionsFinished: string[] };
 
 export type LogOptions = { content: Content; storage: Storage; clock: Clock };
 
-/** What the player enters for a character. A blank World is the one shared World; the Data Center is filled in for a known World. */
-export type CharacterDetails = { name: string; world?: string; dataCenter?: string; level?: number | null };
+/** What the player enters for a character. A blank World is the one shared World; any other must be a known World, and sets the Data Center. */
+export type CharacterDetails = { name: string; world?: string; level?: number | null };
 
-export type CharacterError = "nameRequired" | "invalidLevel" | "nameTaken" | "notFound";
+export type CharacterError = "nameRequired" | "invalidLevel" | "nameTaken" | "unknownWorld" | "notFound";
 
 export type CharacterResult = { ok: true; character: Character } | { ok: false; error: CharacterError };
 
@@ -84,15 +84,16 @@ export function createLog({ content, storage, clock }: LogOptions) {
     characters().some((c) => c.id !== ignoreId && sameText(c.name, name) && sameText(c.world, world));
 
   /** Checks details and fills in the Data Center of a known World left blank; `ignoreId` is the character being edited. */
-  function validate(details: CharacterDetails, ignoreId?: string): { ok: true; details: Required<CharacterDetails> } | { ok: false; error: CharacterError } {
+  function validate(details: CharacterDetails, ignoreId?: string): { ok: true; details: Required<CharacterDetails> & { dataCenter: string } } | { ok: false; error: CharacterError } {
     const name = details.name.trim();
-    const world = (details.world ?? "").trim();
+    const typedWorld = (details.world ?? "").trim();
+    const world = typedWorld === "" ? "" : knownWorld(typedWorld);
     const level = details.level ?? null;
     if (!name) return { ok: false, error: "nameRequired" };
+    if (world === null) return { ok: false, error: "unknownWorld" };
     if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL)) return { ok: false, error: "invalidLevel" };
     if (isTaken(name, world, ignoreId)) return { ok: false, error: "nameTaken" };
-    const dataCenter = (details.dataCenter ?? "").trim() || dataCenterOfWorld(world) || "";
-    return { ok: true, details: { name, world, dataCenter, level } };
+    return { ok: true, details: { name, world, dataCenter: dataCenterOfWorld(world) ?? "", level } };
   }
 
   function addCharacter(details: CharacterDetails): CharacterResult {

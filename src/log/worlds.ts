@@ -21,9 +21,14 @@ export const WORLDS: string[] = Object.values(DATA_CENTERS)
   .flat()
   .sort((a, b) => a.localeCompare(b));
 
-/** The Data Center of a known World, ignoring case and spacing; null for a World not in the table. */
-export function dataCenterOfWorld(world: string): string | null {
+/** A World as the table spells it, ignoring case and spacing; null for a World not in the table. */
+export function knownWorld(world: string): string | null {
   const wanted = world.trim().toLowerCase();
-  if (!wanted) return null;
-  return Object.entries(DATA_CENTERS).find(([, worlds]) => worlds.some((w) => w.toLowerCase() === wanted))?.[0] ?? null;
+  return WORLDS.find((w) => w.toLowerCase() === wanted) ?? null;
+}
+
+/** The Data Center of a known World; null for a World not in the table. */
+export function dataCenterOfWorld(world: string): string | null {
+  const known = knownWorld(world);
+  return known && (Object.entries(DATA_CENTERS).find(([, worlds]) => worlds.includes(known))?.[0] ?? null);
 }
