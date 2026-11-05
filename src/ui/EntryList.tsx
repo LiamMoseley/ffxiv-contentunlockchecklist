@@ -1,5 +1,5 @@
 import type { KeyboardEvent } from "react";
-import { firstIcon, iconFile, type Entry, type EntryStatus, type RichText } from "../log";
+import { entryIcon, iconFile, type Entry, type EntryStatus, type RichText } from "../log";
 
 export type DisplayMode = "list" | "grid";
 
@@ -170,19 +170,20 @@ export function EntryGrid({ entries, statusOf, actions }: EntryListProps) {
     <ul className="entry-grid">
       {entries.map((entry) => {
         const status = statusOf(entry.id);
-        const icon = firstIcon(entry.rich.unlock);
+        const icon = entryIcon(entry);
+        const name = entry.unlock.replaceAll("\n", " ");
         return (
-          <li key={entry.id} className={`entry-card ${status}`} {...entryProps(actions, entry.id)}>
-            <div className="card-icon">
-              {icon && <img className="wiki-icon" src={iconUrl(icon.icon)} width={icon.size} height={icon.size} alt="" />}
-            </div>
-            <div className="card-text">
-              <div className="card-name">
-                <RichCell text={entry.rich.unlock.map((line) => line.filter((s) => !("icon" in s)))} />
-              </div>
-              <div className="card-summary">{summary(entry)}</div>
-            </div>
-            <StatusButton entry={entry} status={status} />
+          <li key={entry.id} className={`entry-card ${status}`} title={name} {...entryProps(actions, entry.id)}>
+            <span className="card-icon">
+              {icon && <img className="wiki-icon" src={iconUrl(icon.icon)} width={36} height={36} alt="" />}
+            </span>
+            <span className="card-text">
+              <b>{name}</b>
+              <small>{summary(entry)}</small>
+            </span>
+            <span className="card-status">
+              <StatusButton entry={entry} status={status} />
+            </span>
           </li>
         );
       })}
@@ -206,12 +207,17 @@ export function HintBar({ mode, onMode }: { mode: DisplayMode; onMode: (mode: Di
       </ul>
       <span className="hint-keys">Space: change status · X: not interested</span>
       <div className="display-mode" role="group" aria-label="Display mode">
-        <span className="display-mode-label">DISPLAY MODE</span>
-        {(["list", "grid"] as const).map((option) => (
-          <button key={option} type="button" aria-pressed={mode === option} onClick={() => onMode(option)}>
-            {option === "list" ? "List" : "Grid"}
-          </button>
-        ))}
+        <span className="display-mode-label">Display Mode</span>
+        <button type="button" aria-pressed={mode === "list"} aria-label="List" title="List" onClick={() => onMode("list")}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+            <path d="M1 2h2v2H1zM5 2h8v2H5zM1 6h2v2H1zM5 6h8v2H5zM1 10h2v2H1zM5 10h8v2H5z" />
+          </svg>
+        </button>
+        <button type="button" aria-pressed={mode === "grid"} aria-label="Cards" title="Cards" onClick={() => onMode("grid")}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+            <path d="M1 1h5v5H1zM8 1h5v5H8zM1 8h5v5H1zM8 8h5v5H8z" />
+          </svg>
+        </button>
       </div>
     </div>
   );

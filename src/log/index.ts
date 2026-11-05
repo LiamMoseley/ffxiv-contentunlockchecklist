@@ -11,6 +11,6 @@ export {
   type TextSegment,
   type WikiPage,
 } from "./content";
-export { firstIcon, iconFile, iconsUsed, WIKI_IMAGE_BASE } from "./icons";
+export { entryIcon, iconFile, iconsUsed, WIKI_IMAGE_BASE } from "./icons";
 export { type Expansion } from "./expansions";
 export { type Character, type EntryStatus } from "./progress";

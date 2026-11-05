@@ -1,4 +1,4 @@
-import type { Content, IconSegment, RichText } from "./content";
+import type { Content, Entry, IconSegment, RichText } from "./content";
 
 /** The wiki's image folder; an icon is identified by its path inside it. */
 export const WIKI_IMAGE_BASE = "https://ffxiv.consolegameswiki.com/mediawiki/images/";
@@ -27,4 +27,14 @@ export function iconFile(icon: string): string {
 /** The first icon in a cell, if the wiki shows one there. */
 export function firstIcon(text: RichText): IconSegment | undefined {
   return text.flat().find((s): s is IconSegment => "icon" in s);
+}
+
+/** The icon that stands for an entry on a card: the first the wiki shows in its unlock, type, quest or information. */
+export function entryIcon(entry: Entry): IconSegment | undefined {
+  const { unlock, type, quest, information } = entry.rich;
+  for (const text of [unlock, type, quest, information]) {
+    const icon = firstIcon(text);
+    if (icon) return icon;
+  }
+  return undefined;
 }

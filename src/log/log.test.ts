@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { iconFile, iconsUsed, parseContentUnlockPage, type Segment, type WikiPage } from "./index";
+import { entryIcon, iconFile, iconsUsed, parseContentUnlockPage, type Segment, type WikiPage } from "./index";
 import { editRow, editedPage, fixedClock, insertRowAtTopOf, openLog, realPage, rowOf } from "./test/harness";
 
 describe("content from the real Content Unlock page", () => {
@@ -367,6 +367,12 @@ describe("wiki links and icons in entries", () => {
   it("gives an entry no icon where the wiki has none", () => {
     const entry = entryNamed("Level 5 Class Quest");
     expect(icons(Object.values(entry.rich).flat())).toEqual([]);
+  });
+
+  it("picks an entry's card icon by its unlock icon, else its type icon, else none", () => {
+    expect(entryIcon(entryNamed("Samurai"))?.icon).toContain("Samurai_frame_icon");
+    expect(entryIcon(entryNamed("Sastasha"))?.icon).toContain("Dungeons_icon1");
+    expect(entryIcon(entryNamed("Level 5 Class Quest"))).toBeUndefined();
   });
 
   it("keeps the plain text fields free of markup", () => {
