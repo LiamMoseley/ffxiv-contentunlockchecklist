@@ -26,6 +26,11 @@ export type Progress = {
   statuses: Record<string, Record<string, StatusRecord>>;
 };
 
+/** "Name (World)", or just the name for a character with no World. */
+export function characterLabel(character: Pick<Character, "name" | "world">): string {
+  return character.world ? `${character.name} (${character.world})` : character.name;
+}
+
 export const DEFAULT_CHARACTER_NAME = "Adventurer";
 
 export function newProgress(characterId: string, now: string): Progress {

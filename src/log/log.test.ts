@@ -572,3 +572,300 @@ describe("finishing a section", () => {
     expect(log.setEntryStatus(ids[0], "notInterested").sectionsFinished).toEqual([]);
   });
 });
+
+describe("adding characters", () => {
+  it("adds a character with a name and optionally a World, Data Center and level", () => {
+    const { log } = openLog();
+    const result = log.addCharacter({ name: "Alia", world: "Zodiark", dataCenter: "Light", level: 72 });
+
+    expect(result.ok).toBe(true);
+    expect(log.characters().map((c) => [c.name, c.world, c.dataCenter, c.level])).toEqual([
+      ["Adventurer", "", "", null],
+      ["Alia", "Zodiark", "Light", 72],
+    ]);
+    const bare = log.addCharacter({ name: "Bren" });
+    expect(bare.ok && [bare.character.world, bare.character.dataCenter, bare.character.level]).toEqual(["", "", null]);
+  });
+
+  it("requires a name and a level between 1 and 100 when one is given", () => {
+    const { log } = openLog();
+    expect(log.addCharacter({ name: "   " })).toEqual({ ok: false, error: "nameRequired" });
+    expect(log.addCharacter({ name: "Alia", level: 0 })).toEqual({ ok: false, error: "invalidLevel" });
+    expect(log.addCharacter({ name: "Alia", level: 101 })).toEqual({ ok: false, error: "invalidLevel" });
+    expect(log.addCharacter({ name: "Alia", level: 7.5 })).toEqual({ ok: false, error: "invalidLevel" });
+    expect(log.characters()).toHaveLength(1);
+  });
+
+  it("allows one name on two Worlds but not twice on the same World, ignoring case and spacing", () => {
+    const { log } = openLog();
+    expect(log.addCharacter({ name: "Alia", world: "Zodiark" }).ok).toBe(true);
+    expect(log.addCharacter({ name: "Alia", world: "Ragnarok" }).ok).toBe(true);
+    expect(log.addCharacter({ name: " alia ", world: "zodiark" })).toEqual({ ok: false, error: "nameTaken" });
+  });
+
+  it("counts a blank World as one shared World", () => {
+    const { log } = openLog();
+    expect(log.addCharacter({ name: "Alia" }).ok).toBe(true);
+    expect(log.addCharacter({ name: "Alia", world: "" })).toEqual({ ok: false, error: "nameTaken" });
+    expect(log.addCharacter({ name: "Alia", world: "Zodiark" }).ok).toBe(true);
+  });
+
+  it("fills in the Data Center of a known World, and accepts an unknown World as typed", () => {
+    const { log } = openLog();
+    const known = log.addCharacter({ name: "Alia", world: "Zodiark" });
+    const unknown = log.addCharacter({ name: "Bren", world: "Newworld", dataCenter: "Fresh" });
+    expect(known.ok && known.character.dataCenter).toBe("Light");
+    expect(unknown.ok && [unknown.character.world, unknown.character.dataCenter]).toEqual(["Newworld", "Fresh"]);
+    expect(log.dataCenterOf("Ragnarok")).toBe("Chaos");
+    expect(log.dataCenterOf("Newworld")).toBeNull();
+  });
+
+  it("shows a character as Name (World), or the name alone with no World", () => {
+    const { log } = openLog();
+    const alia = log.addCharacter({ name: "Alia", world: "Zodiark" });
+    expect(alia.ok && log.characterLabel(alia.character)).toBe("Alia (Zodiark)");
+    expect(log.characterLabel(log.characters()[0])).toBe("Adventurer");
+  });
+
+  it("keeps added characters across a reload", () => {
+    const { log, storage } = openLog();
+    log.addCharacter({ name: "Alia", world: "Zodiark" });
+    const { log: reloaded } = openLog({ storage });
+    expect(reloaded.characters().map((c) => c.name)).toEqual(["Adventurer", "Alia"]);
+  });
+});
+
+describe("switching characters", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+  const added = (log: ReturnType<typeof openLog>["log"], name: string) => {
+    const result = log.addCharacter({ name });
+    if (!result.ok) throw new Error(result.error);
+    return result.character;
+  };
+
+  it("keeps separate progress for each character, in every status, count and bulk action", () => {
+    const { log } = openLog();
+    const first = log.currentCharacter();
+    const second = added(log, "Alia");
+    log.cycleEntryStatus(SASTASHA);
+    log.switchCharacter(second.id);
+
+    expect(log.currentCharacter().id).toBe(second.id);
+    expect(log.entryStatus(SASTASHA)).toBe("unmarked");
+    expect(log.overallProgress().completed).toBe(0);
+    expect(log.completeShownCount([SASTASHA])).toBe(1);
+    log.setEntryStatus("party-finder", "notInterested");
+
+    log.switchCharacter(first.id);
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+    expect(log.entryStatus("party-finder")).toBe("unmarked");
+    expect(log.overallProgress().completed).toBe(1);
+  });
+
+  it("starts a new character on the first character until the player switches", () => {
+    const { log } = openLog();
+    const first = log.currentCharacter();
+    added(log, "Alia");
+    expect(log.currentCharacter().id).toBe(first.id);
+  });
+
+  it("remembers the current character across a reload", () => {
+    const { log, storage } = openLog();
+    const second = added(log, "Alia");
+    log.switchCharacter(second.id);
+    expect(openLog({ storage }).log.currentCharacter().id).toBe(second.id);
+  });
+
+  it("ignores switching to a character that does not exist", () => {
+    const { log } = openLog();
+    const first = log.currentCharacter();
+    expect(log.switchCharacter("nobody")).toBe(false);
+    expect(log.currentCharacter().id).toBe(first.id);
+  });
+
+  it("shows each character's own progress in the character list", () => {
+    const { log } = openLog();
+    const first = log.currentCharacter();
+    const second = added(log, "Alia");
+    log.cycleEntryStatus(SASTASHA);
+    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder");
+
+    const entryCount = log.sections().flatMap((s) => s.entries).length;
+    expect(log.characterProgress(first.id)).toEqual({ completed: 1, total: entryCount - 1 });
+    expect(log.characterProgress(second.id)).toEqual({ completed: 0, total: entryCount });
+  });
+});
+
+describe("editing characters", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+
+  it("changes name, World, Data Center and level, and keeps the character's progress and ID", () => {
+    const { log, storage } = openLog();
+    const id = log.currentCharacter().id;
+    log.cycleEntryStatus(SASTASHA);
+
+    const result = log.editCharacter(id, { name: "Alia", world: "Zodiark", level: 60 });
+
+    expect(result.ok && [result.character.id, result.character.name, result.character.world, result.character.dataCenter, result.character.level]).toEqual([id, "Alia", "Zodiark", "Light", 60]);
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+    const reloaded = openLog({ storage }).log;
+    expect(reloaded.entryStatus(SASTASHA)).toBe("completed");
+    expect(reloaded.currentCharacter().name).toBe("Alia");
+  });
+
+  it("keeps progress when a World is added later", () => {
+    const { log } = openLog();
+    log.cycleEntryStatus(SASTASHA);
+    log.editCharacter(log.currentCharacter().id, { name: "Adventurer", world: "Ragnarok" });
+    expect(log.currentCharacter().world).toBe("Ragnarok");
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+  });
+
+  it("applies the same name, World and level rules, but lets a character keep its own name", () => {
+    const { log } = openLog();
+    const first = log.currentCharacter();
+    log.addCharacter({ name: "Alia" });
+
+    expect(log.editCharacter(first.id, { name: "alia" })).toEqual({ ok: false, error: "nameTaken" });
+    expect(log.editCharacter(first.id, { name: "" })).toEqual({ ok: false, error: "nameRequired" });
+    expect(log.editCharacter(first.id, { name: "Adventurer", level: 200 })).toEqual({ ok: false, error: "invalidLevel" });
+    expect(log.editCharacter(first.id, { name: "Adventurer", level: 80 }).ok).toBe(true);
+    expect(log.editCharacter("nobody", { name: "Zed" })).toEqual({ ok: false, error: "notFound" });
+  });
+
+  it("stamps the change with the time it was made", () => {
+    const clock = fixedClock("2026-11-03T10:00:00.000Z");
+    const { log } = openLog({ clock });
+    clock.set("2026-11-03T11:00:00.000Z");
+    log.editCharacter(log.currentCharacter().id, { name: "Alia" });
+    expect(log.currentCharacter().updatedAt).toBe("2026-11-03T11:00:00.000Z");
+  });
+});
+
+describe("resetting a character", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+
+  it("clears only the current character's progress, Not interested included", () => {
+    const { log } = openLog();
+    const first = log.currentCharacter();
+    const second = log.addCharacter({ name: "Alia" });
+    if (!second.ok) throw new Error();
+    log.cycleEntryStatus(SASTASHA);
+    log.setEntryStatus("party-finder", "notInterested");
+    log.switchCharacter(second.character.id);
+    log.cycleEntryStatus(SASTASHA);
+    log.switchCharacter(first.id);
+
+    expect(log.resetCharacter().changed).toBe(2);
+
+    expect(log.entryStatus(SASTASHA)).toBe("unmarked");
+    expect(log.entryStatus("party-finder")).toBe("unmarked");
+    expect(log.characterProgress(first.id).completed).toBe(0);
+    expect(log.characterProgress(second.character.id).completed).toBe(1);
+  });
+
+  it("can be undone", () => {
+    const { log } = openLog();
+    log.cycleEntryStatus(SASTASHA);
+    log.resetCharacter();
+    expect(log.undo()).toBe(true);
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+  });
+
+  it("leaves nothing to undo when there was no progress to clear", () => {
+    const { log } = openLog();
+    expect(log.resetCharacter().changed).toBe(0);
+    expect(log.canUndo()).toBe(false);
+  });
+
+  it("keeps the character itself", () => {
+    const { log } = openLog();
+    log.cycleEntryStatus(SASTASHA);
+    log.resetCharacter();
+    expect(log.characters()).toHaveLength(1);
+  });
+});
+
+describe("deleting a character", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+  const twoCharacters = () => {
+    const opened = openLog();
+    const first = opened.log.currentCharacter();
+    const second = opened.log.addCharacter({ name: "Alia", world: "Zodiark" });
+    if (!second.ok) throw new Error();
+    return { ...opened, first, second: second.character };
+  };
+
+  it("removes the character from the list and leaves the others untouched", () => {
+    const { log, first, second } = twoCharacters();
+    log.cycleEntryStatus(SASTASHA);
+    expect(log.deleteCharacter(second.id)).toEqual({ ok: true });
+    expect(log.characters().map((c) => c.id)).toEqual([first.id]);
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+  });
+
+  it("moves to another character when the current one is deleted", () => {
+    const { log, first, second } = twoCharacters();
+    log.switchCharacter(second.id);
+    log.deleteCharacter(second.id);
+    expect(log.currentCharacter().id).toBe(first.id);
+  });
+
+  it("refuses to delete the last remaining character", () => {
+    const { log, first, second } = twoCharacters();
+    log.deleteCharacter(second.id);
+    expect(log.deleteCharacter(first.id)).toEqual({ ok: false, error: "lastCharacter" });
+    expect(log.characters()).toHaveLength(1);
+    expect(log.deleteCharacter("nobody")).toEqual({ ok: false, error: "notFound" });
+  });
+
+  it("leaves a deleted marker in the stored progress rather than erasing the character (ADR-0001)", () => {
+    const { log, storage, second } = twoCharacters();
+    log.switchCharacter(second.id);
+    log.cycleEntryStatus(SASTASHA);
+    log.deleteCharacter(second.id);
+
+    const stored = JSON.parse(storage.read("contentUnlockLog.progress")!);
+    expect(stored.characters[second.id]).toMatchObject({ id: second.id, name: "Alia", world: "Zodiark", deleted: true });
+    expect(stored.statuses[second.id][SASTASHA].status).toBe("completed");
+    expect(openLog({ storage }).log.characters().map((c) => c.id)).not.toContain(second.id);
+  });
+
+  it("stamps the deletion with the time it was made", () => {
+    const clock = fixedClock("2026-11-03T10:00:00.000Z");
+    const opened = openLog({ clock });
+    const second = opened.log.addCharacter({ name: "Alia" });
+    if (!second.ok) throw new Error();
+    clock.set("2026-11-03T11:00:00.000Z");
+    opened.log.deleteCharacter(second.character.id);
+    const stored = JSON.parse(opened.storage.read("contentUnlockLog.progress")!);
+    expect(stored.characters[second.character.id].updatedAt).toBe("2026-11-03T11:00:00.000Z");
+  });
+
+  it("can be undone, bringing the character back with its progress", () => {
+    const { log, second } = twoCharacters();
+    log.switchCharacter(second.id);
+    log.cycleEntryStatus(SASTASHA);
+    log.deleteCharacter(second.id);
+
+    expect(log.undo()).toBe(true);
+    expect(log.characters().map((c) => c.id)).toContain(second.id);
+    expect(log.currentCharacter().id).toBe(second.id);
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+  });
+
+  it("lets a new character take a deleted character's name and World", () => {
+    const { log, second } = twoCharacters();
+    log.deleteCharacter(second.id);
+    expect(log.addCharacter({ name: "Alia", world: "Zodiark" }).ok).toBe(true);
+  });
+
+  it("cannot undo a deletion whose name and World another character has since taken", () => {
+    const { log, second } = twoCharacters();
+    log.deleteCharacter(second.id);
+    log.addCharacter({ name: "Alia", world: "Zodiark" });
+    expect(log.undo()).toBe(false);
+    expect(log.characters().filter((c) => c.name === "Alia")).toHaveLength(1);
+  });
+});
