@@ -19,7 +19,7 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticket body is the record of which ones were met. When implementing a ticket, after `/code-review`'s Spec axis has passed:
 
 - Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran) by editing the issue body: `gh issue view <n> --json body --jq .body`, change `- [ ]` to `- [x]` on those lines only, then `gh issue edit <n> --body-file <file>`. Never change a criterion's wording.
-- Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body. The owner ticks them after checking.
+- Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body. The owner ticks them after checking. End your closing report to the owner with the same list, one line per criterion, so it reaches them outside the PR too.
 - List any criterion the branch does not meet in the PR body, and leave it unticked.
 
 ## Repository settings

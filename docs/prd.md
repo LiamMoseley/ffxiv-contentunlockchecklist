@@ -427,8 +427,8 @@ The app should feel like an in-game window, taking inspiration from Final Fantas
 configuration screens without copying any of the game's artwork.
 
 The detailed look was settled by a UI prototype, variant E ("Game window"). Its verdict,
-`docs/prototypes/ui-verdict.md` on the `prototype/ui` branch, is the primary source for colours,
-sizes, breakpoints and typefaces, and the runnable prototype is on the same branch. Rebuild it
+[`docs/prototypes/ui-verdict.md`](prototypes/ui-verdict.md), is the primary source for colours,
+sizes, breakpoints and typefaces. The runnable prototype stays on the `prototype/ui` branch. Rebuild it
 properly; don't promote the prototype code.
 
 - **Window:** a single dark charcoal window in a thick bronze frame on a black background. The title
