@@ -678,6 +678,13 @@ describe("switching characters", () => {
     expect(openLog({ storage }).log.currentCharacter().id).toBe(second.id);
   });
 
+  it("stores the current character's ID under its own device key", () => {
+    const { log, storage } = openLog();
+    const second = added(log, "Alia");
+    log.switchCharacter(second.id);
+    expect(storage.read("contentUnlockLog.currentCharacter")).toBe(second.id);
+  });
+
   it("ignores switching to a character that does not exist", () => {
     const { log } = openLog();
     const first = log.currentCharacter();
