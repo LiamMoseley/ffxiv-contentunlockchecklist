@@ -1,1 +1,4 @@
 * text=auto eol=lf
+src/content/bundled-content.json linguist-generated
+fixtures/content-unlock-page.json linguist-generated
+public/icons/** linguist-generated
