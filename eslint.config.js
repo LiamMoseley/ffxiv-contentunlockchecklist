@@ -8,7 +8,7 @@ const ADAPTER_GLOBALS = ["window", "document", "localStorage", "sessionStorage",
 );
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules"] },
+  { ignores: ["dist", "node_modules", ".claude/worktrees"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -56,6 +56,11 @@ export default tseslint.config(
   },
   {
     files: ["scripts/**/*.ts", "*.config.{js,ts}"],
+    languageOptions: { globals: globals.node },
+  },
+  {
+    // Claude Code hook scripts run under Node.
+    files: [".claude/hooks/**/*.mjs"],
     languageOptions: { globals: globals.node },
   },
 );
