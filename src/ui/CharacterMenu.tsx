@@ -79,7 +79,7 @@ export function CharacterMenu({ log, onClose, onChange }: { log: Log; onClose: (
               Add character
             </button>
             <button type="button" onClick={() => setMode({ kind: "form", editing: current })}>
-              Edit {current.name}
+              Edit {label}
             </button>
             <button type="button" onClick={() => setMode({ kind: "confirm", action: "reset" })}>
               Reset
@@ -143,9 +143,11 @@ function CharacterForm({
   useEffect(() => nameRef.current?.select(), []);
 
   const chooseWorld = (value: string) => {
-    setWorld(value);
+    // A Data Center that was filled in for the previous World goes when the World becomes unknown.
     const known = log.dataCenterOf(value);
     if (known) setDataCenter(known);
+    else if (dataCenter && dataCenter === log.dataCenterOf(world)) setDataCenter("");
+    setWorld(value);
   };
 
   const submit = (event: FormEvent) => {

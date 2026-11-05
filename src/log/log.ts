@@ -78,7 +78,10 @@ export function createLog({ content, storage, clock }: LogOptions) {
     return { ok: true, character };
   }
 
-  const sameWorld = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
+  const sameText = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
+  /** Another character already has this name on this World (a blank World is one shared World). */
+  const isTaken = (name: string, world: string, ignoreId?: string) =>
+    characters().some((c) => c.id !== ignoreId && sameText(c.name, name) && sameText(c.world, world));
 
   /** Checks details and fills in the Data Center of a known World left blank; `ignoreId` is the character being edited. */
   function validate(details: CharacterDetails, ignoreId?: string): { ok: true; details: Required<CharacterDetails> } | { ok: false; error: CharacterError } {
@@ -87,9 +90,7 @@ export function createLog({ content, storage, clock }: LogOptions) {
     const level = details.level ?? null;
     if (!name) return { ok: false, error: "nameRequired" };
     if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL)) return { ok: false, error: "invalidLevel" };
-    if (characters().some((c) => c.id !== ignoreId && sameWorld(c.name, name) && sameWorld(c.world, world))) {
-      return { ok: false, error: "nameTaken" };
-    }
+    if (isTaken(name, world, ignoreId)) return { ok: false, error: "nameTaken" };
     const dataCenter = (details.dataCenter ?? "").trim() || dataCenterOfWorld(world) || "";
     return { ok: true, details: { name, world, dataCenter, level } };
   }
@@ -180,7 +181,7 @@ export function createLog({ content, storage, clock }: LogOptions) {
   /** Brings a deleted character back as a new change, unless another has taken its name and World since. */
   function restoreCharacter(id: string): boolean {
     const target = progress.characters[id];
-    if (characters().some((c) => sameWorld(c.name, target.name) && sameWorld(c.world, target.world))) return false;
+    if (isTaken(target.name, target.world)) return false;
     progress.characters[id] = { ...target, deleted: false, updatedAt: now() };
     save();
     switchCharacter(id);
