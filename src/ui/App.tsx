@@ -144,6 +144,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             onClick={() => setCharacterMenuOpen(true)}
           >
             {character.level !== null && <span className="character-level">Level {character.level} ·</span>}
+            {/* eslint-disable-next-line no-restricted-syntax -- the title bar styles name and World apart */}
             <span className="character-name">{character.name}</span>
             {character.world && <span className="character-world">({character.world})</span>}
           </button>

@@ -26,6 +26,20 @@ export default tseslint.config(
     },
   },
   {
+    // Characters are shown as "Name (World)" wherever they're named (GLOSSARY.md): render `log.characterLabel(c)`,
+    // not the bare name. The title bar styles the two parts apart and disables this rule on its name.
+    files: ["src/ui/**/*.tsx"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        ...["JSXExpressionContainer", "TemplateLiteral"].map((parent) => ({
+          selector: `${parent} > MemberExpression[property.name='name'][object.name=/^(character|current|saved)$/]`,
+          message: 'Show a character as "Name (World)": use `log.characterLabel(character)`.',
+        })),
+      ],
+    },
+  },
+  {
     // The Log core: no React, no browser APIs, and no dependency on the UI or adapters (PRD, ADR-0002).
     files: ["src/log/**/*.ts"],
     ignores: ["src/log/**/*.test.ts", "src/log/test/**"],

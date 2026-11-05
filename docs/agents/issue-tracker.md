@@ -14,7 +14,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
-On this Windows machine run `gh` from PowerShell: from Bash it can exit 0 with no output.
+On this Windows machine run `gh` from PowerShell: from Bash it can exit 0 with no output. In PowerShell, backticks and `\"` inside a double-quoted `--body` break parsing: pass bodies with `--body-file` (written with the Write tool) or a single-quoted string.
 
 ## Acceptance criteria
 
