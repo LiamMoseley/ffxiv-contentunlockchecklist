@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import type { ChangeResult, Log, Section, SectionKind, Storage } from "../log";
-import { EntryGrid, EntryTable, HintBar, STATUS_LABEL, type DisplayMode, type EntryActions } from "./EntryList";
+import { EntryGrid, EntryTable, HintBar, type DisplayMode, type EntryActions } from "./EntryList";
 import { ConfirmDialog, Toast } from "./Messages";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
@@ -47,9 +47,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
   const toastCount = useRef(0);
 
-  const entryNames = new Map(
-    log.sections().flatMap((s) => s.entries.map((e) => [e.id, e.unlock.replaceAll("\n", " ")] as const)),
-  );
   const sectionNames = new Map(
     log.sections().map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
   );
@@ -57,11 +54,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const say = (text: string, undoable: boolean) => setToast({ id: ++toastCount.current, text, undoable });
 
   /** Shows the message for a change, adding a note for each section it finished. */
-  const announce = (text: string, result: ChangeResult) => {
+  const announce = (text: string | null, result: ChangeResult) => {
     refresh();
     if (result.changed === 0) return;
     const finished = result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`);
-    say([text, ...finished].join(" "), true);
+    // A single row's change needs no message of its own; only finishing a section is worth one.
+    const message = [text, ...finished].filter(Boolean).join(" ");
+    if (message) say(message, true);
   };
 
   const undo = () => {
@@ -86,11 +85,11 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const actions: EntryActions = {
     onCycle: (entryId) => {
       const result = log.cycleEntryStatus(entryId);
-      announce(`${entryNames.get(entryId)}: ${STATUS_LABEL[log.entryStatus(entryId)]}.`, result);
+      announce(null, result);
     },
     onNotInterested: (entryId) => {
       const result = log.setEntryStatus(entryId, "notInterested");
-      announce(`${entryNames.get(entryId)}: ${STATUS_LABEL.notInterested}.`, result);
+      announce(null, result);
     },
   };
 
