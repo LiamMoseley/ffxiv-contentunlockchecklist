@@ -86,10 +86,11 @@ function StatusButton({ entry, status, actions }: { entry: Entry; status: EntryS
 /** A click anywhere on the entry cycles it; the button's own click and keyboard presses bubble up here. */
 const cycleOnClick = (actions: EntryActions, entryId: string) => () => actions.onCycle(entryId);
 
-const levelParts = (entry: Entry) => [
-  entry.level && { key: "level", text: entry.level },
-  entry.itemLevel && { key: "item-level", text: `iLv ${entry.itemLevel}` },
-];
+const levelParts = (entry: Entry) =>
+  [
+    entry.level && { key: "level", text: entry.level },
+    entry.itemLevel && { key: "item-level", text: `iLv. ${entry.itemLevel}` },
+  ].filter((part) => !!part);
 
 /** "Lv. 61 · Dungeon": a card's one-line summary. Level-cap entries show their item level instead. */
 const summary = (entry: Entry) =>
@@ -100,15 +101,13 @@ const summary = (entry: Entry) =>
     .filter(Boolean)
     .join(" · ");
 
-export function EntryTable({
-  entries,
-  statusOf,
-  actions,
-}: {
+export type EntryListProps = {
   entries: Entry[];
   statusOf: (entryId: string) => EntryStatus;
   actions: EntryActions;
-}) {
+};
+
+export function EntryTable({ entries, statusOf, actions }: EntryListProps) {
   return (
     <table className="entries">
       <thead>
@@ -131,7 +130,9 @@ export function EntryTable({
                 <StatusButton entry={entry} status={status} actions={actions} />
               </td>
               <td data-label="Level" className="level">
-                {levelParts(entry).map((part) => part && <span key={part.key}>{part.text}</span>)}
+                {levelParts(entry).map((part) => (
+                  <span key={part.key}>{part.text}</span>
+                ))}
               </td>
               <td data-label="Unlock" className="unlock">
                 <RichCell text={entry.rich.unlock} />
@@ -156,15 +157,7 @@ export function EntryTable({
   );
 }
 
-export function EntryGrid({
-  entries,
-  statusOf,
-  actions,
-}: {
-  entries: Entry[];
-  statusOf: (entryId: string) => EntryStatus;
-  actions: EntryActions;
-}) {
+export function EntryGrid({ entries, statusOf, actions }: EntryListProps) {
   return (
     <ul className="entry-grid">
       {entries.map((entry) => {
