@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import type { ChangeResult, Log, Section, SectionKind, Storage } from "../log";
 import { EntryGrid, EntryTable, HintBar, type DisplayMode, type EntryActions } from "./EntryList";
+import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
@@ -45,6 +46,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   };
   const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
+  const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
   const toastCount = useRef(0);
 
   const sectionNames = new Map(
@@ -64,9 +66,10 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   };
 
   const undo = () => {
-    if (!log.undo()) return;
+    if (!log.canUndo()) return;
+    const undone = log.undo();
     refresh();
-    say("Change undone.");
+    say(undone ? "Change undone." : "Nothing to undo: that name and World are in use again.");
   };
   // Ctrl/Cmd+Z undoes, except while typing in a field, where it keeps its own meaning.
   const undoRef = useRef(undo);
@@ -133,11 +136,17 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
       <div className="window">
         <header className="title-bar">
           <h1>Content Unlock Log</h1>
-          <div className="character">
+          <button
+            type="button"
+            className="character"
+            aria-haspopup="dialog"
+            aria-label={`Current character: ${log.characterLabel(character)}. Switch character`}
+            onClick={() => setCharacterMenuOpen(true)}
+          >
             {character.level !== null && <span className="character-level">Level {character.level} ·</span>}
             <span className="character-name">{character.name}</span>
             {character.world && <span className="character-world">({character.world})</span>}
-          </div>
+          </button>
         </header>
 
         <div className={`window-body${railCollapsed ? " collapsed" : ""}`}>
@@ -171,6 +180,16 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           </main>
         </div>
 
+        {characterMenuOpen && (
+          <CharacterMenu
+            log={log}
+            onClose={() => setCharacterMenuOpen(false)}
+            onChange={(message) => {
+              refresh();
+              if (message) say(message);
+            }}
+          />
+        )}
         {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
         {confirming && (
           <ConfirmDialog

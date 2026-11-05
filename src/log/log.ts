@@ -1,5 +1,6 @@
 import type { Content, Section } from "./content";
-import { newProgress, type Character, type EntryStatus, type Progress } from "./progress";
+import { dataCenterOfWorld, knownWorld, WORLDS } from "./worlds";
+import { characterLabel, newProgress, type Character, type EntryStatus, type Progress } from "./progress";
 
 /** Storage adapter: persists strings by key. Browser storage in the app, in-memory in tests. */
 export type Storage = {
@@ -18,7 +19,17 @@ export type ChangeResult = { changed: number; sectionsFinished: string[] };
 
 export type LogOptions = { content: Content; storage: Storage; clock: Clock };
 
+/** What the player enters for a character. A blank World is the one shared World; any other must be a known World, and sets the Data Center. */
+export type CharacterDetails = { name: string; world?: string; level?: number | null };
+
+export type CharacterError = "nameRequired" | "invalidLevel" | "nameTaken" | "unknownWorld" | "notFound";
+
+export type CharacterResult = { ok: true; character: Character } | { ok: false; error: CharacterError };
+
+const MAX_LEVEL = 100;
+
 const PROGRESS_KEY = "contentUnlockLog.progress";
+const CURRENT_KEY = "contentUnlockLog.currentCharacter";
 
 const NEXT_STATUS: Record<EntryStatus, EntryStatus> = {
   unmarked: "completed",
@@ -41,29 +52,81 @@ export function createLog({ content, storage, clock }: LogOptions) {
   }
 
   const characters = (): Character[] => Object.values(progress.characters).filter((c) => !c.deleted);
-  const currentCharacter = (): Character => characters()[0];
+  /** The character the player chose, remembered on the device; the first one if that is missing or deleted. */
+  let currentId = storage.read(CURRENT_KEY);
+  const currentCharacter = (): Character => {
+    const chosen = currentId ? progress.characters[currentId] : undefined;
+    return chosen && !chosen.deleted ? chosen : characters()[0];
+  };
 
-  const entryStatus = (entryId: string): EntryStatus =>
-    progress.statuses[currentCharacter().id]?.[entryId]?.status ?? "unmarked";
+  function switchCharacter(id: string): boolean {
+    const target = progress.characters[id];
+    if (!target || target.deleted) return false;
+    currentId = id;
+    storage.write(CURRENT_KEY, id);
+    return true;
+  }
 
-  /** Completed entries out of all entries in the sections, both leaving Not interested entries out. */
-  const progressOf = (sections: Section[]): ProgressCount => {
+  function editCharacter(id: string, details: CharacterDetails): CharacterResult {
+    const existing = progress.characters[id];
+    if (!existing || existing.deleted) return { ok: false, error: "notFound" };
+    const checked = validate(details, id);
+    if (!checked.ok) return checked;
+    const character: Character = { ...existing, ...checked.details, updatedAt: now() };
+    progress.characters[id] = character;
+    save();
+    return { ok: true, character };
+  }
+
+  const sameText = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
+  /** Another character already has this name on this World (a blank World is one shared World). */
+  const isTaken = (name: string, world: string, ignoreId?: string) =>
+    characters().some((c) => c.id !== ignoreId && sameText(c.name, name) && sameText(c.world, world));
+
+  /** Checks details and fills in the Data Center of a known World left blank; `ignoreId` is the character being edited. */
+  function validate(details: CharacterDetails, ignoreId?: string): { ok: true; details: Required<CharacterDetails> & { dataCenter: string } } | { ok: false; error: CharacterError } {
+    const name = details.name.trim();
+    const typedWorld = (details.world ?? "").trim();
+    const world = typedWorld === "" ? "" : knownWorld(typedWorld);
+    const level = details.level ?? null;
+    if (!name) return { ok: false, error: "nameRequired" };
+    if (world === null) return { ok: false, error: "unknownWorld" };
+    if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL)) return { ok: false, error: "invalidLevel" };
+    if (isTaken(name, world, ignoreId)) return { ok: false, error: "nameTaken" };
+    return { ok: true, details: { name, world, dataCenter: dataCenterOfWorld(world) ?? "", level } };
+  }
+
+  function addCharacter(details: CharacterDetails): CharacterResult {
+    const checked = validate(details);
+    if (!checked.ok) return checked;
+    const character: Character = { id: crypto.randomUUID(), ...checked.details, updatedAt: now(), deleted: false };
+    progress.characters[character.id] = character;
+    save();
+    return { ok: true, character };
+  }
+
+  const statusOf = (characterId: string, entryId: string): EntryStatus =>
+    progress.statuses[characterId]?.[entryId]?.status ?? "unmarked";
+  const entryStatus = (entryId: string): EntryStatus => statusOf(currentCharacter().id, entryId);
+
+  /** Completed entries out of all entries in the sections for a character (the current one by default), both leaving Not interested entries out. */
+  const progressOf = (sections: Section[], characterId = currentCharacter().id): ProgressCount => {
     const counted = sections
       .flatMap((s) => s.entries)
-      .map((e) => entryStatus(e.id))
+      .map((e) => statusOf(characterId, e.id))
       .filter((s) => s !== "notInterested");
     return { completed: counted.filter((s) => s === "completed").length, total: counted.length };
   };
 
   /** Earlier statuses of the entries each change touched, newest last. In memory only. */
-  const history: { characterId: string; earlier: Map<string, EntryStatus> }[] = [];
+  const history: ({ characterId: string; earlier: Map<string, EntryStatus> } | { deletedCharacterId: string })[] = [];
 
   /**
    * Writes the given statuses for the character as one change, skipping entries already at that status.
    * Returns the earlier statuses of the entries it changed, and the sections it finished.
    */
   function write(characterId: string, next: Map<string, EntryStatus>): ChangeResult & { earlier: Map<string, EntryStatus> } {
-    const finishedBefore = new Set(content.sections.filter((s) => isFinished(s)).map((s) => s.id));
+    const finishedBefore = new Set(content.sections.filter((s) => isFinished(s, characterId)).map((s) => s.id));
     const earlier = new Map<string, EntryStatus>();
     const stamp = now();
     const records = { ...progress.statuses[characterId] };
@@ -77,7 +140,7 @@ export function createLog({ content, storage, clock }: LogOptions) {
       progress.statuses[characterId] = records;
       save();
     }
-    const sectionsFinished = content.sections.filter((s) => !finishedBefore.has(s.id) && isFinished(s)).map((s) => s.id);
+    const sectionsFinished = content.sections.filter((s) => !finishedBefore.has(s.id) && isFinished(s, characterId)).map((s) => s.id);
     return { changed: earlier.size, sectionsFinished, earlier };
   }
 
@@ -90,8 +153,8 @@ export function createLog({ content, storage, clock }: LogOptions) {
   }
 
   /** Every entry of the section that is wanted is Completed, and at least one is. */
-  function isFinished(section: Section): boolean {
-    const { completed, total } = progressOf([section]);
+  function isFinished(section: Section, characterId: string): boolean {
+    const { completed, total } = progressOf([section], characterId);
     return total > 0 && completed === total;
   }
 
@@ -99,11 +162,50 @@ export function createLog({ content, storage, clock }: LogOptions) {
     return change(new Map([[entryId, status]]));
   }
 
+  /** Sets every entry the current character has marked back to Unmarked, orphaned statuses included. */
+  function resetCharacter(): ChangeResult {
+    const records = progress.statuses[currentCharacter().id] ?? {};
+    return change(new Map(Object.keys(records).map((entryId) => [entryId, "unmarked"])));
+  }
+
+  /** Marks the character deleted, keeping its record and progress so a device that was offline can't bring it back. */
+  function deleteCharacter(id: string): { ok: true } | { ok: false; error: "notFound" | "lastCharacter" } {
+    const target = progress.characters[id];
+    if (!target || target.deleted) return { ok: false, error: "notFound" };
+    if (characters().length === 1) return { ok: false, error: "lastCharacter" };
+    progress.characters[id] = { ...target, deleted: true, updatedAt: now() };
+    save();
+    history.push({ deletedCharacterId: id });
+    return { ok: true };
+  }
+
+  /** Brings a deleted character back as a new change, unless another has taken its name and World since. */
+  function restoreCharacter(id: string): boolean {
+    const target = progress.characters[id];
+    if (isTaken(target.name, target.world)) return false;
+    progress.characters[id] = { ...target, deleted: false, updatedAt: now() };
+    save();
+    switchCharacter(id);
+    return true;
+  }
+
   return {
     expansions: () => content.expansions,
     sections: () => content.sections,
     characters,
     currentCharacter,
+    addCharacter,
+    editCharacter,
+    switchCharacter,
+    /** Clears the current character's progress only; undoable. */
+    resetCharacter,
+    /** Deletes a character unless it is the last one; undoable. */
+    deleteCharacter,
+    /** Progress across every section of the log for one character, for the character list. */
+    characterProgress: (characterId: string): ProgressCount => progressOf(content.sections, characterId),
+    characterLabel,
+    dataCenterOf: dataCenterOfWorld,
+    worlds: () => WORLDS,
     entryStatus,
     sectionProgress(sectionId: string): ProgressCount {
       const section = content.sections.find((s) => s.id === sectionId);
@@ -136,6 +238,7 @@ export function createLog({ content, storage, clock }: LogOptions) {
     undo(): boolean {
       const latest = history.pop();
       if (!latest) return false;
+      if ("deletedCharacterId" in latest) return restoreCharacter(latest.deletedCharacterId);
       write(latest.characterId, latest.earlier);
       return true;
     },

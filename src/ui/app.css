@@ -112,6 +112,12 @@ a:hover {
 }
 .character {
   margin-left: auto;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -120,9 +126,7 @@ a:hover {
   text-shadow: 0 1px 2px #000;
 }
 .character-level {
-  font: 400 13px/1 var(--font-rail);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font: 400 14px/1 var(--font-body);
 }
 .character-name {
   font: 400 24px/1 var(--font-serif);
@@ -135,7 +139,7 @@ a:hover {
   white-space: nowrap;
 }
 .character-world {
-  font: 300 15px/1 var(--font-rail);
+  font: 400 14px/1 var(--font-body);
   color: var(--text-dim);
 }
 
@@ -1085,6 +1089,87 @@ a.wiki-link:focus-visible {
 }
 .dialog-buttons .primary {
   color: #fff;
+}
+.character:focus-visible {
+  outline: 2px solid #f0c35a;
+}
+.character-menu {
+  width: min(520px, calc(100vw - 24px));
+}
+.character-list {
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.character-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 90px auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.character-row:hover,
+.character-row:focus-visible {
+  background: rgba(255, 255, 255, 0.07);
+}
+.character-row.current {
+  border-color: #a07c47;
+  background: rgba(240, 195, 90, 0.1);
+}
+.character-row-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cream);
+}
+.character-row-level {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.character-actions {
+  flex-wrap: wrap;
+}
+.character-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.character-form .form-data-center {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.character-form select,
+.character-form input {
+  display: block;
+  width: 100%;
+  margin-top: 3px;
+  padding: 6px 8px;
+  border: 1px solid #1d1d1d;
+  border-radius: 3px;
+  background: #1c1c1c;
+  color: #eee;
+  font: inherit;
+  font-size: 14px;
+}
+.character-form select:focus-visible,
+.character-form input:focus-visible {
+  outline: 2px solid #f0c35a;
+}
+.character-form .form-error {
+  margin: 0 0 12px;
+  color: #ff9a8a;
 }
 .hint-bar .undo {
   margin-left: auto;
