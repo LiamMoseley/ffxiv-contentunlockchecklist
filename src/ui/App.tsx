@@ -1,6 +1,7 @@
-import { useReducer, useState } from "react";
-import type { Log, Section, SectionKind, Storage } from "../log";
-import { EntryGrid, EntryTable, HintBar, type DisplayMode, type EntryActions } from "./EntryList";
+import { useEffect, useReducer, useRef, useState } from "react";
+import type { ChangeResult, Log, Section, SectionKind, Storage } from "../log";
+import { EntryGrid, EntryTable, HintBar, STATUS_LABEL, type DisplayMode, type EntryActions } from "./EntryList";
+import { ConfirmDialog, Toast } from "./Messages";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
@@ -42,14 +43,54 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
       // The choice still holds for this visit when the device will not store it.
     }
   };
+  const [toast, setToast] = useState<{ id: number; text: string; undoable: boolean } | null>(null);
+  const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
+  const toastCount = useRef(0);
+
+  const entryNames = new Map(
+    log.sections().flatMap((s) => s.entries.map((e) => [e.id, e.unlock.replaceAll("\n", " ")] as const)),
+  );
+  const sectionNames = new Map(
+    log.sections().map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
+  );
+
+  const say = (text: string, undoable: boolean) => setToast({ id: ++toastCount.current, text, undoable });
+
+  /** Shows the message for a change, adding a note for each section it finished. */
+  const announce = (text: string, result: ChangeResult) => {
+    refresh();
+    if (result.changed === 0) return;
+    const finished = result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`);
+    say([text, ...finished].join(" "), true);
+  };
+
+  const undo = () => {
+    if (!log.undo()) return;
+    refresh();
+    say("Change undone.", false);
+  };
+  // Ctrl/Cmd+Z undoes, except while typing in a field, where it keeps its own meaning.
+  const undoRef = useRef(undo);
+  undoRef.current = undo;
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "z") return;
+      if (event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]")) return;
+      event.preventDefault();
+      undoRef.current();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const actions: EntryActions = {
     onCycle: (entryId) => {
-      log.cycleEntryStatus(entryId);
-      refresh();
+      const result = log.cycleEntryStatus(entryId);
+      announce(`${entryNames.get(entryId)}: ${STATUS_LABEL[log.entryStatus(entryId)]}.`, result);
     },
     onNotInterested: (entryId) => {
-      log.setEntryStatus(entryId, "notInterested");
-      refresh();
+      const result = log.setEntryStatus(entryId, "notInterested");
+      announce(`${entryNames.get(entryId)}: ${STATUS_LABEL.notInterested}.`, result);
     },
   };
 
@@ -69,6 +110,22 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     expansion === "all"
       ? log.sections()
       : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
+
+  const shownIds = shownSections.flatMap((s) => s.entries.map((e) => e.id));
+  const completeCount = log.completeShownCount(shownIds);
+  const clearCount = log.clearShownCount(shownIds);
+  const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
+
+  const confirmBulk = () => {
+    if (confirming === "complete") {
+      const n = completeCount;
+      announce(`Marked ${entries(n)} Completed.`, log.completeShown(shownIds));
+    } else if (confirming === "clear") {
+      const n = clearCount;
+      announce(`Cleared ${entries(n)}.`, log.clearShown(shownIds));
+    }
+    setConfirming(null);
+  };
 
   const character = log.currentCharacter();
 
@@ -100,6 +157,17 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               onChoose={(key) => expansion !== "all" && setTab(key)}
               label="Sections"
             />
+            <div className="bulk-bar" role="group" aria-label="Shown entries">
+              <button type="button" disabled={completeCount === 0} onClick={() => setConfirming("complete")}>
+                Complete Shown
+              </button>
+              <button type="button" disabled={clearCount === 0} onClick={() => setConfirming("clear")}>
+                Clear Shown
+              </button>
+              <button type="button" disabled={!log.canUndo()} onClick={undo}>
+                Undo
+              </button>
+            </div>
             <div className="scroll">
               {shownSections.map((section) => (
                 <SectionPanel
@@ -114,6 +182,21 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             </div>
           </main>
         </div>
+
+        {toast && <Toast message={toast} onUndo={undo} onDismiss={() => setToast(null)} />}
+        {confirming && (
+          <ConfirmDialog
+            title={confirming === "complete" ? "Complete Shown" : "Clear Shown"}
+            text={
+              confirming === "complete"
+                ? `Mark ${entries(completeCount)} Completed? Not interested entries are left alone.`
+                : `Set ${entries(clearCount)} back to Unmarked?`
+            }
+            confirmLabel={confirming === "complete" ? "Complete" : "Clear"}
+            onConfirm={confirmBulk}
+            onCancel={() => setConfirming(null)}
+          />
+        )}
 
         <HintBar mode={displayMode} onMode={chooseDisplayMode} />
 

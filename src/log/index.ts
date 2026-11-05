@@ -1,4 +1,4 @@
-export { createLog, type Log, type ProgressCount, type LogOptions, type Storage, type Clock } from "./log";
+export { createLog, type ChangeResult, type Log, type ProgressCount, type LogOptions, type Storage, type Clock } from "./log";
 export {
   parseContentUnlockPage,
   type Content,

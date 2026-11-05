@@ -948,3 +948,88 @@ a.wiki-link:focus-visible {
     background: linear-gradient(#333, #2b2b2b);
   }
 }
+
+/* Bulk actions above the entries */
+.bulk-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.bulk-bar button,
+.dialog-buttons button,
+.toast button {
+  padding: 4px 14px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: linear-gradient(#4a4a4a, #363636);
+  font-size: 13px;
+}
+.bulk-bar button:hover:not(:disabled),
+.dialog-buttons button:hover,
+.toast button:hover {
+  border-color: var(--gold);
+}
+.bulk-bar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.bulk-bar button:focus-visible,
+.dialog-buttons button:focus-visible,
+.toast button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Brief messages and confirmations, framed in the window's bronze */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: min(560px, calc(100vw - 24px));
+  padding: 8px 14px;
+  border: 2px solid #a07c47;
+  border-radius: 4px;
+  background: #262626;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  font-size: 13.5px;
+}
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+.dialog {
+  width: min(380px, calc(100vw - 24px));
+  padding: 16px 18px;
+  border: 2px solid #a07c47;
+  border-radius: 4px;
+  background: #2b2b2b;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.7);
+}
+.dialog h2 {
+  margin: 0 0 8px;
+  font: 600 20px/1.1 var(--font-title);
+  color: var(--cream);
+}
+.dialog p {
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.dialog-buttons .primary {
+  border-color: var(--gold);
+}
