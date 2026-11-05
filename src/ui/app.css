@@ -984,8 +984,7 @@ a.wiki-link:focus-visible {
 /* Embossed pill: grey gradient, light top bevel and dark bottom bevel, no edge line or coloured border */
 .button-footer button,
 .hint-bar .undo,
-.dialog-buttons button,
-.toast button {
+.dialog-buttons button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1005,21 +1004,18 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:hover:not(:disabled),
 .hint-bar .undo:hover:not(:disabled),
-.dialog-buttons button:hover:not(:disabled),
-.toast button:hover:not(:disabled) {
+.dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
 .button-footer button:active:not(:disabled),
 .hint-bar .undo:active:not(:disabled),
-.dialog-buttons button:active:not(:disabled),
-.toast button:active:not(:disabled) {
+.dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 .button-footer button:disabled,
 .hint-bar .undo:disabled,
-.dialog-buttons button:disabled,
-.toast button:disabled {
+.dialog-buttons button:disabled:disabled {
   color: #767676;
   text-shadow: none;
   background: linear-gradient(#3a3a3a, #2e2e2e);
@@ -1028,8 +1024,7 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:focus-visible,
 .hint-bar .undo:focus-visible,
-.dialog-buttons button:focus-visible,
-.toast button:focus-visible {
+.dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }

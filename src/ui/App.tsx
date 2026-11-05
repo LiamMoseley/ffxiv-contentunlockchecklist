@@ -43,7 +43,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
       // The choice still holds for this visit when the device will not store it.
     }
   };
-  const [toast, setToast] = useState<{ id: number; text: string; undoable: boolean } | null>(null);
+  const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
   const toastCount = useRef(0);
 
@@ -51,7 +51,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     log.sections().map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
   );
 
-  const say = (text: string, undoable: boolean) => setToast({ id: ++toastCount.current, text, undoable });
+  const say = (text: string) => setToast({ id: ++toastCount.current, text });
 
   /** Shows the message for a change, adding a note for each section it finished. */
   const announce = (text: string | null, result: ChangeResult) => {
@@ -60,13 +60,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     const finished = result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`);
     // A single row's change needs no message of its own; only finishing a section is worth one.
     const message = [text, ...finished].filter(Boolean).join(" ");
-    if (message) say(message, true);
+    if (message) say(message);
   };
 
   const undo = () => {
     if (!log.undo()) return;
     refresh();
-    say("Change undone.", false);
+    say("Change undone.");
   };
   // Ctrl/Cmd+Z undoes, except while typing in a field, where it keeps its own meaning.
   const undoRef = useRef(undo);
@@ -171,7 +171,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           </main>
         </div>
 
-        {toast && <Toast message={toast} onUndo={undo} onDismiss={() => setToast(null)} />}
+        {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
         {confirming && (
           <ConfirmDialog
             title={confirming === "complete" ? "Complete Shown" : "Clear Shown"}

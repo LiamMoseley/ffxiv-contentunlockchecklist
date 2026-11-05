@@ -2,15 +2,13 @@ import { useEffect, useRef } from "react";
 
 const TOAST_MS = 6000;
 
-/** A brief message at the bottom of the window, with Undo while there is something to undo. */
+/** A brief message at the bottom of the window. */
 export function Toast({
   message,
-  onUndo,
   onDismiss,
 }: {
   /** Replaced by each new message; its `id` restarts the dismiss timer. */
-  message: { id: number; text: string; undoable: boolean };
-  onUndo: () => void;
+  message: { id: number; text: string };
   onDismiss: () => void;
 }) {
   const dismiss = useRef(onDismiss);
@@ -23,11 +21,6 @@ export function Toast({
   return (
     <div className="toast" role="status">
       <span>{message.text}</span>
-      {message.undoable && (
-        <button type="button" onClick={onUndo}>
-          Undo
-        </button>
-      )}
     </div>
   );
 }
