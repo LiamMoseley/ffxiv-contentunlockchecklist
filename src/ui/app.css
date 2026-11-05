@@ -73,7 +73,6 @@ a:hover {
   padding: 18px;
 }
 .window {
-  max-width: 1280px;
   height: calc(100dvh - 36px);
   min-height: 480px;
   margin: 0 auto;
