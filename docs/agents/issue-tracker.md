@@ -24,6 +24,10 @@ A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticke
 - Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body. The owner ticks them after checking. End your closing report to the owner with the same list, one line per criterion, so it reaches them outside the PR too.
 - List any criterion the branch does not meet in the PR body, and leave it unticked.
 
+## Before committing or pushing
+
+Check the branch's PR state first: `gh pr list --head <branch> --state all --json number,state`. If the PR is `MERGED` or `CLOSED`, a push never reaches it: branch from a fresh `origin/main`, carry the new commits over and open a new PR.
+
 ## Repository settings
 
 Read a setting's current state before telling the owner to change it: `gh api repos/<owner>/<repo>/pages` (Pages source and URL), `.../branches/main/protection`, `.../environments`. A 404 means the setting is off. Changing settings stays with the owner.
