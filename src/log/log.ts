@@ -13,6 +13,9 @@ export type Clock = { now(): Date };
 /** Completed entries out of the entries counted; Not interested entries are in neither number. */
 export type ProgressCount = { completed: number; total: number };
 
+/** What a command changed: how many entries, and the IDs of sections it brought to fully Completed. */
+export type ChangeResult = { changed: number; sectionsFinished: string[] };
+
 export type LogOptions = { content: Content; storage: Storage; clock: Clock };
 
 const PROGRESS_KEY = "contentUnlockLog.progress";
@@ -52,13 +55,48 @@ export function createLog({ content, storage, clock }: LogOptions) {
     return { completed: counted.filter((s) => s === "completed").length, total: counted.length };
   };
 
-  function setEntryStatus(entryId: string, status: EntryStatus) {
+  /** Earlier statuses of the entries each change touched, newest last. In memory only. */
+  const history: { characterId: string; earlier: Map<string, EntryStatus> }[] = [];
+
+  /**
+   * Writes the given statuses for the character as one change, skipping entries already at that status.
+   * Returns the earlier statuses of the entries it changed, and the sections it finished.
+   */
+  function write(characterId: string, next: Map<string, EntryStatus>): ChangeResult & { earlier: Map<string, EntryStatus> } {
+    const finishedBefore = new Set(content.sections.filter((s) => isFinished(s)).map((s) => s.id));
+    const earlier = new Map<string, EntryStatus>();
+    const stamp = now();
+    const records = { ...progress.statuses[characterId] };
+    for (const [entryId, status] of next) {
+      const before = records[entryId]?.status ?? "unmarked";
+      if (before === status) continue;
+      earlier.set(entryId, before);
+      records[entryId] = { status, updatedAt: stamp };
+    }
+    if (earlier.size > 0) {
+      progress.statuses[characterId] = records;
+      save();
+    }
+    const sectionsFinished = content.sections.filter((s) => !finishedBefore.has(s.id) && isFinished(s)).map((s) => s.id);
+    return { changed: earlier.size, sectionsFinished, earlier };
+  }
+
+  /** A change the player can undo: every command that changes statuses goes through here. */
+  function change(next: Map<string, EntryStatus>): ChangeResult {
     const characterId = currentCharacter().id;
-    progress.statuses[characterId] = {
-      ...progress.statuses[characterId],
-      [entryId]: { status, updatedAt: now() },
-    };
-    save();
+    const { earlier, ...result } = write(characterId, next);
+    if (earlier.size > 0) history.push({ characterId, earlier });
+    return result;
+  }
+
+  /** Every entry of the section that is wanted is Completed, and at least one is. */
+  function isFinished(section: Section): boolean {
+    const { completed, total } = progressOf([section]);
+    return total > 0 && completed === total;
+  }
+
+  function setEntryStatus(entryId: string, status: EntryStatus): ChangeResult {
+    return change(new Map([[entryId, status]]));
   }
 
   return {
@@ -79,10 +117,28 @@ export function createLog({ content, storage, clock }: LogOptions) {
     },
     /** Progress across every section of the log. */
     overallProgress: (): ProgressCount => progressOf(content.sections),
-    cycleEntryStatus(entryId: string) {
-      setEntryStatus(entryId, NEXT_STATUS[entryStatus(entryId)]);
+    cycleEntryStatus(entryId: string): ChangeResult {
+      return setEntryStatus(entryId, NEXT_STATUS[entryStatus(entryId)]);
     },
     setEntryStatus,
+    /** How many of the shown entries Complete Shown would change: those neither Completed nor Not interested. */
+    completeShownCount: (entryIds: string[]): number => entryIds.filter((id) => entryStatus(id) === "unmarked").length,
+    completeShown: (entryIds: string[]): ChangeResult =>
+      change(new Map(entryIds.filter((id) => entryStatus(id) !== "notInterested").map((id) => [id, "completed"]))),
+    /** How many of the shown entries Clear Shown would change: those not already Unmarked. */
+    clearShownCount: (entryIds: string[]): number => entryIds.filter((id) => entryStatus(id) !== "unmarked").length,
+    clearShown: (entryIds: string[]): ChangeResult => change(new Map(entryIds.map((id) => [id, "unmarked"]))),
+    canUndo: () => history.length > 0,
+    /**
+     * Writes the statuses before the latest change back, as a new change with a fresh timestamp.
+     * Returns whether there was anything to undo.
+     */
+    undo(): boolean {
+      const latest = history.pop();
+      if (!latest) return false;
+      write(latest.characterId, latest.earlier);
+      return true;
+    },
   };
 }
 

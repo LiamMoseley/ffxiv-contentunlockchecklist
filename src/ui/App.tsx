@@ -1,6 +1,7 @@
-import { useReducer, useState } from "react";
-import type { Log, Section, SectionKind, Storage } from "../log";
+import { useEffect, useReducer, useRef, useState } from "react";
+import type { ChangeResult, Log, Section, SectionKind, Storage } from "../log";
 import { EntryGrid, EntryTable, HintBar, type DisplayMode, type EntryActions } from "./EntryList";
+import { ConfirmDialog, Toast } from "./Messages";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
@@ -42,14 +43,53 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
       // The choice still holds for this visit when the device will not store it.
     }
   };
+  const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
+  const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
+  const toastCount = useRef(0);
+
+  const sectionNames = new Map(
+    log.sections().map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
+  );
+
+  const say = (text: string) => setToast({ id: ++toastCount.current, text });
+
+  /** Shows the message for a change, adding a note for each section it finished. */
+  const announce = (text: string | null, result: ChangeResult) => {
+    refresh();
+    if (result.changed === 0) return;
+    const finished = result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`);
+    // A single row's change needs no message of its own; only finishing a section is worth one.
+    const message = [text, ...finished].filter(Boolean).join(" ");
+    if (message) say(message);
+  };
+
+  const undo = () => {
+    if (!log.undo()) return;
+    refresh();
+    say("Change undone.");
+  };
+  // Ctrl/Cmd+Z undoes, except while typing in a field, where it keeps its own meaning.
+  const undoRef = useRef(undo);
+  undoRef.current = undo;
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "z") return;
+      if (event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]")) return;
+      event.preventDefault();
+      undoRef.current();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const actions: EntryActions = {
     onCycle: (entryId) => {
-      log.cycleEntryStatus(entryId);
-      refresh();
+      const result = log.cycleEntryStatus(entryId);
+      announce(null, result);
     },
     onNotInterested: (entryId) => {
-      log.setEntryStatus(entryId, "notInterested");
-      refresh();
+      const result = log.setEntryStatus(entryId, "notInterested");
+      announce(null, result);
     },
   };
 
@@ -69,6 +109,22 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     expansion === "all"
       ? log.sections()
       : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
+
+  const shownIds = shownSections.flatMap((s) => s.entries.map((e) => e.id));
+  const completeCount = log.completeShownCount(shownIds);
+  const clearCount = log.clearShownCount(shownIds);
+  const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
+
+  const confirmBulk = () => {
+    if (confirming === "complete") {
+      const n = completeCount;
+      announce(`Marked ${entries(n)} Completed.`, log.completeShown(shownIds));
+    } else if (confirming === "clear") {
+      const n = clearCount;
+      announce(`Cleared ${entries(n)}.`, log.clearShown(shownIds));
+    }
+    setConfirming(null);
+  };
 
   const character = log.currentCharacter();
 
@@ -115,7 +171,34 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           </main>
         </div>
 
-        <HintBar mode={displayMode} onMode={chooseDisplayMode} />
+        {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
+        {confirming && (
+          <ConfirmDialog
+            title={confirming === "complete" ? "Complete Shown" : "Clear Shown"}
+            text={
+              confirming === "complete"
+                ? `Mark ${entries(completeCount)} Completed? Not interested entries are left alone.`
+                : `Set ${entries(clearCount)} back to Unmarked?`
+            }
+            confirmLabel={confirming === "complete" ? "Complete" : "Clear"}
+            onConfirm={confirmBulk}
+            onCancel={() => setConfirming(null)}
+          />
+        )}
+
+        <HintBar mode={displayMode} onMode={chooseDisplayMode} canUndo={log.canUndo()} onUndo={undo} />
+
+        <div className="button-footer" role="group" aria-label="Shown entries">
+          <button type="button" disabled={clearCount === 0} onClick={() => setConfirming("clear")}>
+            Clear Shown
+          </button>
+          <span className="chevron" aria-hidden="true">
+            ︾
+          </span>
+          <button type="button" disabled={completeCount === 0} onClick={() => setConfirming("complete")}>
+            Complete Shown
+          </button>
+        </div>
 
         <footer className="footer-bar">
           <span>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>

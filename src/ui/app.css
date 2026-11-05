@@ -948,3 +948,147 @@ a.wiki-link:focus-visible {
     background: linear-gradient(#333, #2b2b2b);
   }
 }
+
+/* Button footer: Clear Shown and Complete Shown, as the game's Default and Close */
+.button-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px 10px;
+  border-top: 1px solid #1e1e1e;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.button-footer button {
+  min-width: 150px;
+}
+.chevron {
+  color: var(--gold);
+  font-size: 22px;
+  line-height: 1;
+  text-shadow: 0 0 6px rgba(240, 195, 90, 0.6);
+}
+@media (max-width: 760px) {
+  .button-footer button {
+    flex: 1;
+    min-width: 0;
+    padding: 0 8px;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+  .chevron {
+    display: none;
+  }
+}
+
+/* Embossed pill: grey gradient, light top bevel and dark bottom bevel, no edge line or coloured border */
+.button-footer button,
+.hint-bar .undo,
+.dialog-buttons button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  padding: 0 22px;
+  line-height: 1;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(#626262, #474747 48%, #3b3b3b 52%, #333);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+    0 1px 3px rgba(0, 0, 0, 0.6);
+  color: #f0f0f0;
+  font-size: 14px;
+  text-shadow: 0 1px 1px #000;
+}
+.button-footer button:hover:not(:disabled),
+.hint-bar .undo:hover:not(:disabled),
+.dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
+  background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
+}
+.button-footer button:active:not(:disabled),
+.hint-bar .undo:active:not(:disabled),
+.dialog-buttons button:active:not(:disabled):active:not(:disabled) {
+  background: linear-gradient(#333, #444);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+.button-footer button:disabled,
+.hint-bar .undo:disabled,
+.dialog-buttons button:disabled:disabled {
+  color: #767676;
+  text-shadow: none;
+  background: linear-gradient(#3a3a3a, #2e2e2e);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  cursor: default;
+}
+.button-footer button:focus-visible,
+.hint-bar .undo:focus-visible,
+.dialog-buttons button:focus-visible:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.hint-bar .undo {
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+/* Brief messages and confirmations, framed in the window's bronze */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 74px;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: min(560px, calc(100vw - 24px));
+  padding: 8px 14px;
+  border: 2px solid #a07c47;
+  border-radius: 4px;
+  background: #262626;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  font-size: 13.5px;
+}
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+.dialog {
+  width: min(380px, calc(100vw - 24px));
+  padding: 16px 18px;
+  border: 2px solid #a07c47;
+  border-radius: 4px;
+  background: #2b2b2b;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.7);
+}
+.dialog h2 {
+  margin: 0 0 8px;
+  font: 400 24px/1 var(--font-title);
+  letter-spacing: 0.01em;
+  color: #ececec;
+  text-shadow: 0 1px 2px #000;
+}
+.dialog p {
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.dialog-buttons .primary {
+  color: #fff;
+}
+.hint-bar .undo {
+  margin-left: auto;
+}
+.hint-bar .undo + .display-mode {
+  margin-left: 6px;
+}

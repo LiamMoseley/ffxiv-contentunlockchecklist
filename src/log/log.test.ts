@@ -416,3 +416,159 @@ describe("setting an entry status directly", () => {
     expect(log.entryStatus(id)).toBe("notInterested");
   });
 });
+
+describe("undo", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+
+  it("has nothing to undo on a fresh log", () => {
+    const { log } = openLog();
+    expect(log.canUndo()).toBe(false);
+    expect(log.undo()).toBe(false);
+  });
+
+  it("puts a single changed entry back to its earlier status", () => {
+    const { log } = openLog();
+    log.cycleEntryStatus(SASTASHA);
+    expect(log.canUndo()).toBe(true);
+
+    expect(log.undo()).toBe(true);
+    expect(log.entryStatus(SASTASHA)).toBe("unmarked");
+    expect(log.canUndo()).toBe(false);
+  });
+});
+
+describe("undo as a new change", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+
+  it("writes the earlier status back with a fresh timestamp, never a rewind", () => {
+    const clock = fixedClock("2026-11-03T10:00:00.000Z");
+    const { log, storage } = openLog({ clock });
+    clock.set("2026-11-03T11:00:00.000Z");
+    log.cycleEntryStatus(SASTASHA);
+    clock.set("2026-11-03T12:00:00.000Z");
+    log.undo();
+
+    const id = log.currentCharacter().id;
+    const stored = JSON.parse(storage.read("contentUnlockLog.progress")!);
+    expect(stored.statuses[id]).toEqual({
+      [SASTASHA]: { status: "unmarked", updatedAt: "2026-11-03T12:00:00.000Z" },
+    });
+  });
+
+  it("undoes changes newest first, one at a time", () => {
+    const { log } = openLog();
+    log.cycleEntryStatus(SASTASHA);
+    log.cycleEntryStatus(SASTASHA);
+    log.cycleEntryStatus("party-finder");
+
+    log.undo();
+    expect(log.entryStatus("party-finder")).toBe("unmarked");
+    expect(log.entryStatus(SASTASHA)).toBe("notInterested");
+    log.undo();
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+    log.undo();
+    expect(log.entryStatus(SASTASHA)).toBe("unmarked");
+    expect(log.canUndo()).toBe(false);
+  });
+
+  it("does not count setting an entry to the status it already has as a change", () => {
+    const { log } = openLog();
+    log.setEntryStatus(SASTASHA, "unmarked");
+    expect(log.canUndo()).toBe(false);
+  });
+
+  it("starts empty after a reload: history is in memory only", () => {
+    const { log, storage, clock } = openLog();
+    log.cycleEntryStatus(SASTASHA);
+    const { log: reopened } = openLog({ storage, clock });
+    expect(reopened.entryStatus(SASTASHA)).toBe("completed");
+    expect(reopened.canUndo()).toBe(false);
+  });
+});
+
+describe("bulk actions on the shown entries", () => {
+  const section = () => openLog().log.sections()[0];
+  const idsOf = (n: number) => section().entries.slice(0, n).map((e) => e.id);
+
+  it("Complete Shown marks every shown entry Completed, leaving Not interested alone", () => {
+    const { log } = openLog();
+    const [a, b, c, d] = idsOf(4);
+    log.setEntryStatus(b, "completed");
+    log.setEntryStatus(c, "notInterested");
+
+    expect(log.completeShownCount([a, b, c, d])).toBe(2);
+    expect(log.completeShown([a, b, c, d])).toMatchObject({ changed: 2 });
+    expect([a, b, c, d].map(log.entryStatus)).toEqual(["completed", "completed", "notInterested", "completed"]);
+  });
+
+  it("Clear Shown sets every shown entry back to Unmarked, Not interested included", () => {
+    const { log } = openLog();
+    const [a, b, c, d] = idsOf(4);
+    log.setEntryStatus(a, "completed");
+    log.setEntryStatus(c, "notInterested");
+
+    expect(log.clearShownCount([a, b, c, d])).toBe(2);
+    expect(log.clearShown([a, b, c, d])).toMatchObject({ changed: 2 });
+    expect([a, b, c, d].map(log.entryStatus)).toEqual(["unmarked", "unmarked", "unmarked", "unmarked"]);
+  });
+
+  it("counts nothing to change when everything shown is already there", () => {
+    const { log } = openLog();
+    const ids = idsOf(3);
+    expect(log.clearShownCount(ids)).toBe(0);
+    log.completeShown(ids);
+    expect(log.completeShownCount(ids)).toBe(0);
+    expect(log.completeShown(ids)).toMatchObject({ changed: 0 });
+  });
+
+  it("undoes a bulk change as one step", () => {
+    const { log } = openLog();
+    const ids = idsOf(5);
+    log.setEntryStatus(ids[1], "notInterested");
+    log.completeShown(ids);
+
+    log.undo();
+    expect(ids.map(log.entryStatus)).toEqual(["unmarked", "notInterested", "unmarked", "unmarked", "unmarked"]);
+    expect(log.canUndo()).toBe(true);
+  });
+
+  it("does not leave an undo step when nothing changed", () => {
+    const { log } = openLog();
+    log.clearShown(idsOf(3));
+    expect(log.canUndo()).toBe(false);
+  });
+});
+
+describe("finishing a section", () => {
+  const first = () => openLog().log.sections()[0];
+
+  it("reports the section when the last wanted entry is Completed", () => {
+    const { log } = openLog();
+    const section = log.sections()[0];
+    const ids = section.entries.map((e) => e.id);
+    for (const id of ids.slice(0, -1)) expect(log.setEntryStatus(id, "completed").sectionsFinished).toEqual([]);
+
+    expect(log.setEntryStatus(ids.at(-1)!, "completed").sectionsFinished).toEqual([section.id]);
+  });
+
+  it("counts entries set aside as Not interested as not wanted", () => {
+    const { log } = openLog();
+    const ids = first().entries.map((e) => e.id);
+    log.completeShown(ids.slice(0, -1));
+    expect(log.setEntryStatus(ids.at(-1)!, "notInterested").sectionsFinished).toEqual([first().id]);
+  });
+
+  it("reports a section a bulk change finishes, and none when it was already finished", () => {
+    const { log } = openLog();
+    const ids = first().entries.map((e) => e.id);
+    expect(log.completeShown(ids).sectionsFinished).toEqual([first().id]);
+    expect(log.completeShown(ids).sectionsFinished).toEqual([]);
+  });
+
+  it("does not report a section with no wanted entries", () => {
+    const { log } = openLog();
+    const ids = first().entries.map((e) => e.id);
+    for (const id of ids) log.setEntryStatus(id, "notInterested");
+    expect(log.setEntryStatus(ids[0], "notInterested").sectionsFinished).toEqual([]);
+  });
+});
