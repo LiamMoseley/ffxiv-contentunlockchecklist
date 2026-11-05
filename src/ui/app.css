@@ -744,13 +744,6 @@ a.wiki-link:focus-visible {
   outline-offset: 1px;
 }
 
-.credits {
-  margin: 10px 0 0;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--text-faint);
-}
-
 /* Footer bar */
 .footer-bar {
   display: flex;

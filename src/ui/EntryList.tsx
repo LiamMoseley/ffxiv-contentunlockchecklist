@@ -205,7 +205,6 @@ export function HintBar({ mode, onMode }: { mode: DisplayMode; onMode: (mode: Di
           </li>
         ))}
       </ul>
-      <span className="hint-keys">Space: change status · X: not interested</span>
       <div className="display-mode" role="group" aria-label="Display mode">
         <span className="display-mode-label">Display Mode</span>
         <button type="button" aria-pressed={mode === "list"} aria-label="List" title="List" onClick={() => onMode("list")}>

@@ -111,7 +111,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   actions={actions}
                 />
               ))}
-              <Credits />
             </div>
           </main>
         </div>
@@ -119,7 +118,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         <HintBar mode={displayMode} onMode={chooseDisplayMode} />
 
         <footer className="footer-bar">
-          <span>An unofficial personal tool.</span>
+          <span>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
           <span>
             Content from the <a href={WIKI_PAGE_URL}>Content Unlock page</a> of the community FFXIV wiki.
           </span>
@@ -155,17 +154,5 @@ function SectionPanel({
       </div>
       <Entries entries={section.entries} statusOf={log.entryStatus} actions={actions} />
     </section>
-  );
-}
-
-function Credits() {
-  return (
-    <p className="credits">
-      Content Unlock Log is an unofficial personal tool, not affiliated with or endorsed by Square Enix. Entries come
-      from the <a href={WIKI_PAGE_URL}>Content Unlock page</a> of the community FFXIV wiki (ffxiv.consolegameswiki.com).
-      <br />
-      FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd. FINAL FANTASY XIV © SQUARE ENIX CO.,
-      LTD. All Rights Reserved.
-    </p>
   );
 }
