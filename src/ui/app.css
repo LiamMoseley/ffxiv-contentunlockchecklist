@@ -647,7 +647,7 @@ a.wiki-link:focus-visible {
   transform: translateY(-50%);
 }
 .entry-card.completed .card-icon > * {
-  filter: saturate(0.3) brightness(0.7);
+  opacity: 0.7;
 }
 .entry-card.completed .card-text,
 .entry-card.completed small {
@@ -655,7 +655,7 @@ a.wiki-link:focus-visible {
 }
 .entry-card.notInterested .card-icon,
 .entry-card.notInterested .card-text {
-  opacity: 0.4;
+  opacity: 0.42;
 }
 .entry-card.notInterested .card-icon > * {
   filter: grayscale(1);
