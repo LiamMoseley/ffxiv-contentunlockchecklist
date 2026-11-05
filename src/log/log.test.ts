@@ -279,6 +279,38 @@ describe("section progress", () => {
   });
 });
 
+describe("expansion progress", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+
+  it("counts Completed entries across both of the expansion's sections, leaving Not interested out", () => {
+    const { log } = openLog();
+    expect(log.expansionProgress("arr")).toEqual({ completed: 0, total: 137 });
+
+    log.cycleEntryStatus(SASTASHA);
+    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder");
+    expect(log.expansionProgress("arr")).toEqual({ completed: 1, total: 136 });
+  });
+
+  it("counts each expansion separately", () => {
+    const { log } = openLog();
+    log.cycleEntryStatus(SASTASHA);
+    expect(log.expansionProgress("hw").completed).toBe(0);
+  });
+});
+
+describe("overall progress", () => {
+  it("counts Completed entries across every section of the log, leaving Not interested out", () => {
+    const { log } = openLog();
+    expect(log.overallProgress()).toEqual({ completed: 0, total: 429 });
+
+    log.cycleEntryStatus("sastasha/its-probably-pirates");
+    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder");
+    expect(log.overallProgress()).toEqual({ completed: 1, total: 428 });
+  });
+});
+
 describe("the bundled content", () => {
   it("is the saved wiki page, parsed (run `npm run snapshot` to refresh both together)", async () => {
     const bundled = (await import("../content/bundled-content.json")).default;
