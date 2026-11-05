@@ -2,7 +2,15 @@
 
 ### Issue tracker
 
-Issues are tracked in GitHub Issues (LiamMoseley/ffxiv-contentunlockchecklist) via the `gh` CLI. Read `docs/agents/issue-tracker.md` before implementing, reviewing or closing a ticket: it covers ticking acceptance criteria and listing **Needs owner check** in the PR body.
+Issues are tracked in GitHub Issues (LiamMoseley/ffxiv-contentunlockchecklist) via the `gh` CLI. Read `docs/agents/issue-tracker.md` before implementing, reviewing or closing a ticket, and before committing or pushing to a branch that has a PR: it covers ticking acceptance criteria, listing **Needs owner check** in the PR body, and checking the PR's state first.
+
+### Testing
+
+The test seam is pre-agreed: the Log core's commands and queries. See `CODING_STANDARDS.md`.
+
+### Verifying the UI
+
+Read `docs/agents/verifying-the-ui.md` before checking a change in the browser pane.
 
 ### Triage labels
 
