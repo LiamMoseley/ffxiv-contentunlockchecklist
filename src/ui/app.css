@@ -174,7 +174,7 @@ a:hover {
   transition: width 0.3s;
   background:
     linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08) 50%, rgba(0, 0, 0, 0.12)),
-    linear-gradient(90deg, hsl(calc(var(--hue) + 30) 70% 38%), hsl(var(--hue) 85% 58%));
+    linear-gradient(90deg, #1f8f3a, #3fc95a 60%, #7fe06a);
 }
 .bar.full > span {
   background:
