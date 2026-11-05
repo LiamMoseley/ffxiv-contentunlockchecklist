@@ -1044,6 +1044,7 @@ a.wiki-link:focus-visible {
   align-items: center;
   gap: 14px;
   max-width: min(560px, calc(100vw - 24px));
+  min-height: 88px;
   padding: 8px 14px;
   border: 2px solid #a07c47;
   border-radius: 4px;
