@@ -1,20 +1,9 @@
 import { useReducer, useState } from "react";
-import type { EntryStatus, Log, Section, SectionKind } from "../log";
+import type { Log, Section, SectionKind, Storage } from "../log";
+import { EntryGrid, EntryTable, HintBar, type DisplayMode, type EntryActions } from "./EntryList";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
-
-const STATUS_LABEL: Record<EntryStatus, string> = {
-  unmarked: "Unmarked",
-  completed: "Completed",
-  notInterested: "Not interested",
-};
-
-const STATUS_MARK: Record<EntryStatus, string> = {
-  unmarked: "☐",
-  completed: "☑",
-  notInterested: "⊘",
-};
 
 const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
 
@@ -24,13 +13,45 @@ type TabKey = SectionKind | "all";
 /** The wiki writes "Level 51 - 60"; the window shows "Level 51–60". */
 const sectionTitle = (section: Section) => section.heading.replace(/\s*-\s*/, "–");
 
-export function App({ log }: { log: Log }) {
+const DISPLAY_MODE_KEY = "contentUnlockLog.displayMode";
+
+/** The remembered display mode; storage that is unavailable or holds anything else means the list. */
+function readDisplayMode(preferences: Storage): DisplayMode {
+  try {
+    return preferences.read(DISPLAY_MODE_KEY) === "grid" ? "grid" : "list";
+  } catch {
+    return "list";
+  }
+}
+
+/** `preferences` keeps device settings, such as the display mode, apart from the player's progress. */
+export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // The Log core holds all state; re-render after each command.
   const [, refresh] = useReducer((n: number) => n + 1, 0);
   const [expansion, setExpansion] = useState<ExpansionChoice>(() => log.expansions()[0]?.id ?? "all");
   // Kept while switching expansions, so a player who chose All stays on All.
   const [tab, setTab] = useState<TabKey>("levelling");
   const [railCollapsed, setRailCollapsed] = useState(false);
+  const [displayMode, setDisplayMode] = useState<DisplayMode>(() => readDisplayMode(preferences));
+
+  const chooseDisplayMode = (mode: DisplayMode) => {
+    setDisplayMode(mode);
+    try {
+      preferences.write(DISPLAY_MODE_KEY, mode);
+    } catch {
+      // The choice still holds for this visit when the device will not store it.
+    }
+  };
+  const actions: EntryActions = {
+    onCycle: (entryId) => {
+      log.cycleEntryStatus(entryId);
+      refresh();
+    },
+    onNotInterested: (entryId) => {
+      log.setEntryStatus(entryId, "notInterested");
+      refresh();
+    },
+  };
 
   const expansionNames = new Map(log.expansions().map((e) => [e.id, e.name]));
   const expansionSections = log.sections().filter((s) => s.expansionId === expansion);
@@ -86,19 +107,18 @@ export function App({ log }: { log: Log }) {
                   log={log}
                   section={section}
                   expansionName={expansionNames.get(section.expansionId) ?? ""}
-                  onCycle={(entryId) => {
-                    log.cycleEntryStatus(entryId);
-                    refresh();
-                  }}
+                  mode={displayMode}
+                  actions={actions}
                 />
               ))}
-              <Credits />
             </div>
           </main>
         </div>
 
+        <HintBar mode={displayMode} onMode={chooseDisplayMode} />
+
         <footer className="footer-bar">
-          <span>An unofficial personal tool.</span>
+          <span>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
           <span>
             Content from the <a href={WIKI_PAGE_URL}>Content Unlock page</a> of the community FFXIV wiki.
           </span>
@@ -112,15 +132,17 @@ function SectionPanel({
   log,
   section,
   expansionName,
-  onCycle,
+  mode,
+  actions,
 }: {
   log: Log;
   section: Section;
   expansionName: string;
-  onCycle: (entryId: string) => void;
+  mode: DisplayMode;
+  actions: EntryActions;
 }) {
   const progress = log.sectionProgress(section.id);
-  const levelHeading = section.kind === "levelCap" ? "Item level" : "Level";
+  const Entries = mode === "grid" ? EntryGrid : EntryTable;
   return (
     <section className="section" aria-labelledby={`${section.id}-heading`}>
       <div className="section-head">
@@ -130,61 +152,7 @@ function SectionPanel({
         <ProgressBar progress={progress} label={`${expansionName} ${sectionTitle(section)} progress`} />
         <Count progress={progress} />
       </div>
-      <table className="entries">
-        <thead>
-          <tr>
-            <th>Status</th>
-            <th>{levelHeading}</th>
-            <th>Unlock</th>
-            <th>Type</th>
-            <th>Quest</th>
-            <th>Location</th>
-            <th>Information</th>
-          </tr>
-        </thead>
-        <tbody>
-          {section.entries.map((entry) => {
-            const status = log.entryStatus(entry.id);
-            return (
-              <tr key={entry.id} className={status}>
-                <td>
-                  <button
-                    type="button"
-                    className="status"
-                    aria-label={`${entry.unlock}: ${STATUS_LABEL[status]}`}
-                    title={STATUS_LABEL[status]}
-                    onClick={() => onCycle(entry.id)}
-                  >
-                    {STATUS_MARK[status]}
-                  </button>
-                </td>
-                <td data-label={levelHeading}>{section.kind === "levelCap" ? entry.itemLevel : entry.level}</td>
-                <td data-label="Unlock" className="unlock">
-                  {entry.unlock}
-                </td>
-                <td data-label="Type">{entry.type}</td>
-                <td data-label="Quest" className="quest">
-                  {entry.quest}
-                </td>
-                <td data-label="Location">{entry.location}</td>
-                <td data-label="Information">{entry.information}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Entries entries={section.entries} statusOf={log.entryStatus} actions={actions} />
     </section>
-  );
-}
-
-function Credits() {
-  return (
-    <p className="credits">
-      Content Unlock Log is an unofficial personal tool, not affiliated with or endorsed by Square Enix. Entries come
-      from the <a href={WIKI_PAGE_URL}>Content Unlock page</a> of the community FFXIV wiki (ffxiv.consolegameswiki.com).
-      <br />
-      FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd. FINAL FANTASY XIV © SQUARE ENIX CO.,
-      LTD. All Rights Reserved.
-    </p>
   );
 }

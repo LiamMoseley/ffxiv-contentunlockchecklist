@@ -1,8 +1,8 @@
 import type { ProgressCount } from "../log";
 
 /**
- * Crafting-window style bar: a recessed track with a glossy fill that runs from blue towards
- * yellow-green as it fills, and switches to the blue Quality fill once every entry counted is Completed.
+ * Crafting-window style bar: a recessed track with a glossy green fill, which switches to
+ * the blue Quality fill once every entry counted is Completed.
  */
 export function ProgressBar({ progress, label, thin }: { progress: ProgressCount; label: string; thin?: boolean }) {
   const { completed, total } = progress;
@@ -18,7 +18,7 @@ export function ProgressBar({ progress, label, thin }: { progress: ProgressCount
       aria-valuenow={completed}
       aria-valuetext={`${completed} of ${total} completed`}
     >
-      <span style={{ width: `${fraction * 100}%`, ["--hue" as string]: 200 - 120 * fraction }} />
+      <span style={{ width: `${fraction * 100}%` }} />
     </span>
   );
 }
