@@ -490,6 +490,11 @@ a:hover {
 .entries tbody tr {
   cursor: pointer;
 }
+.entries tbody tr:focus-visible,
+.entry-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
 .entries tbody tr:hover {
   background: rgba(255, 255, 255, 0.04);
 }

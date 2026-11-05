@@ -22,8 +22,10 @@ export function StatusBox({ status }: { status: EntryStatus }) {
 
 /** A cell's text with the wiki's icons and links, one block per line. */
 function RichCell({ text }: { text: RichText }) {
+  // Nothing at all, so the card layout can hide an empty cell and its label.
+  if (text.length === 0) return null;
   return (
-    <>
+    <div className="rich">
       {text.map((line, i) => (
         <span className="line" key={i}>
           {line.map((segment, j) => {
@@ -56,35 +58,41 @@ function RichCell({ text }: { text: RichText }) {
           })}
         </span>
       ))}
-    </>
+    </div>
   );
 }
 
 const iconUrl = (icon: string) => `${import.meta.env.BASE_URL}icons/${iconFile(icon)}`;
 
-/** The status box as a button: clicking, or Space, cycles the status and X sets Not interested. */
-function StatusButton({ entry, status, actions }: { entry: Entry; status: EntryStatus; actions: EntryActions }) {
-  const onKeyDown = (event: KeyboardEvent) => {
-    if (event.key.toLowerCase() === "x" && !event.ctrlKey && !event.metaKey && !event.altKey) {
-      event.preventDefault();
-      actions.onNotInterested(entry.id);
-    }
-  };
+/** The status box as a button; its click, like a click anywhere on the entry, reaches the entry's handler. */
+function StatusButton({ entry, status }: { entry: Entry; status: EntryStatus }) {
   return (
-    <button
-      type="button"
-      className="status"
-      aria-label={`${entry.unlock}: ${STATUS_LABEL[status]}`}
-      title={STATUS_LABEL[status]}
-      onKeyDown={onKeyDown}
-    >
+    <button type="button" className="status" aria-label={`${entry.unlock}: ${STATUS_LABEL[status]}`} title={STATUS_LABEL[status]}>
       <StatusBox status={status} />
     </button>
   );
 }
 
-/** A click anywhere on the entry cycles it; the button's own click and keyboard presses bubble up here. */
-const cycleOnClick = (actions: EntryActions, entryId: string) => () => actions.onCycle(entryId);
+/**
+ * What makes an entry focusable and operable: a click anywhere on it cycles its status, Space cycles
+ * it while the entry itself is focused (the status button does so natively), and X sets Not interested.
+ */
+function entryProps(actions: EntryActions, entryId: string) {
+  return {
+    tabIndex: 0,
+    onClick: () => actions.onCycle(entryId),
+    onKeyDown: (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key.toLowerCase() === "x") {
+        event.preventDefault();
+        actions.onNotInterested(entryId);
+      } else if (event.key === " " && event.target === event.currentTarget) {
+        event.preventDefault();
+        actions.onCycle(entryId);
+      }
+    },
+  };
+}
 
 const levelParts = (entry: Entry) =>
   [
@@ -125,9 +133,9 @@ export function EntryTable({ entries, statusOf, actions }: EntryListProps) {
         {entries.map((entry) => {
           const status = statusOf(entry.id);
           return (
-            <tr key={entry.id} className={status} onClick={cycleOnClick(actions, entry.id)}>
+            <tr key={entry.id} className={status} {...entryProps(actions, entry.id)}>
               <td className="status-cell">
-                <StatusButton entry={entry} status={status} actions={actions} />
+                <StatusButton entry={entry} status={status} />
               </td>
               <td data-label="Level" className="level">
                 {levelParts(entry).map((part) => (
@@ -164,7 +172,7 @@ export function EntryGrid({ entries, statusOf, actions }: EntryListProps) {
         const status = statusOf(entry.id);
         const icon = firstIcon(entry.rich.unlock);
         return (
-          <li key={entry.id} className={`entry-card ${status}`} onClick={cycleOnClick(actions, entry.id)}>
+          <li key={entry.id} className={`entry-card ${status}`} {...entryProps(actions, entry.id)}>
             <div className="card-icon">
               {icon && <img className="wiki-icon" src={iconUrl(icon.icon)} width={icon.size} height={icon.size} alt="" />}
             </div>
@@ -174,7 +182,7 @@ export function EntryGrid({ entries, statusOf, actions }: EntryListProps) {
               </div>
               <div className="card-summary">{summary(entry)}</div>
             </div>
-            <StatusButton entry={entry} status={status} actions={actions} />
+            <StatusButton entry={entry} status={status} />
           </li>
         );
       })}
