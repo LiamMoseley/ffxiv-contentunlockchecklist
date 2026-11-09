@@ -20,7 +20,7 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 
 A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticket body is the record of which ones were met. When implementing a ticket, after `/code-review`'s Spec axis has passed. The axis passes only when every "implemented but wrong" finding is fixed or shown to be false; list any finding left over in the PR body:
 
-- Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran): `node scripts/issue-criteria.mjs tick <n> <criterion numbers>|all`, numbering the `- [ ]` lines from 1. It changes the markers only, never a criterion's wording. Add a criterion the owner asks for with `node scripts/issue-criteria.mjs add <n> "<text>" [--ticked]`. Add `--dry` to print the new body first.
+- Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran): `node scripts/issue-criteria.mjs tick <n> <criterion numbers>|all`, numbering the `- [ ]` lines from 1. It changes the markers only, never a criterion's wording. `untick` puts criteria back, for one you ticked before checking it. Add a criterion the owner asks for with `node scripts/issue-criteria.mjs add <n> "<text>" [--ticked]`. Add `--dry` to print the new body first.
 - Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body. The owner ticks them after checking. End your closing report to the owner with the same list, one line per criterion, so it reaches them outside the PR too.
 - List any criterion the branch does not meet in the PR body, and leave it unticked.
 
