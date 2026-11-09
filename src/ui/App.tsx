@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { cacheWikiIcons } from "../adapters/offline";
-import type { ChangeResult, Log, Section, SectionKind, Storage, UpdatePreview } from "../log";
+import type { ChangeResult, Listing, Log, Section, SectionKind, Storage, UpdatePreview } from "../log";
 import { EntryGrid, EntryTable, HintBar, NewBadge, type DisplayMode, type EntryActions } from "./EntryList";
 import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
@@ -82,8 +82,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
   const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
-  // "Available now" replaces the section view; a view choice for this visit only.
-  const [availableOpen, setAvailableOpen] = useState(false);
   const toastCount = useRef(0);
   const [confirmingUpdate, setConfirmingUpdate] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
@@ -161,8 +159,10 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const expansionNames = new Map(log.expansions().map((e) => [e.id, e.name]));
   const expansionSections = log.sections().filter((s) => s.expansionId === expansion);
 
-  const viewingNew = log.viewingNew();
-  const newSections = log.newEntries();
+  // Which view is open, and what it lists, are the Log core's.
+  const listing = log.listing();
+  const viewingNew = listing.view === "new";
+  const availableOpen = listing.view === "available";
   const tabs: TabChoice<TabKey>[] =
     expansion === "all"
       ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
@@ -176,27 +176,19 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         ];
   const activeTab: TabKey = expansion === "all" ? "all" : tab;
 
-  const shownSections =
-    expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
-
-  const activeFilters = log.activeFilterCount({ availableNow: availableOpen });
-  // Complete Shown and Clear Shown act on what the window lists: Available now, or the filtered sections.
-  const shownIds = availableOpen
-    ? log.availableNow().sections.flatMap((s) => s.entries.map((e) => e.id))
-    : viewingNew
-      ? newSections.flatMap((s) => s.entries.map((e) => e.id))
-      : shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
-  const completeCount = log.completeShownCount(shownIds);
-  const clearCount = log.clearShownCount(shownIds);
+  const activeFilters = log.activeFilterCount();
+  // Complete Shown and Clear Shown act on what the open view lists.
+  const completeCount = log.completeShownCount();
+  const clearCount = log.clearShownCount();
   const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
 
   const confirmBulk = () => {
     if (confirming === "complete") {
       const n = completeCount;
-      announce(`Marked ${entries(n)} Completed.`, log.completeShown(shownIds));
+      announce(`Marked ${entries(n)} Completed.`, log.completeShown());
     } else if (confirming === "clear") {
       const n = clearCount;
-      announce(`Cleared ${entries(n)}.`, log.clearShown(shownIds));
+      announce(`Cleared ${entries(n)}.`, log.clearShown());
     }
     setConfirming(null);
   };
@@ -249,7 +241,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               log={log}
               viewing={viewingNew}
               onShow={() => {
-                setAvailableOpen(false);
                 log.showNewEntries();
                 refresh();
               }}
@@ -284,8 +275,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 aria-pressed={availableOpen}
                 onClick={() => {
                   // Available now replaces the NEW view; coming back lands on the normal view.
-                  log.showAllEntries();
-                  setAvailableOpen(!availableOpen);
+                  if (availableOpen) log.showAllEntries();
+                  else log.showAvailableNow();
+                  refresh();
                 }}
               >
                 {availableOpen ? "Back to the log" : "Available now"}
@@ -317,6 +309,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               {availableOpen ? (
                 <AvailableNow
                   log={log}
+                  listing={listing}
                   expansionNames={expansionNames}
                   mode={displayMode}
                   actions={actions}
@@ -325,13 +318,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               ) : viewingNew ? (
                 <NewEntriesView
                   log={log}
-                  sections={newSections}
+                  sections={listing.sections}
                   expansionNames={expansionNames}
                   mode={displayMode}
                   actions={actions}
                 />
               ) : (
-                shownSections.map((section) => (
+                listing.sections.map((section) => (
                   <SectionPanel
                     key={section.id}
                     log={log}
@@ -450,18 +443,20 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
 /** Every Unmarked entry the current character can reach at their level; the Log core decides which. */
 function AvailableNow({
   log,
+  listing,
   expansionNames,
   mode,
   actions,
   onSetLevel,
 }: {
   log: Log;
+  listing: Listing;
   expansionNames: Map<string, string>;
   mode: DisplayMode;
   actions: EntryActions;
   onSetLevel: () => void;
 }) {
-  const { level, sections, hidden } = log.availableNow();
+  const { level, sections, hidden } = listing;
   const Entries = mode === "grid" ? EntryGrid : EntryTable;
   if (level === null) {
     return (
@@ -610,7 +605,7 @@ function SectionPanel({
   actions: EntryActions;
 }) {
   const progress = log.sectionProgress(section.id);
-  const shown = log.shownEntries(section.id);
+  const shown = section.entries;
   const Entries = mode === "grid" ? EntryGrid : EntryTable;
   return (
     <section className="section" aria-labelledby={`${section.id}-heading`}>

@@ -505,48 +505,47 @@ describe("undo as a new change", () => {
 });
 
 describe("bulk actions on the shown entries", () => {
-  const section = () => openLog().log.sections()[0];
-  const idsOf = (n: number) =>
-    section()
-      .entries.slice(0, n)
-      .map((e) => e.id);
+  // The log opens on the first expansion's levelling tab, so the bulk actions act on that one section.
+  const listedIds = (log: ReturnType<typeof openLog>["log"]) =>
+    log.listing().sections.flatMap((s) => s.entries.map((e) => e.id));
 
   it("Complete Shown marks every shown entry Completed, leaving Not interested alone", () => {
     const { log } = openLog();
-    const [a, b, c, d] = idsOf(4);
+    const ids = listedIds(log);
+    const [a, b, c, d] = ids;
     log.setEntryStatus(b, "completed");
     log.setEntryStatus(c, "notInterested");
 
-    expect(log.completeShownCount([a, b, c, d])).toBe(2);
-    expect(log.completeShown([a, b, c, d])).toMatchObject({ changed: 2 });
+    expect(log.completeShownCount()).toBe(ids.length - 2);
+    expect(log.completeShown()).toMatchObject({ changed: ids.length - 2 });
     expect([a, b, c, d].map(log.entryStatus)).toEqual(["completed", "completed", "notInterested", "completed"]);
+    expect(ids.map(log.entryStatus).filter((s) => s === "notInterested")).toHaveLength(1);
   });
 
   it("Clear Shown sets every shown entry back to Unmarked, Not interested included", () => {
     const { log } = openLog();
-    const [a, b, c, d] = idsOf(4);
+    const [a, b, c, d] = listedIds(log);
     log.setEntryStatus(a, "completed");
     log.setEntryStatus(c, "notInterested");
 
-    expect(log.clearShownCount([a, b, c, d])).toBe(2);
-    expect(log.clearShown([a, b, c, d])).toMatchObject({ changed: 2 });
+    expect(log.clearShownCount()).toBe(2);
+    expect(log.clearShown()).toMatchObject({ changed: 2 });
     expect([a, b, c, d].map(log.entryStatus)).toEqual(["unmarked", "unmarked", "unmarked", "unmarked"]);
   });
 
   it("counts nothing to change when everything shown is already there", () => {
     const { log } = openLog();
-    const ids = idsOf(3);
-    expect(log.clearShownCount(ids)).toBe(0);
-    log.completeShown(ids);
-    expect(log.completeShownCount(ids)).toBe(0);
-    expect(log.completeShown(ids)).toMatchObject({ changed: 0 });
+    expect(log.clearShownCount()).toBe(0);
+    log.completeShown();
+    expect(log.completeShownCount()).toBe(0);
+    expect(log.completeShown()).toMatchObject({ changed: 0 });
   });
 
   it("undoes a bulk change as one step", () => {
     const { log } = openLog();
-    const ids = idsOf(5);
+    const ids = listedIds(log).slice(0, 5);
     log.setEntryStatus(ids[1], "notInterested");
-    log.completeShown(ids);
+    log.completeShown();
 
     log.undo();
     expect(ids.map(log.entryStatus)).toEqual(["unmarked", "notInterested", "unmarked", "unmarked", "unmarked"]);
@@ -555,7 +554,7 @@ describe("bulk actions on the shown entries", () => {
 
   it("does not leave an undo step when nothing changed", () => {
     const { log } = openLog();
-    log.clearShown(idsOf(3));
+    log.clearShown();
     expect(log.canUndo()).toBe(false);
   });
 });
@@ -575,15 +574,14 @@ describe("finishing a section", () => {
   it("counts entries set aside as Not interested as not wanted", () => {
     const { log } = openLog();
     const ids = first().entries.map((e) => e.id);
-    log.completeShown(ids.slice(0, -1));
+    for (const id of ids.slice(0, -1)) log.setEntryStatus(id, "completed");
     expect(log.setEntryStatus(ids.at(-1)!, "notInterested").sectionsFinished).toEqual([first().id]);
   });
 
   it("reports a section a bulk change finishes, and none when it was already finished", () => {
     const { log } = openLog();
-    const ids = first().entries.map((e) => e.id);
-    expect(log.completeShown(ids).sectionsFinished).toEqual([first().id]);
-    expect(log.completeShown(ids).sectionsFinished).toEqual([]);
+    expect(log.completeShown().sectionsFinished).toEqual([first().id]);
+    expect(log.completeShown().sectionsFinished).toEqual([]);
   });
 
   it("does not report a section with no wanted entries", () => {
@@ -676,7 +674,8 @@ describe("switching characters", () => {
     expect(log.currentCharacter().id).toBe(second.id);
     expect(log.entryStatus(SASTASHA)).toBe("unmarked");
     expect(log.overallProgress().completed).toBe(0);
-    expect(log.completeShownCount([SASTASHA])).toBe(1);
+    // The first character's Completed Sastasha does not count against this one's Complete Shown.
+    expect(log.completeShownCount()).toBe(log.listing().sections.flatMap((s) => s.entries).length);
     log.setEntryStatus("party-finder", "notInterested");
 
     log.switchCharacter(first.id);
@@ -921,11 +920,13 @@ describe("deleting a character", () => {
 });
 
 describe("searching the log", () => {
-  const shownNames = (log: ReturnType<typeof openLog>["log"]) =>
-    log
-      .sections()
-      .flatMap((s) => log.shownEntries(s.id))
+  const shownNames = (log: ReturnType<typeof openLog>["log"]) => {
+    log.setSelection({ expansion: "all" });
+    return log
+      .listing()
+      .sections.flatMap((s) => s.entries)
       .map((e) => e.unlock);
+  };
 
   it("shows every entry when the search is blank", () => {
     const { log } = openLog();
@@ -963,7 +964,10 @@ describe("searching the log", () => {
 
 describe("filtering the log", () => {
   type TestLog = ReturnType<typeof openLog>["log"];
-  const shown = (log: TestLog) => log.sections().flatMap((s) => log.shownEntries(s.id));
+  const shown = (log: TestLog) => {
+    log.setSelection({ expansion: "all" });
+    return log.listing().sections.flatMap((s) => s.entries);
+  };
   const SASTASHA = "sastasha/its-probably-pirates";
 
   it("lists every content type with its entry count", () => {
@@ -1028,7 +1032,7 @@ describe("filtering the log", () => {
     const section = log.sections()[0];
     log.setFilters({ search: "zzzz" });
 
-    expect(log.shownEntries(section.id)).toEqual([]);
+    expect(log.listing().sections.map((s) => [s.id, s.entries])).toEqual([[section.id, []]]);
     expect(section.entries.length).toBeGreaterThan(0);
   });
 
@@ -1036,23 +1040,20 @@ describe("filtering the log", () => {
     const { log } = openLog();
     const section = log.sections()[0];
     log.setFilters({ search: "sastasha" });
-    const ids = log.shownEntries(section.id).map((e) => e.id);
+    const listed = () => log.listing().sections.flatMap((s) => s.entries.map((e) => e.id));
+    const ids = listed();
 
     expect(ids).toContain(SASTASHA);
-    expect(log.completeShownCount(ids)).toBe(ids.length);
-    log.completeShown(ids);
+    expect(log.completeShownCount()).toBe(ids.length);
+    log.completeShown();
     expect(log.sectionProgress(section.id).completed).toBe(ids.length);
 
     log.setFilters({ hideCompleted: true });
-    expect(log.shownEntries(section.id)).toEqual([]);
+    expect(listed()).toEqual([]);
 
     // Clear Shown on what is now shown touches nothing; the hidden Completed entries stay Completed.
-    const shownNow = log
-      .sections()
-      .flatMap((s) => log.shownEntries(s.id))
-      .map((e) => e.id);
-    expect(log.clearShownCount(shownNow)).toBe(0);
-    log.clearShown(shownNow);
+    expect(log.clearShownCount()).toBe(0);
+    log.clearShown();
     expect(log.sectionProgress(section.id).completed).toBe(ids.length);
   });
 
@@ -1081,10 +1082,12 @@ describe("filtering the log", () => {
 
   it("counts both hide filters as active in Available now, which only lists Unmarked entries", () => {
     const { log } = openLog();
-    expect(log.activeFilterCount({ availableNow: true })).toBe(2);
+    log.showAvailableNow();
+    expect(log.activeFilterCount()).toBe(2);
 
     log.setFilters({ search: "coil", hideCompleted: true });
-    expect(log.activeFilterCount({ availableNow: true })).toBe(3);
+    expect(log.activeFilterCount()).toBe(3);
+    log.showAllEntries();
     expect(log.activeFilterCount()).toBe(2);
   });
 
@@ -1258,7 +1261,8 @@ describe("available now", () => {
 
   it("is empty once every reachable entry is marked, and a higher level brings more", () => {
     const log = withLevel(15);
-    log.completeShown(availableIds(log));
+    log.showAvailableNow();
+    log.completeShown();
     expect(log.availableNow()).toEqual({ level: 15, sections: [], hidden: 0 });
     log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level: 50 });
     expect(availableIds(log).length).toBeGreaterThan(0);
