@@ -62,6 +62,11 @@ const VIEW_KEY = "contentUnlockLog.view";
 const CONTENT_KEY = "contentUnlockLog.content";
 const NEW_KEY = "contentUnlockLog.newEntries";
 const DECLINED_KEY = "contentUnlockLog.declinedMatches";
+const LAST_CHECK_KEY = "contentUnlockLog.lastUpdateCheck";
+const DISMISSED_KEY = "contentUnlockLog.dismissedRevision";
+
+/** The automatic check looks at the wiki at most this often. */
+const CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
 
 /** The NEW notice: up to three entry names, and how many more there are. */
 export type NewNotice = { names: string[]; more: number };
@@ -83,7 +88,10 @@ const NEXT_STATUS: Record<EntryStatus, EntryStatus> = {
 };
 
 export function createLog({ content: bundled, storage, clock, wiki }: LogOptions) {
-  let content = loadContent() ?? bundled;
+  // A device keeps whichever copy has the higher revision (ADR-0002): its own stored copy, unless it has none.
+  // A bundled copy newer than the stored one is offered for review further down, never applied silently.
+  const stored = loadContent();
+  let content = stored ?? bundled;
   const now = () => clock.now().toISOString();
   const progress = loadProgress() ?? newProgress(crypto.randomUUID(), now());
   save();
@@ -436,6 +444,11 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     }
     // A page with no sections is not the Content Unlock page (the wiki returned something else).
     if (next.sections.length === 0) return { status: "unreachable" };
+    return compareWith(next);
+  }
+
+  /** What `next` would change in the log; a copy that changes no entry is adopted at once. */
+  function compareWith(next: Content): UpdateCheck {
     const { added, changed, removed } = diffContent(content, next);
     const suggestions = suggestMatches(removed.filter(hasProgress), added, content, next, declinedPairs());
     if (added.length + changed.length + removed.length === 0) {
@@ -448,10 +461,81 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     };
   }
 
+  /** The update the notice offers, held until the player applies or dismisses it. Not stored: it is rebuilt on each visit. */
+  let offered: UpdatePreview | null = null;
+  let dismissedRevision = loadDismissedRevision();
+
+  function loadDismissedRevision(): number {
+    const saved = Number(storage.read(DISMISSED_KEY));
+    return Number.isFinite(saved) ? saved : 0;
+  }
+
+  /** The update the notice offers: newer than the log's content and not dismissed. */
+  function updateNotice(): UpdatePreview | null {
+    return offered && offered.revisionId > content.revisionId && offered.revisionId > dismissedRevision
+      ? offered
+      : null;
+  }
+
+  function recordCheck() {
+    storage.write(LAST_CHECK_KEY, now());
+  }
+
+  /** Whether the last check was recent enough to skip this one; a last check in the future (clock changed) is not. */
+  function checkedRecently(): boolean {
+    const last = Date.parse(storage.read(LAST_CHECK_KEY) ?? "");
+    const elapsed = clock.now().getTime() - last;
+    return elapsed >= 0 && elapsed <= CHECK_INTERVAL_MS;
+  }
+
+  /**
+   * The check made when the app opens. Skipped within 6 hours of the last one. It asks the wiki only for its
+   * revision ID, and fetches the page only when that differs from the newest revision the device knows. The
+   * notice appears only when entries changed. A failed check changes nothing and is not counted, so the
+   * next visit tries again; so is a check that found a notice, so the notice returns until it is dealt with.
+   */
+  async function autoCheckForUpdate(): Promise<void> {
+    if (checkedRecently()) return;
+    let revision: number;
+    try {
+      revision = await wiki.fetchRevisionId();
+    } catch {
+      return;
+    }
+    if (revision === Math.max(content.revisionId, offered?.revisionId ?? 0) || revision === dismissedRevision) {
+      recordCheck();
+      return;
+    }
+    const check = await checkForUpdate();
+    if (check.status === "unreachable") return;
+    if (check.status === "changes" && check.preview.revisionId > dismissedRevision) {
+      if (check.preview.revisionId > (offered?.revisionId ?? 0)) offered = check.preview;
+      return;
+    }
+    recordCheck();
+  }
+
+  // A bundled copy newer than the device's own stored copy is offered like a fetched update.
+  if (stored && bundled.revisionId > stored.revisionId) {
+    const check = compareWith(bundled);
+    if (check.status === "changes") offered = check.preview;
+  }
+
   return {
     expansions: () => content.expansions,
     /** Fetches the wiki page and reports what would change; nothing is applied until `applyUpdate`. */
     checkForUpdate,
+    autoCheckForUpdate,
+    /** The update the notice above the log offers (Review opens it), or null when there is none to show. */
+    updateNotice,
+    /** Hides the notice until the wiki's revision, or the bundled copy's, changes again. */
+    dismissUpdateNotice() {
+      const notice = updateNotice();
+      if (!notice) return;
+      dismissedRevision = notice.revisionId;
+      storage.write(DISMISSED_KEY, String(dismissedRevision));
+      recordCheck();
+    },
     /**
      * Replaces the content with a previewed update. Progress is untouched except for the suggested matches the
      * player accepted, which move every character's status to the new entry; statuses of other removed entries

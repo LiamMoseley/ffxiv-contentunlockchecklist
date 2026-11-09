@@ -1,8 +1,11 @@
 import type { Content, Entry, WikiPage } from "./content";
 import type { SuggestedMatch } from "./suggestions";
 
-/** The wiki source adapter: fetches the current Content Unlock page, or rejects when the wiki can't be reached. */
-export type WikiSource = { fetchPage(): Promise<WikiPage> };
+/**
+ * The wiki source adapter. Each call rejects when the wiki can't be reached. `fetchRevisionId` is a cheap
+ * lookup of the Content Unlock page's current revision, so the automatic check needn't download the page.
+ */
+export type WikiSource = { fetchPage(): Promise<WikiPage>; fetchRevisionId(): Promise<number> };
 
 /** The plain fields of an entry that an update can change. */
 export const COMPARED_FIELDS = [
