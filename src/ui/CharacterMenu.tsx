@@ -128,7 +128,7 @@ export function CharacterMenu({
               Add character
             </button>
             <button type="button" onClick={() => setMode({ kind: "form", editing: current })}>
-              Edit {label}
+              Edit character
             </button>
             <button type="button" onClick={() => setMode({ kind: "confirm", action: "reset" })}>
               Reset
