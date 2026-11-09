@@ -170,7 +170,7 @@ describe("NEW entries after an update", () => {
 
       log.showNewEntries();
 
-      expect(log.viewingNew()).toBe(true);
+      expect(log.view()).toBe("new");
       expect(log.newEntries().map((s) => [s.id, s.entries.map((e) => e.unlock)])).toEqual([
         ["arr-levelling", ["Dungeon Alpha"]],
         ["hw-levelling", ["Dungeon Omega"]],
@@ -190,11 +190,11 @@ describe("NEW entries after an update", () => {
 
       log.showNewEntries();
       log.setSelection({ expansion: "hw" });
-      expect(log.viewingNew()).toBe(false);
+      expect(log.view()).toBe("sections");
 
       log.showNewEntries();
       log.setSelection({ tab: "levelCap" });
-      expect(log.viewingNew()).toBe(false);
+      expect(log.view()).toBe("sections");
     });
 
     it("returns to the normal view with Show all entries, keeping the NEW tags", async () => {
@@ -203,7 +203,7 @@ describe("NEW entries after an update", () => {
 
       log.showAllEntries();
 
-      expect(log.viewingNew()).toBe(false);
+      expect(log.view()).toBe("sections");
       expect(log.newNotice()).not.toBeNull();
     });
 
@@ -211,7 +211,7 @@ describe("NEW entries after an update", () => {
       const { log, storage } = await openWithNew(["Dungeon Alpha"]);
       log.showNewEntries();
 
-      expect(openLog({ storage }).log.viewingNew()).toBe(false);
+      expect(openLog({ storage }).log.view()).toBe("sections");
     });
 
     it("does nothing when there are no NEW entries", () => {
@@ -219,7 +219,7 @@ describe("NEW entries after an update", () => {
 
       log.showNewEntries();
 
-      expect(log.viewingNew()).toBe(false);
+      expect(log.view()).toBe("sections");
     });
 
     it("ends when an update is applied", async () => {
@@ -229,7 +229,7 @@ describe("NEW entries after an update", () => {
 
       await apply(log);
 
-      expect(log.viewingNew()).toBe(false);
+      expect(log.view()).toBe("sections");
     });
   });
 
@@ -252,7 +252,7 @@ describe("NEW entries after an update", () => {
 
       log.markNewSeen();
 
-      expect(log.viewingNew()).toBe(false);
+      expect(log.view()).toBe("sections");
     });
 
     it("stays seen when the app is opened again on the device", async () => {

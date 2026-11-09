@@ -37,6 +37,17 @@ export type Available = {
   hidden: number;
 };
 
+/** Which view is open: the expansion and tab sections, every NEW entry, or what is available now. */
+export type LogView = "sections" | "new" | "available";
+
+/**
+ * What the open view lists: its sections with the entries that pass the search and filters. The sections view
+ * keeps a section whose entries are all filtered out (so the UI can say so); the other views leave it out.
+ * `level` and `hidden` are Available now's: the character's level (null with none) and the reachable entries
+ * the search and filters leave out. They are null and 0 in the other views.
+ */
+export type Listing = { view: LogView; sections: Section[]; level: number | null; hidden: number };
+
 /** `content` is the bundled copy; a copy applied from the wiki and stored on the device takes its place. */
 export type LogOptions = { content: Content; storage: Storage; clock: Clock; wiki: WikiSource };
 
@@ -120,8 +131,8 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
 
   /** IDs of the entries the most recently applied update added and the player has not marked as seen. Shared by every character. */
   let newIds: string[] = loadNewIds();
-  /** Whether the log lists the NEW entries in place of the expansion and tab. A view choice for this visit only. */
-  let showingNew = false;
+  /** Which view is open; only one is at a time. A view choice for this visit only. */
+  let openView: LogView = "sections";
 
   function loadNewIds(): string[] {
     try {
@@ -137,6 +148,65 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     const ids = new Set(newIds);
     return content.sections.flatMap((s) => s.entries).filter((e) => ids.has(e.id));
   };
+
+  /** The NEW entries that pass the search and filters, grouped by section, empty sections left out. */
+  function newSections(): Section[] {
+    const shown = new Set(
+      currentNew()
+        .filter((e) => passesFilters(e, entryStatus(e.id), filters))
+        .map((e) => e.id),
+    );
+    return content.sections.flatMap((section) => {
+      const entries = section.entries.filter((e) => shown.has(e.id));
+      return entries.length > 0 ? [{ ...section, entries }] : [];
+    });
+  }
+
+  /**
+   * Everything the current character can reach now and has not marked: levelling entries at or below
+   * their level (a range such as "56-60" by its lower bound), and level-cap entries once they have the
+   * expansion's level cap. A character with no level gets `level: null` and nothing. The search and filters
+   * apply; `hidden` counts the reachable entries they leave out.
+   */
+  function availableNow(): Available {
+    const level = currentCharacter().level;
+    if (level === null) return { level, sections: [], hidden: 0 };
+    let hidden = 0;
+    const sections = content.sections.flatMap((section) => {
+      const expansion = content.expansions.find((e) => e.id === section.expansionId);
+      if (!expansion) throw new Error(`No expansion ${section.expansionId}`);
+      const cap = expansion.levelCap;
+      const reachable = (entry: Entry) =>
+        section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
+      const reached = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
+      const entries = reached.filter((e) => passesFilters(e, "unmarked", filters));
+      hidden += reached.length - entries.length;
+      return entries.length > 0 ? [{ ...section, entries }] : [];
+    });
+    return { level, sections, hidden };
+  }
+
+  function listing(): Listing {
+    if (openView === "new") return { view: openView, sections: newSections(), level: null, hidden: 0 };
+    if (openView === "available") return { view: openView, ...availableNow() };
+    const { expansion, tab } = selection;
+    const chosen = content.sections.filter(
+      (s) => expansion === "all" || (s.expansionId === expansion && (tab === "all" || s.kind === tab)),
+    );
+    const sections = chosen.map((s) => ({
+      ...s,
+      entries: s.entries.filter((e) => passesFilters(e, entryStatus(e.id), filters)),
+    }));
+    return { view: openView, sections, level: null, hidden: 0 };
+  }
+
+  /** The IDs of the entries the open view lists, which Complete Shown and Clear Shown act on. */
+  const shownIds = (): string[] => listing().sections.flatMap((s) => s.entries.map((e) => e.id));
+
+  /** Ending the NEW view returns to the sections; another open view is left alone. */
+  function endNewView() {
+    if (openView === "new") openView = "sections";
+  }
 
   const contentTypes = (): string[] => [...new Set(content.sections.flatMap((s) => s.entries).map(typeOf))];
 
@@ -578,7 +648,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       // The entries this update added are the NEW ones; the last update's are no longer new.
       newIds = preview.added.map((e) => e.id);
       storage.write(NEW_KEY, JSON.stringify(newIds));
-      showingNew = false;
+      endNewView();
     },
     /** Whether the entry was added by the most recently applied update and not yet marked as seen. */
     isNew: (entryId: string): boolean => newIds.includes(entryId),
@@ -594,32 +664,31 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         more: Math.max(0, entries.length - NOTICE_NAMES),
       };
     },
-    /** Whether the log lists the NEW entries from every expansion in place of the expansion and tab. */
-    viewingNew: (): boolean => showingNew,
-    /** Lists the NEW entries across all expansions. Does nothing when there are none. */
+    /** Which view is open. Opening one closes the others. */
+    view: (): LogView => openView,
+    /** Opens the NEW entries from every expansion. Does nothing when there are none. */
     showNewEntries() {
-      showingNew = currentNew().length > 0;
+      if (currentNew().length > 0) openView = "new";
+    },
+    /** Opens Available now. */
+    showAvailableNow() {
+      openView = "available";
     },
     /** Returns to the expansion and tab view. The NEW tags stay. */
     showAllEntries() {
-      showingNew = false;
+      openView = "sections";
     },
+    /**
+     * What the open view lists. Complete Shown, Clear Shown, their counts, and every view's rows and empty
+     * states read this one query.
+     */
+    listing,
     /** The NEW entries that pass the search and filters, grouped by section, empty sections left out. */
-    newEntries(): Section[] {
-      const shown = new Set(
-        currentNew()
-          .filter((e) => passesFilters(e, entryStatus(e.id), filters))
-          .map((e) => e.id),
-      );
-      return content.sections.flatMap((section) => {
-        const entries = section.entries.filter((e) => shown.has(e.id));
-        return entries.length > 0 ? [{ ...section, entries }] : [];
-      });
-    },
+    newEntries: newSections,
     /** Clears every NEW tag and marker at once and ends the Show view. Returns how many entries it cleared. */
     markNewSeen(): number {
       const cleared = currentNew().length;
-      showingNew = false;
+      endNewView();
       if (newIds.length > 0) {
         newIds = [];
         storage.write(NEW_KEY, JSON.stringify(newIds));
@@ -658,7 +727,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         (next.tab === undefined || TABS.includes(next.tab));
       if (!valid) return;
       selection = { ...selection, ...next };
-      showingNew = false;
+      endNewView();
       saveView();
     },
     /** What currently narrows the log. Everything but the search is remembered on the device. */
@@ -673,9 +742,11 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       saveView();
     },
     /** How many filters are narrowing the log right now. */
-    activeFilterCount: ({ availableNow = false } = {}): number =>
+    activeFilterCount: (): number =>
       // Available now lists only Unmarked entries, so it always hides Completed and Not interested ones.
-      activeFilterCount(availableNow ? { ...filters, hideCompleted: true, hideNotInterested: true } : filters),
+      activeFilterCount(
+        openView === "available" ? { ...filters, hideCompleted: true, hideNotInterested: true } : filters,
+      ),
     /** Every content type with its number of entries, most common first. */
     typeCounts: (): { type: string; count: number }[] =>
       contentTypes()
@@ -684,35 +755,8 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
           count: content.sections.flatMap((s) => s.entries).filter((e) => typeOf(e) === type).length,
         }))
         .sort((a, b) => b.count - a.count),
-    /** The section's entries that pass the current search and filters, in the wiki's order. */
-    shownEntries(sectionId: string): Entry[] {
-      const section = content.sections.find((s) => s.id === sectionId);
-      if (!section) throw new Error(`No section ${sectionId}`);
-      return section.entries.filter((e) => passesFilters(e, entryStatus(e.id), filters));
-    },
-    /**
-     * Everything the current character can reach now and has not marked: levelling entries at or below
-     * their level (a range such as "56-60" by its lower bound), and level-cap entries once they have the
-     * expansion's level cap. A character with no level gets `level: null` and nothing. The search and filters
-     * apply; `hidden` counts the reachable entries they leave out.
-     */
-    availableNow(): Available {
-      const level = currentCharacter().level;
-      if (level === null) return { level, sections: [], hidden: 0 };
-      let hidden = 0;
-      const sections = content.sections.flatMap((section) => {
-        const expansion = content.expansions.find((e) => e.id === section.expansionId);
-        if (!expansion) throw new Error(`No expansion ${section.expansionId}`);
-        const cap = expansion.levelCap;
-        const reachable = (entry: Entry) =>
-          section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
-        const reached = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
-        const entries = reached.filter((e) => passesFilters(e, "unmarked", filters));
-        hidden += reached.length - entries.length;
-        return entries.length > 0 ? [{ ...section, entries }] : [];
-      });
-      return { level, sections, hidden };
-    },
+    /** Available now's own reading of the listing: see `listing`. */
+    availableNow,
     sectionProgress(sectionId: string): ProgressCount {
       const section = content.sections.find((s) => s.id === sectionId);
       if (!section) throw new Error(`No section ${sectionId}`);
@@ -729,13 +773,21 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       return setEntryStatus(entryId, NEXT_STATUS[entryStatus(entryId)]);
     },
     setEntryStatus,
-    /** How many of the shown entries Complete Shown would change: those neither Completed nor Not interested. */
-    completeShownCount: (entryIds: string[]): number => entryIds.filter((id) => entryStatus(id) === "unmarked").length,
-    completeShown: (entryIds: string[]): ChangeResult =>
-      change(new Map(entryIds.filter((id) => entryStatus(id) !== "notInterested").map((id) => [id, "completed"]))),
-    /** How many of the shown entries Clear Shown would change: those not already Unmarked. */
-    clearShownCount: (entryIds: string[]): number => entryIds.filter((id) => entryStatus(id) !== "unmarked").length,
-    clearShown: (entryIds: string[]): ChangeResult => change(new Map(entryIds.map((id) => [id, "unmarked"]))),
+    /** How many of the listed entries Complete Shown would change: those neither Completed nor Not interested. */
+    completeShownCount: (): number => shownIds().filter((id) => entryStatus(id) === "unmarked").length,
+    /** Marks the open view's listed entries Completed, leaving Not interested alone. */
+    completeShown: (): ChangeResult =>
+      change(
+        new Map(
+          shownIds()
+            .filter((id) => entryStatus(id) !== "notInterested")
+            .map((id) => [id, "completed"]),
+        ),
+      ),
+    /** How many of the listed entries Clear Shown would change: those not already Unmarked. */
+    clearShownCount: (): number => shownIds().filter((id) => entryStatus(id) !== "unmarked").length,
+    /** Sets the open view's listed entries back to Unmarked. */
+    clearShown: (): ChangeResult => change(new Map(shownIds().map((id) => [id, "unmarked"]))),
     canUndo: () => history.length > 0,
     /**
      * Writes the statuses before the latest change back, as a new change with a fresh timestamp.
