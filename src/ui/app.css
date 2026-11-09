@@ -263,6 +263,9 @@ a:hover {
   border: 1px solid #1e1e1e;
   border-radius: 6px;
   background: rgba(240, 195, 90, 0.1);
+  /* Same size and colour as the legend in the hint bar */
+  font-size: 12.5px;
+  color: var(--text-dim);
 }
 .new-notice-text {
   flex: 1 1 200px;
@@ -1085,6 +1088,7 @@ a.wiki-link:focus-visible {
 /* Embossed pill: grey gradient, light top bevel and dark bottom bevel, no edge line or coloured border */
 .button-footer button,
 .hint-bar .undo,
+.new-notice button,
 .available-empty button,
 .dialog-buttons button {
   display: inline-flex;
@@ -1106,12 +1110,14 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:hover:not(:disabled),
 .hint-bar .undo:hover:not(:disabled),
+.new-notice button:hover:not(:disabled),
 .available-empty button:hover:not(:disabled),
 .dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
 .button-footer button:active:not(:disabled),
 .hint-bar .undo:active:not(:disabled),
+.new-notice button:active:not(:disabled),
 .available-empty button:active:not(:disabled),
 .dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
@@ -1128,6 +1134,7 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:focus-visible,
 .hint-bar .undo:focus-visible,
+.new-notice button:focus-visible,
 .available-empty button:focus-visible,
 .dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
@@ -1136,6 +1143,10 @@ a.wiki-link:focus-visible {
 .hint-bar .undo {
   padding: 0 14px;
   font-size: 13px;
+}
+.new-notice button {
+  padding: 0 14px;
+  font-size: 12.5px;
 }
 
 /* Brief messages and confirmations, framed in the window's bronze */

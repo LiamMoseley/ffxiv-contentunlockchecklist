@@ -12,7 +12,7 @@ import { SectionTabs, type TabChoice } from "./SectionTabs";
 const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
 
 /** A section tab: one of the expansion's two sections, or both. */
-type TabKey = SectionKind | "all" | "new";
+type TabKey = SectionKind | "all";
 
 /** The wiki writes "Level 51 - 60"; the window shows "Level 51–60". */
 const sectionTitle = (section: Section) => section.heading.replace(/\s*-\s*/, "–");
@@ -39,8 +39,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     refresh();
   };
   const setTab = (key: TabKey) => {
-    // The New entries tab is the view already showing.
-    if (key === "new") return;
     // Choosing a tab in the Every section view has no selection to change, but still ends the NEW view.
     if (expansion === "all") log.showAllEntries();
     else log.setSelection({ tab: key });
@@ -155,7 +153,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
 
   const viewingNew = log.viewingNew();
   const newSections = log.newEntries();
-  const sectionTabs: TabChoice<TabKey>[] =
+  const tabs: TabChoice<TabKey>[] =
     expansion === "all"
       ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
       : [
@@ -166,10 +164,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           })),
           { key: "all", label: "All", progress: log.expansionProgress(expansion) },
         ];
-  const tabs: TabChoice<TabKey>[] = viewingNew
-    ? [...sectionTabs, { key: "new", label: "New entries", total: newSections.flatMap((s) => s.entries).length }]
-    : sectionTabs;
-  const activeTab: TabKey = viewingNew ? "new" : expansion === "all" ? "all" : tab;
+  const activeTab: TabKey = expansion === "all" ? "all" : tab;
 
   const shownSections =
     expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
@@ -256,7 +251,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               ) : (
                 <SectionTabs
                   tabs={tabs}
-                  active={activeTab}
+
+                  active={viewingNew ? null : activeTab}
                   onChoose={(key) => expansion !== "all" && setTab(key)}
                   label="Sections"
                 />

@@ -1,13 +1,7 @@
 import type { ProgressCount } from "../log";
 import { Count } from "./ProgressBar";
 
-/** A tab shows a completed count, or a plain number of entries (`total`) where progress means nothing. */
-export type TabChoice<K extends string = string> = {
-  key: K;
-  label: string;
-  progress?: ProgressCount;
-  total?: number;
-};
+export type TabChoice<K extends string = string> = { key: K; label: string; progress: ProgressCount };
 
 /** Separate slanted tabs, each with its completed count; the active one has a yellow corner mark. */
 export function SectionTabs<K extends string>({
@@ -17,7 +11,8 @@ export function SectionTabs<K extends string>({
   label,
 }: {
   tabs: TabChoice<K>[];
-  active: K;
+  /** Null while another view (the NEW entries) is showing in place of the tabs' sections. */
+  active: K | null;
   onChoose: (key: K) => void;
   label: string;
 }) {
@@ -33,7 +28,7 @@ export function SectionTabs<K extends string>({
           onClick={() => onChoose(tab.key)}
         >
           <span>
-            {tab.label} {tab.progress ? <Count progress={tab.progress} /> : <span className="count">{tab.total}</span>}
+            {tab.label} <Count progress={tab.progress} />
           </span>
         </button>
       ))}
