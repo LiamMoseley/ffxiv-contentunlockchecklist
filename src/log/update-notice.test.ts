@@ -114,7 +114,7 @@ describe("the automatic update check", () => {
     expect(later.wiki.requests.revisions).toBe(1);
   });
 
-  it("shows the notice again on the next visit until it is dismissed or applied", async () => {
+  it("shows the notice again on the next visit, without asking the wiki again, until it is dismissed or applied", async () => {
     const storage = createMemoryStorage();
     const first = openLog({ storage });
     first.wiki.serve(withDungeon("Sastasha Reborn", 1));
@@ -125,6 +125,28 @@ describe("the automatic update check", () => {
     await second.log.autoCheckForUpdate();
 
     expect(noticeNames(second.log)).toEqual(["Sastasha Reborn"]);
+    expect(second.wiki.requests).toEqual({ pages: 0, revisions: 0 });
+  });
+
+  it("keeps the fetched update on the device under its own key", async () => {
+    const { log, wiki, storage } = openLog();
+    wiki.serve(withDungeon("Sastasha Reborn", 1));
+
+    await log.autoCheckForUpdate();
+
+    const kept = JSON.parse(storage.read("contentUnlockLog.offeredUpdate")!);
+    expect(kept.revisionId).toBe(realPage.revisionId + 1);
+    expect(kept.sections.flatMap((s: { entries: unknown[] }) => s.entries)).toHaveLength(430);
+  });
+
+  it("does not bring back a notice the player applied", async () => {
+    const storage = createMemoryStorage();
+    const first = openLog({ storage });
+    first.wiki.serve(withDungeon("Sastasha Reborn", 1));
+    await first.log.autoCheckForUpdate();
+    first.log.applyUpdate(first.log.updateNotice()!);
+
+    expect(openLog({ storage }).log.updateNotice()).toBeNull();
   });
 
   describe("Dismiss", () => {

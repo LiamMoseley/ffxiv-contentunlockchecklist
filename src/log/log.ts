@@ -64,6 +64,7 @@ const NEW_KEY = "contentUnlockLog.newEntries";
 const DECLINED_KEY = "contentUnlockLog.declinedMatches";
 const LAST_CHECK_KEY = "contentUnlockLog.lastUpdateCheck";
 const DISMISSED_KEY = "contentUnlockLog.dismissedRevision";
+const OFFERED_KEY = "contentUnlockLog.offeredUpdate";
 
 /** The automatic check looks at the wiki at most this often. */
 const CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
@@ -491,8 +492,9 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
   /**
    * The check made when the app opens. Skipped within 6 hours of the last one. It asks the wiki only for its
    * revision ID, and fetches the page only when that differs from the newest revision the device knows. The
-   * notice appears only when entries changed. A failed check changes nothing and is not counted, so the
-   * next visit tries again; so is a check that found a notice, so the notice returns until it is dealt with.
+   * notice appears only when entries changed, and the fetched page is kept on the device so the notice
+   * returns on later visits without asking the wiki again. A failed check changes nothing and is not
+   * counted, so the next visit tries again.
    */
   async function autoCheckForUpdate(): Promise<void> {
     if (checkedRecently()) return;
@@ -509,16 +511,31 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     const check = await checkForUpdate();
     if (check.status === "unreachable") return;
     if (check.status === "changes" && check.preview.revisionId > dismissedRevision) {
-      if (check.preview.revisionId > (offered?.revisionId ?? 0)) offered = check.preview;
-      return;
+      if (check.preview.revisionId > (offered?.revisionId ?? 0)) {
+        offered = check.preview;
+        storage.write(OFFERED_KEY, JSON.stringify(check.preview.content));
+      }
     }
     recordCheck();
   }
 
-  // A bundled copy newer than the device's own stored copy is offered like a fetched update.
-  if (stored && bundled.revisionId > stored.revisionId) {
-    const check = compareWith(bundled);
+  // A copy the device is holding for review (a fetched update not yet applied or dismissed) and a bundled copy
+  // newer than the device's own are both offered like a fetched update; the newer revision wins.
+  for (const candidate of [loadOffered(), stored && bundled.revisionId > stored.revisionId ? bundled : null]) {
+    if (!candidate || candidate.revisionId <= content.revisionId || candidate.revisionId <= (offered?.revisionId ?? 0))
+      continue;
+    const check = compareWith(candidate);
     if (check.status === "changes") offered = check.preview;
+  }
+
+  /** The fetched update kept for review, if there is a usable one. */
+  function loadOffered(): Content | null {
+    try {
+      const saved = JSON.parse(storage.read(OFFERED_KEY) ?? "null") as Content | null;
+      return saved && Array.isArray(saved.sections) && Array.isArray(saved.expansions) ? saved : null;
+    } catch {
+      return null;
+    }
   }
 
   return {
@@ -534,7 +551,6 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       if (!notice) return;
       dismissedRevision = notice.revisionId;
       storage.write(DISMISSED_KEY, String(dismissedRevision));
-      recordCheck();
     },
     /**
      * Replaces the content with a previewed update. Progress is untouched except for the suggested matches the

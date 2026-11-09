@@ -512,9 +512,7 @@ function UpdateNotice({
   if (!preview) return null;
   return (
     <div className="new-notice" role="status">
-      <span className="new-notice-text">
-        <span>New content is available on the wiki.</span>
-      </span>
+      <span className="new-notice-text">New content is available on the wiki.</span>
       <button type="button" onClick={() => onReview(preview)}>
         Review
       </button>
