@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import type { Character, CharacterError, Log } from "../log";
+import type { BackupError, Character, CharacterError, Log } from "../log";
 import { ConfirmDialog } from "./Messages";
 import { Count, ProgressBar } from "./ProgressBar";
 
@@ -9,6 +9,11 @@ const ERROR_TEXT: Record<CharacterError, string> = {
   unknownWorld: "Choose a World from the list.",
   nameTaken: "Another character already has this name on this World.",
   notFound: "That character no longer exists.",
+};
+
+const IMPORT_ERROR_TEXT: Record<BackupError, string> = {
+  notABackup: "That file is not a backup from this app.",
+  newerVersion: "That backup was made by a newer version of the app. Update the app to read it.",
 };
 
 type Mode =
@@ -32,6 +37,37 @@ export function CharacterMenu({
   const current = log.currentCharacter();
   const label = log.characterLabel(current);
   const onlyOne = log.characters().length === 1;
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const exportBackup = () => {
+    const { fileName, json } = log.exportBackup();
+    const url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    URL.revokeObjectURL(url);
+    onChange(`Saved ${fileName}.`);
+  };
+
+  const importBackup = async (input: HTMLInputElement) => {
+    const file = input.files?.[0];
+    input.value = "";
+    if (!file) return;
+    const result = log.importBackup(await file.text());
+    if (!result.ok) {
+      onChange(IMPORT_ERROR_TEXT[result.error]);
+      return;
+    }
+    const { charactersAdded, charactersMerged, entriesAdded } = result;
+    if (charactersAdded === 0 && entriesAdded === 0) {
+      onChange("Nothing to import: this device already has everything in that backup.");
+      return;
+    }
+    onChange(
+      `Imported ${entriesAdded} ${entriesAdded === 1 ? "entry" : "entries"}: ${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
+    );
+  };
 
   if (mode.kind === "form") {
     return (
@@ -52,6 +88,9 @@ export function CharacterMenu({
     <>
       <div
         className="dialog-backdrop"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) onClose();
+        }}
         onKeyDown={(event) => {
           if (event.key === "Escape") onClose();
         }}
@@ -72,7 +111,6 @@ export function CharacterMenu({
                     onClick={() => {
                       log.switchCharacter(character.id);
                       onChange();
-                      onClose();
                     }}
                   >
                     <span className="character-row-name">{log.characterLabel(character)}</span>
@@ -86,12 +124,13 @@ export function CharacterMenu({
               );
             })}
           </ul>
+          <h3 className="character-section-title">Character</h3>
           <div className="dialog-buttons character-actions">
             <button type="button" onClick={() => setMode({ kind: "form", editing: null })}>
-              Add character
+              Add
             </button>
             <button type="button" onClick={() => setMode({ kind: "form", editing: current })}>
-              Edit {label}
+              Edit
             </button>
             <button type="button" onClick={() => setMode({ kind: "confirm", action: "reset" })}>
               Reset
@@ -104,6 +143,25 @@ export function CharacterMenu({
             >
               Delete
             </button>
+          </div>
+          <h3 className="character-section-title">Backup</h3>
+          <div className="dialog-buttons character-actions">
+            <button type="button" onClick={exportBackup}>
+              Export
+            </button>
+            <button type="button" onClick={() => fileRef.current?.click()}>
+              Import
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="application/json,.json"
+              hidden
+              aria-label="Backup file"
+              onChange={(event) => void importBackup(event.target)}
+            />
+          </div>
+          <div className="dialog-buttons character-actions character-footer">
             <button type="button" className="primary" onClick={onClose}>
               Close
             </button>
