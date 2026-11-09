@@ -10,4 +10,6 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **Keep the UI thin.** The UI has no tests, so any rule that decides what is valid, derived or allowed (uniqueness, a Data Center from a World, what Reset clears) belongs in the Log core, where it is tested. A component only collects input, calls a command and shows the result.
 
+**The device's state is an adapter reading, not a rule.** A component may read whether the device is online (`navigator.onLine`) to disable a control and say why. What an update does, and what a failed fetch means, stays in the Log core.
+
 **One query decides what a view lists.** Every view that lists entries gets its list from one Log core query, and everything derived from that list (Complete Shown and Clear Shown, counts, badges, empty states) uses the same query. A second list built in a component, such as bulk actions reading the section view while a different view is open, drifts from what the player sees.

@@ -1,11 +1,12 @@
 /**
  * Ticks or adds acceptance criteria on a GitHub issue, changing nothing else in its body.
  *
- *   node scripts/issue-criteria.mjs tick <issue> <n>...|all [--dry]
- *   node scripts/issue-criteria.mjs add  <issue> "<criterion text>" [--ticked] [--dry]
+ *   node scripts/issue-criteria.mjs tick   <issue> <n>...|all [--dry]
+ *   node scripts/issue-criteria.mjs untick <issue> <n>...|all [--dry]
+ *   node scripts/issue-criteria.mjs add    <issue> "<criterion text>" [--ticked] [--dry]
  *
  * `tick` marks the numbered criteria (1 = the first `- [ ]` / `- [x]` line under the body) as met, or every
- * criterion with `all`. `add` appends a criterion after the last one. `--dry` prints the new body instead
+ * criterion with `all`; `untick` puts them back to unmet. `add` appends a criterion after the last one. `--dry` prints the new body instead
  * of editing the issue. Needs `gh` signed in.
  */
 import { execFileSync } from "node:child_process";
@@ -18,8 +19,8 @@ const gh = (...args) => execFileSync("gh", args, { encoding: "utf8" });
 const [command, issue, ...rest] = process.argv.slice(2);
 const flags = new Set(rest.filter((a) => a.startsWith("--")));
 const args = rest.filter((a) => !a.startsWith("--"));
-const usage = 'Usage: issue-criteria.mjs tick <issue> <n>...|all | add <issue> "<text>" [--ticked] [--dry]';
-if (!["tick", "add"].includes(command) || !/^\d+$/.test(issue ?? "") || args.length === 0) {
+const usage = 'Usage: issue-criteria.mjs tick|untick <issue> <n>...|all | add <issue> "<text>" [--ticked] [--dry]';
+if (!["tick", "untick", "add"].includes(command) || !/^\d+$/.test(issue ?? "") || args.length === 0) {
   console.error(usage);
   process.exit(1);
 }
@@ -33,7 +34,7 @@ if (criterionAt.length === 0) {
 }
 
 let result;
-if (command === "tick") {
+if (command === "tick" || command === "untick") {
   const chosen = args[0] === "all" ? criterionAt.map((_, i) => i + 1) : args.map(Number);
   const bad = chosen.filter((n) => !Number.isInteger(n) || n < 1 || n > criterionAt.length);
   if (bad.length > 0) {
@@ -41,7 +42,8 @@ if (command === "tick") {
     process.exit(1);
   }
   result = [...lines];
-  for (const n of chosen) result[criterionAt[n - 1]] = result[criterionAt[n - 1]].replace(/^- \[ \]/, "- [x]");
+  const [from, to] = command === "tick" ? [/^- \[ \]/, "- [x]"] : [/^- \[[xX]\]/, "- [ ]"];
+  for (const n of chosen) result[criterionAt[n - 1]] = result[criterionAt[n - 1]].replace(from, to);
 } else {
   // A criterion can wrap onto continuation lines: insert after the last of them.
   let after = criterionAt[criterionAt.length - 1];
