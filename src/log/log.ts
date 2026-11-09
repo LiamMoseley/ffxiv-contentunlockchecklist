@@ -426,7 +426,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       showingNew = false;
     },
     /** Whether the entry was added by the most recently applied update and not yet marked as seen. */
-    isNew: (entryId: string): boolean => currentNew().some((e) => e.id === entryId),
+    isNew: (entryId: string): boolean => newIds.includes(entryId),
     /** Whether the expansion has NEW entries, for its tile's marker. */
     expansionHasNew: (expansionId: string): boolean =>
       content.sections.some((s) => s.expansionId === expansionId && s.entries.some((e) => newIds.includes(e.id))),

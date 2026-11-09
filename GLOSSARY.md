@@ -87,5 +87,12 @@ The entries a character could unlock at their character level and has not yet ma
 **Orphaned status**:
 An entry status whose entry no longer appears in the log after an update. It is kept, and reattaches if the entry returns.
 
+**NEW entry**:
+An entry the most recently applied update added, tagged NEW until the player marks it as seen or the next update replaces the tags. Whether NEW entries have been seen belongs to the device's log, not to a character.
+_Avoid_: Unread, fresh
+
+**Mark as seen**:
+Clears every NEW tag and marker at once.
+
 **Suggested match**:
 A proposal, shown during an update, that an entry new in that update is a reworded version of an entry orphaned by it, in the same expansion. The player accepts or declines it; a declined pair is never suggested again.

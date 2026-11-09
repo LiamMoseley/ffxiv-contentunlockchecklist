@@ -153,7 +153,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const expansionNames = new Map(log.expansions().map((e) => [e.id, e.name]));
   const expansionSections = log.sections().filter((s) => s.expansionId === expansion);
 
-  const viewingNew = log.viewingNew() && !availableOpen;
+  const viewingNew = log.viewingNew();
   const newSections = log.newEntries();
   const sectionTabs: TabChoice<TabKey>[] =
     expansion === "all"
@@ -265,7 +265,11 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 type="button"
                 className="filters-toggle"
                 aria-pressed={availableOpen}
-                onClick={() => setAvailableOpen(!availableOpen)}
+                onClick={() => {
+                  // Available now replaces the NEW view; coming back lands on the normal view.
+                  log.showAllEntries();
+                  setAvailableOpen(!availableOpen);
+                }}
               >
                 {availableOpen ? "Back to the log" : "Available now"}
               </button>
