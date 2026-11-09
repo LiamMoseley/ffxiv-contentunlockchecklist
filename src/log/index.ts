@@ -11,6 +11,7 @@ export {
   type ImportResult,
   type ChangeResult,
   type Available,
+  type NewNotice,
   type Log,
   type ProgressCount,
   type LogOptions,

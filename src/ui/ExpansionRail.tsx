@@ -16,7 +16,10 @@ export function ExpansionRail({
   collapsed,
   onToggleCollapsed,
   inactive = false,
+  noneChosen = false,
 }: {
+  /** Another view (the NEW entries) is showing: no tile is highlighted, but each still works. */
+  noneChosen?: boolean;
   log: Log;
   /** The tiles do nothing (Available now covers every expansion): greyed out, none chosen. */
   inactive?: boolean;
@@ -36,7 +39,7 @@ export function ExpansionRail({
         detail="Every expansion"
         progress={overall}
         inactive={inactive}
-        chosen={!inactive && chosen === "all"}
+        chosen={!inactive && !noneChosen && chosen === "all"}
         onClick={() => onChoose("all")}
       />
       <div className="rail-gap" role="separator" />
@@ -49,7 +52,8 @@ export function ExpansionRail({
           detail={`Level ${expansion.minLevel}–${expansion.levelCap}`}
           progress={log.expansionProgress(expansion.id)}
           inactive={inactive}
-          chosen={!inactive && chosen === expansion.id}
+          chosen={!inactive && !noneChosen && chosen === expansion.id}
+          hasNew={log.expansionHasNew(expansion.id)}
           onClick={() => onChoose(expansion.id)}
         />
       ))}
@@ -78,9 +82,12 @@ function Tile({
   progress,
   chosen,
   inactive,
+  hasNew = false,
   onClick,
 }: {
   inactive: boolean;
+  /** The expansion has NEW entries not yet seen. */
+  hasNew?: boolean;
   className?: string;
   pictogram: string;
   name: string;
@@ -97,10 +104,15 @@ function Tile({
       aria-pressed={chosen}
       disabled={inactive}
       onClick={onClick}
-      title={inactive ? "Not used in Available now" : `${name} · ${detail} · ${progress.completed}/${progress.total}`}
+      title={
+        inactive
+          ? "Not used in Available now"
+          : `${name} · ${detail} · ${progress.completed}/${progress.total}${hasNew ? " · NEW entries" : ""}`
+      }
     >
       <span className="tile">
         <Pictogram name={pictogram} />
+        {hasNew && <span className="tile-new">NEW</span>}
       </span>
       <span className="rail-text">
         <span className="rail-name">

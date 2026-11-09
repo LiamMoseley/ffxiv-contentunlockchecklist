@@ -11,7 +11,8 @@ export function SectionTabs<K extends string>({
   label,
 }: {
   tabs: TabChoice<K>[];
-  active: K;
+  /** Null while another view (the NEW entries) is showing in place of the tabs' sections. */
+  active: K | null;
   onChoose: (key: K) => void;
   label: string;
 }) {

@@ -240,7 +240,59 @@ a:hover {
 .rail-item.inactive:hover .tile {
   filter: none;
 }
+.new-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 3px;
+  background: var(--gold);
+  color: #3a2a05;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+.new-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  border: 1px solid #1e1e1e;
+  border-radius: 6px;
+  background: rgba(240, 195, 90, 0.1);
+  /* Same size and colour as the legend in the hint bar */
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.new-notice-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.new-notice .new-badge {
+  flex: none;
+  margin-left: 0;
+}
+.tile-new {
+  position: absolute;
+  top: -5px;
+  right: -7px;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: var(--gold);
+  color: #3a2a05;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 13px;
+  box-shadow: 0 0 0 1px #3a0d07;
+}
 .tile {
+  position: relative;
   flex: none;
   width: 50px;
   height: 50px;
@@ -1040,6 +1092,7 @@ a.wiki-link:focus-visible {
 /* Embossed pill: grey gradient, light top bevel and dark bottom bevel, no edge line or coloured border */
 .button-footer button,
 .hint-bar .undo,
+.new-notice button,
 .available-empty button,
 .dialog-buttons button {
   display: inline-flex;
@@ -1061,12 +1114,14 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:hover:not(:disabled),
 .hint-bar .undo:hover:not(:disabled),
+.new-notice button:hover:not(:disabled),
 .available-empty button:hover:not(:disabled),
 .dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
 .button-footer button:active:not(:disabled),
 .hint-bar .undo:active:not(:disabled),
+.new-notice button:active:not(:disabled),
 .available-empty button:active:not(:disabled),
 .dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
@@ -1083,6 +1138,7 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:focus-visible,
 .hint-bar .undo:focus-visible,
+.new-notice button:focus-visible,
 .available-empty button:focus-visible,
 .dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
@@ -1091,6 +1147,10 @@ a.wiki-link:focus-visible {
 .hint-bar .undo {
   padding: 0 14px;
   font-size: 13px;
+}
+.new-notice button {
+  padding: 0 14px;
+  font-size: 12.5px;
 }
 
 /* Brief messages and confirmations, framed in the window's bronze */
