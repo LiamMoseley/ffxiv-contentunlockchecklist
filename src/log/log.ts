@@ -28,7 +28,7 @@ export type ChangeResult = { changed: number; sectionsFinished: string[] };
 /** The entries available now, grouped by the section they belong to; `level` is null when the character has none. */
 export type Available = {
   level: number | null;
-  sections: { id: string; expansionId: string; kind: SectionKind; entries: Entry[] }[];
+  sections: Section[];
 };
 
 export type LogOptions = { content: Content; storage: Storage; clock: Clock };
@@ -322,13 +322,13 @@ export function createLog({ content, storage, clock }: LogOptions) {
       const level = currentCharacter().level;
       if (level === null) return { level, sections: [] };
       const sections = content.sections.flatMap((section) => {
-        const cap = content.expansions.find((e) => e.id === section.expansionId)?.levelCap ?? Infinity;
+        const expansion = content.expansions.find((e) => e.id === section.expansionId);
+        if (!expansion) throw new Error(`No expansion ${section.expansionId}`);
+        const cap = expansion.levelCap;
         const reachable = (entry: Entry) =>
           section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
         const entries = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
-        return entries.length > 0
-          ? [{ id: section.id, expansionId: section.expansionId, kind: section.kind, entries }]
-          : [];
+        return entries.length > 0 ? [{ ...section, entries }] : [];
       });
       return { level, sections };
     },
