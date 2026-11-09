@@ -8,15 +8,18 @@ type State =
   | { phase: "preview"; preview: UpdatePreview };
 
 const FIELD_NAMES = {
-  level: "level",
-  itemLevel: "item level",
-  unlock: "unlock",
-  type: "type",
-  quest: "quest",
-  location: "location",
-  information: "information",
-  optionalChallenge: "optional challenge tag",
+  level: "Level",
+  itemLevel: "Item level",
+  unlock: "Unlock",
+  type: "Type",
+  quest: "Quest",
+  location: "Location",
+  information: "Information",
+  optionalChallenge: "Optional challenge",
 } as const;
+
+/** The fields listed under a new or removed entry, when it has a value for them. */
+const DETAIL_FIELDS = ["level", "itemLevel", "type", "quest", "location"] as const;
 
 const name = (entry: Entry) => entry.unlock || entry.quest;
 
@@ -24,11 +27,22 @@ const name = (entry: Entry) => entry.unlock || entry.quest;
 const show = (value: string | boolean) =>
   typeof value === "boolean" ? (value ? "yes" : "no") : value.replace(/\s*\n\s*/g, "; ") || "none";
 
-/** The detail line of a new or removed entry: its level, type and quest. */
-const summary = (entry: Entry) =>
-  [entry.level && `level ${entry.level}`, entry.type, entry.quest && `quest: ${entry.quest.replace(/\n/g, "; ")}`]
-    .filter(Boolean)
-    .join(" · ");
+/** A new or removed entry: its name, then a labelled line for each detail it has. */
+function EntryDetails({ entry }: { entry: Entry }) {
+  const fields = DETAIL_FIELDS.filter((f) => entry[f] !== "");
+  return (
+    <li className="update-item">
+      <strong className="update-name">{name(entry)}</strong>
+      <ul className="update-diff">
+        {fields.map((f) => (
+          <li key={f}>
+            <span className="update-fields">{FIELD_NAMES[f]}:</span> {show(entry[f])}
+          </li>
+        ))}
+      </ul>
+    </li>
+  );
+}
 
 /** Fetches the wiki's list and shows what would change; the player applies it or leaves it. */
 export function UpdateDialog({
@@ -100,24 +114,22 @@ function Preview({ preview }: { preview: UpdatePreview }) {
         is kept and comes back if the entry returns.
       </p>
       {added.length > 0 && (
-        <section>
+        <section className="update-added">
           <h3>New ({added.length})</h3>
-          <ul>
+          <ul className="update-items">
             {added.map((e) => (
-              <li key={e.id}>
-                {name(e)} <span className="update-fields">{summary(e)}</span>
-              </li>
+              <EntryDetails key={e.id} entry={e} />
             ))}
           </ul>
         </section>
       )}
       {changed.length > 0 && (
-        <section>
+        <section className="update-changed">
           <h3>Changed ({changed.length})</h3>
-          <ul>
+          <ul className="update-items">
             {changed.map((c) => (
-              <li key={c.after.id}>
-                {name(c.after)}
+              <li key={c.after.id} className="update-item">
+                <strong className="update-name">{name(c.after)}</strong>
                 <ul className="update-diff">
                   {c.fields.map((f) => (
                     <li key={f}>
@@ -132,13 +144,11 @@ function Preview({ preview }: { preview: UpdatePreview }) {
         </section>
       )}
       {removed.length > 0 && (
-        <section>
+        <section className="update-removed">
           <h3>Removed ({removed.length})</h3>
-          <ul>
+          <ul className="update-items">
             {removed.map((e) => (
-              <li key={e.id}>
-                {name(e)} <span className="update-fields">{summary(e)}</span>
-              </li>
+              <EntryDetails key={e.id} entry={e} />
             ))}
           </ul>
         </section>
