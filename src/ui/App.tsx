@@ -220,6 +220,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               <button
                 type="button"
                 className="filters-toggle"
+                aria-pressed={availableOpen}
+                onClick={() => setAvailableOpen(!availableOpen)}
+              >
+                {availableOpen ? "Back to the log" : "Available now"}
+              </button>
+              <button
+                type="button"
+                className="filters-toggle"
                 aria-expanded={filtersOpen}
                 aria-controls="filter-bar"
                 onClick={() => setFiltersOpen(!filtersOpen)}
@@ -235,14 +243,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   </span>
                 )}{" "}
                 {filtersOpen ? "▴" : "▾"}
-              </button>
-              <button
-                type="button"
-                className="filters-toggle"
-                aria-pressed={availableOpen}
-                onClick={() => setAvailableOpen(!availableOpen)}
-              >
-                {availableOpen ? "Back to the log" : "Available now"}
               </button>
             </div>
             {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
