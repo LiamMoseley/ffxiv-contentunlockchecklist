@@ -1094,7 +1094,6 @@ a.wiki-link:focus-visible {
 .hint-bar .undo,
 .new-notice button,
 .available-empty button,
-.update-match-buttons button,
 .dialog-buttons button {
   display: inline-flex;
   align-items: center;
@@ -1117,7 +1116,6 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:hover:not(:disabled),
 .new-notice button:hover:not(:disabled),
 .available-empty button:hover:not(:disabled),
-.update-match-buttons button:hover:not(:disabled),
 .dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
@@ -1125,8 +1123,6 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:active:not(:disabled),
 .new-notice button:active:not(:disabled),
 .available-empty button:active:not(:disabled),
-.update-match-buttons button:active:not(:disabled),
-.update-match-buttons button[aria-pressed="true"],
 .dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
@@ -1144,7 +1140,6 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:focus-visible,
 .new-notice button:focus-visible,
 .available-empty button:focus-visible,
-.update-match-buttons button:focus-visible,
 .dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
@@ -1243,13 +1238,17 @@ a.wiki-link:focus-visible {
 .update-matches {
   --update-edge: #5f8fd4;
 }
-.update-match-buttons {
+.update-match {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.35rem;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
 }
-.update-match-buttons button[aria-pressed="true"] {
-  color: var(--gold);
+.update-match input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--gold);
+  cursor: pointer;
 }
 .update-item {
   padding: 6px 0;

@@ -132,13 +132,24 @@ describe("suggested matches for renamed entries", () => {
     expect(log.entryStatus(SASTASHA_ID)).toBe("unmarked");
   });
 
+  it("does not remember an accepted pair as declined", async () => {
+    const { log, wiki, storage } = openLog();
+    log.setEntryStatus(SASTASHA_ID, "completed");
+    wiki.serve(renamedUnlock);
+    const preview = await check(log);
+
+    log.applyUpdate(preview, preview.suggestions);
+
+    expect(storage.read("contentUnlockLog.declinedMatches")).toBeNull();
+  });
+
   it("leaves the orphan orphaned when a match is not accepted", async () => {
     const { log, wiki, storage } = openLog();
     log.setEntryStatus(SASTASHA_ID, "completed");
     wiki.serve(renamedUnlock);
     const preview = await check(log);
 
-    log.applyUpdate(preview, []);
+    log.applyUpdate(preview);
 
     expect(log.entryStatus(preview.suggestions[0].to.id)).toBe("unmarked");
     expect(JSON.parse(storage.read("contentUnlockLog.progress")!).statuses).toMatchObject({
@@ -146,22 +157,39 @@ describe("suggested matches for renamed entries", () => {
     });
   });
 
-  it("never suggests a declined pair again, and keeps the orphan orphaned", async () => {
+  it("remembers nothing about a pair until the update is applied", async () => {
+    const storage = createMemoryStorage();
+    const { log, wiki } = openLog({ storage });
+    log.setEntryStatus(SASTASHA_ID, "completed");
+    wiki.serve(renamedUnlock);
+
+    await check(log);
+
+    expect(storage.read("contentUnlockLog.declinedMatches")).toBeNull();
+    expect(pairs(await check(log))).toEqual([["Sastasha", "Sastashas"]]);
+  });
+
+  it("never suggests a pair again once the update is applied without accepting it, and keeps the orphan orphaned", async () => {
     const storage = createMemoryStorage();
     const { log, wiki } = openLog({ storage });
     log.setEntryStatus(SASTASHA_ID, "completed");
     wiki.serve(renamedUnlock);
     const preview = await check(log);
 
-    log.declineMatch(preview.suggestions[0]);
+    log.applyUpdate(preview, []);
 
     expect(storage.read("contentUnlockLog.declinedMatches")).toBe(
       '["sastasha/its-probably-pirates\\nsastashas/its-probably-pirates"]',
     );
+    expect(log.entryStatus(SASTASHA_ID)).toBe("completed");
+    expect(log.entryStatus(preview.suggestions[0].to.id)).toBe("unmarked");
+
+    // The wiki goes back to the old name and then renames again: the same pair is not offered.
+    wiki.serve({ ...realPage, revisionId: realPage.revisionId + 2 });
+    log.applyUpdate(await check(log));
+    wiki.serve({ ...renamedUnlock, revisionId: realPage.revisionId + 3 });
     expect((await check(log)).suggestions).toEqual([]);
     const reopened = openLog({ storage, wiki });
     expect((await check(reopened.log)).suggestions).toEqual([]);
-    reopened.log.applyUpdate(await check(reopened.log));
-    expect(reopened.log.entryStatus(SASTASHA_ID)).toBe("completed");
   });
 });

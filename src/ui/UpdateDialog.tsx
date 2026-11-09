@@ -74,15 +74,10 @@ export function UpdateDialog({
 
   /** The second step: the suggested matches, shown after the new, changed and removed entries. */
   const [reviewing, setReviewing] = useState(false);
+  /** The ticked matches. Nothing is saved until Apply; the Log core treats every unticked match as declined. */
   const [accepted, setAccepted] = useState<SuggestedMatch[]>([]);
-  const [declined, setDeclined] = useState<SuggestedMatch[]>([]);
-  const decide = (match: SuggestedMatch, accept: boolean) => {
-    setAccepted((list) => (accept ? [...list, match] : list.filter((m) => m !== match)));
-    if (!accept) {
-      log.declineMatch(match);
-      setDeclined((list) => [...list, match]);
-    }
-  };
+  const tick = (match: SuggestedMatch, ticked: boolean) =>
+    setAccepted((list) => (ticked ? [...list, match] : list.filter((m) => m !== match)));
 
   const apply = (preview: UpdatePreview) => {
     log.applyUpdate(preview, accepted);
@@ -103,7 +98,7 @@ export function UpdateDialog({
         {state.phase === "upToDate" && <p role="status">The log is up to date.</p>}
         {state.phase === "preview" && !reviewing && <Preview preview={state.preview} />}
         {state.phase === "preview" && reviewing && (
-          <Matches preview={state.preview} accepted={accepted} declined={declined} onDecide={decide} />
+          <Matches preview={state.preview} accepted={accepted} onTick={tick} />
         )}
         <div className="dialog-buttons">
           <button type="button" ref={closeRef} onClick={onClose}>
@@ -130,47 +125,36 @@ export function UpdateDialog({
   );
 }
 
-/** The second step: each suggested match, to accept or decline before the update is applied. */
+/** The second step: a tick box per suggested match, to choose which to accept before the update is applied. */
 function Matches({
   preview,
   accepted,
-  declined,
-  onDecide,
+  onTick,
 }: {
   preview: UpdatePreview;
   accepted: SuggestedMatch[];
-  declined: SuggestedMatch[];
-  onDecide: (match: SuggestedMatch, accept: boolean) => void;
+  onTick: (match: SuggestedMatch, ticked: boolean) => void;
 }) {
-  const open = preview.suggestions.filter((m) => !declined.includes(m));
   return (
     <div className="update-preview">
       <p>
-        These entries look renamed. Accept a match to move its progress, for every character, to the new entry. A match
-        you leave alone or decline moves nothing, and a declined match is never suggested again. Nothing is applied
-        until you choose Apply update.
+        These entries look renamed. Tick a match to move its progress, for every character, to the new entry. A match
+        you leave unticked moves nothing and is never suggested again. Nothing is saved until you choose Apply update.
       </p>
       <div className="update-scroll">
         <section className="update-matches">
-          <h3>Suggested matches ({open.length})</h3>
-          {open.length === 0 && <p>No matches left to review.</p>}
+          <h3>Suggested matches ({preview.suggestions.length})</h3>
           <ul className="update-items">
-            {open.map((m) => {
-              const isAccepted = accepted.includes(m);
-              return (
-                <li key={`${m.from.id}|${m.to.id}`} className="update-item">
-                  <strong className="update-name">{name(m.from)}</strong> → <strong>{name(m.to)}</strong>
-                  <div className="update-match-buttons">
-                    <button type="button" aria-pressed={isAccepted} onClick={() => onDecide(m, !isAccepted)}>
-                      {isAccepted ? "Accepted" : "Accept"}
-                    </button>
-                    <button type="button" onClick={() => onDecide(m, false)}>
-                      Decline
-                    </button>
-                  </div>
-                </li>
-              );
-            })}
+            {preview.suggestions.map((m) => (
+              <li key={`${m.from.id}|${m.to.id}`} className="update-item">
+                <label className="update-match">
+                  <input type="checkbox" checked={accepted.includes(m)} onChange={(e) => onTick(m, e.target.checked)} />
+                  <span>
+                    <strong className="update-name">{name(m.from)}</strong> → <strong>{name(m.to)}</strong>
+                  </span>
+                </label>
+              </li>
+            ))}
           </ul>
         </section>
       </div>

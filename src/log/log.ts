@@ -452,21 +452,23 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     expansions: () => content.expansions,
     /** Fetches the wiki page and reports what would change; nothing is applied until `applyUpdate`. */
     checkForUpdate,
-    /** Remembers that the player declined the suggested match, so no later update offers it again. */
-    declineMatch({ from, to }: SuggestedMatch) {
-      const declined = declinedPairs();
-      declined.add(pairKey(from, to));
-      storage.write(DECLINED_KEY, JSON.stringify([...declined]));
-    },
     /**
      * Replaces the content with a previewed update. Progress is untouched except for the suggested matches the
      * player accepted, which move every character's status to the new entry; statuses of other removed entries
-     * are kept as orphaned.
+     * are kept as orphaned. Every suggested match the player did not accept counts as declined and is
+     * remembered, so no later update offers it again. Nothing is decided before the update is applied.
      */
     applyUpdate(preview: UpdatePreview, accepted: SuggestedMatch[] = []) {
       adopt(preview.content);
-      const offered = new Set(preview.suggestions.map((s) => pairKey(s.from, s.to)));
-      for (const match of accepted) if (offered.has(pairKey(match.from, match.to))) moveStatuses(match);
+      const takenKeys = new Set(accepted.map((m) => pairKey(m.from, m.to)));
+      const accept = preview.suggestions.filter((m) => takenKeys.has(pairKey(m.from, m.to)));
+      for (const match of accept) moveStatuses(match);
+      const refused = preview.suggestions.filter((m) => !accept.includes(m));
+      if (refused.length > 0) {
+        const all = declinedPairs();
+        for (const { from, to } of refused) all.add(pairKey(from, to));
+        storage.write(DECLINED_KEY, JSON.stringify([...all]));
+      }
       // The entries this update added are the NEW ones; the last update's are no longer new.
       newIds = preview.added.map((e) => e.id);
       storage.write(NEW_KEY, JSON.stringify(newIds));
