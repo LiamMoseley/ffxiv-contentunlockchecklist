@@ -203,13 +203,12 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           />
 
           <main className="main">
-            <div className="tabs-row">
+            <div className={`tabs-row${availableOpen ? " available" : ""}`}>
               {availableOpen ? (
-                <div className="tabs" role="tablist" aria-label="Views">
-                  <button type="button" role="tab" aria-selected="true" className="active">
-                    <span>Available now</span>
-                  </button>
-                </div>
+                <>
+                  <h2 className="available-title">Available now</h2>
+                  <div className="tabs-spacer" />
+                </>
               ) : (
                 <SectionTabs
                   tabs={tabs}
@@ -246,7 +245,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 {filtersOpen ? "▴" : "▾"}
               </button>
             </div>
-            {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
+            {filtersOpen && (
+              <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
+            )}
             <div className="scroll">
               {availableOpen ? (
                 <AvailableNow

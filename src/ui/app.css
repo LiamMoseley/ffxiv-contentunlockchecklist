@@ -1206,6 +1206,51 @@ a.wiki-link:focus-visible {
   align-items: flex-start;
   gap: 12px;
 }
+/* Available now: a blue glow behind the row that fades out towards its edges, with no change to its size */
+.tabs-row.available {
+  position: relative;
+  isolation: isolate;
+}
+/* Centred on the buttons (24px tall, at the top of the row) and reaching the top of the section (10px above the row) */
+/* Holds the row at the height the tabs give it (24px plus their 8px margin) */
+.tabs-spacer {
+  flex: 1;
+  height: 32px;
+}
+/* The view's name, centred in the glow and set in capitals in the app title's font */
+.available-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 400 20px/1 var(--font-title);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #e9e6df;
+  text-shadow: 0 1px 2px #000;
+  pointer-events: none;
+}
+.tabs-row.available::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -10px;
+  height: 44px;
+  left: -10px;
+  right: -10px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse closest-side at 50% 50%,
+    rgba(74, 163, 255, 0.45),
+    rgba(74, 163, 255, 0.2) 55%,
+    transparent 100%
+  );
+}
 .tabs-row .tabs {
   flex: 1;
   min-width: 0;
