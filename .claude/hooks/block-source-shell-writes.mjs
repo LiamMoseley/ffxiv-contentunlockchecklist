@@ -1,5 +1,9 @@
-// PreToolUse hook: refuses shell commands that write project source (heredocs, redirects, `sed -i`, `node -e`),
-// so source changes go through the Write and Edit tools, where quoting and `\n` survive intact.
+// PreToolUse hook: refuses shell commands that write project source (heredocs, redirects, `sed -i`, `node -e`,
+// or a throwaway `node script.mjs` whose text writes `src/` or `scripts/`), so source changes go through the
+// Write and Edit tools, where quoting and `\n` survive intact.
+
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 let input = "";
 for await (const chunk of process.stdin) input += chunk;
@@ -14,8 +18,25 @@ const evalWritesSource =
   mentionsSource &&
   /\bnode\b[^|;&]*\s(?:-\w*[ep]\w*|--eval|--print)\b/.test(command) &&
   /\b(?:write|append|copy|rename|rm|unlink)\w*(?:Sync)?\s*\(/.test(command);
+/** A throwaway script run with `node` or `tsx` whose text writes project source; the repo's own scripts are exempt. */
+function scriptWritesSource() {
+  const runs = command.matchAll(/\b(?:node|tsx)\s+(?:--?\S+\s+)*["']?([^\s"'|;&]+\.(?:mjs|cjs|js|ts))/g);
+  for (const [, path] of runs) {
+    if (new RegExp(SOURCE).test(path)) continue;
+    const local = process.platform === "win32" ? path.replace(/^\/([a-z])\//i, "$1:/") : path;
+    try {
+      const text = readFileSync(resolve(toolInput.cwd ?? process.cwd(), local), "utf8");
+      if (new RegExp(SOURCE).test(text) && /\b(?:write|append|copy|rename|rm|unlink)\w*(?:Sync)?\s*\(/.test(text))
+        return true;
+    } catch {
+      // A script that can't be read can't be judged.
+    }
+  }
+  return false;
+}
 const writesSource =
   evalWritesSource ||
+  scriptWritesSource() ||
   [
     new RegExp(String.raw`>>?\s*${SOURCE}`), // cat > src/..., echo >> src/...
     new RegExp(String.raw`\btee\b[^|;&]*${SOURCE}`),
