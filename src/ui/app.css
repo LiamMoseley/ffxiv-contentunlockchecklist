@@ -1143,6 +1143,8 @@ a.wiki-link:focus-visible {
   min-height: 0;
   overflow-y: auto;
   padding-right: 6px;
+  /* The same 16px the intro text has above it, so the buttons don't sit on the list. */
+  margin-bottom: 16px;
 }
 .update-dialog h3 {
   margin: 10px 0 4px;
