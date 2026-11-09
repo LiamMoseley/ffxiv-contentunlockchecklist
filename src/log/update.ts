@@ -1,4 +1,5 @@
 import type { Content, Entry, WikiPage } from "./content";
+import type { SuggestedMatch } from "./suggestions";
 
 /** The wiki source adapter: fetches the current Content Unlock page, or rejects when the wiki can't be reached. */
 export type WikiSource = { fetchPage(): Promise<WikiPage> };
@@ -26,6 +27,8 @@ export type UpdatePreview = {
   added: Entry[];
   changed: ChangedEntry[];
   removed: Entry[];
+  /** Removed entries that had progress, each paired with the new entry that may be its reworded version. */
+  suggestions: SuggestedMatch[];
   /** The parsed page, kept so applying needs no second fetch. */
   content: Content;
 };
@@ -36,7 +39,10 @@ export type UpdateCheck =
 const entriesOf = (content: Content) => content.sections.flatMap((s) => s.entries);
 
 /** Compares entries by ID: new, changed (other fields differ) and removed. */
-export function diffContent(current: Content, next: Content): Omit<UpdatePreview, "revisionId" | "content"> {
+export function diffContent(
+  current: Content,
+  next: Content,
+): Omit<UpdatePreview, "revisionId" | "content" | "suggestions"> {
   const before = new Map(entriesOf(current).map((e) => [e.id, e]));
   const after = new Map(entriesOf(next).map((e) => [e.id, e]));
   const changed: ChangedEntry[] = [];

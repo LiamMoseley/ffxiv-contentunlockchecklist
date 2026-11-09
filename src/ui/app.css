@@ -1235,6 +1235,17 @@ a.wiki-link:focus-visible {
 .update-removed {
   --update-edge: #c25a5a;
 }
+.update-matches {
+  --update-edge: #5f8fd4;
+}
+.update-match-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+.update-match-buttons button[aria-pressed="true"] {
+  font-weight: 700;
+}
 .update-item {
   padding: 6px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.12);

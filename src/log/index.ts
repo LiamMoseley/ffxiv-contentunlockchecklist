@@ -31,6 +31,7 @@ export {
   type WikiPage,
 } from "./content";
 export { type ChangedEntry, type EntryField, type UpdateCheck, type UpdatePreview, type WikiSource } from "./update";
+export { type SuggestedMatch } from "./suggestions";
 export { entryIcon, iconFile, iconsUsed, WIKI_IMAGE_BASE } from "./icons";
 export { type Expansion } from "./expansions";
 export { type Character, type EntryStatus } from "./progress";
