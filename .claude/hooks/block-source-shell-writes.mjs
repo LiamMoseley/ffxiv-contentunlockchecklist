@@ -34,14 +34,18 @@ function scriptWritesSource() {
   }
   return false;
 }
+// `sed -i` with a source path anywhere in the command. The sed script may hold `|`, `;` or `&` (`s|a|b|` is common),
+// so the path is not looked for between the flag and the end of the script: only the flag must sit in sed's own
+// arguments, before any pipe or `;`/`&` token.
+const sedEditsInPlace =
+  mentionsSource && /\bsed\b(?:\s+(?![|;&])\S+)*?\s+(?:-\w*i\S*|--in-place\S*)(?=\s|$)/.test(command);
 const writesSource =
   evalWritesSource ||
   scriptWritesSource() ||
   [
     new RegExp(String.raw`>>?\s*${SOURCE}`), // cat > src/..., echo >> src/...
     new RegExp(String.raw`\btee\b[^|;&]*${SOURCE}`),
-    new RegExp(String.raw`\bsed\b[^|;&]*\s-\w*i\w*\b[^|;&]*${SOURCE}`),
-  ].some((pattern) => pattern.test(command));
+  ].some((pattern) => pattern.test(command)) || sedEditsInPlace;
 
 if (writesSource) {
   console.log(
