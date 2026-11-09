@@ -30,8 +30,9 @@ async function cacheFonts() {
     const files = [...(await response.text()).matchAll(/url\((https:[^)]+)\)/g)].map((m) => m[1]);
     await Promise.all(
       files.map(async (file) => {
-        const font = await fetch(file);
-        if (font.ok) await cache.put(file, font);
+        // One file failing must not stop the others being kept.
+        const font = await fetch(file).catch(() => null);
+        if (font?.ok) await cache.put(file, font);
       }),
     );
   }
@@ -41,7 +42,9 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const shell = await caches.open(SHELL);
-      await shell.addAll(PRECACHE.map(scopeUrl));
+      // `reload` skips the browser's HTTP cache, which GitHub Pages lets hold a file for 10 minutes: a stale page
+      // or icon would otherwise be kept under the new version's name, beside scripts that no longer exist.
+      await shell.addAll(PRECACHE.map((path) => new Request(scopeUrl(path), { cache: "reload" })));
       // Fonts are a nicety: without them the app falls back to its other fonts, so a failure here must not
       // stop the update from installing.
       await cacheFonts().catch(() => {});
@@ -80,7 +83,10 @@ async function page(request) {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), NAVIGATION_TIMEOUT_MS);
-    const response = await fetch(request, { signal: controller.signal }).finally(() => clearTimeout(timer));
+    // `no-cache` revalidates with the server, so a new deploy shows up despite the HTTP cache.
+    const response = await fetch(request, { signal: controller.signal, cache: "no-cache" }).finally(() =>
+      clearTimeout(timer),
+    );
     if (response.ok && new URL(request.url).pathname === new URL(indexUrl()).pathname) {
       await cache.put(indexUrl(), response.clone());
     }

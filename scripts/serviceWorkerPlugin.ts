@@ -44,6 +44,9 @@ export function serviceWorker(): Plugin {
           "__FONT_STYLESHEETS__",
           JSON.stringify(fontStylesheets(readFileSync(join(outDir, "index.html"), "utf8"))),
         );
+      // A placeholder the template lost or misspelt would otherwise ship as literal text.
+      const unfilled = worker.match(/"__VERSION__"|__PRECACHE__|__FONT_STYLESHEETS__/);
+      if (unfilled) throw new Error(`sw.template.js: placeholder not filled: ${unfilled[0]}`);
       writeFileSync(join(outDir, "sw.js"), worker);
     },
   };
