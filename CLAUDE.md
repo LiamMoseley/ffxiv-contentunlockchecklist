@@ -8,6 +8,10 @@ Issues are tracked in GitHub Issues (LiamMoseley/ffxiv-contentunlockchecklist) v
 
 The test seam is pre-agreed: the Log core's commands and queries. See `CODING_STANDARDS.md`.
 
+### Large files
+
+`fixtures/content-unlock-page.json` is one 800KB line: search it with `grep -o '.\{80\}term.\{80\}'`, never plain `grep` or `cat`. `src/content/bundled-content.json` is generated: refresh it with `npm run snapshot -- --from-fixture`.
+
 ### Verifying the UI
 
 Read `docs/agents/verifying-the-ui.md` before checking a change in the browser pane.
