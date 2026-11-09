@@ -227,7 +227,10 @@ function tidyLine(line: Segment[]): Segment[] {
 
 /** The icon an <img> shows: its sharpest source, as a path inside the wiki's image folder. */
 function iconOf(img: HTMLElement): IconSegment[] {
-  const candidates = img.getAttribute("srcset")?.split(",").map((c) => c.trim().split(/\s+/)[0]);
+  const candidates = img
+    .getAttribute("srcset")
+    ?.split(",")
+    .map((c) => c.trim().split(/\s+/)[0]);
   const src = candidates?.[candidates.length - 1] ?? img.getAttribute("src");
   if (!src?.startsWith(IMAGE_FOLDER)) return [];
   return [

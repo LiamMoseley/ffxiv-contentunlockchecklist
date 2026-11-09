@@ -1,0 +1,12 @@
+dist
+node_modules
+test-results
+public
+fixtures
+package-lock.json
+tsconfig.tsbuildinfo
+# Generated, or prose and data that Prettier would only reflow
+src/content/bundled-content.json
+*.md
+*.json
+.claude

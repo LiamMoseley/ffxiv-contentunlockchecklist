@@ -48,7 +48,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.altKey) return;
-      const inField = event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]");
+      const inField =
+        event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]");
       const slash = event.key === "/" && !event.ctrlKey && !event.metaKey && !inField;
       const palette = event.key.toLowerCase() === "k" && (event.ctrlKey || event.metaKey) && !event.shiftKey;
       if (!slash && !palette) return;
@@ -80,7 +81,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const toastCount = useRef(0);
 
   const sectionNames = new Map(
-    log.sections().map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
+    log
+      .sections()
+      .map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
   );
 
   const say = (text: string) => setToast({ id: ++toastCount.current, text });
@@ -106,7 +109,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   undoRef.current = undo;
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "z") return;
+      if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "z")
+        return;
       if (event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]")) return;
       event.preventDefault();
       undoRef.current();
@@ -133,18 +137,20 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     expansion === "all"
       ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
       : [
-          ...expansionSections.map((s) => ({ key: s.kind, label: sectionTitle(s), progress: log.sectionProgress(s.id) })),
+          ...expansionSections.map((s) => ({
+            key: s.kind,
+            label: sectionTitle(s),
+            progress: log.sectionProgress(s.id),
+          })),
           { key: "all", label: "All", progress: log.expansionProgress(expansion) },
         ];
   const activeTab: TabKey = expansion === "all" ? "all" : tab;
 
   const shownSections =
-    expansion === "all"
-      ? log.sections()
-      : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
+    expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
 
   const activeFilters = log.activeFilterCount();
-  const shownIds =shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
+  const shownIds = shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
   const completeCount = log.completeShownCount(shownIds);
   const clearCount = log.clearShownCount(shownIds);
   const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
@@ -207,7 +213,11 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               >
                 Filters
                 {activeFilters > 0 && (
-                  <span className="filters-active" title={`${activeFilters} active`} aria-label={`${activeFilters} active`}>
+                  <span
+                    className="filters-active"
+                    title={`${activeFilters} active`}
+                    aria-label={`${activeFilters} active`}
+                  >
                     {activeFilters}
                   </span>
                 )}{" "}

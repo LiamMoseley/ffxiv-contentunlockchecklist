@@ -1,6 +1,6 @@
 # Coding standards
 
-Judgement calls for review. Mechanical rules live in `eslint.config.js`.
+Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatting is Prettier's (`npm run format` fixes it, CI runs `npm run format:check`).
 
 ## Testing
 

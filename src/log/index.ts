@@ -1,6 +1,18 @@
 export { characterLabel } from "./progress";
 export { type Filters, type OptionalChallengeFilter } from "./filters";
-export { createLog, type Selection, type CharacterDetails, type CharacterError, type CharacterResult, type ChangeResult, type Log, type ProgressCount, type LogOptions, type Storage, type Clock } from "./log";
+export {
+  createLog,
+  type Selection,
+  type CharacterDetails,
+  type CharacterError,
+  type CharacterResult,
+  type ChangeResult,
+  type Log,
+  type ProgressCount,
+  type LogOptions,
+  type Storage,
+  type Clock,
+} from "./log";
 export {
   parseContentUnlockPage,
   type Content,

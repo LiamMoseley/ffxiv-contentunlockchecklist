@@ -51,7 +51,10 @@ export default tseslint.config(
           patterns: [
             { group: ["react", "react-dom", "react/*", "react-dom/*"], message: "The Log core has no React." },
             { group: ["**/ui", "**/ui/*"], message: "The Log core does not depend on the UI." },
-            { group: ["**/adapters", "**/adapters/*"], message: "The Log core receives adapters; it never imports them." },
+            {
+              group: ["**/adapters", "**/adapters/*"],
+              message: "The Log core receives adapters; it never imports them.",
+            },
           ],
         },
       ],
@@ -64,12 +67,19 @@ export default tseslint.config(
       "no-restricted-globals": ["error", ...ADAPTER_GLOBALS],
       "no-restricted-imports": [
         "error",
-        { patterns: [{ group: ["react", "react-dom", "react/*", "react-dom/*", "**/ui", "**/ui/*"], message: "Tests drive the Log core, not the UI." }] },
+        {
+          patterns: [
+            {
+              group: ["react", "react-dom", "react/*", "react-dom/*", "**/ui", "**/ui/*"],
+              message: "Tests drive the Log core, not the UI.",
+            },
+          ],
+        },
       ],
     },
   },
   {
-    files: ["scripts/**/*.ts", "*.config.{js,ts}"],
+    files: ["scripts/**/*.{ts,mjs}", "*.config.{js,ts}"],
     languageOptions: { globals: globals.node },
   },
   {

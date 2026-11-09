@@ -6,3 +6,4 @@ Start the app with `preview_start {name: "dev"}` (`.claude/launch.json`).
 - **Prove styling with computed styles** (`getComputedStyle(el)` through `javascript_tool`: font family, size, transform), then take one screenshot for the owner.
 - **Set up state through `localStorage`** (`contentUnlockLog.progress`, `contentUnlockLog.currentCharacter`), then reload: faster than clicking through the UI.
 - **Stop the server** with `preview_stop` when done. Test data stays in the pane's local storage.
+- **Restart a stopped server with `preview_start {name: "dev"}`.** `navigate` to localhost fails and leaves a blank pane.

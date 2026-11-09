@@ -1,5 +1,12 @@
 import type { Content, Entry, Section, SectionKind } from "./content";
-import { activeFilterCount, DEFAULT_FILTERS, OPTIONAL_CHALLENGE_FILTERS, passesFilters, typeOf, type Filters } from "./filters";
+import {
+  activeFilterCount,
+  DEFAULT_FILTERS,
+  OPTIONAL_CHALLENGE_FILTERS,
+  passesFilters,
+  typeOf,
+  type Filters,
+} from "./filters";
 import { dataCenterOfWorld, knownWorld, WORLDS } from "./worlds";
 import { characterLabel, newProgress, type Character, type EntryStatus, type Progress } from "./progress";
 
@@ -75,10 +82,12 @@ export function createLog({ content, storage, clock }: LogOptions) {
     } catch {
       return;
     }
-    if (saved.expansion === "all" || content.expansions.some((e) => e.id === saved.expansion)) selection.expansion = saved.expansion!;
+    if (saved.expansion === "all" || content.expansions.some((e) => e.id === saved.expansion))
+      selection.expansion = saved.expansion!;
     if (saved.tab && TABS.includes(saved.tab)) selection.tab = saved.tab;
     if (typeof saved.type === "string" && contentTypes.includes(saved.type)) filters.type = saved.type;
-    if (saved.optionalChallenge && OPTIONAL_CHALLENGE_FILTERS.includes(saved.optionalChallenge)) filters.optionalChallenge = saved.optionalChallenge;
+    if (saved.optionalChallenge && OPTIONAL_CHALLENGE_FILTERS.includes(saved.optionalChallenge))
+      filters.optionalChallenge = saved.optionalChallenge;
     if (typeof saved.hideCompleted === "boolean") filters.hideCompleted = saved.hideCompleted;
     if (typeof saved.hideNotInterested === "boolean") filters.hideNotInterested = saved.hideNotInterested;
   }
@@ -127,14 +136,18 @@ export function createLog({ content, storage, clock }: LogOptions) {
     characters().some((c) => c.id !== ignoreId && sameText(c.name, name) && sameText(c.world, world));
 
   /** Checks details and fills in the Data Center of a known World left blank; `ignoreId` is the character being edited. */
-  function validate(details: CharacterDetails, ignoreId?: string): { ok: true; details: Required<CharacterDetails> & { dataCenter: string } } | { ok: false; error: CharacterError } {
+  function validate(
+    details: CharacterDetails,
+    ignoreId?: string,
+  ): { ok: true; details: Required<CharacterDetails> & { dataCenter: string } } | { ok: false; error: CharacterError } {
     const name = details.name.trim();
     const typedWorld = (details.world ?? "").trim();
     const world = typedWorld === "" ? "" : knownWorld(typedWorld);
     const level = details.level ?? null;
     if (!name) return { ok: false, error: "nameRequired" };
     if (world === null) return { ok: false, error: "unknownWorld" };
-    if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL)) return { ok: false, error: "invalidLevel" };
+    if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL))
+      return { ok: false, error: "invalidLevel" };
     if (isTaken(name, world, ignoreId)) return { ok: false, error: "nameTaken" };
     return { ok: true, details: { name, world, dataCenter: dataCenterOfWorld(world) ?? "", level } };
   }
@@ -168,7 +181,10 @@ export function createLog({ content, storage, clock }: LogOptions) {
    * Writes the given statuses for the character as one change, skipping entries already at that status.
    * Returns the earlier statuses of the entries it changed, and the sections it finished.
    */
-  function write(characterId: string, next: Map<string, EntryStatus>): ChangeResult & { earlier: Map<string, EntryStatus> } {
+  function write(
+    characterId: string,
+    next: Map<string, EntryStatus>,
+  ): ChangeResult & { earlier: Map<string, EntryStatus> } {
     const finishedBefore = new Set(content.sections.filter((s) => isFinished(s, characterId)).map((s) => s.id));
     const earlier = new Map<string, EntryStatus>();
     const stamp = now();
@@ -183,7 +199,9 @@ export function createLog({ content, storage, clock }: LogOptions) {
       progress.statuses[characterId] = records;
       save();
     }
-    const sectionsFinished = content.sections.filter((s) => !finishedBefore.has(s.id) && isFinished(s, characterId)).map((s) => s.id);
+    const sectionsFinished = content.sections
+      .filter((s) => !finishedBefore.has(s.id) && isFinished(s, characterId))
+      .map((s) => s.id);
     return { changed: earlier.size, sectionsFinished, earlier };
   }
 
@@ -254,7 +272,9 @@ export function createLog({ content, storage, clock }: LogOptions) {
     selection: (): Selection => ({ ...selection }),
     setSelection(next: Partial<Selection>) {
       const valid =
-        (next.expansion === undefined || next.expansion === "all" || content.expansions.some((e) => e.id === next.expansion)) &&
+        (next.expansion === undefined ||
+          next.expansion === "all" ||
+          content.expansions.some((e) => e.id === next.expansion)) &&
         (next.tab === undefined || TABS.includes(next.tab));
       if (!valid) return;
       selection = { ...selection, ...next };
@@ -276,7 +296,10 @@ export function createLog({ content, storage, clock }: LogOptions) {
     /** Every content type with its number of entries, most common first. */
     typeCounts: (): { type: string; count: number }[] =>
       contentTypes
-        .map((type) => ({ type, count: content.sections.flatMap((s) => s.entries).filter((e) => typeOf(e) === type).length }))
+        .map((type) => ({
+          type,
+          count: content.sections.flatMap((s) => s.entries).filter((e) => typeOf(e) === type).length,
+        }))
         .sort((a, b) => b.count - a.count),
     /** The section's entries that pass the current search and filters, in the wiki's order. */
     shownEntries(sectionId: string): Entry[] {
