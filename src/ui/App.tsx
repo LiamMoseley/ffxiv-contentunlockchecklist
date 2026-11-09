@@ -6,6 +6,7 @@ import { ConfirmDialog, Toast } from "./Messages";
 import { FilterBar } from "./FilterBar";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
+import { UpdateDialog } from "./UpdateDialog";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
 
 const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
@@ -81,6 +82,18 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // "Available now" replaces the section view; a view choice for this visit only.
   const [availableOpen, setAvailableOpen] = useState(false);
   const toastCount = useRef(0);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  // Update needs the wiki, so it is disabled while the device is offline.
+  const [online, setOnline] = useState(() => navigator.onLine);
+  useEffect(() => {
+    const sync = () => setOnline(navigator.onLine);
+    window.addEventListener("online", sync);
+    window.addEventListener("offline", sync);
+    return () => {
+      window.removeEventListener("online", sync);
+      window.removeEventListener("offline", sync);
+    };
+  }, []);
 
   const sectionNames = new Map(
     log
@@ -228,6 +241,15 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               <button
                 type="button"
                 className="filters-toggle"
+                disabled={!online}
+                title={online ? undefined : "You're offline"}
+                onClick={() => setUpdateOpen(true)}
+              >
+                {online ? "Update" : "Update (offline)"}
+              </button>
+              <button
+                type="button"
+                className="filters-toggle"
                 aria-expanded={filtersOpen}
                 aria-controls="filter-bar"
                 onClick={() => setFiltersOpen(!filtersOpen)}
@@ -280,6 +302,17 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             onChange={(message) => {
               refresh();
               if (message) say(message);
+            }}
+          />
+        )}
+        {updateOpen && (
+          <UpdateDialog
+            log={log}
+            onClose={() => setUpdateOpen(false)}
+            onApplied={(message) => {
+              setUpdateOpen(false);
+              refresh();
+              say(message);
             }}
           />
         )}

@@ -1,4 +1,5 @@
-import type { Content, Entry, Section, SectionKind } from "./content";
+import { parseContentUnlockPage, type Content, type Entry, type Section, type SectionKind } from "./content";
+import { diffContent, type UpdateCheck, type UpdatePreview, type WikiSource } from "./update";
 import {
   activeFilterCount,
   DEFAULT_FILTERS,
@@ -34,7 +35,8 @@ export type Available = {
   hidden: number;
 };
 
-export type LogOptions = { content: Content; storage: Storage; clock: Clock };
+/** `content` is the bundled copy; a copy applied from the wiki and stored on the device takes its place. */
+export type LogOptions = { content: Content; storage: Storage; clock: Clock; wiki: WikiSource };
 
 /** What the player enters for a character. A blank World is the one shared World; any other must be a known World, and sets the Data Center. */
 export type CharacterDetails = { name: string; world?: string; level?: number | null };
@@ -56,6 +58,7 @@ const MAX_LEVEL = 100;
 const PROGRESS_KEY = "contentUnlockLog.progress";
 const CURRENT_KEY = "contentUnlockLog.currentCharacter";
 const VIEW_KEY = "contentUnlockLog.view";
+const CONTENT_KEY = "contentUnlockLog.content";
 
 /** Which expansion (or "all") and section tab the player is looking at. */
 export type Selection = { expansion: string; tab: SectionKind | "all" };
@@ -71,7 +74,8 @@ const NEXT_STATUS: Record<EntryStatus, EntryStatus> = {
   notInterested: "unmarked",
 };
 
-export function createLog({ content, storage, clock }: LogOptions) {
+export function createLog({ content: bundled, storage, clock, wiki }: LogOptions) {
+  let content = loadContent() ?? bundled;
   const now = () => clock.now().toISOString();
   const progress = loadProgress() ?? newProgress(crypto.randomUUID(), now());
   save();
@@ -85,7 +89,17 @@ export function createLog({ content, storage, clock }: LogOptions) {
     storage.write(PROGRESS_KEY, JSON.stringify(progress));
   }
 
-  const contentTypes = [...new Set(content.sections.flatMap((s) => s.entries).map(typeOf))];
+  /** The copy applied from the wiki on this device, if there is a usable one. */
+  function loadContent(): Content | null {
+    try {
+      const saved = JSON.parse(storage.read(CONTENT_KEY) ?? "null") as Content | null;
+      return saved && Array.isArray(saved.sections) && Array.isArray(saved.expansions) ? saved : null;
+    } catch {
+      return null;
+    }
+  }
+
+  const contentTypes = (): string[] => [...new Set(content.sections.flatMap((s) => s.entries).map(typeOf))];
 
   let selection: Selection = { expansion: content.expansions[0]?.id ?? "all", tab: "levelling" };
   let filters: Filters = { ...DEFAULT_FILTERS };
@@ -102,7 +116,7 @@ export function createLog({ content, storage, clock }: LogOptions) {
     if (saved.expansion === "all" || content.expansions.some((e) => e.id === saved.expansion))
       selection.expansion = saved.expansion!;
     if (saved.tab && TABS.includes(saved.tab)) selection.tab = saved.tab;
-    if (typeof saved.type === "string" && contentTypes.includes(saved.type)) filters.type = saved.type;
+    if (typeof saved.type === "string" && contentTypes().includes(saved.type)) filters.type = saved.type;
     if (saved.optionalChallenge && OPTIONAL_CHALLENGE_FILTERS.includes(saved.optionalChallenge))
       filters.optionalChallenge = saved.optionalChallenge;
     if (typeof saved.hideCompleted === "boolean") filters.hideCompleted = saved.hideCompleted;
@@ -340,8 +354,47 @@ export function createLog({ content, storage, clock }: LogOptions) {
     return { ok: true, charactersAdded: importedCharacterIds.length, charactersMerged, entriesAdded };
   }
 
+  /** Replaces the content and stores it with its revision ID. Progress is keyed by entry ID, so it is never touched. */
+  function adopt(next: Content) {
+    content = next;
+    storage.write(CONTENT_KEY, JSON.stringify(next));
+    // The remembered view may point at an expansion or type the new content no longer has.
+    if (selection.expansion !== "all" && !next.expansions.some((e) => e.id === selection.expansion))
+      selection = { ...selection, expansion: next.expansions[0]?.id ?? "all" };
+    if (filters.type !== null && !contentTypes().includes(filters.type)) filters = { ...filters, type: null };
+    saveView();
+  }
+
+  /**
+   * Fetches the wiki's page and compares it with the log. Nothing is applied when there are new, changed or
+   * removed entries: the player reviews the preview first. A page that changes no entry (a reworded heading,
+   * reordered rows) is adopted at once, since it can't affect anything the player sees marked.
+   */
+  async function checkForUpdate(): Promise<UpdateCheck> {
+    let next: Content;
+    try {
+      next = parseContentUnlockPage(await wiki.fetchPage());
+    } catch {
+      return { status: "unreachable" };
+    }
+    // A page with no sections is not the Content Unlock page (the wiki returned something else).
+    if (next.sections.length === 0) return { status: "unreachable" };
+    const { added, changed, removed } = diffContent(content, next);
+    if (added.length + changed.length + removed.length === 0) {
+      if (JSON.stringify(next) !== JSON.stringify(content)) adopt(next);
+      return { status: "upToDate" };
+    }
+    return { status: "changes", preview: { revisionId: next.revisionId, added, changed, removed, content: next } };
+  }
+
   return {
     expansions: () => content.expansions,
+    /** Fetches the wiki page and reports what would change; nothing is applied until `applyUpdate`. */
+    checkForUpdate,
+    /** Replaces the content with a previewed update. Progress is untouched: statuses of removed entries are kept as orphaned. */
+    applyUpdate: (preview: UpdatePreview) => adopt(preview.content),
+    /** The wiki revision the log's content comes from. */
+    revisionId: () => content.revisionId,
     /** Saves every character as one backup file (format version 1); deleted characters are left out. */
     exportBackup,
     /** Merges a backup file's text into this device's progress, adding only; undoable. */
@@ -379,7 +432,7 @@ export function createLog({ content, storage, clock }: LogOptions) {
     setFilters(next: Partial<Filters>) {
       // A type or optional challenge choice that doesn't exist is ignored, as when restoring a saved view.
       const valid =
-        (next.type === undefined || next.type === null || contentTypes.includes(next.type)) &&
+        (next.type === undefined || next.type === null || contentTypes().includes(next.type)) &&
         (next.optionalChallenge === undefined || OPTIONAL_CHALLENGE_FILTERS.includes(next.optionalChallenge));
       if (!valid) return;
       filters = { ...filters, ...next };
@@ -391,7 +444,7 @@ export function createLog({ content, storage, clock }: LogOptions) {
       activeFilterCount(availableNow ? { ...filters, hideCompleted: true, hideNotInterested: true } : filters),
     /** Every content type with its number of entries, most common first. */
     typeCounts: (): { type: string; count: number }[] =>
-      contentTypes
+      contentTypes()
         .map((type) => ({
           type,
           count: content.sections.flatMap((s) => s.entries).filter((e) => typeOf(e) === type).length,

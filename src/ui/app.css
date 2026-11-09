@@ -1097,6 +1097,22 @@ a.wiki-link:focus-visible {
   background: #2b2b2b;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.7);
 }
+.update-dialog {
+  width: min(520px, calc(100vw - 24px));
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+.update-dialog h3 {
+  margin: 10px 0 4px;
+  font-size: 1em;
+}
+.update-dialog ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.update-fields {
+  opacity: 0.7;
+}
 .dialog h2 {
   margin: 0 0 8px;
   font: 400 24px/1 var(--font-title);

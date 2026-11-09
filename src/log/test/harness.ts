@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { createLog, parseContentUnlockPage, type Clock, type WikiPage } from "../index";
+import { createLog, parseContentUnlockPage, type Clock, type WikiPage, type WikiSource } from "../index";
 import { createMemoryStorage } from "../../adapters/memoryStorage";
 import type { Storage } from "../index";
 
@@ -20,15 +20,32 @@ export function fixedClock(iso = "2026-11-03T12:00:00.000Z"): Clock & { set(iso:
   return { now: () => now, set: (next) => (now = new Date(next)) };
 }
 
-export function openLog(options: { page?: WikiPage; storage?: Storage; clock?: Clock } = {}) {
+/** A wiki that serves the page it is given, or fails to be reached. */
+export function fakeWiki(page: WikiPage = realPage): WikiSource & { serve(next: WikiPage): void; goOffline(): void } {
+  let serving: WikiPage | null = page;
+  return {
+    fetchPage: async () => {
+      if (!serving) throw new Error("offline");
+      return serving;
+    },
+    serve: (next) => (serving = next),
+    goOffline: () => (serving = null),
+  };
+}
+
+export function openLog(
+  options: { page?: WikiPage; storage?: Storage; clock?: Clock; wiki?: ReturnType<typeof fakeWiki> } = {},
+) {
+  const wiki = options.wiki ?? fakeWiki();
   const storage = options.storage ?? createMemoryStorage();
   const clock = options.clock ?? fixedClock();
   const log = createLog({
     content: parseContentUnlockPage(options.page ?? realPage),
     storage,
+    wiki,
     clock,
   });
-  return { log, storage, clock };
+  return { log, storage, clock, wiki };
 }
 
 /** Rewrites the one table row of `html` that contains `marker`. */

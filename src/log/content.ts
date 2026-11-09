@@ -60,13 +60,23 @@ export type Content = {
 export function parseContentUnlockPage(page: WikiPage): Content {
   const root = parse(page.html);
   const sections: ParsedSection[] = [];
+  // Level bands the app has no expansion for, by level cap.
+  const unknown = new Map<number, Expansion>();
   for (const heading of root.querySelectorAll("h2")) {
     const table = tableAfter(heading);
     if (!table) continue;
     const band = levelBand(heading.text);
     if (!band) continue;
-    const expansion = EXPANSIONS.find((e) => e.levelCap === band.upper);
-    if (!expansion) continue;
+    let expansion = EXPANSIONS.find((e) => e.levelCap === band.upper) ?? unknown.get(band.upper);
+    if (!expansion) {
+      expansion = placeholderExpansion(band.upper);
+      unknown.set(band.upper, expansion);
+    }
+    // The levelling section's lower bound gives the placeholder its name; a level-cap section has none.
+    if (unknown.has(band.upper) && band.lower < expansion.minLevel) {
+      expansion = placeholderExpansion(band.upper, band.lower);
+      unknown.set(band.upper, expansion);
+    }
     const kind: SectionKind = band.lower === band.upper ? "levelCap" : "levelling";
     sections.push({
       id: `${expansion.id}-${kind}`,
@@ -77,11 +87,18 @@ export function parseContentUnlockPage(page: WikiPage): Content {
     });
   }
   const expansionIds = new Set(sections.map((s) => s.expansionId));
+  const placeholders = [...unknown.values()].sort((a, b) => a.levelCap - b.levelCap);
   return {
     revisionId: page.revisionId,
-    expansions: EXPANSIONS.filter((e) => expansionIds.has(e.id)),
+    expansions: [...EXPANSIONS, ...placeholders].filter((e) => expansionIds.has(e.id)),
     sections: withEntryIds(sections),
   };
+}
+
+/** A stand-in for an expansion the app doesn't know yet, named by its levels (e.g. "Level 101–110"). */
+function placeholderExpansion(levelCap: number, minLevel = levelCap): Expansion {
+  const levels = minLevel === levelCap ? `Level ${levelCap}` : `Level ${minLevel}–${levelCap}`;
+  return { id: `level-${levelCap}`, name: levels, shortName: levels.replace("Level ", ""), minLevel, levelCap };
 }
 
 /**

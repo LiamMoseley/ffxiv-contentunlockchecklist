@@ -1497,3 +1497,179 @@ describe("backup export and import", () => {
     expect(log.canUndo()).toBe(false);
   });
 });
+
+describe("updating from the wiki", () => {
+  const SASTASHA = ">Sastasha</a></td>";
+  const COPPERBELL = ">Copperbell Mines</a></td>";
+  const SASTASHA_ID = "sastasha/its-probably-pirates";
+  const COPPERBELL_ID = "copperbell-mines/into-a-copper-hell";
+  const newRevision = (page: WikiPage): WikiPage => ({ ...page, revisionId: page.revisionId + 1 });
+
+  it("says the log is up to date when the wiki has nothing new", async () => {
+    const { log } = openLog();
+
+    expect(await log.checkForUpdate()).toEqual({ status: "upToDate" });
+  });
+
+  it("previews new, changed and removed entries without applying anything", async () => {
+    const { log, wiki } = openLog();
+    const sastasha = rowOf(realPage.html, SASTASHA);
+    wiki.serve(
+      newRevision(
+        editedPage((html) => {
+          const levelChanged = editRow(html, COPPERBELL, (r) => r.replace("<td>17</td>", "<td>18</td>"));
+          return insertRowAtTopOf(
+            levelChanged.replace(sastasha, ""),
+            "Level 1 - 50",
+            sastasha.replace(">Sastasha</a>", ">Sastasha Reborn</a>"),
+          );
+        }),
+      ),
+    );
+
+    const check = await log.checkForUpdate();
+
+    if (check.status !== "changes") throw new Error(`expected changes, got ${check.status}`);
+    expect(check.preview.added.map((e) => e.unlock)).toEqual(["Sastasha Reborn"]);
+    expect(check.preview.removed.map((e) => e.id)).toEqual([SASTASHA_ID]);
+    expect(check.preview.changed.map((c) => [c.after.id, c.fields])).toEqual([[COPPERBELL_ID, ["level"]]]);
+    expect(log.sections().flatMap((s) => s.entries)).toHaveLength(429);
+  });
+
+  const preview = async (log: ReturnType<typeof openLog>["log"]) => {
+    const check = await log.checkForUpdate();
+    if (check.status !== "changes") throw new Error(`expected changes, got ${check.status}`);
+    return check.preview;
+  };
+  const sastashaRow = rowOf(realPage.html, SASTASHA);
+  const withoutSastasha = newRevision(editedPage((html) => html.replace(sastashaRow, "")));
+
+  it("applying replaces the content and stores it with its new revision ID", async () => {
+    const { log, wiki, storage } = openLog();
+    wiki.serve(withoutSastasha);
+
+    log.applyUpdate(await preview(log));
+
+    expect(log.revisionId()).toBe(realPage.revisionId + 1);
+    expect(log.sections().flatMap((s) => s.entries)).toHaveLength(428);
+    const stored = JSON.parse(storage.read("contentUnlockLog.content")!);
+    expect(stored.revisionId).toBe(realPage.revisionId + 1);
+    expect(stored.sections.flatMap((s: { entries: unknown[] }) => s.entries)).toHaveLength(428);
+  });
+
+  it("keeps the updated content when the app is opened again on the device", async () => {
+    const { log, wiki, storage } = openLog();
+    wiki.serve(withoutSastasha);
+    log.applyUpdate(await preview(log));
+
+    const reopened = openLog({ storage }).log;
+
+    expect(reopened.revisionId()).toBe(realPage.revisionId + 1);
+    expect(reopened.overallProgress().total).toBe(428);
+  });
+
+  it("is up to date again once the update is applied", async () => {
+    const { log, wiki } = openLog();
+    wiki.serve(withoutSastasha);
+    log.applyUpdate(await preview(log));
+
+    expect(await log.checkForUpdate()).toEqual({ status: "upToDate" });
+  });
+
+  it("never affects progress when entries are reordered, notes re-edited or a heading reworded", async () => {
+    const { log, wiki, storage } = openLog();
+    log.setEntryStatus(SASTASHA_ID, "completed");
+    log.setEntryStatus(COPPERBELL_ID, "notInterested");
+    const stored = storage.read("contentUnlockLog.progress");
+    wiki.serve(
+      newRevision(
+        editedPage((html) => {
+          const moved = insertRowAtTopOf(html.replace(sastashaRow, ""), "Level 1 - 50", sastashaRow);
+          const reworded = moved.replace("Unlocks in the", "Now unlocks in the");
+          return reworded.replace(">Level 1 - 50</h2>", ">Levels 1 to 50</h2>");
+        }),
+      ),
+    );
+
+    log.applyUpdate(await preview(log));
+
+    expect(storage.read("contentUnlockLog.progress")).toBe(stored);
+    expect(log.entryStatus(SASTASHA_ID)).toBe("completed");
+    expect(log.entryStatus(COPPERBELL_ID)).toBe("notInterested");
+    expect(log.overallProgress()).toEqual({ completed: 1, total: 428 });
+    expect(log.sections()[0].heading).toBe("Levels 1 to 50");
+  });
+
+  it("adopts a page that changes no entry without asking, leaving progress alone", async () => {
+    const { log, wiki } = openLog();
+    log.setEntryStatus(SASTASHA_ID, "completed");
+    wiki.serve(newRevision(editedPage((html) => html.replace(">Level 1 - 50</h2>", ">Levels 1 to 50</h2>"))));
+
+    expect(await log.checkForUpdate()).toEqual({ status: "upToDate" });
+
+    expect(log.sections()[0].heading).toBe("Levels 1 to 50");
+    expect(log.entryStatus(SASTASHA_ID)).toBe("completed");
+  });
+
+  it("keeps a removed entry's status as an orphan: not counted, and back when the entry returns", async () => {
+    const { log, wiki, storage } = openLog();
+    log.setEntryStatus(SASTASHA_ID, "completed");
+    wiki.serve(withoutSastasha);
+    log.applyUpdate(await preview(log));
+
+    expect(log.overallProgress()).toEqual({ completed: 0, total: 428 });
+    expect(JSON.parse(storage.read("contentUnlockLog.progress")!).statuses).toMatchObject({
+      [log.currentCharacter().id]: { [SASTASHA_ID]: { status: "completed" } },
+    });
+
+    wiki.serve({ ...realPage, revisionId: realPage.revisionId + 2 });
+    log.applyUpdate(await preview(log));
+
+    expect(log.overallProgress()).toEqual({ completed: 1, total: 429 });
+    expect(log.entryStatus(SASTASHA_ID)).toBe("completed");
+  });
+
+  it("shows a level band it doesn't recognise under a placeholder expansion named by its levels", async () => {
+    const { log, wiki } = openLog();
+    const newBand = (level: string, heading: string, unlock: string) =>
+      `<div class="mw-heading mw-heading2"><h2 id="x">${heading}</h2></div>\n<table><tbody><tr><th>Level</th><th>Unlock</th><th>Type</th><th>Quest</th><th>Location</th><th>Information</th></tr>` +
+      `<tr><td>${level}</td><td>${unlock}</td><td>Dungeon</td><td>A New Quest</td><td>Somewhere</td><td>-</td></tr></tbody></table>\n`;
+    wiki.serve(
+      newRevision(
+        editedPage(
+          (html) =>
+            html + newBand("101", "Level 101 - 110", "Future Dungeon") + newBand("110", "Level 110", "Future Raid"),
+        ),
+      ),
+    );
+
+    const update = await preview(log);
+    log.applyUpdate(update);
+
+    expect(update.added.map((e) => e.unlock)).toEqual(["Future Dungeon", "Future Raid"]);
+    const placeholder = log.expansions().at(-1)!;
+    expect(placeholder).toMatchObject({ name: "Level 101–110", minLevel: 101, levelCap: 110 });
+    expect(log.sections().filter((s) => s.expansionId === placeholder.id)).toHaveLength(2);
+    expect(log.expansions()).toHaveLength(7);
+  });
+
+  it("says the wiki couldn't be reached, and changes nothing, when the fetch fails", async () => {
+    const { log, wiki, storage } = openLog();
+    log.setEntryStatus(SASTASHA_ID, "completed");
+    const stored = [storage.read("contentUnlockLog.progress"), storage.read("contentUnlockLog.content")];
+    wiki.goOffline();
+
+    expect(await log.checkForUpdate()).toEqual({ status: "unreachable" });
+
+    expect([storage.read("contentUnlockLog.progress"), storage.read("contentUnlockLog.content")]).toEqual(stored);
+    expect(log.revisionId()).toBe(realPage.revisionId);
+  });
+
+  it("treats a page with no log in it as unreachable rather than emptying the log", async () => {
+    const { log, wiki } = openLog();
+    wiki.serve(newRevision({ ...realPage, html: "<p>Maintenance</p>" }));
+
+    expect(await log.checkForUpdate()).toEqual({ status: "unreachable" });
+    expect(log.overallProgress().total).toBe(429);
+  });
+});
