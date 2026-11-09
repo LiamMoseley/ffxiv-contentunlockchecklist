@@ -29,6 +29,8 @@ export type Entry = {
   quest: string;
   location: string;
   information: string;
+  /** The wiki tags the entry "Optional challenge content"; free-text mentions of "optional" don't count. */
+  optionalChallenge: boolean;
   rich: RichFields;
 };
 
@@ -154,6 +156,7 @@ function readRows(table: HTMLElement): Row[] {
         quest: field("quest"),
         location: field("location"),
         information: field("information"),
+        optionalChallenge: /optional challenge content/i.test(field("information")),
         rich,
       },
     ];
