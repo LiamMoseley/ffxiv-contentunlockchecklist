@@ -1364,6 +1364,9 @@ a.wiki-link:focus-visible {
   text-align: center;
 }
 .available-empty button {
-  margin-top: 14px;
+  /* On its own line under the message, centred */
+  display: flex;
+  width: fit-content;
+  margin: 14px auto 0;
   font-style: normal;
 }
