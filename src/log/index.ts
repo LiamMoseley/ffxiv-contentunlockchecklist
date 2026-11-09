@@ -1,4 +1,5 @@
 export { characterLabel } from "./progress";
+export { type BackupError } from "./backup";
 export { type Filters, type OptionalChallengeFilter } from "./filters";
 export {
   createLog,

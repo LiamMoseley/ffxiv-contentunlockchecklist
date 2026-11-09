@@ -311,8 +311,14 @@ export function createLog({ content, storage, clock }: LogOptions) {
           id: crypto.randomUUID(),
           name: incoming.name.trim(),
           world: incoming.world.trim(),
-          dataCenter: incoming.dataCenter,
-          level: incoming.level,
+          dataCenter: dataCenterOfWorld(incoming.world.trim()) ?? "",
+          level:
+            incoming.level !== null &&
+            Number.isInteger(incoming.level) &&
+            incoming.level >= 1 &&
+            incoming.level <= MAX_LEVEL
+              ? incoming.level
+              : null,
           updatedAt: now(),
           deleted: false,
         };

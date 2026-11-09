@@ -1443,7 +1443,28 @@ describe("backup export and import", () => {
     expect(log.entryStatus("party-finder")).toBe("completed");
   });
 
-  it("leaves nothing to undo when the import adds nothing", () => {
+  it("reads a literal version 1 backup, deriving the Data Center and dropping an out-of-range level", () => {
+    const { log } = openLog();
+    const file = JSON.stringify({
+      formatVersion: 1,
+      exportedAt: T2,
+      characters: [
+        {
+          name: "Dax",
+          world: "Balmung",
+          dataCenter: "Wrong",
+          level: 999,
+          updatedAt: T1,
+          statuses: { [SASTASHA]: { status: "completed", updatedAt: T1 } },
+        },
+      ],
+    });
+
+    expect(log.importBackup(file)).toEqual({ ok: true, charactersAdded: 1, charactersMerged: 0, entriesAdded: 1 });
+    expect(log.characters().find((c) => c.name === "Dax")).toMatchObject({ dataCenter: "Crystal", level: null });
+  });
+
+  it("undoes only the latest import when a repeat import adds nothing", () => {
     const backup = deviceWithAria().log.exportBackup();
     const { log } = openLog();
     log.importBackup(backup.json);

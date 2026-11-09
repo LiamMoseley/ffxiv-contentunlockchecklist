@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import type { Character, CharacterError, Log } from "../log";
+import type { BackupError, Character, CharacterError, Log } from "../log";
 import { ConfirmDialog } from "./Messages";
 import { Count, ProgressBar } from "./ProgressBar";
 
@@ -11,7 +11,7 @@ const ERROR_TEXT: Record<CharacterError, string> = {
   notFound: "That character no longer exists.",
 };
 
-const IMPORT_ERROR_TEXT = {
+const IMPORT_ERROR_TEXT: Record<BackupError, string> = {
   notABackup: "That file is not a backup from this app.",
   newerVersion: "That backup was made by a newer version of the app. Update the app to read it.",
 };
@@ -60,6 +60,10 @@ export function CharacterMenu({
       return;
     }
     const { charactersAdded, charactersMerged, entriesAdded } = result;
+    if (charactersAdded === 0 && entriesAdded === 0) {
+      onChange("Nothing to import: this device already has everything in that backup.");
+      return;
+    }
     onChange(
       `Imported ${entriesAdded} ${entriesAdded === 1 ? "entry" : "entries"}: ${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
     );
