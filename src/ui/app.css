@@ -11,8 +11,8 @@
   --line: #4a4a4a;
   --line-soft: #3c3c3c;
   --text: #eee;
-  --text-dim: #a3a3a3;
-  --text-faint: #7d7d7d;
+  --text-dim: #b8b8b8;
+  --text-faint: #ababab;
   --gold: #f0c35a;
   --yellow: #f6b93b;
   --cream: #efe2bf;
@@ -63,8 +63,12 @@ a:hover {
   outline-offset: 2px;
 }
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -594,7 +598,9 @@ a.wiki-link:focus-visible {
 }
 
 /* Entry status: dimmed when completed, faded with grey icons when not interested */
-.completed td:not(:first-child),
+.completed td:not(:first-child) {
+  color: #9a9a9a;
+}
 .completed a.wiki-link {
   color: var(--link-dim);
 }
@@ -642,7 +648,7 @@ a.wiki-link:focus-visible {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 .status-box.notInterested {
-  border-color: #666;
+  border-color: #8f8f8f;
   background:
     linear-gradient(
       to top right,
@@ -727,10 +733,6 @@ a.wiki-link:focus-visible {
 .entry-card.completed .card-text,
 .entry-card.completed small {
   color: #9a9a9a;
-}
-.entry-card.notInterested .card-icon,
-.entry-card.notInterested .card-text {
-  opacity: 0.42;
 }
 .entry-card.notInterested .card-icon > * {
   filter: grayscale(1);
@@ -1576,6 +1578,38 @@ a.wiki-link:focus-visible {
 .available-empty {
   padding-top: 36px;
   text-align: center;
+}
+/* Phones: the tabs take a row of their own, with Available now and Filters on the row below */
+@media (max-width: 760px) {
+  .tabs-row {
+    flex-wrap: wrap;
+  }
+  .tabs-row .tabs {
+    flex: 1 1 100%;
+    margin-bottom: 0;
+  }
+  .tabs-row .filters-toggle {
+    margin-right: 0;
+  }
+  .tabs-row.available .available-title {
+    position: static;
+    flex: 1 1 100%;
+    pointer-events: auto;
+  }
+  .tabs-row.available .tabs-spacer {
+    display: none;
+  }
+  .tabs button > span {
+    white-space: normal;
+  }
+  .tabs .count {
+    display: block;
+  }
+  .tabs button {
+    height: auto;
+    min-height: 36px;
+    padding: 2px 5px;
+  }
 }
 .available-empty button {
   /* On its own line under the message, centred */

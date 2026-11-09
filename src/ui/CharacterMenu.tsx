@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { BackupError, Character, CharacterError, Log } from "../log";
 import { ConfirmDialog } from "./Messages";
 import { Count, ProgressBar } from "./ProgressBar";
+import { useModal } from "./useModal";
 
 const ERROR_TEXT: Record<CharacterError, string> = {
   nameRequired: "Enter a name.",
@@ -34,6 +35,7 @@ export function CharacterMenu({
   onChange: (message?: string) => void;
 }) {
   const [mode, setMode] = useState<Mode>({ kind: "list" });
+  const trapTab = useModal();
   const current = log.currentCharacter();
   const label = log.characterLabel(current);
   const onlyOne = log.characters().length === 1;
@@ -92,6 +94,7 @@ export function CharacterMenu({
           if (event.target === event.currentTarget) onClose();
         }}
         onKeyDown={(event) => {
+          trapTab(event);
           if (event.key === "Escape") onClose();
         }}
       >
@@ -214,6 +217,7 @@ function CharacterForm({
   const [level, setLevel] = useState(editing?.level?.toString() ?? "");
   const [error, setError] = useState<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
+  const trapTab = useModal();
   useEffect(() => nameRef.current?.select(), []);
 
   const submit = (event: FormEvent) => {
@@ -228,6 +232,7 @@ function CharacterForm({
     <div
       className="dialog-backdrop"
       onKeyDown={(event) => {
+        trapTab(event);
         if (event.key === "Escape") onCancel();
       }}
     >
