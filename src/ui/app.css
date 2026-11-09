@@ -1204,15 +1204,16 @@ a.wiki-link:focus-visible {
 /* A yellow count badge: filters are narrowing the log, even while the panel is closed */
 .filters-active {
   display: inline-block;
-  min-width: 16px;
+  min-width: 13px;
   margin-left: 6px;
-  padding: 0 4px;
-  border-radius: 8px;
+  padding: 0 3px;
+  border-radius: 7px;
   background: var(--yellow);
   color: #1c1c1c;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 16px;
+  line-height: 13px;
+  vertical-align: 1px;
   text-align: center;
   text-shadow: none;
 }
