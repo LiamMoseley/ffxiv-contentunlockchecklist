@@ -14,7 +14,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
-`gh` reads work from both Bash and PowerShell (checked on gh 2.102). In PowerShell, backticks and `\"` inside a double-quoted `--body` break parsing: pass bodies with `--body-file` (written with the Write tool) or a single-quoted string.
+`gh` reads work from both Bash and PowerShell (checked on gh 2.102). In PowerShell, backticks and `\"` inside a double-quoted `--body` break parsing: pass bodies with `--body-file` (written with the Write tool into the session's scratchpad directory, never the repo, so `git add -A` can't commit it) or a single-quoted string.
 
 ## Acceptance criteria
 
