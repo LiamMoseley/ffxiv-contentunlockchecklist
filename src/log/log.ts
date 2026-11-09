@@ -29,6 +29,8 @@ export type ChangeResult = { changed: number; sectionsFinished: string[] };
 export type Available = {
   level: number | null;
   sections: Section[];
+  /** Reachable Unmarked entries the search and filters leave out. */
+  hidden: number;
 };
 
 export type LogOptions = { content: Content; storage: Storage; clock: Clock };
@@ -316,21 +318,25 @@ export function createLog({ content, storage, clock }: LogOptions) {
     /**
      * Everything the current character can reach now and has not marked: levelling entries at or below
      * their level (a range such as "56-60" by its lower bound), and level-cap entries once they have the
-     * expansion's level cap. A character with no level gets `level: null` and nothing. Ignores search and filters.
+     * expansion's level cap. A character with no level gets `level: null` and nothing. The search and filters
+     * apply; `hidden` counts the reachable entries they leave out.
      */
     availableNow(): Available {
       const level = currentCharacter().level;
-      if (level === null) return { level, sections: [] };
+      if (level === null) return { level, sections: [], hidden: 0 };
+      let hidden = 0;
       const sections = content.sections.flatMap((section) => {
         const expansion = content.expansions.find((e) => e.id === section.expansionId);
         if (!expansion) throw new Error(`No expansion ${section.expansionId}`);
         const cap = expansion.levelCap;
         const reachable = (entry: Entry) =>
           section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
-        const entries = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
+        const reached = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
+        const entries = reached.filter((e) => passesFilters(e, "unmarked", filters));
+        hidden += reached.length - entries.length;
         return entries.length > 0 ? [{ ...section, entries }] : [];
       });
-      return { level, sections };
+      return { level, sections, hidden };
     },
     sectionProgress(sectionId: string): ProgressCount {
       const section = content.sections.find((s) => s.id === sectionId);

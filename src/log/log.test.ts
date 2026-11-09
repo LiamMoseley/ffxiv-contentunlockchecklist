@@ -1195,7 +1195,7 @@ describe("available now", () => {
   };
 
   it("asks for a level while the character has none", () => {
-    expect(withLevel(null).availableNow()).toEqual({ level: null, sections: [] });
+    expect(withLevel(null).availableNow()).toEqual({ level: null, sections: [], hidden: 0 });
   });
 
   it("lists levelling entries at or below the character level, across expansions", () => {
@@ -1250,7 +1250,7 @@ describe("available now", () => {
   it("is empty once every reachable entry is marked, and a higher level brings more", () => {
     const log = withLevel(15);
     log.completeShown(availableIds(log));
-    expect(log.availableNow()).toEqual({ level: 15, sections: [] });
+    expect(log.availableNow()).toEqual({ level: 15, sections: [], hidden: 0 });
     log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level: 50 });
     expect(availableIds(log).length).toBeGreaterThan(0);
   });
@@ -1264,9 +1264,28 @@ describe("available now", () => {
     expect(availableIds(withLevel(56))).toContain(ranged.id);
   });
 
-  it("ignores the search and filters", () => {
+  it("applies the search and filters, counting the entries they hide", () => {
     const log = withLevel(15);
-    log.setFilters({ search: "zzzz", hideCompleted: true });
-    expect(availableIds(log)).toContain(SASTASHA);
+    const all = availableIds(log);
+
+    log.setFilters({ search: "sastasha" });
+    const found = availableIds(log);
+    expect(found).toContain(SASTASHA);
+    expect(found.length).toBeLessThan(all.length);
+    expect(log.availableNow().hidden).toBe(all.length - found.length);
+
+    log.setFilters({ search: "zzzz" });
+    expect(log.availableNow()).toEqual({ level: 15, sections: [], hidden: all.length });
+
+    log.setFilters({ search: "", type: "Dungeon" });
+    const dungeons = log
+      .sections()
+      .flatMap((s) => s.entries)
+      .filter((e) => all.includes(e.id) && e.type.split("\n")[0] === "Dungeon");
+    expect(availableIds(log)).toEqual(dungeons.map((e) => e.id));
+  });
+
+  it("hides nothing when no filter is set", () => {
+    expect(withLevel(15).availableNow().hidden).toBe(0);
   });
 });

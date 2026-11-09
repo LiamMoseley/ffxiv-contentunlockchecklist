@@ -220,34 +220,32 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               <button
                 type="button"
                 className="filters-toggle"
+                aria-expanded={filtersOpen}
+                aria-controls="filter-bar"
+                onClick={() => setFiltersOpen(!filtersOpen)}
+              >
+                Filters
+                {activeFilters > 0 && (
+                  <span
+                    className="filters-active"
+                    title={`${activeFilters} active`}
+                    aria-label={`${activeFilters} active`}
+                  >
+                    {activeFilters}
+                  </span>
+                )}{" "}
+                {filtersOpen ? "▴" : "▾"}
+              </button>
+              <button
+                type="button"
+                className="filters-toggle"
                 aria-pressed={availableOpen}
                 onClick={() => setAvailableOpen(!availableOpen)}
               >
                 {availableOpen ? "Back to the log" : "Available now"}
               </button>
-              {!availableOpen && (
-                <button
-                  type="button"
-                  className="filters-toggle"
-                  aria-expanded={filtersOpen}
-                  aria-controls="filter-bar"
-                  onClick={() => setFiltersOpen(!filtersOpen)}
-                >
-                  Filters
-                  {activeFilters > 0 && (
-                    <span
-                      className="filters-active"
-                      title={`${activeFilters} active`}
-                      aria-label={`${activeFilters} active`}
-                    >
-                      {activeFilters}
-                    </span>
-                  )}{" "}
-                  {filtersOpen ? "▴" : "▾"}
-                </button>
-              )}
             </div>
-            {!availableOpen && filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
+            {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
             <div className="scroll">
               {availableOpen ? (
                 <AvailableNow
@@ -337,7 +335,7 @@ function AvailableNow({
   actions: EntryActions;
   onSetLevel: () => void;
 }) {
-  const { level, sections } = log.availableNow();
+  const { level, sections, hidden } = log.availableNow();
   const Entries = mode === "grid" ? EntryGrid : EntryTable;
   if (level === null) {
     return (
@@ -348,6 +346,9 @@ function AvailableNow({
         </button>
       </p>
     );
+  }
+  if (sections.length === 0 && hidden > 0) {
+    return <p className="section-empty">All available entries are hidden by the search or filters.</p>;
   }
   if (sections.length === 0) {
     return (
