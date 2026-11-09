@@ -1165,6 +1165,9 @@ a.wiki-link:focus-visible {
 .character-actions {
   flex-wrap: wrap;
 }
+.character-actions + .character-actions {
+  margin-top: 8px;
+}
 .character-form label {
   display: block;
   margin-bottom: 10px;

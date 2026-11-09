@@ -140,9 +140,6 @@ export function CharacterMenu({
             >
               Delete
             </button>
-            <button type="button" className="primary" onClick={onClose}>
-              Close
-            </button>
           </div>
           <div className="dialog-buttons character-actions">
             <button type="button" onClick={exportBackup}>
@@ -159,6 +156,11 @@ export function CharacterMenu({
               aria-label="Backup file"
               onChange={(event) => void importBackup(event.target)}
             />
+          </div>
+          <div className="dialog-buttons character-actions">
+            <button type="button" className="primary" onClick={onClose}>
+              Close
+            </button>
           </div>
         </div>
       </div>
