@@ -1,4 +1,5 @@
 import { parseContentUnlockPage, type Content, type Entry, type Section, type SectionKind } from "./content";
+import { iconsUsed } from "./icons";
 import { pairKey, suggestMatches, type SuggestedMatch } from "./suggestions";
 import { diffContent, type UpdateCheck, type UpdatePreview, type WikiSource } from "./update";
 import {
@@ -93,6 +94,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
   // A bundled copy newer than the stored one is offered for review further down, never applied silently.
   const stored = loadContent();
   let content = stored ?? bundled;
+  const bundledIcons = new Set(iconsUsed(bundled));
   const now = () => clock.now().toISOString();
   const progress = loadProgress() ?? newProgress(crypto.randomUUID(), now());
   save();
@@ -540,6 +542,10 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
 
   return {
     expansions: () => content.expansions,
+    /** Whether the app ships this wiki icon (by its path in the wiki's image folder) rather than fetching it. */
+    isBundledIcon: (icon: string): boolean => bundledIcons.has(icon),
+    /** The icons the current content uses that the app does not ship: fetched from the wiki once, then kept for offline use. */
+    unbundledIcons: (): string[] => iconsUsed(content).filter((icon) => !bundledIcons.has(icon)),
     /** Fetches the wiki page and reports what would change; nothing is applied until `applyUpdate`. */
     checkForUpdate,
     autoCheckForUpdate,
