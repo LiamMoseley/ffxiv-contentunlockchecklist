@@ -42,7 +42,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     refresh();
   };
   const searchRef = useRef<HTMLInputElement>(null);
-  // "/" or Ctrl/Cmd+K focuses the search box, except while typing in a field.
+  // Hidden by default; the filters still apply while the panel is closed.
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  // "/" or Ctrl/Cmd+K opens the filters and focuses the search box, except while typing in a field.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.altKey) return;
@@ -51,8 +53,12 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
       const palette = event.key.toLowerCase() === "k" && (event.ctrlKey || event.metaKey) && !event.shiftKey;
       if (!slash && !palette) return;
       event.preventDefault();
-      searchRef.current?.focus();
-      searchRef.current?.select();
+      setFiltersOpen(true);
+      // The search box mounts on the next render.
+      setTimeout(() => {
+        searchRef.current?.focus();
+        searchRef.current?.select();
+      }, 0);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -184,13 +190,24 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           />
 
           <main className="main">
-            <SectionTabs
-              tabs={tabs}
-              active={activeTab}
-              onChoose={(key) => expansion !== "all" && setTab(key)}
-              label="Sections"
-            />
-            <FilterBar log={log} searchRef={searchRef} onChange={refresh} />
+            <div className="tabs-row">
+              <SectionTabs
+                tabs={tabs}
+                active={activeTab}
+                onChoose={(key) => expansion !== "all" && setTab(key)}
+                label="Sections"
+              />
+              <button
+                type="button"
+                className="filters-toggle"
+                aria-expanded={filtersOpen}
+                aria-controls="filter-bar"
+                onClick={() => setFiltersOpen(!filtersOpen)}
+              >
+                Filters {filtersOpen ? "▴" : "▾"}
+              </button>
+            </div>
+            {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
             <div className="scroll">
               {shownSections.map((section) => (
                 <SectionPanel

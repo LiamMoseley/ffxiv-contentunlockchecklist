@@ -23,7 +23,7 @@ export function FilterBar({
     onChange();
   };
   return (
-    <div className="filter-bar" role="search">
+    <div className="filter-bar" id="filter-bar" role="search">
       <label className="filter-field filter-search">
         <span>Search</span>
         <input

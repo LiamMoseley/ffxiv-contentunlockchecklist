@@ -1178,6 +1178,36 @@ a.wiki-link:focus-visible {
   margin-left: 6px;
 }
 
+/* Tabs on the left, the Filters toggle on the right of the same row */
+.tabs-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tabs-row .tabs {
+  flex: 1;
+  min-width: 0;
+}
+.filters-toggle {
+  flex: none;
+  height: 24px;
+  margin-right: 14px;
+  padding: 0 12px;
+  border: 1px solid #1d1d1d;
+  border-radius: 3px;
+  background: linear-gradient(#5a5a5a, #3f3f3f);
+  color: #f2f2f2;
+  font: inherit;
+  font-size: 13px;
+  text-shadow: 0 1px 1px #000;
+}
+.filters-toggle:hover {
+  background: linear-gradient(#686868, #494949);
+}
+.filters-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+}
+
 /* Search and filters */
 .filter-bar {
   display: flex;
