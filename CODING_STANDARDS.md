@@ -6,7 +6,9 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **The agreed test seam is the Log core's commands and queries.** Write tests there, with the in-memory adapters and the fixed clock. This is pre-agreed: don't ask again before writing them.
 
-**Persisted formats are contracts.** Tests may assert directly on the stored progress (ADR-0001) and the backup file, against literal expected values, because later versions of the app and future sync must read them unchanged. Every storage key the Log core writes counts, not only the progress: a new key gets a literal assertion on its key and value. Everything else goes through the Log core's commands and queries.
+**Persisted formats are contracts.** Tests may assert directly on the stored progress (ADR-0001) and the backup file, against literal expected values, because later versions of the app and future sync must read them unchanged. Every storage key the Log core writes counts, not only the progress: a new key gets a literal assertion on its key and value (`storage-keys.test.ts` fails a `contentUnlockLog.*` key in `log.ts` that no other test names). Everything else goes through the Log core's commands and queries.
+
+**Start-up work in `createLog` goes just before its `return`.** The closure declares its helpers as `const`s in order (`statusOf`, `selection`, `filters`, `history`), so work that runs while the log is created, such as offering a bundled copy, hits an uninitialised `const` if it sits higher up.
 
 **Keep the UI thin.** The UI has no tests, so any rule that decides what is valid, derived or allowed (uniqueness, a Data Center from a World, what Reset clears) belongs in the Log core, where it is tested. A component only collects input, calls a command and shows the result.
 
