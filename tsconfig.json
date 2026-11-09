@@ -13,6 +13,8 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "noEmit": true,
+    // Lets vite.config.ts import its plugin with the extension Vite's native config loader requires.
+    "allowImportingTsExtensions": true,
     "types": ["node", "vite/client"]
   },
   "include": ["src", "scripts", "vite.config.ts"]

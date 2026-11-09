@@ -83,6 +83,13 @@ export default tseslint.config(
     languageOptions: { globals: globals.node },
   },
   {
+    // The service worker's template runs in a service worker, not Node.
+    files: ["scripts/sw.template.js"],
+    languageOptions: {
+      globals: { ...globals.serviceworker, __PRECACHE__: "readonly", __FONT_STYLESHEETS__: "readonly" },
+    },
+  },
+  {
     // Claude Code hook scripts run under Node.
     files: [".claude/hooks/**/*.mjs"],
     languageOptions: { globals: globals.node },

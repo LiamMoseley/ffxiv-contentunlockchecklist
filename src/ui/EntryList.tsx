@@ -1,5 +1,5 @@
-import type { KeyboardEvent } from "react";
-import { entryIcon, iconFile, type Entry, type EntryStatus, type RichText } from "../log";
+import { createContext, useContext, type KeyboardEvent } from "react";
+import { entryIcon, iconFile, WIKI_IMAGE_BASE, type Entry, type EntryStatus, type RichText } from "../log";
 
 export type DisplayMode = "list" | "grid";
 
@@ -30,16 +30,7 @@ function RichCell({ text }: { text: RichText }) {
         <span className="line" key={i}>
           {line.map((segment, j) => {
             if ("icon" in segment) {
-              return (
-                <img
-                  key={j}
-                  className="wiki-icon"
-                  src={iconUrl(segment.icon)}
-                  width={segment.size}
-                  height={segment.size}
-                  alt=""
-                />
-              );
+              return <WikiIcon key={j} icon={segment.icon} size={segment.size} />;
             }
             if (!segment.href) return segment.text;
             return (
@@ -62,7 +53,26 @@ function RichCell({ text }: { text: RichText }) {
   );
 }
 
-const iconUrl = (icon: string) => `${import.meta.env.BASE_URL}icons/${iconFile(icon)}`;
+/** Whether the app ships a wiki icon; the App supplies the Log core's answer. */
+export const BundledIconContext = createContext<(icon: string) => boolean>(() => true);
+
+/**
+ * A wiki icon. A bundled one is served from the app. One that only appeared after an in-browser update comes from
+ * the wiki, which rejects requests that carry a Referer, so none is sent; the service worker keeps it for offline use.
+ */
+function WikiIcon({ icon, size }: { icon: string; size: number }) {
+  const bundled = useContext(BundledIconContext)(icon);
+  return (
+    <img
+      className="wiki-icon"
+      src={bundled ? `${import.meta.env.BASE_URL}icons/${iconFile(icon)}` : WIKI_IMAGE_BASE + icon}
+      referrerPolicy="no-referrer"
+      width={size}
+      height={size}
+      alt=""
+    />
+  );
+}
 
 /** The status box as a button; its click, like a click anywhere on the entry, reaches the entry's handler. */
 function StatusButton({ entry, status }: { entry: Entry; status: EntryStatus }) {
@@ -183,9 +193,7 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
         const name = entry.unlock.replaceAll("\n", " ");
         return (
           <li key={entry.id} className={`entry-card ${status}`} title={name} {...entryProps(actions, entry.id)}>
-            <span className="card-icon">
-              {icon && <img className="wiki-icon" src={iconUrl(icon.icon)} width={36} height={36} alt="" />}
-            </span>
+            <span className="card-icon">{icon && <WikiIcon icon={icon.icon} size={36} />}</span>
             <span className="card-text">
               <b>
                 {name}

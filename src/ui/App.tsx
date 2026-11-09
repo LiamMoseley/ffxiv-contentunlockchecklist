@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
+import { cacheWikiIcons } from "../adapters/offline";
 import type { ChangeResult, Log, Section, SectionKind, Storage, UpdatePreview } from "../log";
 import { EntryGrid, EntryTable, HintBar, NewBadge, type DisplayMode, type EntryActions } from "./EntryList";
 import { CharacterMenu } from "./CharacterMenu";
@@ -199,6 +200,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     }
     setConfirming(null);
   };
+
+  // Icons from an in-browser update are kept for offline use as soon as the service worker can keep them.
+  useEffect(() => cacheWikiIcons(log.unbundledIcons()));
 
   const character = log.currentCharacter();
 

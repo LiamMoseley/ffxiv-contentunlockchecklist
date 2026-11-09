@@ -20,5 +20,6 @@ Start the app with `preview_start {name: "dev"}` (`.claude/launch.json`).
 - **Never reload inside a `javascript_tool` script.** `location.reload()` cuts the script off and loses its result; reload in its own call, then run the next script.
 - **Make a scroll region scroll by shortening the viewport.** `resize_window` to 800×500, then compare `scrollHeight` with `clientHeight` on the region.
 - **Check responsive layout with `resize_window`** (a narrow width such as 800 and a wide one such as 1500), and reset it with `preset: "desktop"` afterwards.
+- **The browser pane cannot register a service worker** (even a one-line one fails with "unknown error occurred when fetching the script"), so offline behaviour cannot be checked there. `npm run build` writes `dist/sw.js`; run it in Node against fake `caches`, `fetch` and `self` (install, activate, then fetch events with the network off), and leave the live-browser check to the owner.
 - **Stop the server** with `preview_stop` when done. Test data stays in the pane's local storage.
 - **Restart a stopped server with `preview_start {name: "dev"}`.** `navigate` to localhost fails and leaves a blank pane.
