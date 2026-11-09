@@ -151,7 +151,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const shownSections =
     expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
 
-  const activeFilters = log.activeFilterCount();
+  const activeFilters = log.activeFilterCount({ availableNow: availableOpen });
   // Complete Shown and Clear Shown act on what the window lists: Available now, or the filtered sections.
   const shownIds = availableOpen
     ? log.availableNow().sections.flatMap((s) => s.entries.map((e) => e.id))

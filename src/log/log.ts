@@ -300,7 +300,9 @@ export function createLog({ content, storage, clock }: LogOptions) {
       saveView();
     },
     /** How many filters are narrowing the log right now. */
-    activeFilterCount: (): number => activeFilterCount(filters),
+    activeFilterCount: ({ availableNow = false } = {}): number =>
+      // Available now lists only Unmarked entries, so it always hides Completed and Not interested ones.
+      activeFilterCount(availableNow ? { ...filters, hideCompleted: true, hideNotInterested: true } : filters),
     /** Every content type with its number of entries, most common first. */
     typeCounts: (): { type: string; count: number }[] =>
       contentTypes

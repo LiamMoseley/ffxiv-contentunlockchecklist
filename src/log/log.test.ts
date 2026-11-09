@@ -1079,6 +1079,15 @@ describe("filtering the log", () => {
     expect(log.activeFilterCount()).toBe(0);
   });
 
+  it("counts both hide filters as active in Available now, which only lists Unmarked entries", () => {
+    const { log } = openLog();
+    expect(log.activeFilterCount({ availableNow: true })).toBe(2);
+
+    log.setFilters({ search: "coil", hideCompleted: true });
+    expect(log.activeFilterCount({ availableNow: true })).toBe(3);
+    expect(log.activeFilterCount()).toBe(2);
+  });
+
   it("ignores a type or optional challenge choice that does not exist", () => {
     const { log } = openLog();
     log.setFilters({ type: "Dungeon" });
