@@ -127,10 +127,10 @@ export function CharacterMenu({
           <h3 className="character-section-title">Character</h3>
           <div className="dialog-buttons character-actions">
             <button type="button" onClick={() => setMode({ kind: "form", editing: null })}>
-              Add character
+              Add
             </button>
             <button type="button" onClick={() => setMode({ kind: "form", editing: current })}>
-              Edit character
+              Edit
             </button>
             <button type="button" onClick={() => setMode({ kind: "confirm", action: "reset" })}>
               Reset
