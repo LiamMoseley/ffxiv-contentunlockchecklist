@@ -341,22 +341,22 @@ function AvailableNow({
   const Entries = mode === "grid" ? EntryGrid : EntryTable;
   if (level === null) {
     return (
-      <p className="section-empty">
+      <p className="section-empty available-empty">
         {log.characterLabel(log.currentCharacter())} has no level yet. Set one to see what is available now.{" "}
-        <button type="button" className="filters-toggle" onClick={onSetLevel}>
+        <button type="button" onClick={onSetLevel}>
           Set level
         </button>
       </p>
     );
   }
   if (sections.length === 0 && hidden > 0) {
-    return <p className="section-empty">All available entries are hidden by the search or filters.</p>;
+    return <p className="section-empty available-empty">All available entries are hidden by the search or filters.</p>;
   }
   if (sections.length === 0) {
     return (
-      <p className="section-empty">
+      <p className="section-empty available-empty">
         Nothing left to unlock at level {level}. Raise the character&apos;s level to see more.{" "}
-        <button type="button" className="filters-toggle" onClick={onSetLevel}>
+        <button type="button" onClick={onSetLevel}>
           Change level
         </button>
       </p>
