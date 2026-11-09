@@ -122,6 +122,7 @@ export function CharacterMenu({
               );
             })}
           </ul>
+          <h3 className="character-section-title">Character</h3>
           <div className="dialog-buttons character-actions">
             <button type="button" onClick={() => setMode({ kind: "form", editing: null })}>
               Add character
@@ -141,6 +142,7 @@ export function CharacterMenu({
               Delete
             </button>
           </div>
+          <h3 className="character-section-title">Backup</h3>
           <div className="dialog-buttons character-actions">
             <button type="button" onClick={exportBackup}>
               Export backup
