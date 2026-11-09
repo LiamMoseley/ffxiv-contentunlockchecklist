@@ -113,46 +113,48 @@ function Preview({ preview }: { preview: UpdatePreview }) {
         Nothing is applied until you choose Apply update. Your progress is never changed; the status of a removed entry
         is kept and comes back if the entry returns.
       </p>
-      {added.length > 0 && (
-        <section className="update-added">
-          <h3>New ({added.length})</h3>
-          <ul className="update-items">
-            {added.map((e) => (
-              <EntryDetails key={e.id} entry={e} />
-            ))}
-          </ul>
-        </section>
-      )}
-      {changed.length > 0 && (
-        <section className="update-changed">
-          <h3>Changed ({changed.length})</h3>
-          <ul className="update-items">
-            {changed.map((c) => (
-              <li key={c.after.id} className="update-item">
-                <strong className="update-name">{name(c.after)}</strong>
-                <ul className="update-diff">
-                  {c.fields.map((f) => (
-                    <li key={f}>
-                      <span className="update-fields">{FIELD_NAMES[f]}:</span> <del>{show(c.before[f])}</del> →{" "}
-                      <ins>{show(c.after[f])}</ins>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-      {removed.length > 0 && (
-        <section className="update-removed">
-          <h3>Removed ({removed.length})</h3>
-          <ul className="update-items">
-            {removed.map((e) => (
-              <EntryDetails key={e.id} entry={e} />
-            ))}
-          </ul>
-        </section>
-      )}
+      <div className="update-scroll">
+        {added.length > 0 && (
+          <section className="update-added">
+            <h3>New ({added.length})</h3>
+            <ul className="update-items">
+              {added.map((e) => (
+                <EntryDetails key={e.id} entry={e} />
+              ))}
+            </ul>
+          </section>
+        )}
+        {changed.length > 0 && (
+          <section className="update-changed">
+            <h3>Changed ({changed.length})</h3>
+            <ul className="update-items">
+              {changed.map((c) => (
+                <li key={c.after.id} className="update-item">
+                  <strong className="update-name">{name(c.after)}</strong>
+                  <ul className="update-diff">
+                    {c.fields.map((f) => (
+                      <li key={f}>
+                        <span className="update-fields">{FIELD_NAMES[f]}:</span> <del>{show(c.before[f])}</del> →{" "}
+                        <ins>{show(c.after[f])}</ins>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {removed.length > 0 && (
+          <section className="update-removed">
+            <h3>Removed ({removed.length})</h3>
+            <ul className="update-items">
+              {removed.map((e) => (
+                <EntryDetails key={e.id} entry={e} />
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
     </div>
   );
 }

@@ -1128,9 +1128,21 @@ a.wiki-link:focus-visible {
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.7);
 }
 .update-dialog {
+  display: flex;
+  flex-direction: column;
   width: min(520px, calc(100vw - 24px));
   max-height: calc(100vh - 48px);
+}
+/* The title, intro text and buttons stay put; only the list of changes scrolls. */
+.update-preview {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.update-scroll {
+  min-height: 0;
   overflow-y: auto;
+  padding-right: 6px;
 }
 .update-dialog h3 {
   margin: 10px 0 4px;
