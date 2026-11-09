@@ -20,6 +20,16 @@ const FIELD_NAMES = {
 
 const name = (entry: Entry) => entry.unlock || entry.quest;
 
+/** A field's value as the dialog shows it: an empty one as "none", the optional challenge tag as yes or no. */
+const show = (value: string | boolean) =>
+  typeof value === "boolean" ? (value ? "yes" : "no") : value.replace(/\s*\n\s*/g, "; ") || "none";
+
+/** The detail line of a new or removed entry: its level, type and quest. */
+const summary = (entry: Entry) =>
+  [entry.level && `level ${entry.level}`, entry.type, entry.quest && `quest: ${entry.quest.replace(/\n/g, "; ")}`]
+    .filter(Boolean)
+    .join(" · ");
+
 /** Fetches the wiki's list and shows what would change; the player applies it or leaves it. */
 export function UpdateDialog({
   log,
@@ -94,7 +104,9 @@ function Preview({ preview }: { preview: UpdatePreview }) {
           <h3>New ({added.length})</h3>
           <ul>
             {added.map((e) => (
-              <li key={e.id}>{name(e)}</li>
+              <li key={e.id}>
+                {name(e)} <span className="update-fields">{summary(e)}</span>
+              </li>
             ))}
           </ul>
         </section>
@@ -105,8 +117,15 @@ function Preview({ preview }: { preview: UpdatePreview }) {
           <ul>
             {changed.map((c) => (
               <li key={c.after.id}>
-                {name(c.after)}{" "}
-                <span className="update-fields">({c.fields.map((f) => FIELD_NAMES[f]).join(", ")})</span>
+                {name(c.after)}
+                <ul className="update-diff">
+                  {c.fields.map((f) => (
+                    <li key={f}>
+                      <span className="update-fields">{FIELD_NAMES[f]}:</span> <del>{show(c.before[f])}</del> →{" "}
+                      <ins>{show(c.after[f])}</ins>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>
@@ -117,7 +136,9 @@ function Preview({ preview }: { preview: UpdatePreview }) {
           <h3>Removed ({removed.length})</h3>
           <ul>
             {removed.map((e) => (
-              <li key={e.id}>{name(e)}</li>
+              <li key={e.id}>
+                {name(e)} <span className="update-fields">{summary(e)}</span>
+              </li>
             ))}
           </ul>
         </section>
