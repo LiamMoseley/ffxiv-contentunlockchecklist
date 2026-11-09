@@ -25,6 +25,16 @@ export const OPTIONAL_CHALLENGE_FILTERS: OptionalChallengeFilter[] = ["all", "no
 /** An entry's content type: the first line of the wiki's Type cell ("PvP\nLocation" is a PvP entry). */
 export const typeOf = (entry: Entry): string => entry.type.split("\n")[0];
 
+/** How many filters are narrowing the log: the search, the type, the optional challenge choice and each checkbox. */
+export const activeFilterCount = (filters: Filters): number =>
+  [
+    filters.search.trim() !== "",
+    filters.type !== null,
+    filters.optionalChallenge !== "all",
+    filters.hideCompleted,
+    filters.hideNotInterested,
+  ].filter(Boolean).length;
+
 /** Every field the search looks in. */
 const searchText = (entry: Entry): string =>
   [entry.level, entry.itemLevel, entry.unlock, entry.type, entry.quest, entry.location, entry.information]

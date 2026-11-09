@@ -1201,6 +1201,21 @@ a.wiki-link:focus-visible {
   font-size: 13px;
   text-shadow: 0 1px 1px #000;
 }
+/* A yellow count badge: filters are narrowing the log, even while the panel is closed */
+.filters-active {
+  display: inline-block;
+  min-width: 16px;
+  margin-left: 6px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--yellow);
+  color: #1c1c1c;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  text-shadow: none;
+}
 .filters-toggle:hover {
   background: linear-gradient(#686868, #494949);
 }

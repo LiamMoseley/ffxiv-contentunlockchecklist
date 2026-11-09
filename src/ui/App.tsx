@@ -143,7 +143,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
       ? log.sections()
       : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
 
-  const shownIds = shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
+  const activeFilters = log.activeFilterCount();
+  const shownIds =shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
   const completeCount = log.completeShownCount(shownIds);
   const clearCount = log.clearShownCount(shownIds);
   const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
@@ -204,7 +205,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 aria-controls="filter-bar"
                 onClick={() => setFiltersOpen(!filtersOpen)}
               >
-                Filters {filtersOpen ? "▴" : "▾"}
+                Filters
+                {activeFilters > 0 && (
+                  <span className="filters-active" title={`${activeFilters} active`} aria-label={`${activeFilters} active`}>
+                    {activeFilters}
+                  </span>
+                )}{" "}
+                {filtersOpen ? "▴" : "▾"}
               </button>
             </div>
             {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}

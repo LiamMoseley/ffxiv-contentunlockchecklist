@@ -1,5 +1,5 @@
 import type { Content, Entry, Section, SectionKind } from "./content";
-import { DEFAULT_FILTERS, OPTIONAL_CHALLENGE_FILTERS, passesFilters, typeOf, type Filters } from "./filters";
+import { activeFilterCount, DEFAULT_FILTERS, OPTIONAL_CHALLENGE_FILTERS, passesFilters, typeOf, type Filters } from "./filters";
 import { dataCenterOfWorld, knownWorld, WORLDS } from "./worlds";
 import { characterLabel, newProgress, type Character, type EntryStatus, type Progress } from "./progress";
 
@@ -271,6 +271,8 @@ export function createLog({ content, storage, clock }: LogOptions) {
       filters = { ...filters, ...next };
       saveView();
     },
+    /** How many filters are narrowing the log right now. */
+    activeFilterCount: (): number => activeFilterCount(filters),
     /** Every content type with its number of entries, most common first. */
     typeCounts: (): { type: string; count: number }[] =>
       contentTypes

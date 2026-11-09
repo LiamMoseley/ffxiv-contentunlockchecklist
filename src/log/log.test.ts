@@ -1010,6 +1010,23 @@ describe("filtering the log", () => {
     expect(log.sectionProgress(section.id).completed).toBe(ids.length);
   });
 
+  it("counts the filters that are narrowing the log", () => {
+    const { log } = openLog();
+    expect(log.activeFilterCount()).toBe(0);
+
+    log.setFilters({ search: "  " });
+    expect(log.activeFilterCount()).toBe(0);
+
+    log.setFilters({ search: "coil" });
+    expect(log.activeFilterCount()).toBe(1);
+
+    log.setFilters({ type: "Trial", optionalChallenge: "only", hideCompleted: true, hideNotInterested: true });
+    expect(log.activeFilterCount()).toBe(5);
+
+    log.setFilters({ search: "", type: null, optionalChallenge: "all", hideCompleted: false, hideNotInterested: false });
+    expect(log.activeFilterCount()).toBe(0);
+  });
+
   it("ignores a type or optional challenge choice that does not exist", () => {
     const { log } = openLog();
     log.setFilters({ type: "Dungeon" });
