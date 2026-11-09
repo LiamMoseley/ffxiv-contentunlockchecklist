@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useModal } from "./useModal";
 
 const TOAST_MS = 6000;
 
@@ -40,11 +41,13 @@ export function ConfirmDialog({
   onCancel: () => void;
 }) {
   const cancelRef = useRef<HTMLButtonElement>(null);
+  const trapTab = useModal();
   useEffect(() => cancelRef.current?.focus(), []);
   return (
     <div
       className="dialog-backdrop"
       onKeyDown={(event) => {
+        trapTab(event);
         if (event.key === "Escape") onCancel();
       }}
     >

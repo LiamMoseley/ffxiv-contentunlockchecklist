@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { StatusBox } from "./EntryList";
+import { useModal } from "./useModal";
 import type { Entry, Log, SuggestedMatch, UpdatePreview } from "../log";
 
 type State =
@@ -74,6 +75,7 @@ export function UpdateDialog({
       cancelled = true;
     };
   }, [log]);
+  const trapTab = useModal();
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => closeRef.current?.focus(), [state.phase]);
 
@@ -93,6 +95,7 @@ export function UpdateDialog({
     <div
       className="dialog-backdrop"
       onKeyDown={(event) => {
+        trapTab(event);
         if (event.key === "Escape") onClose();
       }}
     >
