@@ -13,6 +13,8 @@
   --text: #eee;
   --text-dim: #b8b8b8;
   --text-faint: #ababab;
+  /* Text of a Not interested row: faded, but still 4.5:1 on the window and the cards */
+  --text-muted: #b0b0b0;
   --gold: #f0c35a;
   --yellow: #f6b93b;
   --cream: #efe2bf;
@@ -606,12 +608,10 @@ a.wiki-link:focus-visible {
 .completed a.wiki-link {
   color: var(--link-dim);
 }
-.notInterested td:not(:first-child) {
-  color: #b0b0b0;
-}
+.notInterested td:not(:first-child),
 .notInterested a.wiki-link,
 .entry-card.notInterested .card-text {
-  color: #b0b0b0;
+  color: var(--text-muted);
 }
 .completed a.wiki-link,
 .notInterested a.wiki-link {
@@ -659,7 +659,7 @@ a.wiki-link:focus-visible {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 .status-box.notInterested {
-  border-color: #666;
+  border-color: #8f8f8f;
   background:
     linear-gradient(
       to top right,
@@ -743,10 +743,10 @@ a.wiki-link:focus-visible {
 }
 .entry-card.completed .card-text,
 .entry-card.completed small {
-  color: #b0b0b0;
+  color: var(--text-muted);
 }
 .entry-card.notInterested small {
-  color: #b0b0b0;
+  color: var(--text-muted);
 }
 .entry-card.notInterested .card-icon > * {
   filter: grayscale(1);
