@@ -6,7 +6,7 @@ Issues are tracked in GitHub Issues (LiamMoseley/ffxiv-contentunlockchecklist) v
 
 ### Testing
 
-The test seam is pre-agreed: the Log core's commands and queries. See `CODING_STANDARDS.md`.
+The test seam is pre-agreed: the Log core's commands and queries. See `CODING_STANDARDS.md`. `npm run check` runs every check CI does except the build (format, lint, typecheck, tests): run it once before committing.
 
 ### Large files
 

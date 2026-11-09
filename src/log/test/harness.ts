@@ -48,7 +48,10 @@ export function openLog(
   return { log, storage, clock, wiki };
 }
 
-/** Rewrites the one table row of `html` that contains `marker`. */
+/**
+ * Rewrites the one table row of `html` that contains `marker`. An entry's ID is a slug of its unlock and quest,
+ * so a rename that only changes punctuation keeps the ID: use a different spelling to make a new entry.
+ */
 export function editRow(html: string, marker: string, edit: (row: string) => string): string {
   const at = html.indexOf(marker);
   if (at < 0 || html.indexOf(marker, at + 1) >= 0) throw new Error(`marker must occur once: ${marker}`);
