@@ -13,15 +13,13 @@
   --text: #eee;
   --text-dim: #b8b8b8;
   --text-faint: #ababab;
-  /* Text of a Not interested row: faded, but still 4.5:1 on the window and the cards */
-  --text-muted: #b0b0b0;
   --gold: #f0c35a;
   --yellow: #f6b93b;
   --cream: #efe2bf;
   --tile-red: #c9442b;
   --tile-red-dark: #8e1f15;
   --link: #8ab4f8;
-  --link-dim: #9db8ea;
+  --link-dim: #7894c4;
   /* Bronze frame metal, shared by the window and (later) menus, dialogs and messages */
   --bronze: linear-gradient(#ecd9a6, #c09a5c 28%, #7c5d33 55%, #a07c47 78%, #e0c68e);
 
@@ -599,25 +597,14 @@ a.wiki-link:focus-visible {
   text-decoration: underline;
 }
 
-/*
- * Entry status: dimmed when completed, faded with grey icons when not interested. Text is faded by
- * colour, not opacity, so it keeps 4.5:1 contrast. Links in these rows take the row's colour, so they
- * are underlined to stay recognisable.
- */
+/* Entry status: dimmed when completed, faded with grey icons when not interested */
 .completed td:not(:first-child),
 .completed a.wiki-link {
   color: var(--link-dim);
 }
 .notInterested td:not(:first-child),
-.notInterested a.wiki-link,
+.entry-card.notInterested .card-icon,
 .entry-card.notInterested .card-text {
-  color: var(--text-muted);
-}
-.completed a.wiki-link,
-.notInterested a.wiki-link {
-  text-decoration: underline;
-}
-.entry-card.notInterested .card-icon {
   opacity: 0.42;
 }
 .completed .wiki-icon {
@@ -743,10 +730,7 @@ a.wiki-link:focus-visible {
 }
 .entry-card.completed .card-text,
 .entry-card.completed small {
-  color: var(--text-muted);
-}
-.entry-card.notInterested small {
-  color: var(--text-muted);
+  color: #9a9a9a;
 }
 .entry-card.notInterested .card-icon > * {
   filter: grayscale(1);
