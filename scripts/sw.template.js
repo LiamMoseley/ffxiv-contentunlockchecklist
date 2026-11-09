@@ -67,7 +67,9 @@ self.addEventListener("activate", (event) => {
 /** The cached response if there is one; otherwise the network's, kept when it is usable. */
 async function cacheFirst(request, cacheName, { keepOpaque = false } = {}) {
   const cache = await caches.open(cacheName);
-  const cached = await cache.match(request);
+  // `ignoreVary`: a server that sends `Vary: Origin` would otherwise never match the script request, which carries
+  // an Origin header the install-time request did not. These files are the same whoever asks.
+  const cached = await cache.match(request, { ignoreVary: true });
   if (cached) return cached;
   const response = await fetch(request);
   if (response.ok || (keepOpaque && response.type === "opaque")) await cache.put(request, response.clone());
@@ -92,7 +94,7 @@ async function page(request) {
     }
     return response;
   } catch {
-    return (await cache.match(indexUrl())) ?? Response.error();
+    return (await cache.match(indexUrl(), { ignoreVary: true })) ?? Response.error();
   }
 }
 

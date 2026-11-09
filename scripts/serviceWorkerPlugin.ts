@@ -34,10 +34,12 @@ export function serviceWorker(): Plugin {
     },
     closeBundle() {
       const files = filesUnder(outDir).filter((file) => file !== "sw.js");
-      const hash = createHash("sha256");
+      const template = readFileSync(TEMPLATE, "utf8");
+      // The worker's own code is part of the version: a changed worker starts with a fresh cache.
+      const hash = createHash("sha256").update(template);
       for (const file of files) hash.update(file).update(readFileSync(join(outDir, file)));
       const precache = files.map((file) => (file === "index.html" ? "./" : file));
-      const worker = readFileSync(TEMPLATE, "utf8")
+      const worker = template
         .replace("__VERSION__", hash.digest("hex").slice(0, 12))
         .replace("__PRECACHE__", JSON.stringify(precache))
         .replace(
