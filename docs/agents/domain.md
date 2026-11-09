@@ -42,6 +42,8 @@ Multi-context repo (presence of `GLOSSARY-MAP.md` at the root):
 
 The Log core is `createLog` in `src/log/log.ts` (content parsing in `content.ts`, filters in `filters.ts`, tests in `log.test.ts` with the harness in `test/harness.ts`); import it through `src/log/index.ts`. The UI in `src/ui` only calls it, starting from `App.tsx`. Read the one file you need, not the whole folder.
 
+`log.test.ts` is too long to append to with an anchored edit: put a new feature's Log core tests in `src/log/<topic>.test.ts` beside it (see `new-entries.test.ts`), using `test/harness.ts`. In `src/ui/app.css` the embossed pill buttons are four selector lists (base, `:hover`, `:active`, `:focus-visible`); give a new pill button a line in each.
+
 ## Use the glossary's vocabulary
 
 When your output names a domain concept (in an issue title, a refactor proposal, a hypothesis, a test name), use the term as defined in `GLOSSARY.md`. Don't drift to synonyms the glossary explicitly avoids.
