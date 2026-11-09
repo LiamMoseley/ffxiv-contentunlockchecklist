@@ -1002,7 +1002,22 @@ describe("filtering the log", () => {
 
     log.setFilters({ hideCompleted: true });
     expect(log.shownEntries(section.id)).toEqual([]);
-    expect(log.clearShownCount([])).toBe(0);
+
+    // Clear Shown on what is now shown touches nothing; the hidden Completed entries stay Completed.
+    const shownNow = log.sections().flatMap((s) => log.shownEntries(s.id)).map((e) => e.id);
+    expect(log.clearShownCount(shownNow)).toBe(0);
+    log.clearShown(shownNow);
+    expect(log.sectionProgress(section.id).completed).toBe(ids.length);
+  });
+
+  it("ignores a type or optional challenge choice that does not exist", () => {
+    const { log } = openLog();
+    log.setFilters({ type: "Dungeon" });
+
+    log.setFilters({ type: "Nope" });
+    log.setFilters({ optionalChallenge: "some" as "all" });
+
+    expect(log.filters()).toMatchObject({ type: "Dungeon", optionalChallenge: "all" });
   });
 });
 

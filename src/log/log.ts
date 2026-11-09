@@ -263,6 +263,11 @@ export function createLog({ content, storage, clock }: LogOptions) {
     /** What currently narrows the log. Everything but the search is remembered on the device. */
     filters: (): Filters => ({ ...filters }),
     setFilters(next: Partial<Filters>) {
+      // A type or optional challenge choice that doesn't exist is ignored, as when restoring a saved view.
+      const valid =
+        (next.type === undefined || next.type === null || contentTypes.includes(next.type)) &&
+        (next.optionalChallenge === undefined || OPTIONAL_CHALLENGE_FILTERS.includes(next.optionalChallenge));
+      if (!valid) return;
       filters = { ...filters, ...next };
       saveView();
     },
