@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { StatusBox } from "./EntryList";
 import type { Entry, Log, SuggestedMatch, UpdatePreview } from "../log";
 
 type State =
@@ -147,12 +148,18 @@ function Matches({
           <ul className="update-items">
             {preview.suggestions.map((m) => (
               <li key={`${m.from.id}|${m.to.id}`} className="update-item">
-                <label className="update-match">
-                  <input type="checkbox" checked={accepted.includes(m)} onChange={(e) => onTick(m, e.target.checked)} />
+                <button
+                  type="button"
+                  role="checkbox"
+                  aria-checked={accepted.includes(m)}
+                  className="update-match"
+                  onClick={() => onTick(m, !accepted.includes(m))}
+                >
+                  <StatusBox status={accepted.includes(m) ? "completed" : "unmarked"} />
                   <span>
                     <strong className="update-name">{name(m.from)}</strong> → <strong>{name(m.to)}</strong>
                   </span>
-                </label>
+                </button>
               </li>
             ))}
           </ul>
