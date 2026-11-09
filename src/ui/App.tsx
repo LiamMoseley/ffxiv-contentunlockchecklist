@@ -6,6 +6,7 @@ import { ConfirmDialog, Toast } from "./Messages";
 import { FilterBar } from "./FilterBar";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
+import { UpdateDialog } from "./UpdateDialog";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
 
 const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
@@ -81,6 +82,19 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // "Available now" replaces the section view; a view choice for this visit only.
   const [availableOpen, setAvailableOpen] = useState(false);
   const toastCount = useRef(0);
+  const [confirmingUpdate, setConfirmingUpdate] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  // Update needs the wiki, so it is disabled while the device is offline.
+  const [online, setOnline] = useState(() => navigator.onLine);
+  useEffect(() => {
+    const sync = () => setOnline(navigator.onLine);
+    window.addEventListener("online", sync);
+    window.addEventListener("offline", sync);
+    return () => {
+      window.removeEventListener("online", sync);
+      window.removeEventListener("offline", sync);
+    };
+  }, []);
 
   const sectionNames = new Map(
     log
@@ -283,6 +297,30 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             }}
           />
         )}
+        {confirmingUpdate && (
+          <ConfirmDialog
+            title="Update from the wiki"
+            text="Fetch the latest list from the wiki and review what changed? Nothing is applied until you confirm the changes, and your progress is never changed."
+            confirmLabel="Update"
+            onConfirm={() => {
+              setConfirmingUpdate(false);
+              setUpdateOpen(true);
+            }}
+            onCancel={() => setConfirmingUpdate(false)}
+          />
+        )}
+        {updateOpen && (
+          <UpdateDialog
+            log={log}
+            onClose={() => setUpdateOpen(false)}
+            onChecked={refresh}
+            onApplied={(message) => {
+              setUpdateOpen(false);
+              refresh();
+              say(message);
+            }}
+          />
+        )}
         {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
         {confirming && (
           <ConfirmDialog
@@ -314,8 +352,22 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
 
         <footer className="footer-bar">
           <span>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
-          <span>
-            Content from the <a href={WIKI_PAGE_URL}>Content Unlock page</a> of the community FFXIV wiki.
+          <span className="footer-source">
+            <span>
+              Content from <a href={WIKI_PAGE_URL}>Content Unlock</a> on the community FFXIV wiki.
+            </span>
+            <button
+              type="button"
+              className="update-button"
+              disabled={!online}
+              aria-label={online ? "Update from the wiki" : "Update from the wiki (offline)"}
+              title={online ? "Update from the wiki" : "You're offline: Update needs the wiki"}
+              onClick={() => setConfirmingUpdate(true)}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+                <path d="M6 1h2v6h2.5L7 10.5 3.5 7H6V1ZM2 11.5h10V13H2v-1.5Z" />
+              </svg>
+            </button>
           </span>
         </footer>
       </div>
