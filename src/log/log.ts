@@ -7,6 +7,7 @@ import {
   typeOf,
   type Filters,
 } from "./filters";
+import { BACKUP_FORMAT_VERSION, parseBackup, type Backup, type BackupError } from "./backup";
 import { dataCenterOfWorld, knownWorld, WORLDS } from "./worlds";
 import { characterLabel, newProgress, type Character, type EntryStatus, type Progress } from "./progress";
 
@@ -41,6 +42,14 @@ export type CharacterDetails = { name: string; world?: string; level?: number | 
 export type CharacterError = "nameRequired" | "invalidLevel" | "nameTaken" | "unknownWorld" | "notFound";
 
 export type CharacterResult = { ok: true; character: Character } | { ok: false; error: CharacterError };
+
+/** A backup file ready to save. */
+export type BackupFile = { fileName: string; json: string };
+
+/** What an import did: characters added, existing characters it filled in, and entries it set. */
+export type ImportResult =
+  | { ok: true; charactersAdded: number; charactersMerged: number; entriesAdded: number }
+  | { ok: false; error: BackupError };
 
 const MAX_LEVEL = 100;
 
@@ -183,7 +192,11 @@ export function createLog({ content, storage, clock }: LogOptions) {
   };
 
   /** Earlier statuses of the entries each change touched, newest last. In memory only. */
-  const history: ({ characterId: string; earlier: Map<string, EntryStatus> } | { deletedCharacterId: string })[] = [];
+  const history: (
+    | { characterId: string; earlier: Map<string, EntryStatus> }
+    | { deletedCharacterId: string }
+    | { importedCharacterIds: string[]; earlierByCharacter: Map<string, Map<string, EntryStatus>> }
+  )[] = [];
 
   /**
    * Writes the given statuses for the character as one change, skipping entries already at that status.
@@ -258,8 +271,75 @@ export function createLog({ content, storage, clock }: LogOptions) {
     return true;
   }
 
+  /** Every character that is not deleted, with all its statuses, as a backup file. */
+  function exportBackup(): BackupFile {
+    const exportedAt = now();
+    const backup: Backup = {
+      formatVersion: BACKUP_FORMAT_VERSION,
+      exportedAt,
+      characters: characters().map((c) => ({
+        name: c.name,
+        world: c.world,
+        dataCenter: c.dataCenter,
+        level: c.level,
+        updatedAt: c.updatedAt,
+        statuses: { ...progress.statuses[c.id] },
+      })),
+    };
+    return {
+      fileName: `content-unlock-log-backup-${exportedAt.slice(0, 10)}.json`,
+      json: JSON.stringify(backup, null, 2),
+    };
+  }
+
+  /**
+   * Adds a backup's progress without overwriting any: characters are matched by name and World and added
+   * when missing, and only entries that are Unmarked here are filled in. One undoable change.
+   */
+  function importBackup(text: string): ImportResult {
+    const parsed = parseBackup(text);
+    if (!parsed.ok) return parsed;
+    const importedCharacterIds: string[] = [];
+    const earlierByCharacter = new Map<string, Map<string, EntryStatus>>();
+    let charactersMerged = 0;
+    let entriesAdded = 0;
+    for (const incoming of parsed.backup.characters) {
+      let local = characters().find((c) => sameText(c.name, incoming.name) && sameText(c.world, incoming.world));
+      if (local) charactersMerged++;
+      else {
+        local = {
+          id: crypto.randomUUID(),
+          name: incoming.name.trim(),
+          world: incoming.world.trim(),
+          dataCenter: incoming.dataCenter,
+          level: incoming.level,
+          updatedAt: now(),
+          deleted: false,
+        };
+        progress.characters[local.id] = local;
+        importedCharacterIds.push(local.id);
+      }
+      const fill = new Map<string, EntryStatus>();
+      for (const [entryId, record] of Object.entries(incoming.statuses)) {
+        if (record.status !== "unmarked" && statusOf(local.id, entryId) === "unmarked")
+          fill.set(entryId, record.status);
+      }
+      const { earlier } = write(local.id, fill);
+      entriesAdded += earlier.size;
+      if (earlier.size > 0) earlierByCharacter.set(local.id, earlier);
+    }
+    if (importedCharacterIds.length > 0) save();
+    if (importedCharacterIds.length > 0 || earlierByCharacter.size > 0)
+      history.push({ importedCharacterIds, earlierByCharacter });
+    return { ok: true, charactersAdded: importedCharacterIds.length, charactersMerged, entriesAdded };
+  }
+
   return {
     expansions: () => content.expansions,
+    /** Saves every character as one backup file (format version 1); deleted characters are left out. */
+    exportBackup,
+    /** Merges a backup file's text into this device's progress, adding only; undoable. */
+    importBackup,
     sections: () => content.sections,
     characters,
     currentCharacter,
@@ -372,6 +452,13 @@ export function createLog({ content, storage, clock }: LogOptions) {
       const latest = history.pop();
       if (!latest) return false;
       if ("deletedCharacterId" in latest) return restoreCharacter(latest.deletedCharacterId);
+      if ("importedCharacterIds" in latest) {
+        for (const [characterId, earlier] of latest.earlierByCharacter) write(characterId, earlier);
+        for (const id of latest.importedCharacterIds)
+          progress.characters[id] = { ...progress.characters[id], deleted: true, updatedAt: now() };
+        save();
+        return true;
+      }
       write(latest.characterId, latest.earlier);
       return true;
     },

@@ -6,6 +6,8 @@ export {
   type CharacterDetails,
   type CharacterError,
   type CharacterResult,
+  type BackupFile,
+  type ImportResult,
   type ChangeResult,
   type Available,
   type Log,

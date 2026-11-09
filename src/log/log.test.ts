@@ -1298,3 +1298,181 @@ describe("available now", () => {
     expect(withLevel(15).availableNow().hidden).toBe(0);
   });
 });
+
+describe("backup export and import", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+  const ORPHAN = "an-entry-the-wiki-dropped";
+  const T1 = "2026-11-03T10:00:00.000Z";
+  const T2 = "2026-11-03T11:00:00.000Z";
+
+  /** A device with Aria on Balmung (level 50) holding a few statuses, one of them orphaned. */
+  function deviceWithAria() {
+    const clock = fixedClock(T1);
+    const device = openLog({ clock });
+    device.log.editCharacter(device.log.currentCharacter().id, { name: "Aria", world: "Balmung", level: 50 });
+    clock.set(T2);
+    device.log.setEntryStatus(SASTASHA, "completed");
+    device.log.setEntryStatus("party-finder", "notInterested");
+    device.log.setEntryStatus(ORPHAN, "completed");
+    return device;
+  }
+
+  const names = (log: ReturnType<typeof openLog>["log"]) => log.characters().map((c) => c.name);
+
+  it("exports one JSON file with a format version, every character, its statuses and their timestamps", () => {
+    const { log } = deviceWithAria();
+    log.addCharacter({ name: "Bree", world: "", level: null });
+
+    const backup = log.exportBackup();
+    expect(backup.fileName).toBe("content-unlock-log-backup-2026-11-03.json");
+    expect(JSON.parse(backup.json)).toEqual({
+      formatVersion: 1,
+      exportedAt: T2,
+      characters: [
+        {
+          name: "Aria",
+          world: "Balmung",
+          dataCenter: "Crystal",
+          level: 50,
+          updatedAt: T1,
+          statuses: {
+            [SASTASHA]: { status: "completed", updatedAt: T2 },
+            "party-finder": { status: "notInterested", updatedAt: T2 },
+            [ORPHAN]: { status: "completed", updatedAt: T2 },
+          },
+        },
+        { name: "Bree", world: "", dataCenter: "", level: null, updatedAt: T2, statuses: {} },
+      ],
+    });
+  });
+
+  it("leaves deleted characters out of the export", () => {
+    const { log } = deviceWithAria();
+    const bree = log.addCharacter({ name: "Bree" });
+    if (!bree.ok) throw new Error("add failed");
+    log.deleteCharacter(bree.character.id);
+
+    expect(JSON.parse(log.exportBackup().json).characters.map((c: { name: string }) => c.name)).toEqual(["Aria"]);
+  });
+
+  it("round-trips: importing into a fresh device adds the character with every status, orphaned ones included", () => {
+    const backup = deviceWithAria().log.exportBackup();
+    const { log } = openLog();
+
+    expect(log.importBackup(backup.json)).toEqual({
+      ok: true,
+      charactersAdded: 1,
+      charactersMerged: 0,
+      entriesAdded: 3,
+    });
+    const aria = log.characters().find((c) => c.name === "Aria")!;
+    expect(aria).toMatchObject({ world: "Balmung", dataCenter: "Crystal", level: 50 });
+    expect(aria.id).toMatch(/^[0-9a-f-]{36}$/);
+    log.switchCharacter(aria.id);
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+    expect(log.entryStatus("party-finder")).toBe("notInterested");
+    const exported = JSON.parse(log.exportBackup().json).characters;
+    expect(exported.find((c: { name: string }) => c.name === "Aria").statuses).toHaveProperty(ORPHAN);
+  });
+
+  it("matches characters by name and World and adds the ones that are missing", () => {
+    const backup = deviceWithAria().log.exportBackup();
+    const { log } = openLog();
+    const local = log.currentCharacter();
+    log.editCharacter(local.id, { name: "aria", world: "Balmung" });
+    log.addCharacter({ name: "Aria", world: "Ragnarok" });
+
+    expect(log.importBackup(backup.json)).toEqual({
+      ok: true,
+      charactersAdded: 0,
+      charactersMerged: 1,
+      entriesAdded: 3,
+    });
+    expect(log.characters()).toHaveLength(2);
+    expect(log.currentCharacter().id).toBe(local.id);
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+  });
+
+  it("only fills in entries that are Unmarked here, never changing a Completed or Not interested one", () => {
+    const backup = deviceWithAria().log.exportBackup();
+    const { log } = openLog();
+    log.editCharacter(log.currentCharacter().id, { name: "Aria", world: "Balmung" });
+    log.setEntryStatus(SASTASHA, "notInterested");
+    log.setEntryStatus("party-finder", "completed");
+
+    expect(log.importBackup(backup.json)).toMatchObject({ ok: true, entriesAdded: 1 });
+    expect(log.entryStatus(SASTASHA)).toBe("notInterested");
+    expect(log.entryStatus("party-finder")).toBe("completed");
+    expect(log.entryStatus(ORPHAN)).toBe("completed");
+  });
+
+  it("ignores backup entries that are Unmarked", () => {
+    const { log: source } = openLog();
+    source.setEntryStatus(SASTASHA, "completed");
+    source.setEntryStatus(SASTASHA, "unmarked");
+    const { log } = openLog();
+
+    expect(log.importBackup(source.exportBackup().json)).toMatchObject({ ok: true, entriesAdded: 0 });
+  });
+
+  it("writes imported statuses as a new change with a fresh timestamp", () => {
+    const backup = deviceWithAria().log.exportBackup();
+    const { log, storage } = openLog({ clock: fixedClock("2026-11-05T09:00:00.000Z") });
+    log.importBackup(backup.json);
+
+    const stored = JSON.parse(storage.read("contentUnlockLog.progress")!);
+    const aria = Object.values<{ id: string; name: string }>(stored.characters).find((c) => c.name === "Aria")!;
+    expect(stored.statuses[aria.id][SASTASHA]).toEqual({ status: "completed", updatedAt: "2026-11-05T09:00:00.000Z" });
+  });
+
+  it("undoes an import: merged entries go back to Unmarked and added characters are removed", () => {
+    const { log: source } = openLog();
+    source.editCharacter(source.currentCharacter().id, { name: "Aria", world: "Balmung" });
+    source.setEntryStatus(SASTASHA, "completed");
+    source.addCharacter({ name: "Cleo", world: "" });
+
+    const { log } = openLog();
+    log.editCharacter(log.currentCharacter().id, { name: "Aria", world: "Balmung" });
+    log.setEntryStatus("party-finder", "completed");
+    expect(log.importBackup(source.exportBackup().json)).toMatchObject({ charactersAdded: 1, charactersMerged: 1 });
+    expect(names(log)).toContain("Cleo");
+
+    expect(log.undo()).toBe(true);
+    expect(names(log)).not.toContain("Cleo");
+    expect(log.entryStatus(SASTASHA)).toBe("unmarked");
+    expect(log.entryStatus("party-finder")).toBe("completed");
+  });
+
+  it("leaves nothing to undo when the import adds nothing", () => {
+    const backup = deviceWithAria().log.exportBackup();
+    const { log } = openLog();
+    log.importBackup(backup.json);
+
+    expect(log.importBackup(backup.json)).toEqual({
+      ok: true,
+      charactersAdded: 0,
+      charactersMerged: 1,
+      entriesAdded: 0,
+    });
+    expect(log.undo()).toBe(true);
+    expect(names(log)).not.toContain("Aria");
+    expect(log.canUndo()).toBe(false);
+  });
+
+  it("rejects a file that is not a backup, or from a newer format, and changes nothing", () => {
+    const { log, storage } = openLog();
+    const stored = storage.read("contentUnlockLog.progress");
+
+    expect(log.importBackup("not json")).toEqual({ ok: false, error: "notABackup" });
+    expect(log.importBackup(JSON.stringify({ formatVersion: 1, characters: "x" }))).toEqual({
+      ok: false,
+      error: "notABackup",
+    });
+    expect(log.importBackup(JSON.stringify({ formatVersion: 2, characters: [] }))).toEqual({
+      ok: false,
+      error: "newerVersion",
+    });
+    expect(storage.read("contentUnlockLog.progress")).toBe(stored);
+    expect(log.canUndo()).toBe(false);
+  });
+});

@@ -11,6 +11,11 @@ const ERROR_TEXT: Record<CharacterError, string> = {
   notFound: "That character no longer exists.",
 };
 
+const IMPORT_ERROR_TEXT = {
+  notABackup: "That file is not a backup from this app.",
+  newerVersion: "That backup was made by a newer version of the app. Update the app to read it.",
+};
+
 type Mode =
   { kind: "list" } | { kind: "form"; editing: Character | null } | { kind: "confirm"; action: "reset" | "delete" };
 
@@ -32,6 +37,33 @@ export function CharacterMenu({
   const current = log.currentCharacter();
   const label = log.characterLabel(current);
   const onlyOne = log.characters().length === 1;
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const exportBackup = () => {
+    const { fileName, json } = log.exportBackup();
+    const url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    URL.revokeObjectURL(url);
+    onChange(`Saved ${fileName}.`);
+  };
+
+  const importBackup = async (input: HTMLInputElement) => {
+    const file = input.files?.[0];
+    input.value = "";
+    if (!file) return;
+    const result = log.importBackup(await file.text());
+    if (!result.ok) {
+      onChange(IMPORT_ERROR_TEXT[result.error]);
+      return;
+    }
+    const { charactersAdded, charactersMerged, entriesAdded } = result;
+    onChange(
+      `Imported ${entriesAdded} ${entriesAdded === 1 ? "entry" : "entries"}: ${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
+    );
+  };
 
   if (mode.kind === "form") {
     return (
@@ -107,6 +139,22 @@ export function CharacterMenu({
             <button type="button" className="primary" onClick={onClose}>
               Close
             </button>
+          </div>
+          <div className="dialog-buttons character-actions">
+            <button type="button" onClick={exportBackup}>
+              Export backup
+            </button>
+            <button type="button" onClick={() => fileRef.current?.click()}>
+              Import backup
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="application/json,.json"
+              hidden
+              aria-label="Backup file"
+              onChange={(event) => void importBackup(event.target)}
+            />
           </div>
         </div>
       </div>
