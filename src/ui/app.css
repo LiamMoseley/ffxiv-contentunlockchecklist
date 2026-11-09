@@ -1227,18 +1227,6 @@ a.wiki-link:focus-visible {
   text-align: center;
   text-shadow: none;
 }
-/* Wide enough for both labels, so the button stays put when the view changes */
-.view-toggle {
-  min-width: 124px;
-}
-.available-title {
-  flex: 1;
-  margin: 0;
-  font: 400 21px/24px var(--font-serif);
-  font-variant: small-caps;
-  letter-spacing: 0.05em;
-  color: #e9e6df;
-}
 .filters-toggle:hover {
   background: linear-gradient(#686868, #494949);
 }

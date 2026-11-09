@@ -204,7 +204,11 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <main className="main">
             <div className="tabs-row">
               {availableOpen ? (
-                <h2 className="available-title">Available now</h2>
+                <div className="tabs" role="tablist" aria-label="Views">
+                  <button type="button" role="tab" aria-selected="true" className="active">
+                    <span>Available now</span>
+                  </button>
+                </div>
               ) : (
                 <SectionTabs
                   tabs={tabs}
@@ -215,35 +219,33 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               )}
               <button
                 type="button"
-                className="filters-toggle view-toggle"
+                className="filters-toggle"
                 aria-pressed={availableOpen}
                 onClick={() => setAvailableOpen(!availableOpen)}
               >
                 {availableOpen ? "Back to the log" : "Available now"}
               </button>
-              {/* Kept in place but hidden in Available now, so the view button doesn't move. */}
-              <button
-                type="button"
-                className="filters-toggle"
-                style={availableOpen ? { visibility: "hidden" } : undefined}
-                disabled={availableOpen}
-                aria-hidden={availableOpen}
-                aria-expanded={filtersOpen}
-                aria-controls="filter-bar"
-                onClick={() => setFiltersOpen(!filtersOpen)}
-              >
-                Filters
-                {activeFilters > 0 && (
-                  <span
-                    className="filters-active"
-                    title={`${activeFilters} active`}
-                    aria-label={`${activeFilters} active`}
-                  >
-                    {activeFilters}
-                  </span>
-                )}{" "}
-                {filtersOpen ? "▴" : "▾"}
-              </button>
+              {!availableOpen && (
+                <button
+                  type="button"
+                  className="filters-toggle"
+                  aria-expanded={filtersOpen}
+                  aria-controls="filter-bar"
+                  onClick={() => setFiltersOpen(!filtersOpen)}
+                >
+                  Filters
+                  {activeFilters > 0 && (
+                    <span
+                      className="filters-active"
+                      title={`${activeFilters} active`}
+                      aria-label={`${activeFilters} active`}
+                    >
+                      {activeFilters}
+                    </span>
+                  )}{" "}
+                  {filtersOpen ? "▴" : "▾"}
+                </button>
+              )}
             </div>
             {!availableOpen && filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
             <div className="scroll">
