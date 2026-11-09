@@ -88,6 +88,9 @@ export function CharacterMenu({
     <>
       <div
         className="dialog-backdrop"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) onClose();
+        }}
         onKeyDown={(event) => {
           if (event.key === "Escape") onClose();
         }}
@@ -108,7 +111,6 @@ export function CharacterMenu({
                     onClick={() => {
                       log.switchCharacter(character.id);
                       onChange();
-                      onClose();
                     }}
                   >
                     <span className="character-row-name">{log.characterLabel(character)}</span>
