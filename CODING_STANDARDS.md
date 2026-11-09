@@ -20,4 +20,6 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **The device's state is an adapter reading, not a rule.** A component may read whether the device is online (`navigator.onLine`) to disable a control and say why. What an update does, and what a failed fetch means, stays in the Log core.
 
+**The look settled by the UI prototype verdict is the owner's.** Fading Completed and Not interested rows by opacity, the Completed text colour and the bronze frame came from `docs/prototypes/ui-verdict.md` (on the `prototype/ui` branch). An accessibility fix that changes one of them (a contrast change, an underline, a different fade) is a decision to put to the owner with the contrast numbers, not a change to make: #47 changed the fading, and the owner had it restored.
+
 **One query decides what a view lists.** Every view that lists entries gets its list from one Log core query, and everything derived from that list (Complete Shown and Clear Shown, counts, badges, empty states) uses the same query. A second list built in a component, such as bulk actions reading the section view while a different view is open, drifts from what the player sees.
