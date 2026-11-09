@@ -38,6 +38,10 @@ Multi-context repo (presence of `GLOSSARY-MAP.md` at the root):
         └── docs/adr/
 ```
 
+## Where the code is
+
+The Log core is `createLog` in `src/log/log.ts` (content parsing in `content.ts`, filters in `filters.ts`, tests in `log.test.ts` with the harness in `test/harness.ts`); import it through `src/log/index.ts`. The UI in `src/ui` only calls it, starting from `App.tsx`. Read the one file you need, not the whole folder.
+
 ## Use the glossary's vocabulary
 
 When your output names a domain concept (in an issue title, a refactor proposal, a hypothesis, a test name), use the term as defined in `GLOSSARY.md`. Don't drift to synonyms the glossary explicitly avoids.

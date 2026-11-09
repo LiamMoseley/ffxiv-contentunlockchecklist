@@ -26,7 +26,7 @@ A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticke
 
 ## Before committing or pushing
 
-Check the branch's PR state first: `gh pr list --head <branch> --state all --json number,state`. If the PR is `MERGED` or `CLOSED`, a push never reaches it: branch from a fresh `origin/main`, carry the new commits over and open a new PR.
+Review again before updating a PR that has had follow-up changes from the owner: run `/code-review` on the new commits, since the first review covered only the first diff. Then check the branch's PR state: `gh pr list --head <branch> --state all --json number,state`. If the PR is `MERGED` or `CLOSED`, a push never reaches it: branch from a fresh `origin/main`, carry the new commits over and open a new PR.
 
 ## Repository settings
 
