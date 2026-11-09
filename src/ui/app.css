@@ -268,10 +268,14 @@ a:hover {
   color: var(--text-dim);
 }
 .new-notice-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   flex: 1 1 200px;
   min-width: 0;
 }
 .new-notice .new-badge {
+  flex: none;
   margin-left: 0;
 }
 .tile-new {

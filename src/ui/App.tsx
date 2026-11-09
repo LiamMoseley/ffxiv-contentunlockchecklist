@@ -487,8 +487,11 @@ function NewNotice({
   return (
     <div className="new-notice" role="status">
       <span className="new-notice-text">
-        <NewBadge /> {notice.names.join(" · ")}
-        {notice.more > 0 && ` and ${notice.more} more`}
+        <NewBadge />
+        <span>
+          {notice.names.join(" · ")}
+          {notice.more > 0 && ` and ${notice.more} more`}
+        </span>
       </span>
       <button type="button" onClick={viewing ? onShowAll : onShow}>
         {viewing ? "Show all entries" : "Show"}
