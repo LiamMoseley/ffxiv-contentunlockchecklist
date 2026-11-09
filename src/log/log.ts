@@ -59,6 +59,12 @@ const PROGRESS_KEY = "contentUnlockLog.progress";
 const CURRENT_KEY = "contentUnlockLog.currentCharacter";
 const VIEW_KEY = "contentUnlockLog.view";
 const CONTENT_KEY = "contentUnlockLog.content";
+const NEW_KEY = "contentUnlockLog.newEntries";
+
+/** The NEW notice: up to three entry names, and how many more there are. */
+export type NewNotice = { names: string[]; more: number };
+
+const NOTICE_NAMES = 3;
 
 /** Which expansion (or "all") and section tab the player is looking at. */
 export type Selection = { expansion: string; tab: SectionKind | "all" };
@@ -98,6 +104,26 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       return null;
     }
   }
+
+  /** IDs of the entries the most recently applied update added and the player has not marked as seen. Shared by every character. */
+  let newIds: string[] = loadNewIds();
+  /** Whether the log lists the NEW entries in place of the expansion and tab. A view choice for this visit only. */
+  let showingNew = false;
+
+  function loadNewIds(): string[] {
+    try {
+      const saved = JSON.parse(storage.read(NEW_KEY) ?? "[]") as unknown;
+      return Array.isArray(saved) ? saved.filter((id): id is string => typeof id === "string") : [];
+    } catch {
+      return [];
+    }
+  }
+
+  /** The NEW entries still in the log, in the wiki's order. */
+  const currentNew = (): Entry[] => {
+    const ids = new Set(newIds);
+    return content.sections.flatMap((s) => s.entries).filter((e) => ids.has(e.id));
+  };
 
   const contentTypes = (): string[] => [...new Set(content.sections.flatMap((s) => s.entries).map(typeOf))];
 
@@ -392,7 +418,59 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     /** Fetches the wiki page and reports what would change; nothing is applied until `applyUpdate`. */
     checkForUpdate,
     /** Replaces the content with a previewed update. Progress is untouched: statuses of removed entries are kept as orphaned. */
-    applyUpdate: (preview: UpdatePreview) => adopt(preview.content),
+    applyUpdate(preview: UpdatePreview) {
+      adopt(preview.content);
+      // The entries this update added are the NEW ones; the last update's are no longer new.
+      newIds = preview.added.map((e) => e.id);
+      storage.write(NEW_KEY, JSON.stringify(newIds));
+      showingNew = false;
+    },
+    /** Whether the entry was added by the most recently applied update and not yet marked as seen. */
+    isNew: (entryId: string): boolean => currentNew().some((e) => e.id === entryId),
+    /** Whether the expansion has NEW entries, for its tile's marker. */
+    expansionHasNew: (expansionId: string): boolean =>
+      content.sections.some((s) => s.expansionId === expansionId && s.entries.some((e) => newIds.includes(e.id))),
+    /** What the notice above Filters says, or null when there are no NEW entries to see. */
+    newNotice(): NewNotice | null {
+      const entries = currentNew();
+      if (entries.length === 0) return null;
+      return {
+        names: entries.slice(0, NOTICE_NAMES).map((e) => e.unlock.replaceAll("\n", " ")),
+        more: Math.max(0, entries.length - NOTICE_NAMES),
+      };
+    },
+    /** Whether the log lists the NEW entries from every expansion in place of the expansion and tab. */
+    viewingNew: (): boolean => showingNew,
+    /** Lists the NEW entries across all expansions. Does nothing when there are none. */
+    showNewEntries() {
+      showingNew = currentNew().length > 0;
+    },
+    /** Returns to the expansion and tab view. The NEW tags stay. */
+    showAllEntries() {
+      showingNew = false;
+    },
+    /** The NEW entries that pass the search and filters, grouped by section, empty sections left out. */
+    newEntries(): Section[] {
+      const shown = new Set(
+        currentNew()
+          .filter((e) => passesFilters(e, entryStatus(e.id), filters))
+          .map((e) => e.id),
+      );
+      return content.sections.flatMap((section) => {
+        const entries = section.entries.filter((e) => shown.has(e.id));
+        return entries.length > 0 ? [{ ...section, entries }] : [];
+      });
+    },
+    /** Clears every NEW tag and marker at once and ends the Show view. Returns how many entries it cleared. */
+    markNewSeen(): number {
+      const cleared = currentNew().length;
+      showingNew = false;
+      if (newIds.length > 0) {
+        newIds = [];
+        storage.write(NEW_KEY, JSON.stringify(newIds));
+      }
+      return cleared;
+    },
     /** The wiki revision the log's content comes from. */
     revisionId: () => content.revisionId,
     /** Saves every character as one backup file (format version 1); deleted characters are left out. */
@@ -425,6 +503,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         (next.tab === undefined || TABS.includes(next.tab));
       if (!valid) return;
       selection = { ...selection, ...next };
+      showingNew = false;
       saveView();
     },
     /** What currently narrows the log. Everything but the search is remembered on the device. */

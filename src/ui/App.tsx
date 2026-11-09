@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import type { ChangeResult, Log, Section, SectionKind, Storage } from "../log";
-import { EntryGrid, EntryTable, HintBar, type DisplayMode, type EntryActions } from "./EntryList";
+import { EntryGrid, EntryTable, HintBar, NewBadge, type DisplayMode, type EntryActions } from "./EntryList";
 import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
 import { FilterBar } from "./FilterBar";
@@ -12,7 +12,7 @@ import { SectionTabs, type TabChoice } from "./SectionTabs";
 const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
 
 /** A section tab: one of the expansion's two sections, or both. */
-type TabKey = SectionKind | "all";
+type TabKey = SectionKind | "all" | "new";
 
 /** The wiki writes "Level 51 - 60"; the window shows "Level 51–60". */
 const sectionTitle = (section: Section) => section.heading.replace(/\s*-\s*/, "–");
@@ -39,7 +39,11 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     refresh();
   };
   const setTab = (key: TabKey) => {
-    log.setSelection({ tab: key });
+    // The New entries tab is the view already showing.
+    if (key === "new") return;
+    // Choosing a tab in the Every section view has no selection to change, but still ends the NEW view.
+    if (expansion === "all") log.showAllEntries();
+    else log.setSelection({ tab: key });
     refresh();
   };
   const searchRef = useRef<HTMLInputElement>(null);
@@ -149,7 +153,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const expansionNames = new Map(log.expansions().map((e) => [e.id, e.name]));
   const expansionSections = log.sections().filter((s) => s.expansionId === expansion);
 
-  const tabs: TabChoice<TabKey>[] =
+  const viewingNew = log.viewingNew() && !availableOpen;
+  const newSections = log.newEntries();
+  const sectionTabs: TabChoice<TabKey>[] =
     expansion === "all"
       ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
       : [
@@ -160,7 +166,10 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           })),
           { key: "all", label: "All", progress: log.expansionProgress(expansion) },
         ];
-  const activeTab: TabKey = expansion === "all" ? "all" : tab;
+  const tabs: TabChoice<TabKey>[] = viewingNew
+    ? [...sectionTabs, { key: "new", label: "New entries", total: newSections.flatMap((s) => s.entries).length }]
+    : sectionTabs;
+  const activeTab: TabKey = viewingNew ? "new" : expansion === "all" ? "all" : tab;
 
   const shownSections =
     expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
@@ -169,7 +178,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // Complete Shown and Clear Shown act on what the window lists: Available now, or the filtered sections.
   const shownIds = availableOpen
     ? log.availableNow().sections.flatMap((s) => s.entries.map((e) => e.id))
-    : shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
+    : viewingNew
+      ? newSections.flatMap((s) => s.entries.map((e) => e.id))
+      : shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
   const completeCount = log.completeShownCount(shownIds);
   const clearCount = log.clearShownCount(shownIds);
   const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
@@ -211,12 +222,31 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             log={log}
             chosen={expansion}
             inactive={availableOpen}
+            noneChosen={viewingNew}
             onChoose={setExpansion}
             collapsed={railCollapsed}
             onToggleCollapsed={() => setRailCollapsed(!railCollapsed)}
           />
 
           <main className="main">
+            <NewNotice
+              log={log}
+              viewing={viewingNew}
+              onShow={() => {
+                setAvailableOpen(false);
+                log.showNewEntries();
+                refresh();
+              }}
+              onShowAll={() => {
+                log.showAllEntries();
+                refresh();
+              }}
+              onMarkSeen={() => {
+                const n = log.markNewSeen();
+                refresh();
+                say(`Marked ${entries(n)} as seen.`);
+              }}
+            />
             <div className={`tabs-row${availableOpen ? " available" : ""}`}>
               {availableOpen ? (
                 <>
@@ -270,6 +300,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   mode={displayMode}
                   actions={actions}
                   onSetLevel={() => setCharacterMenuOpen(true)}
+                />
+              ) : viewingNew ? (
+                <NewEntriesView
+                  log={log}
+                  sections={newSections}
+                  expansionNames={expansionNames}
+                  mode={displayMode}
+                  actions={actions}
                 />
               ) : (
                 shownSections.map((section) => (
@@ -423,7 +461,73 @@ function AvailableNow({
               {expansionNames.get(section.expansionId)} <span>{sectionTitle(section)}</span>
             </h2>
           </div>
-          <Entries entries={section.entries} statusOf={log.entryStatus} actions={actions} />
+          <Entries entries={section.entries} statusOf={log.entryStatus} isNew={log.isNew} actions={actions} />
+        </section>
+      ))}
+    </>
+  );
+}
+
+/** The notice above Filters while there are NEW entries not yet seen: what they are, and what to do about them. */
+function NewNotice({
+  log,
+  viewing,
+  onShow,
+  onShowAll,
+  onMarkSeen,
+}: {
+  log: Log;
+  viewing: boolean;
+  onShow: () => void;
+  onShowAll: () => void;
+  onMarkSeen: () => void;
+}) {
+  const notice = log.newNotice();
+  if (!notice) return null;
+  return (
+    <div className="new-notice" role="status">
+      <span className="new-notice-text">
+        <NewBadge /> {notice.names.join(" · ")}
+        {notice.more > 0 && ` and ${notice.more} more`}
+      </span>
+      <button type="button" onClick={viewing ? onShowAll : onShow}>
+        {viewing ? "Show all entries" : "Show"}
+      </button>
+      <button type="button" onClick={onMarkSeen}>
+        Mark as seen
+      </button>
+    </div>
+  );
+}
+
+/** Every NEW entry from all expansions, section by section; the Log core decides which. */
+function NewEntriesView({
+  log,
+  sections,
+  expansionNames,
+  mode,
+  actions,
+}: {
+  log: Log;
+  sections: Section[];
+  expansionNames: Map<string, string>;
+  mode: DisplayMode;
+  actions: EntryActions;
+}) {
+  const Entries = mode === "grid" ? EntryGrid : EntryTable;
+  if (sections.length === 0) {
+    return <p className="section-empty">All NEW entries are hidden by the search or filters.</p>;
+  }
+  return (
+    <>
+      {sections.map((section) => (
+        <section key={section.id} className="section" aria-labelledby={`new-${section.id}-heading`}>
+          <div className="section-head">
+            <h2 id={`new-${section.id}-heading`}>
+              {expansionNames.get(section.expansionId)} <span>{sectionTitle(section)}</span>
+            </h2>
+          </div>
+          <Entries entries={section.entries} statusOf={log.entryStatus} isNew={log.isNew} actions={actions} />
         </section>
       ))}
     </>
@@ -458,7 +562,7 @@ function SectionPanel({
       {shown.length === 0 ? (
         <p className="section-empty">All entries in this section are hidden by the search or filters.</p>
       ) : (
-        <Entries entries={shown} statusOf={log.entryStatus} actions={actions} />
+        <Entries entries={shown} statusOf={log.entryStatus} isNew={log.isNew} actions={actions} />
       )}
     </section>
   );

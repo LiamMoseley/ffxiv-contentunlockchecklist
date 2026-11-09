@@ -111,13 +111,19 @@ const summary = (entry: Entry) =>
     .filter(Boolean)
     .join(" · ");
 
+/** The gold NEW badge after an entry's name. */
+export function NewBadge() {
+  return <span className="new-badge">NEW</span>;
+}
+
 export type EntryListProps = {
   entries: Entry[];
   statusOf: (entryId: string) => EntryStatus;
+  isNew: (entryId: string) => boolean;
   actions: EntryActions;
 };
 
-export function EntryTable({ entries, statusOf, actions }: EntryListProps) {
+export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps) {
   return (
     <table className="entries">
       <thead>
@@ -146,6 +152,7 @@ export function EntryTable({ entries, statusOf, actions }: EntryListProps) {
               </td>
               <td data-label="Unlock" className="unlock">
                 <RichCell text={entry.rich.unlock} />
+                {isNew(entry.id) && <NewBadge />}
               </td>
               <td data-label="Type">
                 <RichCell text={entry.rich.type} />
@@ -167,7 +174,7 @@ export function EntryTable({ entries, statusOf, actions }: EntryListProps) {
   );
 }
 
-export function EntryGrid({ entries, statusOf, actions }: EntryListProps) {
+export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps) {
   return (
     <ul className="entry-grid">
       {entries.map((entry) => {
@@ -180,7 +187,10 @@ export function EntryGrid({ entries, statusOf, actions }: EntryListProps) {
               {icon && <img className="wiki-icon" src={iconUrl(icon.icon)} width={36} height={36} alt="" />}
             </span>
             <span className="card-text">
-              <b>{name}</b>
+              <b>
+                {name}
+                {isNew(entry.id) && <NewBadge />}
+              </b>
               <small>{summary(entry)}</small>
             </span>
             <span className="card-status">
