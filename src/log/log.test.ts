@@ -1554,6 +1554,19 @@ describe("updating from the wiki", () => {
     expect(log.sections().flatMap((s) => s.entries)).toHaveLength(428);
     const stored = JSON.parse(storage.read("contentUnlockLog.content")!);
     expect(stored.revisionId).toBe(realPage.revisionId + 1);
+    expect(stored.expansions[0]).toEqual({
+      id: "arr",
+      name: "A Realm Reborn",
+      shortName: "ARR",
+      minLevel: 1,
+      levelCap: 50,
+    });
+    expect(stored.sections[0]).toMatchObject({
+      id: "arr-levelling",
+      expansionId: "arr",
+      kind: "levelling",
+      heading: "Level 1 - 50",
+    });
     expect(stored.sections.flatMap((s: { entries: unknown[] }) => s.entries)).toHaveLength(428);
   });
 

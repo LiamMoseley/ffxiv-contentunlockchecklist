@@ -25,15 +25,19 @@ export function UpdateDialog({
   log,
   onClose,
   onApplied,
+  onChecked,
 }: {
   log: Log;
   onClose: () => void;
   onApplied: (message: string) => void;
+  /** A check can adopt a page that changes no entry, so the view must redraw after every check. */
+  onChecked: () => void;
 }) {
   const [state, setState] = useState<State>({ phase: "checking" });
   useEffect(() => {
     let cancelled = false;
     void log.checkForUpdate().then((check) => {
+      onChecked();
       if (cancelled) return;
       setState(check.status === "changes" ? { phase: "preview", preview: check.preview } : { phase: check.status });
     });

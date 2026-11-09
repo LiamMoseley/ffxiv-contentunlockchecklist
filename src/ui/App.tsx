@@ -309,6 +309,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <UpdateDialog
             log={log}
             onClose={() => setUpdateOpen(false)}
+            onChecked={refresh}
             onApplied={(message) => {
               setUpdateOpen(false);
               refresh();
