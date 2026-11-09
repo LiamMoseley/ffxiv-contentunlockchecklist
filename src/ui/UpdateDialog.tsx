@@ -72,6 +72,8 @@ export function UpdateDialog({
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => closeRef.current?.focus(), [state.phase]);
 
+  /** The second step: the suggested matches, shown after the new, changed and removed entries. */
+  const [reviewing, setReviewing] = useState(false);
   const [accepted, setAccepted] = useState<SuggestedMatch[]>([]);
   const [declined, setDeclined] = useState<SuggestedMatch[]>([]);
   const decide = (match: SuggestedMatch, accept: boolean) => {
@@ -99,14 +101,25 @@ export function UpdateDialog({
         {state.phase === "checking" && <p role="status">Checking the wiki…</p>}
         {state.phase === "unreachable" && <p role="alert">The wiki couldn&apos;t be reached. Nothing was changed.</p>}
         {state.phase === "upToDate" && <p role="status">The log is up to date.</p>}
-        {state.phase === "preview" && (
-          <Preview preview={state.preview} accepted={accepted} declined={declined} onDecide={decide} />
+        {state.phase === "preview" && !reviewing && <Preview preview={state.preview} />}
+        {state.phase === "preview" && reviewing && (
+          <Matches preview={state.preview} accepted={accepted} declined={declined} onDecide={decide} />
         )}
         <div className="dialog-buttons">
           <button type="button" ref={closeRef} onClick={onClose}>
             {state.phase === "preview" ? "Cancel" : "Close"}
           </button>
-          {state.phase === "preview" && (
+          {state.phase === "preview" && reviewing && (
+            <button type="button" onClick={() => setReviewing(false)}>
+              Back
+            </button>
+          )}
+          {state.phase === "preview" && !reviewing && state.preview.suggestions.length > 0 && (
+            <button type="button" className="primary" onClick={() => setReviewing(true)}>
+              Review suggested matches
+            </button>
+          )}
+          {state.phase === "preview" && (reviewing || state.preview.suggestions.length === 0) && (
             <button type="button" className="primary" onClick={() => apply(state.preview)}>
               Apply update
             </button>
@@ -117,7 +130,8 @@ export function UpdateDialog({
   );
 }
 
-function Preview({
+/** The second step: each suggested match, to accept or decline before the update is applied. */
+function Matches({
   preview,
   accepted,
   declined,
@@ -128,41 +142,52 @@ function Preview({
   declined: SuggestedMatch[];
   onDecide: (match: SuggestedMatch, accept: boolean) => void;
 }) {
-  const { added, changed, removed } = preview;
   const open = preview.suggestions.filter((m) => !declined.includes(m));
   return (
     <div className="update-preview">
       <p>
-        Nothing is applied until you choose Apply update. Your progress is never changed; the status of a removed entry
-        is kept and comes back if the entry returns.
+        These entries look renamed. Accept a match to move its progress, for every character, to the new entry. A match
+        you leave alone or decline moves nothing, and a declined match is never suggested again. Nothing is applied
+        until you choose Apply update.
       </p>
       <div className="update-scroll">
-        {open.length > 0 && (
-          <section className="update-matches">
-            <h3>Suggested matches ({open.length})</h3>
-            <p>
-              These entries look renamed. Accept a match to move its progress, for every character, to the new entry.
-            </p>
-            <ul className="update-items">
-              {open.map((m) => {
-                const isAccepted = accepted.includes(m);
-                return (
-                  <li key={`${m.from.id}|${m.to.id}`} className="update-item">
-                    <strong className="update-name">{name(m.from)}</strong> → <strong>{name(m.to)}</strong>
-                    <div className="update-match-buttons">
-                      <button type="button" aria-pressed={isAccepted} onClick={() => onDecide(m, !isAccepted)}>
-                        {isAccepted ? "Accepted" : "Accept"}
-                      </button>
-                      <button type="button" onClick={() => onDecide(m, false)}>
-                        Decline
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        )}
+        <section className="update-matches">
+          <h3>Suggested matches ({open.length})</h3>
+          {open.length === 0 && <p>No matches left to review.</p>}
+          <ul className="update-items">
+            {open.map((m) => {
+              const isAccepted = accepted.includes(m);
+              return (
+                <li key={`${m.from.id}|${m.to.id}`} className="update-item">
+                  <strong className="update-name">{name(m.from)}</strong> → <strong>{name(m.to)}</strong>
+                  <div className="update-match-buttons">
+                    <button type="button" aria-pressed={isAccepted} onClick={() => onDecide(m, !isAccepted)}>
+                      {isAccepted ? "Accepted" : "Accept"}
+                    </button>
+                    <button type="button" onClick={() => onDecide(m, false)}>
+                      Decline
+                    </button>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function Preview({ preview }: { preview: UpdatePreview }) {
+  const { added, changed, removed } = preview;
+  return (
+    <div className="update-preview">
+      <p>
+        Nothing is applied until you choose Apply update. Your progress is never changed
+        {preview.suggestions.length > 0 ? " unless you accept a suggested match" : ""}; the status of a removed entry is
+        kept and comes back if the entry returns.
+      </p>
+      <div className="update-scroll">
         {added.length > 0 && (
           <section className="update-added">
             <h3>New ({added.length})</h3>
