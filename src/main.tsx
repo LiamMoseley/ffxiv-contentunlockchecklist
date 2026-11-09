@@ -7,6 +7,7 @@ import { fetchContentUnlockPage, fetchContentUnlockRevisionId } from "./adapters
 import bundledContent from "./content/bundled-content.json";
 import { createLog, type Content } from "./log";
 import { App } from "./ui/App";
+import { BundledIconContext } from "./ui/EntryList";
 import "./ui/app.css";
 
 registerServiceWorker();
@@ -20,6 +21,8 @@ const log = createLog({
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App log={log} preferences={storage} />
+    <BundledIconContext.Provider value={log.isBundledIcon}>
+      <App log={log} preferences={storage} />
+    </BundledIconContext.Provider>
   </StrictMode>,
 );
