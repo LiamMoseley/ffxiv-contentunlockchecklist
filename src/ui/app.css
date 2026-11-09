@@ -1205,6 +1205,7 @@ a.wiki-link:focus-visible {
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  container-type: inline-size;
 }
 /* Available now: a blue glow behind the row that fades out towards its edges, with no change to its size */
 .tabs-row.available {
@@ -1234,6 +1235,12 @@ a.wiki-link:focus-visible {
   color: #e9e6df;
   text-shadow: 0 1px 2px #000;
   pointer-events: none;
+}
+/* When the row is too narrow to centre the title clear of the buttons, centre it in the space left of them */
+@container (max-width: 640px) {
+  .available-title {
+    right: 265px;
+  }
 }
 .tabs-row.available::before {
   content: "";
@@ -1346,4 +1353,9 @@ a.wiki-link:focus-visible {
   margin: 8px 4px 0;
   color: var(--text-dim);
   font-style: italic;
+}
+/* The level buttons in the Available now messages: the app's usual button, set apart from the text */
+.section-empty .filters-toggle {
+  margin: 8px 0 0;
+  font-style: normal;
 }

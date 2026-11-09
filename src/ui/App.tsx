@@ -343,7 +343,7 @@ function AvailableNow({
     return (
       <p className="section-empty">
         {log.characterLabel(log.currentCharacter())} has no level yet. Set one to see what is available now.{" "}
-        <button type="button" onClick={onSetLevel}>
+        <button type="button" className="filters-toggle" onClick={onSetLevel}>
           Set level
         </button>
       </p>
@@ -356,7 +356,7 @@ function AvailableNow({
     return (
       <p className="section-empty">
         Nothing left to unlock at level {level}. Raise the character&apos;s level to see more.{" "}
-        <button type="button" onClick={onSetLevel}>
+        <button type="button" className="filters-toggle" onClick={onSetLevel}>
           Change level
         </button>
       </p>
