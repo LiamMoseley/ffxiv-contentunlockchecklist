@@ -727,7 +727,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         (next.tab === undefined || TABS.includes(next.tab));
       if (!valid) return;
       selection = { ...selection, ...next };
-      openView = "sections";
+      endNewView();
       saveView();
     },
     /** What currently narrows the log. Everything but the search is remembered on the device. */

@@ -49,11 +49,11 @@ describe("the open view and what it lists", () => {
     }
   });
 
-  it("returns to the sections view when an expansion or tab is chosen", async () => {
+  it("returns from the NEW view to the sections when an expansion or tab is chosen, and leaves Available now open", async () => {
     const { log } = await openWithNewAndLevel();
     log.showAvailableNow();
     log.setSelection({ expansion: "hw" });
-    expect(log.view()).toBe("sections");
+    expect(log.view()).toBe("available");
 
     log.showNewEntries();
     log.setSelection({ tab: "levelCap" });
