@@ -354,7 +354,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <span>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
           <span className="footer-source">
             <span>
-              Content from the <a href={WIKI_PAGE_URL}>Content Unlock page</a> of the community FFXIV wiki.
+              Content from <a href={WIKI_PAGE_URL}>Content Unlock</a> on the community FFXIV wiki.
             </span>
             <button
               type="button"
