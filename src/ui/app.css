@@ -598,7 +598,9 @@ a.wiki-link:focus-visible {
 }
 
 /* Entry status: dimmed when completed, faded with grey icons when not interested */
-.completed td:not(:first-child),
+.completed td:not(:first-child) {
+  color: #9a9a9a;
+}
 .completed a.wiki-link {
   color: var(--link-dim);
 }
