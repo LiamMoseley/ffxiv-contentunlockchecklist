@@ -25,6 +25,12 @@ export type ProgressCount = { completed: number; total: number };
 /** What a command changed: how many entries, and the IDs of sections it brought to fully Completed. */
 export type ChangeResult = { changed: number; sectionsFinished: string[] };
 
+/** The entries available now, grouped by the section they belong to; `level` is null when the character has none. */
+export type Available = {
+  level: number | null;
+  sections: { id: string; expansionId: string; kind: SectionKind; entries: Entry[] }[];
+};
+
 export type LogOptions = { content: Content; storage: Storage; clock: Clock };
 
 /** What the player enters for a character. A blank World is the one shared World; any other must be a known World, and sets the Data Center. */
@@ -306,6 +312,25 @@ export function createLog({ content, storage, clock }: LogOptions) {
       const section = content.sections.find((s) => s.id === sectionId);
       if (!section) throw new Error(`No section ${sectionId}`);
       return section.entries.filter((e) => passesFilters(e, entryStatus(e.id), filters));
+    },
+    /**
+     * Everything the current character can reach now and has not marked: levelling entries at or below
+     * their level (a range such as "56-60" by its lower bound), and level-cap entries once they have the
+     * expansion's level cap. A character with no level gets `level: null` and nothing. Ignores search and filters.
+     */
+    availableNow(): Available {
+      const level = currentCharacter().level;
+      if (level === null) return { level, sections: [] };
+      const sections = content.sections.flatMap((section) => {
+        const cap = content.expansions.find((e) => e.id === section.expansionId)?.levelCap ?? Infinity;
+        const reachable = (entry: Entry) =>
+          section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
+        const entries = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
+        return entries.length > 0
+          ? [{ id: section.id, expansionId: section.expansionId, kind: section.kind, entries }]
+          : [];
+      });
+      return { level, sections };
     },
     sectionProgress(sectionId: string): ProgressCount {
       const section = content.sections.find((s) => s.id === sectionId);

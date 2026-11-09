@@ -78,6 +78,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
   const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
+  // "Available now" replaces the section view; a view choice for this visit only.
+  const [availableOpen, setAvailableOpen] = useState(false);
   const toastCount = useRef(0);
 
   const sectionNames = new Map(
@@ -198,44 +200,68 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
 
           <main className="main">
             <div className="tabs-row">
-              <SectionTabs
-                tabs={tabs}
-                active={activeTab}
-                onChoose={(key) => expansion !== "all" && setTab(key)}
-                label="Sections"
-              />
+              {availableOpen ? (
+                <h2 className="available-title">Available now</h2>
+              ) : (
+                <SectionTabs
+                  tabs={tabs}
+                  active={activeTab}
+                  onChoose={(key) => expansion !== "all" && setTab(key)}
+                  label="Sections"
+                />
+              )}
               <button
                 type="button"
                 className="filters-toggle"
-                aria-expanded={filtersOpen}
-                aria-controls="filter-bar"
-                onClick={() => setFiltersOpen(!filtersOpen)}
+                aria-pressed={availableOpen}
+                onClick={() => setAvailableOpen(!availableOpen)}
               >
-                Filters
-                {activeFilters > 0 && (
-                  <span
-                    className="filters-active"
-                    title={`${activeFilters} active`}
-                    aria-label={`${activeFilters} active`}
-                  >
-                    {activeFilters}
-                  </span>
-                )}{" "}
-                {filtersOpen ? "▴" : "▾"}
+                {availableOpen ? "Back to the log" : "Available now"}
               </button>
+              {!availableOpen && (
+                <button
+                  type="button"
+                  className="filters-toggle"
+                  aria-expanded={filtersOpen}
+                  aria-controls="filter-bar"
+                  onClick={() => setFiltersOpen(!filtersOpen)}
+                >
+                  Filters
+                  {activeFilters > 0 && (
+                    <span
+                      className="filters-active"
+                      title={`${activeFilters} active`}
+                      aria-label={`${activeFilters} active`}
+                    >
+                      {activeFilters}
+                    </span>
+                  )}{" "}
+                  {filtersOpen ? "▴" : "▾"}
+                </button>
+              )}
             </div>
-            {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
+            {!availableOpen && filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
             <div className="scroll">
-              {shownSections.map((section) => (
-                <SectionPanel
-                  key={section.id}
+              {availableOpen ? (
+                <AvailableNow
                   log={log}
-                  section={section}
-                  expansionName={expansionNames.get(section.expansionId) ?? ""}
+                  sectionNames={sectionNames}
                   mode={displayMode}
                   actions={actions}
+                  onSetLevel={() => setCharacterMenuOpen(true)}
                 />
-              ))}
+              ) : (
+                shownSections.map((section) => (
+                  <SectionPanel
+                    key={section.id}
+                    log={log}
+                    section={section}
+                    expansionName={expansionNames.get(section.expansionId) ?? ""}
+                    mode={displayMode}
+                    actions={actions}
+                  />
+                ))
+              )}
             </div>
           </main>
         </div>
@@ -287,6 +313,56 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         </footer>
       </div>
     </div>
+  );
+}
+
+/** Every Unmarked entry the current character can reach at their level; the Log core decides which. */
+function AvailableNow({
+  log,
+  sectionNames,
+  mode,
+  actions,
+  onSetLevel,
+}: {
+  log: Log;
+  sectionNames: Map<string, string>;
+  mode: DisplayMode;
+  actions: EntryActions;
+  onSetLevel: () => void;
+}) {
+  const { level, sections } = log.availableNow();
+  const Entries = mode === "grid" ? EntryGrid : EntryTable;
+  if (level === null) {
+    return (
+      <p className="section-empty">
+        {log.characterLabel(log.currentCharacter())} has no level yet. Set one to see what is available now.{" "}
+        <button type="button" onClick={onSetLevel}>
+          Set level
+        </button>
+      </p>
+    );
+  }
+  if (sections.length === 0) {
+    return (
+      <p className="section-empty">
+        Nothing left to unlock at level {level}. Raise the character&apos;s level to see more.{" "}
+        <button type="button" onClick={onSetLevel}>
+          Change level
+        </button>
+      </p>
+    );
+  }
+  return (
+    <>
+      {sections.map((section) => (
+        <section key={section.id} className="section" aria-labelledby={`available-${section.id}-heading`}>
+          <div className="section-head">
+            <h2 id={`available-${section.id}-heading`}>{sectionNames.get(section.id)}</h2>
+          </div>
+          <Entries entries={section.entries} statusOf={log.entryStatus} actions={actions} />
+        </section>
+      ))}
+    </>
   );
 }
 

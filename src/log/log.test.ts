@@ -1183,3 +1183,90 @@ describe("optional challenge entries", () => {
     expect(untagged).toHaveLength(6);
   });
 });
+
+describe("available now", () => {
+  const SASTASHA = "sastasha/its-probably-pirates";
+  type OpenedLog = ReturnType<typeof openLog>["log"];
+  const availableIds = (log: OpenedLog) => log.availableNow().sections.flatMap((s) => s.entries.map((e) => e.id));
+  const withLevel = (level: number | null) => {
+    const { log } = openLog();
+    log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level });
+    return log;
+  };
+
+  it("asks for a level while the character has none", () => {
+    expect(withLevel(null).availableNow()).toEqual({ level: null, sections: [] });
+  });
+
+  it("lists levelling entries at or below the character level, across expansions", () => {
+    const log = withLevel(60);
+    const wanted = log
+      .sections()
+      .filter((s) => s.kind === "levelling")
+      .flatMap((s) => s.entries)
+      .filter((e) => parseInt(e.level, 10) <= 60);
+    expect(availableIds(log).filter((id) => wanted.some((e) => e.id === id))).toEqual(wanted.map((e) => e.id));
+    expect(availableIds(log)).toContain(SASTASHA);
+    expect(availableIds(withLevel(14))).not.toContain(SASTASHA);
+    expect(availableIds(withLevel(15))).toContain(SASTASHA);
+  });
+
+  it("lists a higher expansion's levelling entry once the level reaches it", () => {
+    const hw = openLog()
+      .log.sections()
+      .find((s) => s.id === "hw-levelling")!;
+    const entry = hw.entries.find((e) => e.level === "60")!;
+    expect(availableIds(withLevel(59))).not.toContain(entry.id);
+    expect(availableIds(withLevel(60))).toContain(entry.id);
+  });
+
+  it("lists level-cap entries only once the character reaches that expansion's level cap, with their item level", () => {
+    const arrCap = openLog()
+      .log.sections()
+      .find((s) => s.id === "arr-levelCap")!;
+    expect(arrCap.entries.length).toBeGreaterThan(0);
+    expect(
+      withLevel(49)
+        .availableNow()
+        .sections.some((s) => s.id === "arr-levelCap"),
+    ).toBe(false);
+    const after = withLevel(50).availableNow();
+    const listed = after.sections.find((s) => s.id === "arr-levelCap")!;
+    expect(listed.entries.map((e) => e.id)).toEqual(arrCap.entries.map((e) => e.id));
+    expect(listed.entries.some((e) => e.itemLevel !== "")).toBe(true);
+    expect(after.sections.some((s) => s.id === "hw-levelCap")).toBe(false);
+  });
+
+  it("drops an entry as soon as it is marked, and brings it back when unmarked", () => {
+    const log = withLevel(15);
+    log.setEntryStatus(SASTASHA, "completed");
+    expect(availableIds(log)).not.toContain(SASTASHA);
+    log.setEntryStatus(SASTASHA, "notInterested");
+    expect(availableIds(log)).not.toContain(SASTASHA);
+    log.setEntryStatus(SASTASHA, "unmarked");
+    expect(availableIds(log)).toContain(SASTASHA);
+  });
+
+  it("is empty once every reachable entry is marked, and a higher level brings more", () => {
+    const log = withLevel(15);
+    log.completeShown(availableIds(log));
+    expect(log.availableNow()).toEqual({ level: 15, sections: [] });
+    log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level: 50 });
+    expect(availableIds(log).length).toBeGreaterThan(0);
+  });
+
+  it("reads a level range such as 56-60 by its lower bound", () => {
+    const hw = openLog()
+      .log.sections()
+      .find((s) => s.id === "hw-levelling")!;
+    const ranged = hw.entries.find((e) => e.level === "56-60")!;
+    expect(availableIds(withLevel(55))).not.toContain(ranged.id);
+    expect(availableIds(withLevel(56))).toContain(ranged.id);
+  });
+
+  it("ignores the search and filters", () => {
+    const log = withLevel(15);
+    log.setFilters({ search: "zzzz", hideCompleted: true });
+    expect(availableIds(log)).toContain(SASTASHA);
+  });
+});

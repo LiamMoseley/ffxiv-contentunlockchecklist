@@ -7,6 +7,7 @@ export {
   type CharacterError,
   type CharacterResult,
   type ChangeResult,
+  type Available,
   type Log,
   type ProgressCount,
   type LogOptions,
