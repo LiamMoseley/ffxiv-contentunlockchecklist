@@ -1188,6 +1188,11 @@ a.wiki-link:focus-visible {
 .character-actions + .character-actions {
   margin-top: 16px;
 }
+.character-actions.character-footer {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
 .character-form label {
   display: block;
   margin-bottom: 10px;

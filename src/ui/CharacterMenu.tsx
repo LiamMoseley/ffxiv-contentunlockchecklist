@@ -161,7 +161,7 @@ export function CharacterMenu({
               onChange={(event) => void importBackup(event.target)}
             />
           </div>
-          <div className="dialog-buttons character-actions">
+          <div className="dialog-buttons character-actions character-footer">
             <button type="button" className="primary" onClick={onClose}>
               Close
             </button>
