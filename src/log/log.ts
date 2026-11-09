@@ -1,4 +1,5 @@
 import { parseContentUnlockPage, type Content, type Entry, type Section, type SectionKind } from "./content";
+import { pairKey, suggestMatches, type SuggestedMatch } from "./suggestions";
 import { diffContent, type UpdateCheck, type UpdatePreview, type WikiSource } from "./update";
 import {
   activeFilterCount,
@@ -60,6 +61,7 @@ const CURRENT_KEY = "contentUnlockLog.currentCharacter";
 const VIEW_KEY = "contentUnlockLog.view";
 const CONTENT_KEY = "contentUnlockLog.content";
 const NEW_KEY = "contentUnlockLog.newEntries";
+const DECLINED_KEY = "contentUnlockLog.declinedMatches";
 
 /** The NEW notice: up to three entry names, and how many more there are. */
 export type NewNotice = { names: string[]; more: number };
@@ -380,6 +382,35 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     return { ok: true, charactersAdded: importedCharacterIds.length, charactersMerged, entriesAdded };
   }
 
+  /** Whether any character that is not deleted has marked the entry. */
+  function hasProgress(entry: Entry): boolean {
+    return Object.values(progress.characters).some((c) => !c.deleted && statusOf(c.id, entry.id) !== "unmarked");
+  }
+
+  /** Keys of the pairs the player declined; they are never suggested again. */
+  function declinedPairs(): Set<string> {
+    try {
+      const saved = JSON.parse(storage.read(DECLINED_KEY) ?? "[]") as unknown;
+      return new Set(Array.isArray(saved) ? saved.filter((k): k is string => typeof k === "string") : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  /** Moves every character's status from the orphan to the entry that replaces it, as one saved change. */
+  function moveStatuses({ from, to }: SuggestedMatch) {
+    const stamp = now();
+    let moved = false;
+    for (const records of Object.values(progress.statuses)) {
+      const status = records[from.id]?.status ?? "unmarked";
+      if (status === "unmarked" || (records[to.id]?.status ?? "unmarked") !== "unmarked") continue;
+      records[to.id] = { status, updatedAt: stamp };
+      records[from.id] = { status: "unmarked", updatedAt: stamp };
+      moved = true;
+    }
+    if (moved) save();
+  }
+
   /** Replaces the content and stores it with its revision ID. Progress is keyed by entry ID, so it is never touched. */
   function adopt(next: Content) {
     content = next;
@@ -406,20 +437,38 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     // A page with no sections is not the Content Unlock page (the wiki returned something else).
     if (next.sections.length === 0) return { status: "unreachable" };
     const { added, changed, removed } = diffContent(content, next);
+    const suggestions = suggestMatches(removed.filter(hasProgress), added, content, next, declinedPairs());
     if (added.length + changed.length + removed.length === 0) {
       if (JSON.stringify(next) !== JSON.stringify(content)) adopt(next);
       return { status: "upToDate" };
     }
-    return { status: "changes", preview: { revisionId: next.revisionId, added, changed, removed, content: next } };
+    return {
+      status: "changes",
+      preview: { revisionId: next.revisionId, added, changed, removed, suggestions, content: next },
+    };
   }
 
   return {
     expansions: () => content.expansions,
     /** Fetches the wiki page and reports what would change; nothing is applied until `applyUpdate`. */
     checkForUpdate,
-    /** Replaces the content with a previewed update. Progress is untouched: statuses of removed entries are kept as orphaned. */
-    applyUpdate(preview: UpdatePreview) {
+    /**
+     * Replaces the content with a previewed update. Progress is untouched except for the suggested matches the
+     * player accepted, which move every character's status to the new entry; statuses of other removed entries
+     * are kept as orphaned. Every suggested match the player did not accept counts as declined and is
+     * remembered, so no later update offers it again. Nothing is decided before the update is applied.
+     */
+    applyUpdate(preview: UpdatePreview, accepted: SuggestedMatch[] = []) {
       adopt(preview.content);
+      const takenKeys = new Set(accepted.map((m) => pairKey(m.from, m.to)));
+      const accept = preview.suggestions.filter((m) => takenKeys.has(pairKey(m.from, m.to)));
+      for (const match of accept) moveStatuses(match);
+      const refused = preview.suggestions.filter((m) => !accept.includes(m));
+      if (refused.length > 0) {
+        const all = declinedPairs();
+        for (const { from, to } of refused) all.add(pairKey(from, to));
+        storage.write(DECLINED_KEY, JSON.stringify([...all]));
+      }
       // The entries this update added are the NEW ones; the last update's are no longer new.
       newIds = preview.added.map((e) => e.id);
       storage.write(NEW_KEY, JSON.stringify(newIds));

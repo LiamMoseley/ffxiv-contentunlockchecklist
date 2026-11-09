@@ -1235,6 +1235,28 @@ a.wiki-link:focus-visible {
 .update-removed {
   --update-edge: #c25a5a;
 }
+.update-matches {
+  --update-edge: #5f8fd4;
+}
+/* A suggested match's tick box: the same status box as the entry grid, on a row-wide button */
+.update-match {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 3px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.update-match:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
 .update-item {
   padding: 6px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
