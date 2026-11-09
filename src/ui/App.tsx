@@ -196,6 +196,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <ExpansionRail
             log={log}
             chosen={expansion}
+            inactive={availableOpen}
             onChoose={setExpansion}
             collapsed={railCollapsed}
             onToggleCollapsed={() => setRailCollapsed(!railCollapsed)}

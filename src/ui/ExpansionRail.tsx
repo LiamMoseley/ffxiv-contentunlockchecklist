@@ -15,8 +15,11 @@ export function ExpansionRail({
   onChoose,
   collapsed,
   onToggleCollapsed,
+  inactive = false,
 }: {
   log: Log;
+  /** The tiles do nothing (Available now covers every expansion): greyed out, none chosen. */
+  inactive?: boolean;
   chosen: ExpansionChoice;
   onChoose: (choice: ExpansionChoice) => void;
   collapsed: boolean;
@@ -32,7 +35,8 @@ export function ExpansionRail({
         shortName="All"
         detail="Every expansion"
         progress={overall}
-        chosen={chosen === "all"}
+        inactive={inactive}
+        chosen={!inactive && chosen === "all"}
         onClick={() => onChoose("all")}
       />
       <div className="rail-gap" role="separator" />
@@ -44,7 +48,8 @@ export function ExpansionRail({
           shortName={expansion.shortName}
           detail={`Level ${expansion.minLevel}–${expansion.levelCap}`}
           progress={log.expansionProgress(expansion.id)}
-          chosen={chosen === expansion.id}
+          inactive={inactive}
+          chosen={!inactive && chosen === expansion.id}
           onClick={() => onChoose(expansion.id)}
         />
       ))}
@@ -72,8 +77,10 @@ function Tile({
   detail,
   progress,
   chosen,
+  inactive,
   onClick,
 }: {
+  inactive: boolean;
   className?: string;
   pictogram: string;
   name: string;
@@ -86,10 +93,11 @@ function Tile({
   return (
     <button
       type="button"
-      className={`rail-item ${className}${chosen ? " chosen" : ""}`}
+      className={`rail-item ${className}${chosen ? " chosen" : ""}${inactive ? " inactive" : ""}`}
       aria-pressed={chosen}
+      disabled={inactive}
       onClick={onClick}
-      title={`${name} · ${detail} · ${progress.completed}/${progress.total}`}
+      title={inactive ? "Not used in Available now" : `${name} · ${detail} · ${progress.completed}/${progress.total}`}
     >
       <span className="tile">
         <Pictogram name={pictogram} />

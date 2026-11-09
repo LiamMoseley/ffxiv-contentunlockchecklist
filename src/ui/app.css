@@ -228,6 +228,18 @@ a:hover {
 .rail-item.chosen {
   background: linear-gradient(90deg, rgba(255, 231, 160, 0.12), transparent);
 }
+/* Available now covers every expansion: the tiles stay for spacing but are greyed out and do nothing */
+.rail-item.inactive {
+  opacity: 0.4;
+  filter: grayscale(1);
+  cursor: default;
+}
+.rail-item.inactive:hover {
+  background: none;
+}
+.rail-item.inactive:hover .tile {
+  filter: none;
+}
 .tile {
   flex: none;
   width: 50px;
