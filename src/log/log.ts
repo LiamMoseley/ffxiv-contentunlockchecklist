@@ -1,4 +1,12 @@
-import type { Content, Section } from "./content";
+import type { Content, Entry, Section, SectionKind } from "./content";
+import {
+  activeFilterCount,
+  DEFAULT_FILTERS,
+  OPTIONAL_CHALLENGE_FILTERS,
+  passesFilters,
+  typeOf,
+  type Filters,
+} from "./filters";
 import { dataCenterOfWorld, knownWorld, WORLDS } from "./worlds";
 import { characterLabel, newProgress, type Character, type EntryStatus, type Progress } from "./progress";
 
@@ -30,6 +38,15 @@ const MAX_LEVEL = 100;
 
 const PROGRESS_KEY = "contentUnlockLog.progress";
 const CURRENT_KEY = "contentUnlockLog.currentCharacter";
+const VIEW_KEY = "contentUnlockLog.view";
+
+/** Which expansion (or "all") and section tab the player is looking at. */
+export type Selection = { expansion: string; tab: SectionKind | "all" };
+
+const TABS: Selection["tab"][] = ["levelling", "levelCap", "all"];
+
+/** The device's remembered view: the selection and the filters, apart from the search text. */
+type StoredView = Selection & Omit<Filters, "search">;
 
 const NEXT_STATUS: Record<EntryStatus, EntryStatus> = {
   unmarked: "completed",
@@ -49,6 +66,41 @@ export function createLog({ content, storage, clock }: LogOptions) {
 
   function save() {
     storage.write(PROGRESS_KEY, JSON.stringify(progress));
+  }
+
+  const contentTypes = [...new Set(content.sections.flatMap((s) => s.entries).map(typeOf))];
+
+  let selection: Selection = { expansion: content.expansions[0]?.id ?? "all", tab: "levelling" };
+  let filters: Filters = { ...DEFAULT_FILTERS };
+  restoreView();
+
+  /** Reads the remembered view, keeping each saved value that is still valid and the default for the rest. */
+  function restoreView() {
+    let saved: Partial<StoredView> = {};
+    try {
+      saved = JSON.parse(storage.read(VIEW_KEY) ?? "{}") ?? {};
+    } catch {
+      return;
+    }
+    if (saved.expansion === "all" || content.expansions.some((e) => e.id === saved.expansion))
+      selection.expansion = saved.expansion!;
+    if (saved.tab && TABS.includes(saved.tab)) selection.tab = saved.tab;
+    if (typeof saved.type === "string" && contentTypes.includes(saved.type)) filters.type = saved.type;
+    if (saved.optionalChallenge && OPTIONAL_CHALLENGE_FILTERS.includes(saved.optionalChallenge))
+      filters.optionalChallenge = saved.optionalChallenge;
+    if (typeof saved.hideCompleted === "boolean") filters.hideCompleted = saved.hideCompleted;
+    if (typeof saved.hideNotInterested === "boolean") filters.hideNotInterested = saved.hideNotInterested;
+  }
+
+  function saveView() {
+    const stored: StoredView = {
+      ...selection,
+      type: filters.type,
+      optionalChallenge: filters.optionalChallenge,
+      hideCompleted: filters.hideCompleted,
+      hideNotInterested: filters.hideNotInterested,
+    };
+    storage.write(VIEW_KEY, JSON.stringify(stored));
   }
 
   const characters = (): Character[] => Object.values(progress.characters).filter((c) => !c.deleted);
@@ -84,14 +136,18 @@ export function createLog({ content, storage, clock }: LogOptions) {
     characters().some((c) => c.id !== ignoreId && sameText(c.name, name) && sameText(c.world, world));
 
   /** Checks details and fills in the Data Center of a known World left blank; `ignoreId` is the character being edited. */
-  function validate(details: CharacterDetails, ignoreId?: string): { ok: true; details: Required<CharacterDetails> & { dataCenter: string } } | { ok: false; error: CharacterError } {
+  function validate(
+    details: CharacterDetails,
+    ignoreId?: string,
+  ): { ok: true; details: Required<CharacterDetails> & { dataCenter: string } } | { ok: false; error: CharacterError } {
     const name = details.name.trim();
     const typedWorld = (details.world ?? "").trim();
     const world = typedWorld === "" ? "" : knownWorld(typedWorld);
     const level = details.level ?? null;
     if (!name) return { ok: false, error: "nameRequired" };
     if (world === null) return { ok: false, error: "unknownWorld" };
-    if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL)) return { ok: false, error: "invalidLevel" };
+    if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL))
+      return { ok: false, error: "invalidLevel" };
     if (isTaken(name, world, ignoreId)) return { ok: false, error: "nameTaken" };
     return { ok: true, details: { name, world, dataCenter: dataCenterOfWorld(world) ?? "", level } };
   }
@@ -125,7 +181,10 @@ export function createLog({ content, storage, clock }: LogOptions) {
    * Writes the given statuses for the character as one change, skipping entries already at that status.
    * Returns the earlier statuses of the entries it changed, and the sections it finished.
    */
-  function write(characterId: string, next: Map<string, EntryStatus>): ChangeResult & { earlier: Map<string, EntryStatus> } {
+  function write(
+    characterId: string,
+    next: Map<string, EntryStatus>,
+  ): ChangeResult & { earlier: Map<string, EntryStatus> } {
     const finishedBefore = new Set(content.sections.filter((s) => isFinished(s, characterId)).map((s) => s.id));
     const earlier = new Map<string, EntryStatus>();
     const stamp = now();
@@ -140,7 +199,9 @@ export function createLog({ content, storage, clock }: LogOptions) {
       progress.statuses[characterId] = records;
       save();
     }
-    const sectionsFinished = content.sections.filter((s) => !finishedBefore.has(s.id) && isFinished(s, characterId)).map((s) => s.id);
+    const sectionsFinished = content.sections
+      .filter((s) => !finishedBefore.has(s.id) && isFinished(s, characterId))
+      .map((s) => s.id);
     return { changed: earlier.size, sectionsFinished, earlier };
   }
 
@@ -207,6 +268,45 @@ export function createLog({ content, storage, clock }: LogOptions) {
     dataCenterOf: dataCenterOfWorld,
     worlds: () => WORLDS,
     entryStatus,
+    /** The expansion and tab the player last chose, remembered on the device. */
+    selection: (): Selection => ({ ...selection }),
+    setSelection(next: Partial<Selection>) {
+      const valid =
+        (next.expansion === undefined ||
+          next.expansion === "all" ||
+          content.expansions.some((e) => e.id === next.expansion)) &&
+        (next.tab === undefined || TABS.includes(next.tab));
+      if (!valid) return;
+      selection = { ...selection, ...next };
+      saveView();
+    },
+    /** What currently narrows the log. Everything but the search is remembered on the device. */
+    filters: (): Filters => ({ ...filters }),
+    setFilters(next: Partial<Filters>) {
+      // A type or optional challenge choice that doesn't exist is ignored, as when restoring a saved view.
+      const valid =
+        (next.type === undefined || next.type === null || contentTypes.includes(next.type)) &&
+        (next.optionalChallenge === undefined || OPTIONAL_CHALLENGE_FILTERS.includes(next.optionalChallenge));
+      if (!valid) return;
+      filters = { ...filters, ...next };
+      saveView();
+    },
+    /** How many filters are narrowing the log right now. */
+    activeFilterCount: (): number => activeFilterCount(filters),
+    /** Every content type with its number of entries, most common first. */
+    typeCounts: (): { type: string; count: number }[] =>
+      contentTypes
+        .map((type) => ({
+          type,
+          count: content.sections.flatMap((s) => s.entries).filter((e) => typeOf(e) === type).length,
+        }))
+        .sort((a, b) => b.count - a.count),
+    /** The section's entries that pass the current search and filters, in the wiki's order. */
+    shownEntries(sectionId: string): Entry[] {
+      const section = content.sections.find((s) => s.id === sectionId);
+      if (!section) throw new Error(`No section ${sectionId}`);
+      return section.entries.filter((e) => passesFilters(e, entryStatus(e.id), filters));
+    },
     sectionProgress(sectionId: string): ProgressCount {
       const section = content.sections.find((s) => s.id === sectionId);
       if (!section) throw new Error(`No section ${sectionId}`);

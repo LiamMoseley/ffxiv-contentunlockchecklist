@@ -48,7 +48,13 @@ export function ConfirmDialog({
         if (event.key === "Escape") onCancel();
       }}
     >
-      <div className="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-text">
+      <div
+        className="dialog"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-text"
+      >
         <h2 id="dialog-title">{title}</h2>
         <p id="dialog-text">{text}</p>
         <div className="dialog-buttons">

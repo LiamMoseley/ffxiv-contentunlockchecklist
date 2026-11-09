@@ -4,7 +4,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 ## Conventions
 
-- **Read an issue**: `gh issue view <number> --json number,title,body,labels,comments`. Always `--json`: plain `gh issue view <number> --comments` printed nothing here.
+- **Read an issue**: `gh issue view <number> --json number,title,body,labels,comments`.
 - **Create an issue**: `gh issue create --title "..." --body "..."`. Use a heredoc for multi-line bodies.
 - **List issues**: `gh issue list --state open --json number,title,body,labels,comments --jq '[.[] | {number, title, body, labels: [.labels[].name], comments: [.comments[].body]}]'` with appropriate `--label` and `--state` filters.
 - **Make an issue a sub-issue of a parent**: `gh issue create --parent <parent> ...`, or `gh issue edit <parent> --add-sub-issue <child>` afterwards (`gh` 2.94+). Older `gh`: `gh api --method POST repos/<owner>/<repo>/issues/<parent>/sub_issues -F sub_issue_id=<child-db-id>` (database id, as in **Blocking** below). Without sub-issues, put `Part of #<parent>` at the top of the child body.
@@ -14,15 +14,19 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
-On this Windows machine run `gh` from PowerShell: from Bash it can exit 0 with no output. In PowerShell, backticks and `\"` inside a double-quoted `--body` break parsing: pass bodies with `--body-file` (written with the Write tool) or a single-quoted string.
+`gh` reads work from both Bash and PowerShell (checked on gh 2.102). In PowerShell, backticks and `\"` inside a double-quoted `--body` break parsing: pass bodies with `--body-file` (written with the Write tool) or a single-quoted string.
 
 ## Acceptance criteria
 
 A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticket body is the record of which ones were met. When implementing a ticket, after `/code-review`'s Spec axis has passed. The axis passes only when every "implemented but wrong" finding is fixed or shown to be false; list any finding left over in the PR body:
 
-- Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran) by editing the issue body: `gh issue view <n> --json body --jq .body`, change `- [ ]` to `- [x]` on those lines only, then `gh issue edit <n> --body-file <file>`. Never change a criterion's wording.
+- Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran): `node scripts/issue-criteria.mjs tick <n> <criterion numbers>|all`, numbering the `- [ ]` lines from 1. It changes the markers only, never a criterion's wording. Add a criterion the owner asks for with `node scripts/issue-criteria.mjs add <n> "<text>" [--ticked]`. Add `--dry` to print the new body first.
 - Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body. The owner ticks them after checking. End your closing report to the owner with the same list, one line per criterion, so it reaches them outside the PR too.
 - List any criterion the branch does not meet in the PR body, and leave it unticked.
+
+## Before committing or pushing
+
+Check the branch's PR state first: `gh pr list --head <branch> --state all --json number,state`. If the PR is `MERGED` or `CLOSED`, a push never reaches it: branch from a fresh `origin/main`, carry the new commits over and open a new PR.
 
 ## Repository settings
 

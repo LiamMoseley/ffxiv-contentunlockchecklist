@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { entryIcon, iconFile, iconsUsed, parseContentUnlockPage, type Segment, type WikiPage } from "./index";
+import { createMemoryStorage } from "../adapters/memoryStorage";
 import { editRow, editedPage, fixedClock, insertRowAtTopOf, openLog, realPage, rowOf } from "./test/harness";
 
 describe("content from the real Content Unlock page", () => {
@@ -32,7 +33,10 @@ describe("content from the real Content Unlock page", () => {
 });
 
 describe("entries from the real Content Unlock page", () => {
-  const entries = () => openLog().log.sections().flatMap((s) => s.entries);
+  const entries = () =>
+    openLog()
+      .log.sections()
+      .flatMap((s) => s.entries);
   const entryNamed = (unlock: string) => {
     const found = entries().filter((e) => e.unlock === unlock);
     expect(found).toHaveLength(1);
@@ -80,9 +84,13 @@ describe("entries from the real Content Unlock page", () => {
 });
 
 describe("entry IDs", () => {
-  const SASTASHA = '>Sastasha</a></td>';
+  const SASTASHA = ">Sastasha</a></td>";
   const idOf = (page: WikiPage, unlock: string) => {
-    const ids = openLog({ page }).log.sections().flatMap((s) => s.entries).filter((e) => e.unlock === unlock).map((e) => e.id);
+    const ids = openLog({ page })
+      .log.sections()
+      .flatMap((s) => s.entries)
+      .filter((e) => e.unlock === unlock)
+      .map((e) => e.id);
     return ids;
   };
   const originalSastashaId = () => idOf(realPage, "Sastasha")[0];
@@ -93,7 +101,9 @@ describe("entry IDs", () => {
   });
 
   it("are unique across the real page", () => {
-    const ids = openLog().log.sections().flatMap((s) => s.entries.map((e) => e.id));
+    const ids = openLog()
+      .log.sections()
+      .flatMap((s) => s.entries.map((e) => e.id));
     expect(new Set(ids).size).toBe(ids.length);
   });
 
@@ -134,7 +144,9 @@ describe("entry IDs", () => {
   });
 
   it("change when the unlock is renamed", () => {
-    const page = editedPage((html) => editRow(html, SASTASHA, (row) => row.replace(">Sastasha</a>", ">Sastasha (Normal)</a>")));
+    const page = editedPage((html) =>
+      editRow(html, SASTASHA, (row) => row.replace(">Sastasha</a>", ">Sastasha (Normal)</a>")),
+    );
     expect(idOf(page, "Sastasha (Normal)")).not.toEqual([originalSastashaId()]);
   });
 
@@ -158,7 +170,10 @@ describe("entry IDs", () => {
     const original = editedPage((html) => insertRowAtTopOf(html.replace(row, ""), "Level 51 - 60", movedToHeavensward));
     const withEarlierDuplicate = editedPage(() => insertRowAtTopOf(original.html, "Level 1 - 50", row));
     const levelOf = (page: WikiPage, id: string) =>
-      openLog({ page }).log.sections().flatMap((s) => s.entries).find((e) => e.id === id)?.level;
+      openLog({ page })
+        .log.sections()
+        .flatMap((s) => s.entries)
+        .find((e) => e.id === id)?.level;
 
     const [idBefore] = idOf(original, "Sastasha");
     expect(levelOf(original, idBefore)).toBe("55");
@@ -319,11 +334,13 @@ describe("the bundled content", () => {
 });
 
 describe("wiki links and icons in entries", () => {
-  const entries = () => openLog().log.sections().flatMap((s) => s.entries);
+  const entries = () =>
+    openLog()
+      .log.sections()
+      .flatMap((s) => s.entries);
   const entryNamed = (unlock: string) => entries().filter((e) => e.unlock === unlock)[0];
   const WIKI = "https://ffxiv.consolegameswiki.com/wiki/";
-  const linked = (lines: Segment[][]) =>
-    lines.flat().flatMap((s) => ("text" in s && s.href ? [[s.text, s.href]] : []));
+  const linked = (lines: Segment[][]) => lines.flat().flatMap((s) => ("text" in s && s.href ? [[s.text, s.href]] : []));
   const icons = (lines: Segment[][]) => lines.flat().filter((s) => "icon" in s);
 
   it("links the unlock name and the quest to their wiki pages", () => {
@@ -344,11 +361,7 @@ describe("wiki links and icons in entries", () => {
 
   it("links phrases inside the Information text, with plain words between them", () => {
     expect(entryNamed("Sastasha").rich.information).toEqual([
-      [
-        { text: "Unlocks in the " },
-        { text: "Main Scenario Quest", href: `${WIKI}Main_Scenario_Quest` },
-        { text: "." },
-      ],
+      [{ text: "Unlocks in the " }, { text: "Main Scenario Quest", href: `${WIKI}Main_Scenario_Quest` }, { text: "." }],
     ]);
   });
 
@@ -381,9 +394,14 @@ describe("wiki links and icons in entries", () => {
 
   it("splits rich text into the same lines as the plain text", () => {
     const guildhests = entryNamed("Guildhests");
-    expect(guildhests.rich.quest.map((line) => line.map((s) => ("text" in s ? s.text : "")).join("").trim())).toEqual(
-      guildhests.quest.split("\n"),
-    );
+    expect(
+      guildhests.rich.quest.map((line) =>
+        line
+          .map((s) => ("text" in s ? s.text : ""))
+          .join("")
+          .trim(),
+      ),
+    ).toEqual(guildhests.quest.split("\n"));
   });
 
   it("downloads each distinct icon once, from the wiki's image folder", () => {
@@ -488,7 +506,10 @@ describe("undo as a new change", () => {
 
 describe("bulk actions on the shown entries", () => {
   const section = () => openLog().log.sections()[0];
-  const idsOf = (n: number) => section().entries.slice(0, n).map((e) => e.id);
+  const idsOf = (n: number) =>
+    section()
+      .entries.slice(0, n)
+      .map((e) => e.id);
 
   it("Complete Shown marks every shown entry Completed, leaving Not interested alone", () => {
     const { log } = openLog();
@@ -716,7 +737,15 @@ describe("editing characters", () => {
 
     const result = log.editCharacter(id, { name: "Alia", world: "Zodiark", level: 60 });
 
-    expect(result.ok && [result.character.id, result.character.name, result.character.world, result.character.dataCenter, result.character.level]).toEqual([id, "Alia", "Zodiark", "Light", 60]);
+    expect(
+      result.ok && [
+        result.character.id,
+        result.character.name,
+        result.character.world,
+        result.character.dataCenter,
+        result.character.level,
+      ],
+    ).toEqual([id, "Alia", "Zodiark", "Light", 60]);
     expect(log.entryStatus(SASTASHA)).toBe("completed");
     const reloaded = openLog({ storage }).log;
     expect(reloaded.entryStatus(SASTASHA)).toBe("completed");
@@ -738,7 +767,10 @@ describe("editing characters", () => {
 
     expect(log.editCharacter(first.id, { name: "alia" })).toEqual({ ok: false, error: "nameTaken" });
     expect(log.editCharacter(first.id, { name: "" })).toEqual({ ok: false, error: "nameRequired" });
-    expect(log.editCharacter(first.id, { name: "Adventurer", level: 200 })).toEqual({ ok: false, error: "invalidLevel" });
+    expect(log.editCharacter(first.id, { name: "Adventurer", level: 200 })).toEqual({
+      ok: false,
+      error: "invalidLevel",
+    });
     expect(log.editCharacter(first.id, { name: "Adventurer", level: 80 }).ok).toBe(true);
     expect(log.editCharacter("nobody", { name: "Zed" })).toEqual({ ok: false, error: "notFound" });
   });
@@ -836,9 +868,18 @@ describe("deleting a character", () => {
     log.deleteCharacter(second.id);
 
     const stored = JSON.parse(storage.read("contentUnlockLog.progress")!);
-    expect(stored.characters[second.id]).toMatchObject({ id: second.id, name: "Alia", world: "Zodiark", deleted: true });
+    expect(stored.characters[second.id]).toMatchObject({
+      id: second.id,
+      name: "Alia",
+      world: "Zodiark",
+      deleted: true,
+    });
     expect(stored.statuses[second.id][SASTASHA].status).toBe("completed");
-    expect(openLog({ storage }).log.characters().map((c) => c.id)).not.toContain(second.id);
+    expect(
+      openLog({ storage })
+        .log.characters()
+        .map((c) => c.id),
+    ).not.toContain(second.id);
   });
 
   it("stamps the deletion with the time it was made", () => {
@@ -876,5 +917,269 @@ describe("deleting a character", () => {
     log.addCharacter({ name: "Alia", world: "Zodiark" });
     expect(log.undo()).toBe(false);
     expect(log.characters().filter((c) => c.name === "Alia")).toHaveLength(1);
+  });
+});
+
+describe("searching the log", () => {
+  const shownNames = (log: ReturnType<typeof openLog>["log"]) =>
+    log
+      .sections()
+      .flatMap((s) => log.shownEntries(s.id))
+      .map((e) => e.unlock);
+
+  it("shows every entry when the search is blank", () => {
+    const { log } = openLog();
+    log.setFilters({ search: "   " });
+
+    expect(shownNames(log)).toHaveLength(429);
+  });
+
+  it("matches a word in any field, ignoring case, across every section", () => {
+    const { log } = openLog();
+
+    log.setFilters({ search: "SASTASHA" });
+    expect(shownNames(log)).toContain("Sastasha");
+
+    log.setFilters({ search: "pirates" }); // quest name
+    expect(shownNames(log)).toContain("Sastasha");
+
+    log.setFilters({ search: "limsa" }); // location
+    expect(shownNames(log)).toContain("Sastasha");
+
+    log.setFilters({ search: "main scenario" }); // information
+    expect(shownNames(log)).toContain("Sastasha");
+  });
+
+  it("needs every typed word to match somewhere in the entry", () => {
+    const { log } = openLog();
+
+    log.setFilters({ search: "sastasha hard" });
+    expect(shownNames(log)).toEqual(["Sastasha (Hard)"]);
+
+    log.setFilters({ search: "sastasha zzzz" });
+    expect(shownNames(log)).toEqual([]);
+  });
+});
+
+describe("filtering the log", () => {
+  type TestLog = ReturnType<typeof openLog>["log"];
+  const shown = (log: TestLog) => log.sections().flatMap((s) => log.shownEntries(s.id));
+  const SASTASHA = "sastasha/its-probably-pirates";
+
+  it("lists every content type with its entry count", () => {
+    const { log } = openLog();
+    const counts = log.typeCounts();
+
+    expect(counts.slice(0, 3)).toEqual([
+      { type: "Trial", count: 104 },
+      { type: "Dungeon", count: 103 },
+      { type: "Game Mechanic", count: 59 },
+    ]);
+    expect(counts).toContainEqual({ type: "PvP", count: 4 }); // "PvP" twice, "PvP\nLocation" and "PvP\nRoulette"
+    expect(counts.reduce((sum, c) => sum + c.count, 0)).toBe(429);
+  });
+
+  it("filters by type", () => {
+    const { log } = openLog();
+    log.setFilters({ type: "Dungeon" });
+
+    expect(shown(log)).toHaveLength(103);
+    expect(shown(log).every((e) => e.type === "Dungeon")).toBe(true);
+  });
+
+  it("offers all content, no optional challenges, and optional challenges only", () => {
+    const { log } = openLog();
+
+    log.setFilters({ optionalChallenge: "only" });
+    expect(shown(log)).toHaveLength(81);
+
+    log.setFilters({ optionalChallenge: "none" });
+    expect(shown(log)).toHaveLength(429 - 81);
+
+    log.setFilters({ optionalChallenge: "all" });
+    expect(shown(log)).toHaveLength(429);
+  });
+
+  it("hides completed entries, and entries marked not interested, on request", () => {
+    const { log } = openLog();
+    const [a, b] = log.sections()[0].entries;
+    log.setEntryStatus(a.id, "completed");
+    log.setEntryStatus(b.id, "notInterested");
+
+    log.setFilters({ hideCompleted: true });
+    expect(shown(log).map((e) => e.id)).not.toContain(a.id);
+    expect(shown(log).map((e) => e.id)).toContain(b.id);
+
+    log.setFilters({ hideCompleted: false, hideNotInterested: true });
+    expect(shown(log).map((e) => e.id)).toContain(a.id);
+    expect(shown(log).map((e) => e.id)).not.toContain(b.id);
+  });
+
+  it("combines the search with the filters", () => {
+    const { log } = openLog();
+    log.setFilters({ search: "extreme", type: "Trial", optionalChallenge: "only" });
+
+    expect(shown(log).length).toBeGreaterThan(0);
+    expect(shown(log).every((e) => e.type === "Trial" && e.optionalChallenge)).toBe(true);
+  });
+
+  it("leaves a section with no shown entries empty, so the UI can say so", () => {
+    const { log } = openLog();
+    const section = log.sections()[0];
+    log.setFilters({ search: "zzzz" });
+
+    expect(log.shownEntries(section.id)).toEqual([]);
+    expect(section.entries.length).toBeGreaterThan(0);
+  });
+
+  it("makes Complete Shown and Clear Shown act on the shown entries only", () => {
+    const { log } = openLog();
+    const section = log.sections()[0];
+    log.setFilters({ search: "sastasha" });
+    const ids = log.shownEntries(section.id).map((e) => e.id);
+
+    expect(ids).toContain(SASTASHA);
+    expect(log.completeShownCount(ids)).toBe(ids.length);
+    log.completeShown(ids);
+    expect(log.sectionProgress(section.id).completed).toBe(ids.length);
+
+    log.setFilters({ hideCompleted: true });
+    expect(log.shownEntries(section.id)).toEqual([]);
+
+    // Clear Shown on what is now shown touches nothing; the hidden Completed entries stay Completed.
+    const shownNow = log
+      .sections()
+      .flatMap((s) => log.shownEntries(s.id))
+      .map((e) => e.id);
+    expect(log.clearShownCount(shownNow)).toBe(0);
+    log.clearShown(shownNow);
+    expect(log.sectionProgress(section.id).completed).toBe(ids.length);
+  });
+
+  it("counts the filters that are narrowing the log", () => {
+    const { log } = openLog();
+    expect(log.activeFilterCount()).toBe(0);
+
+    log.setFilters({ search: "  " });
+    expect(log.activeFilterCount()).toBe(0);
+
+    log.setFilters({ search: "coil" });
+    expect(log.activeFilterCount()).toBe(1);
+
+    log.setFilters({ type: "Trial", optionalChallenge: "only", hideCompleted: true, hideNotInterested: true });
+    expect(log.activeFilterCount()).toBe(5);
+
+    log.setFilters({
+      search: "",
+      type: null,
+      optionalChallenge: "all",
+      hideCompleted: false,
+      hideNotInterested: false,
+    });
+    expect(log.activeFilterCount()).toBe(0);
+  });
+
+  it("ignores a type or optional challenge choice that does not exist", () => {
+    const { log } = openLog();
+    log.setFilters({ type: "Dungeon" });
+
+    log.setFilters({ type: "Nope" });
+    log.setFilters({ optionalChallenge: "some" as "all" });
+
+    expect(log.filters()).toMatchObject({ type: "Dungeon", optionalChallenge: "all" });
+  });
+});
+
+describe("remembering the view on the device", () => {
+  it("starts on the first expansion's levelling tab with nothing filtered", () => {
+    const { log } = openLog();
+
+    expect(log.selection()).toEqual({ expansion: "arr", tab: "levelling" });
+    expect(log.filters()).toEqual({
+      search: "",
+      type: null,
+      optionalChallenge: "all",
+      hideCompleted: false,
+      hideNotInterested: false,
+    });
+  });
+
+  it("stores the selection and filters, but not the search, under one key", () => {
+    const { log, storage } = openLog();
+    log.setSelection({ expansion: "hw", tab: "levelCap" });
+    log.setFilters({
+      search: "coil",
+      type: "Trial",
+      optionalChallenge: "only",
+      hideCompleted: true,
+      hideNotInterested: true,
+    });
+
+    expect(JSON.parse(storage.read("contentUnlockLog.view")!)).toEqual({
+      expansion: "hw",
+      tab: "levelCap",
+      type: "Trial",
+      optionalChallenge: "only",
+      hideCompleted: true,
+      hideNotInterested: true,
+    });
+  });
+
+  it("restores them when the log opens again on the same device", () => {
+    const first = openLog();
+    first.log.setSelection({ expansion: "all", tab: "all" });
+    first.log.setFilters({ search: "coil", type: "Trial", optionalChallenge: "none", hideCompleted: true });
+
+    const { log } = openLog({ storage: first.storage });
+
+    expect(log.selection()).toEqual({ expansion: "all", tab: "all" });
+    expect(log.filters()).toEqual({
+      search: "",
+      type: "Trial",
+      optionalChallenge: "none",
+      hideCompleted: true,
+      hideNotInterested: false,
+    });
+  });
+
+  it("ignores remembered values that are no longer valid", () => {
+    const storage = createMemoryStorage();
+    storage.write(
+      "contentUnlockLog.view",
+      JSON.stringify({ expansion: "gone", tab: "x", type: "Nope", optionalChallenge: "some", hideCompleted: "yes" }),
+    );
+    const { log } = openLog({ storage });
+
+    expect(log.selection()).toEqual({ expansion: "arr", tab: "levelling" });
+    expect(log.filters()).toMatchObject({ type: null, optionalChallenge: "all", hideCompleted: false });
+  });
+
+  it("opens normally when the remembered view is not JSON", () => {
+    const storage = createMemoryStorage();
+    storage.write("contentUnlockLog.view", "{oops");
+
+    expect(openLog({ storage }).log.selection()).toEqual({ expansion: "arr", tab: "levelling" });
+  });
+});
+
+describe("optional challenge entries", () => {
+  const entries = () =>
+    openLog()
+      .log.sections()
+      .flatMap((s) => s.entries);
+
+  it("are the entries the wiki tags 'Optional challenge content', and no others", () => {
+    const optional = entries().filter((e) => e.optionalChallenge);
+
+    expect(optional).toHaveLength(81);
+    expect(optional.every((e) => /optional challenge content/i.test(e.information))).toBe(true);
+  });
+
+  it("do not include entries whose free text merely says optional", () => {
+    const untagged = entries().filter(
+      (e) => !e.optionalChallenge && /optional/i.test(e.information + e.type + e.unlock + e.quest),
+    );
+
+    expect(untagged).toHaveLength(6);
   });
 });

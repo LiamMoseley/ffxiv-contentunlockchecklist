@@ -29,6 +29,8 @@ export type Entry = {
   quest: string;
   location: string;
   information: string;
+  /** The wiki tags the entry "Optional challenge content"; free-text mentions of "optional" don't count. */
+  optionalChallenge: boolean;
   rich: RichFields;
 };
 
@@ -154,6 +156,7 @@ function readRows(table: HTMLElement): Row[] {
         quest: field("quest"),
         location: field("location"),
         information: field("information"),
+        optionalChallenge: /optional challenge content/i.test(field("information")),
         rich,
       },
     ];
@@ -224,7 +227,10 @@ function tidyLine(line: Segment[]): Segment[] {
 
 /** The icon an <img> shows: its sharpest source, as a path inside the wiki's image folder. */
 function iconOf(img: HTMLElement): IconSegment[] {
-  const candidates = img.getAttribute("srcset")?.split(",").map((c) => c.trim().split(/\s+/)[0]);
+  const candidates = img
+    .getAttribute("srcset")
+    ?.split(",")
+    .map((c) => c.trim().split(/\s+/)[0]);
   const src = candidates?.[candidates.length - 1] ?? img.getAttribute("src");
   if (!src?.startsWith(IMAGE_FOLDER)) return [];
   return [

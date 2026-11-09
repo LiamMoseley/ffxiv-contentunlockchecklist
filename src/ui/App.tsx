@@ -3,6 +3,7 @@ import type { ChangeResult, Log, Section, SectionKind, Storage } from "../log";
 import { EntryGrid, EntryTable, HintBar, type DisplayMode, type EntryActions } from "./EntryList";
 import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
+import { FilterBar } from "./FilterBar";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { Count, ProgressBar } from "./ProgressBar";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
@@ -30,9 +31,39 @@ function readDisplayMode(preferences: Storage): DisplayMode {
 export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // The Log core holds all state; re-render after each command.
   const [, refresh] = useReducer((n: number) => n + 1, 0);
-  const [expansion, setExpansion] = useState<ExpansionChoice>(() => log.expansions()[0]?.id ?? "all");
-  // Kept while switching expansions, so a player who chose All stays on All.
-  const [tab, setTab] = useState<TabKey>("levelling");
+  // The Log core remembers the chosen expansion and tab on the device.
+  const { expansion, tab } = log.selection();
+  const setExpansion = (choice: ExpansionChoice) => {
+    log.setSelection({ expansion: choice });
+    refresh();
+  };
+  const setTab = (key: TabKey) => {
+    log.setSelection({ tab: key });
+    refresh();
+  };
+  const searchRef = useRef<HTMLInputElement>(null);
+  // Hidden by default; the filters still apply while the panel is closed.
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  // "/" or Ctrl/Cmd+K opens the filters and focuses the search box, except while typing in a field.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.altKey) return;
+      const inField =
+        event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]");
+      const slash = event.key === "/" && !event.ctrlKey && !event.metaKey && !inField;
+      const palette = event.key.toLowerCase() === "k" && (event.ctrlKey || event.metaKey) && !event.shiftKey;
+      if (!slash && !palette) return;
+      event.preventDefault();
+      setFiltersOpen(true);
+      // The search box mounts on the next render.
+      setTimeout(() => {
+        searchRef.current?.focus();
+        searchRef.current?.select();
+      }, 0);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   const [railCollapsed, setRailCollapsed] = useState(false);
   const [displayMode, setDisplayMode] = useState<DisplayMode>(() => readDisplayMode(preferences));
 
@@ -50,7 +81,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const toastCount = useRef(0);
 
   const sectionNames = new Map(
-    log.sections().map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
+    log
+      .sections()
+      .map((s) => [s.id, `${log.expansions().find((e) => e.id === s.expansionId)?.name ?? ""} ${sectionTitle(s)}`]),
   );
 
   const say = (text: string) => setToast({ id: ++toastCount.current, text });
@@ -76,7 +109,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   undoRef.current = undo;
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "z") return;
+      if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "z")
+        return;
       if (event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]")) return;
       event.preventDefault();
       undoRef.current();
@@ -103,17 +137,20 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     expansion === "all"
       ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
       : [
-          ...expansionSections.map((s) => ({ key: s.kind, label: sectionTitle(s), progress: log.sectionProgress(s.id) })),
+          ...expansionSections.map((s) => ({
+            key: s.kind,
+            label: sectionTitle(s),
+            progress: log.sectionProgress(s.id),
+          })),
           { key: "all", label: "All", progress: log.expansionProgress(expansion) },
         ];
   const activeTab: TabKey = expansion === "all" ? "all" : tab;
 
   const shownSections =
-    expansion === "all"
-      ? log.sections()
-      : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
+    expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
 
-  const shownIds = shownSections.flatMap((s) => s.entries.map((e) => e.id));
+  const activeFilters = log.activeFilterCount();
+  const shownIds = shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
   const completeCount = log.completeShownCount(shownIds);
   const clearCount = log.clearShownCount(shownIds);
   const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
@@ -160,12 +197,34 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           />
 
           <main className="main">
-            <SectionTabs
-              tabs={tabs}
-              active={activeTab}
-              onChoose={(key) => expansion !== "all" && setTab(key)}
-              label="Sections"
-            />
+            <div className="tabs-row">
+              <SectionTabs
+                tabs={tabs}
+                active={activeTab}
+                onChoose={(key) => expansion !== "all" && setTab(key)}
+                label="Sections"
+              />
+              <button
+                type="button"
+                className="filters-toggle"
+                aria-expanded={filtersOpen}
+                aria-controls="filter-bar"
+                onClick={() => setFiltersOpen(!filtersOpen)}
+              >
+                Filters
+                {activeFilters > 0 && (
+                  <span
+                    className="filters-active"
+                    title={`${activeFilters} active`}
+                    aria-label={`${activeFilters} active`}
+                  >
+                    {activeFilters}
+                  </span>
+                )}{" "}
+                {filtersOpen ? "▴" : "▾"}
+              </button>
+            </div>
+            {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
             <div className="scroll">
               {shownSections.map((section) => (
                 <SectionPanel
@@ -245,6 +304,7 @@ function SectionPanel({
   actions: EntryActions;
 }) {
   const progress = log.sectionProgress(section.id);
+  const shown = log.shownEntries(section.id);
   const Entries = mode === "grid" ? EntryGrid : EntryTable;
   return (
     <section className="section" aria-labelledby={`${section.id}-heading`}>
@@ -255,7 +315,11 @@ function SectionPanel({
         <ProgressBar progress={progress} label={`${expansionName} ${sectionTitle(section)} progress`} />
         <Count progress={progress} />
       </div>
-      <Entries entries={section.entries} statusOf={log.entryStatus} actions={actions} />
+      {shown.length === 0 ? (
+        <p className="section-empty">All entries in this section are hidden by the search or filters.</p>
+      ) : (
+        <Entries entries={shown} statusOf={log.entryStatus} actions={actions} />
+      )}
     </section>
   );
 }

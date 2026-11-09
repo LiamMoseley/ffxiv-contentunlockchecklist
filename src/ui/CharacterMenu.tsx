@@ -11,14 +11,23 @@ const ERROR_TEXT: Record<CharacterError, string> = {
   notFound: "That character no longer exists.",
 };
 
-type Mode = { kind: "list" } | { kind: "form"; editing: Character | null } | { kind: "confirm"; action: "reset" | "delete" };
+type Mode =
+  { kind: "list" } | { kind: "form"; editing: Character | null } | { kind: "confirm"; action: "reset" | "delete" };
 
 /**
  * The character switcher, opened from the title bar: lists every character with its progress and
  * adds, edits, resets and deletes them. Reset and Delete apply to the current character.
  * `onChange` is called after each change to the log, with a message to show when there is one.
  */
-export function CharacterMenu({ log, onClose, onChange }: { log: Log; onClose: () => void; onChange: (message?: string) => void }) {
+export function CharacterMenu({
+  log,
+  onClose,
+  onChange,
+}: {
+  log: Log;
+  onClose: () => void;
+  onChange: (message?: string) => void;
+}) {
   const [mode, setMode] = useState<Mode>({ kind: "list" });
   const current = log.currentCharacter();
   const label = log.characterLabel(current);
@@ -67,7 +76,9 @@ export function CharacterMenu({ log, onClose, onChange }: { log: Log; onClose: (
                     }}
                   >
                     <span className="character-row-name">{log.characterLabel(character)}</span>
-                    <span className="character-row-level">{character.level !== null ? `Level ${character.level}` : "No level"}</span>
+                    <span className="character-row-level">
+                      {character.level !== null ? `Level ${character.level}` : "No level"}
+                    </span>
                     <ProgressBar progress={progress} label={`${log.characterLabel(character)} progress`} thin />
                     <Count progress={progress} />
                   </button>
@@ -85,7 +96,12 @@ export function CharacterMenu({ log, onClose, onChange }: { log: Log; onClose: (
             <button type="button" onClick={() => setMode({ kind: "confirm", action: "reset" })}>
               Reset
             </button>
-            <button type="button" disabled={onlyOne} title={onlyOne ? "The last character can't be deleted" : undefined} onClick={() => setMode({ kind: "confirm", action: "delete" })}>
+            <button
+              type="button"
+              disabled={onlyOne}
+              title={onlyOne ? "The last character can't be deleted" : undefined}
+              onClick={() => setMode({ kind: "confirm", action: "delete" })}
+            >
               Delete
             </button>
             <button type="button" className="primary" onClick={onClose}>
@@ -157,7 +173,14 @@ function CharacterForm({
         if (event.key === "Escape") onCancel();
       }}
     >
-      <form className="dialog character-form" role="dialog" aria-modal="true" aria-labelledby="character-form-title" onSubmit={submit} noValidate>
+      <form
+        className="dialog character-form"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="character-form-title"
+        onSubmit={submit}
+        noValidate
+      >
         <h2 id="character-form-title">{editing ? "Edit character" : "Add character"}</h2>
         <label>
           Name

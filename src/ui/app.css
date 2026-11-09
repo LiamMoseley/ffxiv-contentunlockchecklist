@@ -402,8 +402,8 @@ a:hover {
 /* The triangle is a layer of the skewed tab itself, so it always sits in the bottom-left corner */
 .tabs button.active::before {
   background:
-    linear-gradient(to top right, var(--yellow) 0 48%, rgba(246, 185, 59, 0.35) 48% 56%, transparent 56%) left
-      bottom / 11px 11px no-repeat,
+    linear-gradient(to top right, var(--yellow) 0 48%, rgba(246, 185, 59, 0.35) 48% 56%, transparent 56%) left bottom /
+      11px 11px no-repeat,
     linear-gradient(#9b9b9b, #767676 55%, #666);
   box-shadow:
     0 0 0 1px #000,
@@ -579,7 +579,15 @@ a.wiki-link:focus-visible {
 }
 .status-box.notInterested {
   border-color: #666;
-  background: linear-gradient(to top right, transparent calc(50% - 1px), #9a9a9a calc(50% - 1px), #9a9a9a calc(50% + 1px), transparent calc(50% + 1px)), #3a3a3a;
+  background:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      #9a9a9a calc(50% - 1px),
+      #9a9a9a calc(50% + 1px),
+      transparent calc(50% + 1px)
+    ),
+    #3a3a3a;
 }
 
 /* Entries as a grid of cards, as in the game's Actions & Traits window */
@@ -707,7 +715,9 @@ a.wiki-link:focus-visible {
 }
 .display-mode-label {
   margin-right: 12px;
-  font: 700 13px/1 "Barlow Condensed", sans-serif;
+  font:
+    700 13px/1 "Barlow Condensed",
+    sans-serif;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -1176,4 +1186,107 @@ a.wiki-link:focus-visible {
 }
 .hint-bar .undo + .display-mode {
   margin-left: 6px;
+}
+
+/* Tabs on the left, the Filters toggle on the right of the same row */
+.tabs-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tabs-row .tabs {
+  flex: 1;
+  min-width: 0;
+}
+.filters-toggle {
+  flex: none;
+  height: 24px;
+  margin-right: 14px;
+  padding: 0 12px;
+  border: 1px solid #1d1d1d;
+  border-radius: 3px;
+  background: linear-gradient(#5a5a5a, #3f3f3f);
+  color: #f2f2f2;
+  font: inherit;
+  font-size: 13px;
+  text-shadow: 0 1px 1px #000;
+}
+/* A yellow count badge: filters are narrowing the log, even while the panel is closed */
+.filters-active {
+  display: inline-block;
+  min-width: 13px;
+  margin-left: 6px;
+  padding: 0 3px;
+  border-radius: 7px;
+  background: var(--yellow);
+  color: #1c1c1c;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 13px;
+  vertical-align: 1px;
+  text-align: center;
+  text-shadow: none;
+}
+.filters-toggle:hover {
+  background: linear-gradient(#686868, #494949);
+}
+.filters-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+}
+
+/* Search and filters */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px 14px;
+  padding: 0 14px 8px 18px;
+}
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.filter-search {
+  flex: 1 1 200px;
+}
+.filter-field input,
+.filter-field select {
+  padding: 4px 8px;
+  border: 1px solid #1d1d1d;
+  border-radius: 3px;
+  background: #1c1c1c;
+  color: #eee;
+  font: inherit;
+  font-size: 13px;
+}
+.filter-field input:focus-visible,
+.filter-field select:focus-visible {
+  outline: 2px solid var(--gold);
+}
+.filter-checks {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 12.5px;
+  color: var(--text);
+}
+.filter-checks legend {
+  padding: 0;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.filter-checks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-empty {
+  margin: 8px 4px 0;
+  color: var(--text-dim);
+  font-style: italic;
 }
