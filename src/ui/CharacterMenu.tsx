@@ -147,10 +147,10 @@ export function CharacterMenu({
           <h3 className="character-section-title">Backup</h3>
           <div className="dialog-buttons character-actions">
             <button type="button" onClick={exportBackup}>
-              Export backup
+              Export
             </button>
             <button type="button" onClick={() => fileRef.current?.click()}>
-              Import backup
+              Import
             </button>
             <input
               ref={fileRef}
