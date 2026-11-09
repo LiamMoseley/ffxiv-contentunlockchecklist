@@ -4,6 +4,7 @@
  *   node scripts/issue-criteria.mjs tick   <issue> <n>...|all [--dry]
  *   node scripts/issue-criteria.mjs untick <issue> <n>...|all [--dry]
  *   node scripts/issue-criteria.mjs add    <issue> "<criterion text>" [--ticked] [--dry]
+ *   node scripts/issue-criteria.mjs reword <issue> <n> "<new text>" [--dry]   (only when the owner changes a requirement)
  *
  * `tick` marks the numbered criteria (1 = the first `- [ ]` / `- [x]` line under the body) as met, or every
  * criterion with `all`; `untick` puts them back to unmet. `add` appends a criterion after the last one. `--dry` prints the new body instead
@@ -20,7 +21,7 @@ const [command, issue, ...rest] = process.argv.slice(2);
 const flags = new Set(rest.filter((a) => a.startsWith("--")));
 const args = rest.filter((a) => !a.startsWith("--"));
 const usage = 'Usage: issue-criteria.mjs tick|untick <issue> <n>...|all | add <issue> "<text>" [--ticked] [--dry]';
-if (!["tick", "untick", "add"].includes(command) || !/^\d+$/.test(issue ?? "") || args.length === 0) {
+if (!["tick", "untick", "add", "reword"].includes(command) || !/^\d+$/.test(issue ?? "") || args.length === 0) {
   console.error(usage);
   process.exit(1);
 }
@@ -44,6 +45,18 @@ if (command === "tick" || command === "untick") {
   result = [...lines];
   const [from, to] = command === "tick" ? [/^- \[ \]/, "- [x]"] : [/^- \[[xX]\]/, "- [ ]"];
   for (const n of chosen) result[criterionAt[n - 1]] = result[criterionAt[n - 1]].replace(from, to);
+} else if (command === "reword") {
+  const n = Number(args[0]);
+  if (!Number.isInteger(n) || n < 1 || n > criterionAt.length || args.length < 2) {
+    console.error(`Usage: reword <issue> <1-${criterionAt.length}> "<new text>"`);
+    process.exit(1);
+  }
+  result = [...lines];
+  // Keeps the marker; a criterion that wrapped onto continuation lines becomes one line.
+  const at = criterionAt[n - 1];
+  let end = at;
+  while (end + 1 < lines.length && lines[end + 1].trim() !== "" && !/^(- |#)/.test(lines[end + 1])) end++;
+  result.splice(at, end - at + 1, `${lines[at].slice(0, 5)} ${args.slice(1).join(" ")}`);
 } else {
   // A criterion can wrap onto continuation lines: insert after the last of them.
   let after = criterionAt[criterionAt.length - 1];
