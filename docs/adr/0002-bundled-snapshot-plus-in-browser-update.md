@@ -7,6 +7,7 @@ The app is a static site. A build script fetches and parses the wiki's Content U
 - A device keeps whichever copy of the content has the higher wiki revision. A redeployed bundle that is newer than the device's copy is offered as a reviewable update, like one fetched from the wiki, never applied silently.
 - Level bands the app does not recognise (a new expansion) appear under a placeholder expansion named by its levels until the app is redeployed with the real name.
 - The automatic check compares wiki revision IDs at most every 6 hours, and only raises a notice when the parsed entries differ.
+- A service worker keeps the app working offline. `scripts/serviceWorkerPlugin.ts` writes `dist/sw.js` from `scripts/sw.template.js` at build time, listing every built file and versioning the cache by their hash. Icons that only appear after an in-browser update come from the wiki without a referrer (it rejects requests that carry one) and are kept in a cache that outlives deploys.
 
 ## Considered Options
 

@@ -1,0 +1,37 @@
+import { spawnSync } from "node:child_process";
+import { describe, expect, it } from "vitest";
+
+const hook = new URL("./block-source-shell-writes.mjs", import.meta.url);
+
+/** Whether the hook refuses `command`. */
+function blocks(command) {
+  const run = spawnSync("node", [hook.pathname.replace(/^\/([A-Za-z]:)/, "$1")], {
+    input: JSON.stringify({ tool_input: { command } }),
+    encoding: "utf8",
+  });
+  return run.stdout.includes('"permissionDecision":"deny"');
+}
+
+describe("block-source-shell-writes hook", () => {
+  it.each([
+    `cat > src/a.ts`,
+    `echo x >> scripts/a.ts`,
+    `sed -i 's/a/b/' src/log/log.ts`,
+    `sed -i 's|a|b|' src/log/log.ts`,
+    `sed -i 's|scripts/a"|scripts/a.ts"|' vite.config.ts`,
+    `sed -i -e 's|a|b|;s|c|d|' src/main.tsx`,
+    `sed -n 1p x && sed -i.bak 's|a|b|' src/ui/App.tsx`,
+    `sed --in-place 's|a|b|' scripts/sw.template.js`,
+  ])("blocks %s", (command) => {
+    expect(blocks(command)).toBe(true);
+  });
+
+  it.each([
+    `sed -n '1,10p' src/log/log.ts`,
+    `grep -i foo src/log/log.ts | sed 's|a|b|'`,
+    `sed -i 's|a|b|' notes.txt`,
+    `git status`,
+  ])("allows %s", (command) => {
+    expect(blocks(command)).toBe(false);
+  });
+});
