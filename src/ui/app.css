@@ -769,6 +769,36 @@ a.wiki-link:focus-visible {
   outline-offset: 1px;
 }
 
+.footer-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.update-button {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid #5a4a30;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.update-button:hover:not(:disabled) {
+  color: var(--text);
+  border-color: #a07c47;
+}
+.update-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.update-button:focus-visible {
+  outline: 2px solid #a07c47;
+  outline-offset: 2px;
+}
+
 /* Footer bar */
 .footer-bar {
   display: flex;
