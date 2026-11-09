@@ -382,9 +382,9 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     return { ok: true, charactersAdded: importedCharacterIds.length, charactersMerged, entriesAdded };
   }
 
-  /** Whether any character, deleted ones included, has marked the entry. */
+  /** Whether any character that is not deleted has marked the entry. */
   function hasProgress(entry: Entry): boolean {
-    return Object.values(progress.statuses).some((records) => (records[entry.id]?.status ?? "unmarked") !== "unmarked");
+    return Object.values(progress.characters).some((c) => !c.deleted && statusOf(c.id, entry.id) !== "unmarked");
   }
 
   /** Keys of the pairs the player declined; they are never suggested again. */

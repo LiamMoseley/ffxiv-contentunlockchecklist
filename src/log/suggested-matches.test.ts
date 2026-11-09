@@ -67,6 +67,20 @@ describe("suggested matches for renamed entries", () => {
     expect(pairs(await check(log))).toEqual([["Sastasha", "Sastashas"]]);
   });
 
+  it("ignores progress that belongs only to a deleted character", async () => {
+    const { log, wiki } = openLog();
+    const kept = log.currentCharacter().id;
+    const doomed = log.addCharacter({ name: "Bryn" });
+    if (!doomed.ok) throw new Error("expected character");
+    log.switchCharacter(doomed.character.id);
+    log.setEntryStatus(SASTASHA_ID, "completed");
+    log.switchCharacter(kept);
+    log.deleteCharacter(doomed.character.id);
+    wiki.serve(renamedUnlock);
+
+    expect((await check(log)).suggestions).toEqual([]);
+  });
+
   it("does not offer a replacement from another expansion", async () => {
     const { log, wiki } = openLog();
     log.setEntryStatus(SASTASHA_ID, "completed");
@@ -142,7 +156,7 @@ describe("suggested matches for renamed entries", () => {
     log.declineMatch(preview.suggestions[0]);
 
     expect(storage.read("contentUnlockLog.declinedMatches")).toBe(
-      JSON.stringify([`${SASTASHA_ID}\nsastashas/its-probably-pirates`]),
+      '["sastasha/its-probably-pirates\\nsastashas/its-probably-pirates"]',
     );
     expect((await check(log)).suggestions).toEqual([]);
     const reopened = openLog({ storage, wiki });
