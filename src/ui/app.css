@@ -228,6 +228,18 @@ a:hover {
 .rail-item.chosen {
   background: linear-gradient(90deg, rgba(255, 231, 160, 0.12), transparent);
 }
+/* Available now covers every expansion: the tiles stay for spacing but are greyed out and do nothing */
+.rail-item.inactive {
+  opacity: 0.4;
+  filter: grayscale(1);
+  cursor: default;
+}
+.rail-item.inactive:hover {
+  background: none;
+}
+.rail-item.inactive:hover .tile {
+  filter: none;
+}
 .tile {
   flex: none;
   width: 50px;
@@ -998,6 +1010,7 @@ a.wiki-link:focus-visible {
 /* Embossed pill: grey gradient, light top bevel and dark bottom bevel, no edge line or coloured border */
 .button-footer button,
 .hint-bar .undo,
+.available-empty button,
 .dialog-buttons button {
   display: inline-flex;
   align-items: center;
@@ -1018,11 +1031,13 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:hover:not(:disabled),
 .hint-bar .undo:hover:not(:disabled),
+.available-empty button:hover:not(:disabled),
 .dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
 .button-footer button:active:not(:disabled),
 .hint-bar .undo:active:not(:disabled),
+.available-empty button:active:not(:disabled),
 .dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
@@ -1038,6 +1053,7 @@ a.wiki-link:focus-visible {
 }
 .button-footer button:focus-visible,
 .hint-bar .undo:focus-visible,
+.available-empty button:focus-visible,
 .dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
@@ -1193,6 +1209,58 @@ a.wiki-link:focus-visible {
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  container-type: inline-size;
+}
+/* Available now: a blue glow behind the row that fades out towards its edges, with no change to its size */
+.tabs-row.available {
+  position: relative;
+  isolation: isolate;
+}
+/* Centred on the buttons (24px tall, at the top of the row) and reaching the top of the section (10px above the row) */
+/* Holds the row at the height the tabs give it (24px plus their 8px margin) */
+.tabs-spacer {
+  flex: 1;
+  height: 32px;
+}
+/* The view's name, centred in the glow and set in capitals in the app title's font */
+.available-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 400 20px/1 var(--font-title);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #e9e6df;
+  text-shadow: 0 1px 2px #000;
+  pointer-events: none;
+}
+/* When the row is too narrow to centre the title clear of the buttons, centre it in the space left of them */
+@container (max-width: 640px) {
+  .available-title {
+    right: 265px;
+  }
+}
+.tabs-row.available::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -10px;
+  height: 44px;
+  left: -10px;
+  right: -10px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse closest-side at 50% 50%,
+    rgba(74, 163, 255, 0.45),
+    rgba(74, 163, 255, 0.2) 55%,
+    transparent 100%
+  );
 }
 .tabs-row .tabs {
   flex: 1;
@@ -1289,4 +1357,16 @@ a.wiki-link:focus-visible {
   margin: 8px 4px 0;
   color: var(--text-dim);
   font-style: italic;
+}
+/* The Available now messages: centred and lowered, with the level button set apart below the text */
+.available-empty {
+  padding-top: 36px;
+  text-align: center;
+}
+.available-empty button {
+  /* On its own line under the message, centred */
+  display: flex;
+  width: fit-content;
+  margin: 14px auto 0;
+  font-style: normal;
 }

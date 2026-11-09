@@ -25,6 +25,14 @@ export type ProgressCount = { completed: number; total: number };
 /** What a command changed: how many entries, and the IDs of sections it brought to fully Completed. */
 export type ChangeResult = { changed: number; sectionsFinished: string[] };
 
+/** The entries available now, grouped by the section they belong to; `level` is null when the character has none. */
+export type Available = {
+  level: number | null;
+  sections: Section[];
+  /** Reachable Unmarked entries the search and filters leave out. */
+  hidden: number;
+};
+
 export type LogOptions = { content: Content; storage: Storage; clock: Clock };
 
 /** What the player enters for a character. A blank World is the one shared World; any other must be a known World, and sets the Data Center. */
@@ -292,7 +300,9 @@ export function createLog({ content, storage, clock }: LogOptions) {
       saveView();
     },
     /** How many filters are narrowing the log right now. */
-    activeFilterCount: (): number => activeFilterCount(filters),
+    activeFilterCount: ({ availableNow = false } = {}): number =>
+      // Available now lists only Unmarked entries, so it always hides Completed and Not interested ones.
+      activeFilterCount(availableNow ? { ...filters, hideCompleted: true, hideNotInterested: true } : filters),
     /** Every content type with its number of entries, most common first. */
     typeCounts: (): { type: string; count: number }[] =>
       contentTypes
@@ -306,6 +316,29 @@ export function createLog({ content, storage, clock }: LogOptions) {
       const section = content.sections.find((s) => s.id === sectionId);
       if (!section) throw new Error(`No section ${sectionId}`);
       return section.entries.filter((e) => passesFilters(e, entryStatus(e.id), filters));
+    },
+    /**
+     * Everything the current character can reach now and has not marked: levelling entries at or below
+     * their level (a range such as "56-60" by its lower bound), and level-cap entries once they have the
+     * expansion's level cap. A character with no level gets `level: null` and nothing. The search and filters
+     * apply; `hidden` counts the reachable entries they leave out.
+     */
+    availableNow(): Available {
+      const level = currentCharacter().level;
+      if (level === null) return { level, sections: [], hidden: 0 };
+      let hidden = 0;
+      const sections = content.sections.flatMap((section) => {
+        const expansion = content.expansions.find((e) => e.id === section.expansionId);
+        if (!expansion) throw new Error(`No expansion ${section.expansionId}`);
+        const cap = expansion.levelCap;
+        const reachable = (entry: Entry) =>
+          section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
+        const reached = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
+        const entries = reached.filter((e) => passesFilters(e, "unmarked", filters));
+        hidden += reached.length - entries.length;
+        return entries.length > 0 ? [{ ...section, entries }] : [];
+      });
+      return { level, sections, hidden };
     },
     sectionProgress(sectionId: string): ProgressCount {
       const section = content.sections.find((s) => s.id === sectionId);

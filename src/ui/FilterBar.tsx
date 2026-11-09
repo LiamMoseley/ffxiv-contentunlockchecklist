@@ -12,10 +12,13 @@ export function FilterBar({
   log,
   searchRef,
   onChange,
+  alwaysHidingMarked = false,
 }: {
   log: Log;
   searchRef: Ref<HTMLInputElement>;
   onChange: () => void;
+  /** Available now lists only Unmarked entries: both hide checkboxes show as ticked and can't be changed. */
+  alwaysHidingMarked?: boolean;
 }) {
   const filters = log.filters();
   const set = (next: Partial<Filters>) => {
@@ -63,7 +66,8 @@ export function FilterBar({
         <label>
           <input
             type="checkbox"
-            checked={filters.hideCompleted}
+            checked={alwaysHidingMarked || filters.hideCompleted}
+            disabled={alwaysHidingMarked}
             onChange={(event) => set({ hideCompleted: event.target.checked })}
           />
           Hide completed entries.
@@ -71,7 +75,8 @@ export function FilterBar({
         <label>
           <input
             type="checkbox"
-            checked={filters.hideNotInterested}
+            checked={alwaysHidingMarked || filters.hideNotInterested}
+            disabled={alwaysHidingMarked}
             onChange={(event) => set({ hideNotInterested: event.target.checked })}
           />
           Hide entries marked not interested.

@@ -78,6 +78,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
   const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
+  // "Available now" replaces the section view; a view choice for this visit only.
+  const [availableOpen, setAvailableOpen] = useState(false);
   const toastCount = useRef(0);
 
   const sectionNames = new Map(
@@ -149,8 +151,11 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const shownSections =
     expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
 
-  const activeFilters = log.activeFilterCount();
-  const shownIds = shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
+  const activeFilters = log.activeFilterCount({ availableNow: availableOpen });
+  // Complete Shown and Clear Shown act on what the window lists: Available now, or the filtered sections.
+  const shownIds = availableOpen
+    ? log.availableNow().sections.flatMap((s) => s.entries.map((e) => e.id))
+    : shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
   const completeCount = log.completeShownCount(shownIds);
   const clearCount = log.clearShownCount(shownIds);
   const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
@@ -191,19 +196,35 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <ExpansionRail
             log={log}
             chosen={expansion}
+            inactive={availableOpen}
             onChoose={setExpansion}
             collapsed={railCollapsed}
             onToggleCollapsed={() => setRailCollapsed(!railCollapsed)}
           />
 
           <main className="main">
-            <div className="tabs-row">
-              <SectionTabs
-                tabs={tabs}
-                active={activeTab}
-                onChoose={(key) => expansion !== "all" && setTab(key)}
-                label="Sections"
-              />
+            <div className={`tabs-row${availableOpen ? " available" : ""}`}>
+              {availableOpen ? (
+                <>
+                  <h2 className="available-title">Available now</h2>
+                  <div className="tabs-spacer" />
+                </>
+              ) : (
+                <SectionTabs
+                  tabs={tabs}
+                  active={activeTab}
+                  onChoose={(key) => expansion !== "all" && setTab(key)}
+                  label="Sections"
+                />
+              )}
+              <button
+                type="button"
+                className="filters-toggle"
+                aria-pressed={availableOpen}
+                onClick={() => setAvailableOpen(!availableOpen)}
+              >
+                {availableOpen ? "Back to the log" : "Available now"}
+              </button>
               <button
                 type="button"
                 className="filters-toggle"
@@ -224,18 +245,30 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 {filtersOpen ? "▴" : "▾"}
               </button>
             </div>
-            {filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
+            {filtersOpen && (
+              <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
+            )}
             <div className="scroll">
-              {shownSections.map((section) => (
-                <SectionPanel
-                  key={section.id}
+              {availableOpen ? (
+                <AvailableNow
                   log={log}
-                  section={section}
-                  expansionName={expansionNames.get(section.expansionId) ?? ""}
+                  expansionNames={expansionNames}
                   mode={displayMode}
                   actions={actions}
+                  onSetLevel={() => setCharacterMenuOpen(true)}
                 />
-              ))}
+              ) : (
+                shownSections.map((section) => (
+                  <SectionPanel
+                    key={section.id}
+                    log={log}
+                    section={section}
+                    expansionName={expansionNames.get(section.expansionId) ?? ""}
+                    mode={displayMode}
+                    actions={actions}
+                  />
+                ))
+              )}
             </div>
           </main>
         </div>
@@ -287,6 +320,61 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         </footer>
       </div>
     </div>
+  );
+}
+
+/** Every Unmarked entry the current character can reach at their level; the Log core decides which. */
+function AvailableNow({
+  log,
+  expansionNames,
+  mode,
+  actions,
+  onSetLevel,
+}: {
+  log: Log;
+  expansionNames: Map<string, string>;
+  mode: DisplayMode;
+  actions: EntryActions;
+  onSetLevel: () => void;
+}) {
+  const { level, sections, hidden } = log.availableNow();
+  const Entries = mode === "grid" ? EntryGrid : EntryTable;
+  if (level === null) {
+    return (
+      <p className="section-empty available-empty">
+        {log.characterLabel(log.currentCharacter())} has no level yet. Set one to see what is available now.{" "}
+        <button type="button" onClick={onSetLevel}>
+          Set level
+        </button>
+      </p>
+    );
+  }
+  if (sections.length === 0 && hidden > 0) {
+    return <p className="section-empty available-empty">All available entries are hidden by the search or filters.</p>;
+  }
+  if (sections.length === 0) {
+    return (
+      <p className="section-empty available-empty">
+        Nothing left to unlock at level {level}. Raise the character&apos;s level to see more.{" "}
+        <button type="button" onClick={onSetLevel}>
+          Change level
+        </button>
+      </p>
+    );
+  }
+  return (
+    <>
+      {sections.map((section) => (
+        <section key={section.id} className="section" aria-labelledby={`available-${section.id}-heading`}>
+          <div className="section-head">
+            <h2 id={`available-${section.id}-heading`}>
+              {expansionNames.get(section.expansionId)} <span>{sectionTitle(section)}</span>
+            </h2>
+          </div>
+          <Entries entries={section.entries} statusOf={log.entryStatus} actions={actions} />
+        </section>
+      ))}
+    </>
   );
 }
 
