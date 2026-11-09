@@ -152,7 +152,10 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     expansion === "all" ? log.sections() : expansionSections.filter((s) => activeTab === "all" || s.kind === activeTab);
 
   const activeFilters = log.activeFilterCount();
-  const shownIds = shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
+  // Complete Shown and Clear Shown act on what the window lists: Available now, or the filtered sections.
+  const shownIds = availableOpen
+    ? log.availableNow().sections.flatMap((s) => s.entries.map((e) => e.id))
+    : shownSections.flatMap((s) => log.shownEntries(s.id).map((e) => e.id));
   const completeCount = log.completeShownCount(shownIds);
   const clearCount = log.clearShownCount(shownIds);
   const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
@@ -212,40 +215,42 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               )}
               <button
                 type="button"
-                className="filters-toggle"
+                className="filters-toggle view-toggle"
                 aria-pressed={availableOpen}
                 onClick={() => setAvailableOpen(!availableOpen)}
               >
                 {availableOpen ? "Back to the log" : "Available now"}
               </button>
-              {!availableOpen && (
-                <button
-                  type="button"
-                  className="filters-toggle"
-                  aria-expanded={filtersOpen}
-                  aria-controls="filter-bar"
-                  onClick={() => setFiltersOpen(!filtersOpen)}
-                >
-                  Filters
-                  {activeFilters > 0 && (
-                    <span
-                      className="filters-active"
-                      title={`${activeFilters} active`}
-                      aria-label={`${activeFilters} active`}
-                    >
-                      {activeFilters}
-                    </span>
-                  )}{" "}
-                  {filtersOpen ? "▴" : "▾"}
-                </button>
-              )}
+              {/* Kept in place but hidden in Available now, so the view button doesn't move. */}
+              <button
+                type="button"
+                className="filters-toggle"
+                style={availableOpen ? { visibility: "hidden" } : undefined}
+                disabled={availableOpen}
+                aria-hidden={availableOpen}
+                aria-expanded={filtersOpen}
+                aria-controls="filter-bar"
+                onClick={() => setFiltersOpen(!filtersOpen)}
+              >
+                Filters
+                {activeFilters > 0 && (
+                  <span
+                    className="filters-active"
+                    title={`${activeFilters} active`}
+                    aria-label={`${activeFilters} active`}
+                  >
+                    {activeFilters}
+                  </span>
+                )}{" "}
+                {filtersOpen ? "▴" : "▾"}
+              </button>
             </div>
             {!availableOpen && filtersOpen && <FilterBar log={log} searchRef={searchRef} onChange={refresh} />}
             <div className="scroll">
               {availableOpen ? (
                 <AvailableNow
                   log={log}
-                  sectionNames={sectionNames}
+                  expansionNames={expansionNames}
                   mode={displayMode}
                   actions={actions}
                   onSetLevel={() => setCharacterMenuOpen(true)}
@@ -319,13 +324,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
 /** Every Unmarked entry the current character can reach at their level; the Log core decides which. */
 function AvailableNow({
   log,
-  sectionNames,
+  expansionNames,
   mode,
   actions,
   onSetLevel,
 }: {
   log: Log;
-  sectionNames: Map<string, string>;
+  expansionNames: Map<string, string>;
   mode: DisplayMode;
   actions: EntryActions;
   onSetLevel: () => void;
@@ -357,7 +362,9 @@ function AvailableNow({
       {sections.map((section) => (
         <section key={section.id} className="section" aria-labelledby={`available-${section.id}-heading`}>
           <div className="section-head">
-            <h2 id={`available-${section.id}-heading`}>{sectionNames.get(section.id)}</h2>
+            <h2 id={`available-${section.id}-heading`}>
+              {expansionNames.get(section.expansionId)} <span>{sectionTitle(section)}</span>
+            </h2>
           </div>
           <Entries entries={section.entries} statusOf={log.entryStatus} actions={actions} />
         </section>
