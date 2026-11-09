@@ -48,18 +48,22 @@ function EntryDetails({ entry }: { entry: Entry }) {
 /** Fetches the wiki's list and shows what would change; the player applies it or leaves it. */
 export function UpdateDialog({
   log,
+  preview,
   onClose,
   onApplied,
   onChecked,
 }: {
   log: Log;
+  /** An update already fetched (the notice's Review): shown at once, with no second fetch. */
+  preview?: UpdatePreview;
   onClose: () => void;
   onApplied: (message: string) => void;
   /** A check can adopt a page that changes no entry, so the view must redraw after every check. */
   onChecked: () => void;
 }) {
-  const [state, setState] = useState<State>({ phase: "checking" });
+  const [state, setState] = useState<State>(preview ? { phase: "preview", preview } : { phase: "checking" });
   useEffect(() => {
+    if (preview) return;
     let cancelled = false;
     void log.checkForUpdate().then((check) => {
       onChecked();

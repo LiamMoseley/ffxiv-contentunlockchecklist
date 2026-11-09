@@ -21,20 +21,38 @@ export function fixedClock(iso = "2026-11-03T12:00:00.000Z"): Clock & { set(iso:
 }
 
 /** A wiki that serves the page it is given, or fails to be reached. */
-export function fakeWiki(page: WikiPage = realPage): WikiSource & { serve(next: WikiPage): void; goOffline(): void } {
+export function fakeWiki(page: WikiPage = realPage): WikiSource & {
+  serve(next: WikiPage): void;
+  goOffline(): void;
+  /** How many times the whole page, and only its revision ID, have been asked for. */
+  requests: { pages: number; revisions: number };
+} {
   let serving: WikiPage | null = page;
+  const requests = { pages: 0, revisions: 0 };
   return {
     fetchPage: async () => {
+      requests.pages++;
       if (!serving) throw new Error("offline");
       return serving;
     },
+    fetchRevisionId: async () => {
+      requests.revisions++;
+      if (!serving) throw new Error("offline");
+      return serving.revisionId;
+    },
     serve: (next) => (serving = next),
     goOffline: () => (serving = null),
+    requests,
   };
 }
 
 export function openLog(
-  options: { page?: WikiPage; storage?: Storage; clock?: Clock; wiki?: ReturnType<typeof fakeWiki> } = {},
+  options: {
+    page?: WikiPage;
+    storage?: Storage;
+    clock?: ReturnType<typeof fixedClock>;
+    wiki?: ReturnType<typeof fakeWiki>;
+  } = {},
 ) {
   const wiki = options.wiki ?? fakeWiki();
   const storage = options.storage ?? createMemoryStorage();

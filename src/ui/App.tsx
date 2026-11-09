@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import type { ChangeResult, Log, Section, SectionKind, Storage } from "../log";
+import type { ChangeResult, Log, Section, SectionKind, Storage, UpdatePreview } from "../log";
 import { EntryGrid, EntryTable, HintBar, NewBadge, type DisplayMode, type EntryActions } from "./EntryList";
 import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
@@ -86,6 +86,15 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const toastCount = useRef(0);
   const [confirmingUpdate, setConfirmingUpdate] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
+  // Review opens the update the notice offers; the Update action fetches its own.
+  const [reviewing, setReviewing] = useState<UpdatePreview | null>(null);
+  // The automatic check runs once as the app opens; the Log core decides whether it is due and what it finds.
+  const autoChecked = useRef(false);
+  useEffect(() => {
+    if (autoChecked.current) return;
+    autoChecked.current = true;
+    void log.autoCheckForUpdate().then(refresh);
+  }, [log]);
   // Update needs the wiki, so it is disabled while the device is offline.
   const [online, setOnline] = useState(() => navigator.onLine);
   useEffect(() => {
@@ -224,6 +233,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           />
 
           <main className="main">
+            <UpdateNotice
+              log={log}
+              onReview={(preview) => setReviewing(preview)}
+              onDismiss={() => {
+                log.dismissUpdateNotice();
+                refresh();
+              }}
+            />
             <NewNotice
               log={log}
               viewing={viewingNew}
@@ -359,6 +376,19 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             }}
           />
         )}
+        {reviewing && (
+          <UpdateDialog
+            log={log}
+            preview={reviewing}
+            onClose={() => setReviewing(null)}
+            onChecked={refresh}
+            onApplied={(message) => {
+              setReviewing(null);
+              refresh();
+              say(message);
+            }}
+          />
+        )}
         {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
         {confirming && (
           <ConfirmDialog
@@ -465,6 +495,31 @@ function AvailableNow({
         </section>
       ))}
     </>
+  );
+}
+
+/** The notice above the log when the automatic check found new content: Review opens it, Dismiss hides it. */
+function UpdateNotice({
+  log,
+  onReview,
+  onDismiss,
+}: {
+  log: Log;
+  onReview: (preview: UpdatePreview) => void;
+  onDismiss: () => void;
+}) {
+  const preview = log.updateNotice();
+  if (!preview) return null;
+  return (
+    <div className="new-notice" role="status">
+      <span className="new-notice-text">New content is available on the wiki.</span>
+      <button type="button" onClick={() => onReview(preview)}>
+        Review
+      </button>
+      <button type="button" onClick={onDismiss}>
+        Dismiss
+      </button>
+    </div>
   );
 }
 
