@@ -1177,3 +1177,60 @@ a.wiki-link:focus-visible {
 .hint-bar .undo + .display-mode {
   margin-left: 6px;
 }
+
+/* Search and filters */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px 14px;
+  padding: 0 14px 8px 18px;
+}
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.filter-search {
+  flex: 1 1 200px;
+}
+.filter-field input,
+.filter-field select {
+  padding: 4px 8px;
+  border: 1px solid #1d1d1d;
+  border-radius: 3px;
+  background: #1c1c1c;
+  color: #eee;
+  font: inherit;
+  font-size: 13px;
+}
+.filter-field input:focus-visible,
+.filter-field select:focus-visible {
+  outline: 2px solid var(--gold);
+}
+.filter-checks {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 12.5px;
+  color: var(--text);
+}
+.filter-checks legend {
+  padding: 0;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.filter-checks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-empty {
+  margin: 8px 4px 0;
+  color: var(--text-dim);
+  font-style: italic;
+}

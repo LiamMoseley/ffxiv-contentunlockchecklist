@@ -60,6 +60,7 @@
      "quest": "",
      "location": "",
      "information": "This unlocks Hunting Log.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -115,6 +116,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 1 Class Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -162,6 +164,7 @@
      "quest": "Where the Heart Is (Mist)",
      "location": "Lower La Noscea (X:31, Y:20)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -229,6 +232,7 @@
      "quest": "Where the Heart Is (The Goblet)",
      "location": "Western Thanalan (X:26, Y:24)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -296,6 +300,7 @@
      "quest": "Spirithold Broken\nWay Down in the Hole\nJust Deserts",
      "location": "Central Shroud (X:23, Y:19)\nCentral Thanalan (X:20, Y:18)\nMiddle La Noscea (X:25, Y:17)",
      "information": "Unlocks levequests & Inns.\nGridania: Unlocks Leves of Bentbranch\nUl'dah: Unlocks Leves of Horizon\nLimsa Lominsa: Unlocks Leves of Swiftperch",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -494,6 +499,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 5 Class Quest first.\nUnlocks class changing via the Armoury system.\nSince Rogue is available as an ARR class but not available to start the game with, this is the earliest you can access that class.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -573,6 +579,7 @@
      "quest": "You need to complete Rank 1 first",
      "location": "",
      "information": "Gives you extra exp for completing objectives.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -627,6 +634,7 @@
      "quest": "Where the Heart Is (The Lavender Beds)",
      "location": "Central Shroud (X:21, Y:21)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -694,6 +702,7 @@
      "quest": "Simply the Hest (Gridania)\nSimply the Hest (Ul'dah)\nSimply the Hest (Limsa Lominsa)",
      "location": "Central Shroud (X:22, Y:22)\nWestern Thanalan (X:23, Y:16)\nWestern La Noscea (X:34, Y:31)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -804,6 +813,7 @@
      "quest": "",
      "location": "",
      "information": "Unlocks on the completion of your first Guildhest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -856,6 +866,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 10 Class Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -903,6 +914,7 @@
      "quest": "Color Your World",
      "location": "Western Thanalan (X:12, Y:14)",
      "information": "Allows the player to recolor their gear with dyes.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -979,6 +991,7 @@
      "quest": "If I Had a Glamour\nA Self-improving Man",
      "location": "Western Thanalan (X:12, Y:14)\nMor Dhona (X:22.1, Y:6.7)",
      "information": "Allows the player to change the look of their gear with glamours.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1092,6 +1105,7 @@
      "quest": "Absolutely Glamourous\nSubmission Impossible",
      "location": "Western Thanalan (X:12.6, Y:14.3)\nMor Dhona (X:22, Y:6)",
      "information": "Allows the player to craft Glamour Prisms.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1191,6 +1205,7 @@
      "quest": "Beauty Is Only Scalp Deep",
      "location": "Limsa Lominsa Upper Decks (X:11, Y:11)",
      "information": "Allows the player to redo certain character creation settings such as hairstyle.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1252,6 +1267,7 @@
      "quest": "It Could Happen to You",
      "location": "Ul'dah - Steps of Nald (X:9, Y:9)",
      "information": "Contains mini-games such as Chocobo Racing, Triple Triad, Cactpot and more.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1342,6 +1358,7 @@
      "quest": "Rising to the Challenge",
      "location": "Limsa Lominsa Upper Decks (X:11, Y:10)",
      "information": "Gives you extra gil and exp for completing objectives.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1412,6 +1429,7 @@
      "quest": "",
      "location": "Western La Noscea (X:28, Y:24)",
      "information": "Tutorials on combat mechanics for each class or job. Free Starter Gear and EXP Up Ring",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1492,6 +1510,7 @@
      "quest": "It's Probably Pirates",
      "location": "Limsa Lominsa Upper Decks (X:7, Y:5)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1569,6 +1588,7 @@
      "quest": "",
      "location": "",
      "information": "Unlocks after completing Sastasha.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1621,6 +1641,7 @@
      "quest": "The Lominsan Envoy\nThe Ul'dahn Envoy\nThe Gridanian Envoy",
      "location": "",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1708,6 +1729,7 @@
      "quest": "Fire in the Gloom",
      "location": "New Gridania (X:11, Y:13)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1785,6 +1807,7 @@
      "quest": "",
      "location": "",
      "information": "Unlocks when you have more than one Dungeon.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1837,6 +1860,7 @@
      "quest": "The Scions of the Seventh Dawn",
      "location": "New Gridania (X:11, Y:12)\nUl'dah - Steps of Nald (X:9, Y:8)\nLimsa Lominsa Lower Decks (X:9, Y:11)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -1924,6 +1948,7 @@
      "quest": "An Ill-conceived Venture\nAn Ill-conceived Venture\nAn Ill-conceived Venture",
      "location": "New Gridania (X:11, Y:12)\nUl'dah - Steps of Nald (X:9, Y:8)\nLimsa Lominsa Lower Decks (X:9, Y:11)",
      "information": "Send your retainers on missions to obtain items.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2039,6 +2064,7 @@
      "quest": "Into a Copper Hell",
      "location": "Ul'dah - Steps of Nald (X:11, Y:9)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2116,6 +2142,7 @@
      "quest": "The House That Death Built",
      "location": "New Gridania (X:12.0, Y:13.1)",
      "information": "Rogue-like Dungeon",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2190,6 +2217,7 @@
      "quest": "The Ties That Bind",
      "location": "East Shroud (X:17, Y:18)",
      "information": "Player weddings",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2252,6 +2280,7 @@
      "quest": "Forging the Spirit",
      "location": "Central Thanalan (X:24, Y:13)",
      "information": "Extract materia from fully spiritbonded gear.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2329,6 +2358,7 @@
      "quest": "Waking the Spirit",
      "location": "Central Thanalan (X:23, Y:13)",
      "information": "Meld Materia onto gear with sockets. Requires a level 19 crafting class.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2405,6 +2435,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 15 Class Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2452,6 +2483,7 @@
      "quest": "You need to complete Rank 2 first",
      "location": "",
      "information": "Gives you extra exp for completing objectives.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2506,6 +2538,7 @@
      "quest": "Hallo Halatali",
      "location": "Western Thanalan (X:12, Y:14)",
      "information": "Optional Dungeon.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2583,6 +2616,7 @@
      "quest": "Lord of the Inferno",
      "location": "The Waking Sands (X:6, Y:6)",
      "information": "Ifrit Main Scenario Quest unlock.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2664,6 +2698,7 @@
      "quest": "The Company You Keep",
      "location": "",
      "information": "Allows you to select a grand company.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2724,6 +2759,7 @@
      "quest": "My Little Chocobo",
      "location": "",
      "information": "Allows you to ride mounts.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2784,6 +2820,7 @@
      "quest": "A Sight to Behold",
      "location": "New Gridania (X:11, Y:13)",
      "information": "Unlocks various paintings by the painter in Idyllshire. Annoyingly hard in ARR, easier later.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2853,6 +2890,7 @@
      "quest": "Into the Beast's Maw",
      "location": "South Shroud (X:18, Y:19)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2930,6 +2968,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 20 Class Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -2977,6 +3016,7 @@
      "quest": "Melding Materia Muchly",
      "location": "Central Thanalan (X:23, Y:13)",
      "information": "Meld more materia onto gear than normally possible.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3053,6 +3093,7 @@
      "quest": "Skeletons in Her Closet",
      "location": "Old Gridania (X:11, Y:4)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3130,6 +3171,7 @@
      "quest": "Broadening Horizons",
      "location": "New Gridania (X:12, Y:11)",
      "information": "Grants you access to White Wolf Gate (a Gridanian exit gate to the upper level of Central Shroud map) by talking to the NPC in front of the gate. The exit will also add the destination to the Gridanian Aethernet.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3205,6 +3247,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 25 Class Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3252,6 +3295,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 30 Class Quest and Sylph-management first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3314,6 +3358,7 @@
      "quest": "You need to complete Rank 3 first",
      "location": "",
      "information": "Gives you extra exp for completing objectives.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3368,6 +3413,7 @@
      "quest": "Gone to Pieces",
      "location": "Ul'dah - Steps of Thal (X:14, Y:10)",
      "information": "Breaks down items to components and other items.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3438,6 +3484,7 @@
      "quest": "A Pup No Longer (Maelstrom)\nA Pup No Longer (Twin Adder)\nA Pup No Longer (Immortal Flames)",
      "location": "Limsa Lominsa Upper Decks (X:13, Y:12)\nNew Gridania (X:9, Y:11)\nSteps of Nald (X:8, Y:8)",
      "information": "The PvP hub zone.\nPrerequisite to unlock Crystalline Conflict, Frontline, and Rival Wings modes",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3598,6 +3645,7 @@
      "quest": "The Crystal (Line's) Call",
      "location": "Wolves' Den Pier (X:4.9, Y:6.4)",
      "information": "Ranked PvP Mode; players must be equipped with a Soul Crystal to enter this mode.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3678,6 +3726,7 @@
      "quest": "Like Civilized Men and Women (Maelstrom)\nLike Civilized Men and Women (Twin Adder)\nLike Civilized Men and Women (Immortal Flames)",
      "location": "Limsa Lominsa Upper Decks (X:12.7, Y:12.8)\nNew Gridania (X:9, Y:11)\nUl'dah - Steps of Nald (X:8, Y:9)",
      "information": "Duty Roulette: Frontline places the player into one of the Frontline PvP maps. Players must be equipped with a Soul Crystal to use this 'Roulette.'",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3815,6 +3864,7 @@
      "quest": "Earning Your Wings",
      "location": "Wolves' Den Pier (X:5.7, Y:5.5)",
      "information": "Players must be equipped with a Soul Crystal to enter this mode.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3888,6 +3938,7 @@
      "quest": "My Feisty Little Chocobo",
      "location": "South Shroud (X:17, Y:28)",
      "information": "Allows your Chocobo to fight alone side you, good for solo-ing in the overworld.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -3972,6 +4023,7 @@
      "quest": "Bird in Hand",
      "location": "Central Shroud (X:20, Y:21)",
      "information": "Raise your chocobo with a stable in Free Company or outside an Apartment building.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4048,6 +4100,7 @@
      "quest": "The Things We Do for Cheese",
      "location": "Eastern La Noscea (X:32, Y:30)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4125,6 +4178,7 @@
      "quest": "Lord of Crags",
      "location": "Upper La Noscea (X:31, Y:24)",
      "information": "Titan Main Scenario Quest unlock.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4206,6 +4260,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 30 Job Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4253,6 +4308,7 @@
      "quest": "Braving New Depths",
      "location": "Western Thanalan (X:12, Y:14)",
      "information": "Optional Dungeon.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4330,6 +4386,7 @@
      "quest": "Treasures and Tribulations",
      "location": "Eastern La Noscea (X:21, Y:21)",
      "information": "Treasure maps are found while gathering.\nSolve the map, get to the location and defeat the enemy for reward.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4412,6 +4469,7 @@
      "quest": "Dishonor Before Death",
      "location": "Ul'dah - Steps of Thal (X:14, Y:10)",
      "information": "Optional Dungeon.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4489,6 +4547,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 35 Job Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4536,6 +4595,7 @@
      "quest": "You need to complete Rank 4 first",
      "location": "",
      "information": "Gives you extra exp for completing objectives.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4590,6 +4650,7 @@
      "quest": "In Pursuit of the Past",
      "location": "Coerthas Central Highlands (X:12, Y:16)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4667,6 +4728,7 @@
      "quest": "A Bad Bladder",
      "location": "New Gridania (X:9, Y:11)",
      "information": "Daily Quests for the Ixal. Requires crafters.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4751,6 +4813,7 @@
      "quest": "Highway Robbery",
      "location": "Limsa Lominsa Upper Decks (X:12, Y:12)",
      "information": "Daily Quests for the Kobolds",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4825,6 +4888,7 @@
      "quest": "Seeking Solace",
      "location": "New Gridania (X:9, Y:11)",
      "information": "Daily Quests for the Sylphs",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4899,6 +4963,7 @@
      "quest": "Peace for Thanalan",
      "location": "Ul'dah - Steps of Nald (X:8, Y:8)",
      "information": "Daily Quests for the Amalj'aa",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -4973,6 +5038,7 @@
      "quest": "They Came from the Deep",
      "location": "Limsa Lominsa Upper Decks (X:13, Y:12)",
      "information": "Daily Quests for the Sahagin",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5047,6 +5113,7 @@
      "quest": "Fort of Fear",
      "location": "Coerthas Central Highlands (X:24, Y:28)",
      "information": "Optional Dungeon",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5121,6 +5188,7 @@
      "quest": "Lady of the Vortex",
      "location": "New Gridania (X:11, Y:14)",
      "information": "Garuda Main Scenario Quest unlock.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5202,6 +5270,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 40 Job Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5249,6 +5318,7 @@
      "quest": "Going for Gold",
      "location": "Western Thanalan (X:12, Y:14)",
      "information": "Optional Dungeon",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5323,6 +5393,7 @@
      "quest": "Squadron and Commander",
      "location": "",
      "information": "Unlocks Grand Company Adventurer Squadrons.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5375,6 +5446,7 @@
      "quest": "Hearts on Fire",
      "location": "Western La Noscea (X:28, Y:24)",
      "information": "Tutorials on advanced combat mechanics and enemy attack indicators. Rewards a second EXP Up Ring.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5452,6 +5524,7 @@
      "quest": "",
      "location": "",
      "information": "You need to complete your level 45 Job Quest first.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5499,6 +5572,7 @@
      "quest": "Rock the Castrum",
      "location": "Northern Thanalan (X:15, Y:16)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5576,6 +5650,7 @@
      "quest": "The Ultimate Weapon",
      "location": "Northern Thanalan (X:3, Y:3)",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5653,6 +5728,7 @@
      "quest": "The Ultimate Weapon",
      "location": "",
      "information": "Unlocks in the Main Scenario Quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5720,6 +5796,7 @@
      "quest": "",
      "location": "",
      "information": "Unlocks when you complete The Porta Decumana.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5772,6 +5849,7 @@
      "quest": "",
      "location": "",
      "information": "Unlocks once at least two 8-player Trials have been unlocked.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5824,6 +5902,7 @@
      "quest": "",
      "location": "",
      "information": "Unlocks once at least two 24-man raids have been unlocked. The first set of these is the Crystal Tower.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5883,6 +5962,7 @@
      "quest": "The Rise and Fall of Gentlemen",
      "location": "Ul'dah - Steps of Nald (X:9, Y:8)",
      "information": "Humor, trials, glams, emotes, minions, mount, relic weapons. This is a long quest chain that goes through multiple expansions.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -5953,6 +6033,7 @@
      "quest": "Let the Hunt Begin (Maelstrom)\nLet the Hunt Begin (Immortal Flames)\nLet the Hunt Begin (Twin Adder)",
      "location": "Limsa Lominsa Upper Decks (X:12, Y:12)\nUl'dah - Steps of Nald (X:8, Y:9)\nNew Gridania (X:9, Y:11)",
      "information": "Hunt rare enemies for good rewards.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6061,6 +6142,7 @@
      "quest": "The Weaponsmith of Legend",
      "location": "Western Thanalan (X:12, Y:14)",
      "information": "Obtain Zodiac Weapons. Very optional and extremely grindy.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6130,6 +6212,7 @@
      "quest": "Just Tooling Around",
      "location": "Mor Dhona (X:21, Y:6)",
      "information": "Unlocks the vendor Talan and all levels of crafting Master Recipe Tomes.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6213,6 +6296,7 @@
      "quest": "Magiteknical Difficulties",
      "location": "Mor Dhona (X:21.9, Y:7.8)",
      "information": "Upgrades your Magitek Armor mount to fire from its weapon",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6292,6 +6376,7 @@
      "quest": "Call of the Wild (Immortal Flames)\nCall of the Wild (Maelstrom)\nCall of the Wild (Twin Adder)",
      "location": "Ul'dah - Steps of Nald (X:8, Y:9)\nLimsa Lominsa Upper Decks (X:12, Y:12)\nNew Gridania (X:9, Y:11)",
      "information": "Unlocks after completing all Allied Society reputation grinds.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6415,6 +6500,7 @@
      "quest": "Of Errant Epistles",
      "location": "Mor Dhona (X:30, Y:13)",
      "information": "Lore, glam, and minion.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6493,6 +6579,7 @@
      "quest": "The Way of the Samurai",
      "location": "Ul'dah - Steps of Nald (X:9.2, Y:9.1)",
      "information": "Once unlocked, job starts at level 50.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6566,6 +6653,7 @@
      "quest": "Taking the Red",
      "location": "Ul'dah - Steps of Thal (X:14.1, Y:11.7)",
      "information": "Once unlocked, job starts at level 50.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6639,6 +6727,7 @@
      "quest": "Out of the Blue",
      "location": "Limsa Lominsa Lower Decks (X:9.9, Y:11.0)",
      "information": "Limited job.\nOnce unlocked, job starts at level 1.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6721,6 +6810,7 @@
      "quest": "Strangers in the Wood",
      "location": "New Gridania (X:11.8, Y:13.6)",
      "information": "Limited job; requires Dawntrail expansion.\nOnce unlocked, job starts at level 1.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6810,6 +6900,7 @@
      "quest": "Ghosts of Amdapor",
      "location": "Western Thanalan (X:12, Y:14)",
      "information": "Requires The Aurum Vale cleared",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6895,6 +6986,7 @@
      "quest": "Trauma Queen",
      "location": "Western Thanalan (X:11, Y:13)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -6959,6 +7051,7 @@
      "quest": "Sirius Business",
      "location": "Western La Noscea (X:26, Y:26)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7023,6 +7116,7 @@
      "quest": "Out of Sight, Out of Mine",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7087,6 +7181,7 @@
      "quest": "Maniac Manor",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7151,6 +7246,7 @@
      "quest": "Ifrit Bleeds, We Can Kill It",
      "location": "The Waking Sands (X:6.1, Y:5.1)",
      "information": "Required for Patch 2.5 MSQ Good Intentions; part of Primal Quests. Requires A Recurring Problem at the same location.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7272,6 +7368,7 @@
      "quest": "Labyrinth of the Ancients",
      "location": "Mor Dhona (X:21, Y:8)",
      "information": "Required for Patch 2.55 MSQ A Time to Every Purpose; part of Crystal Tower",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7375,6 +7472,7 @@
      "quest": "The Three Collectors",
      "location": "Western Thanalan (X:12, Y:13)",
      "information": "Unlocks during the Hildibrand questline.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7452,6 +7550,7 @@
      "quest": "A Relic Reborn",
      "location": "North Shroud (X:30, Y:20)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7516,6 +7615,7 @@
      "quest": "A Relic Reborn",
      "location": "North Shroud (X:30, Y:20)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7580,6 +7680,7 @@
      "quest": "In for Garuda Awakening",
      "location": "The Waking Sands (X:6.1, Y:5.0)",
      "information": "Required for Patch 2.5 MSQ Good Intentions; part of Primal Quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7686,6 +7787,7 @@
      "quest": "You Have Selected Regicide",
      "location": "Old Gridania (X:6, Y:10)",
      "information": "Unlocks as part of the Patch 2.1 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7763,6 +7865,7 @@
      "quest": "One Night in Amdapor",
      "location": "Old Gridania (X:6, Y:10)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7827,6 +7930,7 @@
      "quest": "This Time's for Fun",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "Requires Halatali cleared",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7912,6 +8016,7 @@
      "quest": "Curds and Slay",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -7976,6 +8081,7 @@
      "quest": "In a Titan Spot",
      "location": "The Waking Sands (X:6.1, Y:5.1)",
      "information": "Required for Patch 2.5 MSQ Good Intentions; part of Primal Quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8082,6 +8188,7 @@
      "quest": "Lord of the Whorl",
      "location": "Lower La Noscea (X:24, Y:33)",
      "information": "Unlocks as part of the Patch 2.2 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8159,6 +8266,7 @@
      "quest": "The Ultimate Ballad",
      "location": "Mor Dhona (X:21, Y:8)",
      "information": "(Optional challenge content)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -8229,6 +8337,7 @@
      "quest": "Levin an Impression",
      "location": "East Shroud (X:23, Y:14)",
      "information": "Unlocks as part of the Patch 2.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8306,6 +8415,7 @@
      "quest": "Gale-force Warning",
      "location": "New Gridania (X:9, Y:11)",
      "information": "(Optional challenge content) Requires Primal Nature",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -8388,6 +8498,7 @@
      "quest": "Quake Me Up Before You O'Ghomoro",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "(Optional challenge content) Requires Gale-force Warning",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -8470,6 +8581,7 @@
      "quest": "Ifrit Ain't Broke",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "(Optional challenge content) Requires Quake Me Up Before You O'Ghomoro",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -8552,6 +8664,7 @@
      "quest": "Primal Awakening",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "Requires In a Titan Spot; part of Bahamut Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8641,6 +8754,7 @@
      "quest": "Syrcus Tower",
      "location": "Mor Dhona (X:30, Y:12)",
      "information": "Required for Patch 2.55 MSQ A Time to Every Purpose; part of Crystal Tower",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8744,6 +8858,7 @@
      "quest": "King of the Hull",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8808,6 +8923,7 @@
      "quest": "Corpse Groom",
      "location": "Ul'dah - Steps of Nald (X:12, Y:8)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8872,6 +8988,7 @@
      "quest": "Blood for Stone",
      "location": "Mor Dhona (X:21, Y:8)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -8936,6 +9053,7 @@
      "quest": "It's Definitely Pirates",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9000,6 +9118,7 @@
      "quest": "The Wrath of Qarn",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "Requires The Sunken Temple of Qarn cleared",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9085,6 +9204,7 @@
      "quest": "The Path of the Righteous",
      "location": "Coerthas Central Highlands (X:12, Y:17)",
      "information": "Unlocks as part of the Patch 2.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9162,6 +9282,7 @@
      "quest": "The Coliseum Conundrum",
      "location": "Ul'dah - Steps of Thal (X:14, Y:10)",
      "information": "Unlocks during the Hildibrand questline",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9239,6 +9360,7 @@
      "quest": "The King Lives",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "(Optional challenge content) Requires Thornmarch (Hard)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -9313,6 +9435,7 @@
      "quest": "Whorl of a Time",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "(Optional challenge content) Requires The Whorleater (Hard)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -9387,6 +9510,7 @@
      "quest": "The Instruments of Our Deliverance",
      "location": "Mor Dhona (X:6, Y:5)",
      "information": "Unlocks as part of the Patch 2.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9464,6 +9588,7 @@
      "quest": "Judgment Bolts and Lightning",
      "location": "New Gridania (X:9, Y:11)",
      "information": "(Optional challenge content) Requires Brave New Companions, The Whorleater (Extreme) and Thornmarch (Extreme).",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -9563,6 +9688,7 @@
      "quest": "An Uninvited Ascian",
      "location": "Northern Thanalan (X:20, Y:22)",
      "information": "Unlocks as part of the Patch 2.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9640,6 +9766,7 @@
      "quest": "",
      "location": "",
      "information": "Requires unlocking a minimum of two of the included Dungeons.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9685,6 +9812,7 @@
      "quest": "Her Last Vow",
      "location": "Ul'dah - Steps of Thal (X:12, Y:11)",
      "information": "Unlocks during the Hildibrand questline.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9762,6 +9890,7 @@
      "quest": "The World of Darkness",
      "location": "Mor Dhona (X:30, Y:12)",
      "information": "Required for Patch 2.55 MSQ A Time to Every Purpose; part of Crystal Tower",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9865,6 +9994,7 @@
      "quest": "For Keep's Sake",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "Requires Amdapor Keep cleared",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -9950,6 +10080,7 @@
      "quest": "Not Easy Being Green",
      "location": "Mor Dhona (X:22, Y:8)",
      "information": "Requires The Wanderer's Palace cleared",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10035,6 +10166,7 @@
      "quest": "Best-laid Schemes",
      "location": "Eastern Thanalan (X:25, Y:25)",
      "information": "Unlocks as part of the Patch 2.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10112,6 +10244,7 @@
      "quest": "Fear and Odin in the Shroud",
      "location": "New Gridania (X:9, Y:11)",
      "information": "(Optional challenge content) Unlocks during the Who Was That Man in Black questline",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -10197,6 +10330,7 @@
      "quest": "Drop Dead Shiva",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "(Optional challenge content) Requires Let Us Cling Together and The Striking Tree (Extreme).",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -10289,6 +10423,7 @@
      "quest": "Another Turn in the Coil",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "Requires Alisaie's Pledge after completing The Binding Coil of Bahamut - Turn 5; part of Bahamut Quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10388,6 +10523,7 @@
      "quest": "Sing Me Another Song",
      "location": "Mor Dhona (X:21, Y:8)",
      "information": "(Optional challenge content) Requires the completion of The Second Coil of Bahamut - Turn 4\nNo loot, only Title",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -10467,6 +10603,7 @@
      "quest": "Fragments of Truth",
      "location": "The Waking Sands (X:6.0, Y:4.9)",
      "information": "Requires Alisaie's Resolve after completing The Second Coil of Bahamut - Turn 4; part of Bahamut Quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10574,6 +10711,7 @@
      "quest": "A Dark Spectacle",
      "location": "The Pillars (X:13.2, Y:8.8)",
      "information": "Once unlocked, job starts at level 30. Requires Heavensward MSQ Coming to Ishgard for access to the quest giver in Ishgard.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10683,6 +10821,7 @@
      "quest": "What's Your Sign",
      "location": "The Pillars (X:15.2, Y:10.0)",
      "information": "Once unlocked, job starts at level 30. Requires Heavensward MSQ Coming to Ishgard for access to the quest giver in Ishgard.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10792,6 +10931,7 @@
      "quest": "So You Want to Be a Machinist",
      "location": "Foundation (X:8.1, Y:10.1)",
      "information": "Once unlocked, job starts at level 30. Requires Heavensward MSQ Coming to Ishgard for access to the quest giver in Ishgard.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10901,6 +11041,7 @@
      "quest": "Inscrutable Tastes",
      "location": "Foundation (X:10.1, Y:10.4)",
      "information": "Requires Heavensward MSQ The Better Half",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -10995,6 +11136,7 @@
      "quest": "For All the Nights to Come",
      "location": "Coerthas Western Highlands (X:16, Y:22)",
      "information": "Speak with Wealdtheow",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11069,6 +11211,7 @@
      "quest": "Sights of the North",
      "location": "The Dravanian Forelands (X:31.1, Y:22.2)",
      "information": "Speak with Kester Ironheart",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11138,6 +11281,7 @@
      "quest": "The Naming of Vath",
      "location": "The Dravanian Forelands (X:24, Y:19)",
      "information": "Daily Quests for the Gnath, requires Lord of the Hive",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11227,6 +11371,7 @@
      "quest": "Mourn in Passing",
      "location": "The Dravanian Forelands (X:23, Y:19)",
      "information": "Unlocks in the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11301,6 +11446,7 @@
      "quest": "Lord of the Hive",
      "location": "The Dravanian Forelands (X:30, Y:37)",
      "information": "Unlocks in the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11375,6 +11521,7 @@
      "quest": "Let the Clan Hunt Begin",
      "location": "Foundation (X:12, Y:11)",
      "information": "Speak with Aytienne",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11441,6 +11588,7 @@
      "quest": "Into the Aery",
      "location": "Foundation (X:12, Y:10)",
      "information": "Unlocks in the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11515,6 +11663,7 @@
      "quest": "Tricks and Stones",
      "location": "The Churning Mists (X:27.2, Y:34.5)",
      "information": "Daily quests for Moogle. Has a large number of prerequisite quests, and requires He Who Would Not Be Denied",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11604,6 +11753,7 @@
      "quest": "Better Bill Hunting",
      "location": "Foundation (X:12, Y:11)",
      "information": "Speak with Eustacia",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11670,6 +11820,7 @@
      "quest": "Keeping the Ledger",
      "location": "The Pillars (X:6, Y:9)",
      "information": "Speak with Mathye. Also requires clearing the Hildibrand Adventures quest Her Last Vow.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11769,6 +11920,7 @@
      "quest": "A Knight's Calling",
      "location": "Foundation (X:12, Y:11)",
      "information": "Unlocks in the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11843,6 +11995,7 @@
      "quest": "Bolt, Chain, and Island",
      "location": "The Sea of Clouds (X:10, Y:13)",
      "information": "Unlocks in the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -11917,6 +12070,7 @@
      "quest": "Three Beaks to the Wind",
      "location": "The Sea of Clouds (X:11.7, Y:14.8)",
      "information": "Daily quests for Vanu Vanu. Requires A Difference of Opinion",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12006,6 +12160,7 @@
      "quest": "Forbidden Knowledge",
      "location": "Matoya's Cave (X:6, Y:5)",
      "information": "Unlocks in the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12080,6 +12235,7 @@
      "quest": "Top Marks",
      "location": "Idyllshire (X:6, Y:6)",
      "information": "Speak with Yloise",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12146,6 +12302,7 @@
      "quest": "Elite and Dangerous",
      "location": "Foundation (X:13, Y:11)",
      "information": "Speak with Ardolain",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12212,6 +12369,7 @@
      "quest": "A Gentleman Falls, Rather than Flies",
      "location": "The Pillars (X:5, Y:9)",
      "information": "Speak with Nashu Mhakaracca",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12286,6 +12444,7 @@
      "quest": "An Unexpected Proposal",
      "location": "Idyllshire (X:5, Y:5)",
      "information": "Speak with Rowena",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12352,6 +12511,7 @@
      "quest": "The Paths We Walk",
      "location": "Fortemps Manor (X:6.0, Y:6.0)",
      "information": "Speak with House Fortemps Manservant. Unlocks after Main Scenario Quest Litany of Peace",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12441,6 +12601,7 @@
      "quest": "A Striking Opportunity",
      "location": "Idyllshire (X:7, Y:6)",
      "information": "DPS Check for various Raids and Trials",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12522,6 +12683,7 @@
      "quest": "Arms Wide Open",
      "location": "Idyllshire (X:5.8, Y:6.9)",
      "information": "Custom Deliveries for Zhloe Aliapoh (the first of several clients)",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12611,6 +12773,7 @@
      "quest": "The Makings of a Gunbreaker",
      "location": "New Gridania (X:11.5, Y:11.9)",
      "information": "Once unlocked, job starts at level 60.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12684,6 +12847,7 @@
      "quest": "Shall We Dance",
      "location": "Limsa Lominsa Lower Decks (X:9.8, Y:12.0)",
      "information": "Once unlocked, job starts at level 60.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12757,6 +12921,7 @@
      "quest": "Heavensward",
      "location": "Azys Lla (X:15, Y:21)",
      "information": "Speak with Guidance Node, Unlocks in the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12838,6 +13003,7 @@
      "quest": "Heavensward",
      "location": "Azys Lla (X:15, Y:21)",
      "information": "Follows directly on from The Aetherochemical Research Facility during the Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12919,6 +13085,7 @@
      "quest": "Reap What You Sow",
      "location": "The Sea of Clouds (X:11, Y:14)",
      "information": "Speak with Sanu Vanu",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -12993,6 +13160,7 @@
      "quest": "Do It for Gilly",
      "location": "The Pillars (X:14, Y:11)",
      "information": "Speak with Notrelchamps",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13067,6 +13235,7 @@
      "quest": "The Diabolical Bismarck",
      "location": "The Rising Stones (X:6, Y:5)",
      "information": "(Optional challenge content) Speak with Unukalhai",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -13141,6 +13310,7 @@
      "quest": "Disarmed",
      "location": "Idyllshire (X:7, Y:6)",
      "information": "Speak with Slowfix; part of Alexander Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13222,6 +13392,7 @@
      "quest": "An Overgrown Ambition",
      "location": "The Dravanian Hinterlands (X:12, Y:19)",
      "information": "Speak with Tetchy Treasure Hunter",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13296,6 +13467,7 @@
      "quest": "Things Are Getting Sirius",
      "location": "Limsa Lominsa Upper Decks (X:13, Y:13)",
      "information": "Speak with Trachraet, requires completing Why So Sirius after clearing Pharos Sirius",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13400,6 +13572,7 @@
      "quest": "Thok Around the Clock",
      "location": "The Rising Stones (X:6, Y:5)",
      "information": "(Optional challenge content) Speak with Unukalhai",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -13474,6 +13647,7 @@
      "quest": "To Rule the Skies",
      "location": "The Sea of Clouds (X:25, Y:5)",
      "information": "Speak with Utata; part of Shadow of Mhach",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13555,6 +13729,7 @@
      "quest": "The Word of the Mother",
      "location": "The Rising Stones (X:6, Y:6)",
      "information": "Speak with Alphinaud, Unlocks as part of the Patch 3.2 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13639,6 +13814,7 @@
      "quest": "One More Night in Amdapor",
      "location": "Old Gridania (X:6.0, Y:10.6)",
      "information": "Speak with E-Sumi-Yan, requires completing One Night in Amdapor. Note: Does not require clearing The Lost City of Amdapor.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13746,6 +13922,7 @@
      "quest": "A Song of Steam and Steel",
      "location": "Mor Dhona (X:21, Y:8)",
      "information": "(Optional challenge content) Speak with Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -13820,6 +13997,7 @@
      "quest": "Thordan's Reign",
      "location": "Mor Dhona (X:21, Y:8)",
      "information": "(Optional challenge content) Speak with Alys",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -13894,6 +14072,7 @@
      "quest": "When the Bough Wakes",
      "location": "The Rising Stones (X:6, Y:5)",
      "information": "Speak with Unukalhai; part of the Warring Triad.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -13978,6 +14157,7 @@
      "quest": "Rearmed",
      "location": "The Dravanian Hinterlands (X:22, Y:19)",
      "information": "Speak with Roundrox; part of Alexander Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14059,6 +14239,7 @@
      "quest": "Winning Over the Wyrm",
      "location": "The Churning Mists (X:16.7, Y:23.2)",
      "information": "Speak with Alphinaud, Unlocks as part of the Patch 3.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14143,6 +14324,7 @@
      "quest": "Storming the Hull",
      "location": "Limsa Lominsa Upper Decks (X:11, Y:10)",
      "information": "Speak with Denston, requires completing King of the Hull after clearing Hullbreaker Isle",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14247,6 +14429,7 @@
      "quest": "A Fiendish Likeness",
      "location": "The Rising Stones (X:6, Y:5)",
      "information": "(Optional challenge content) Speak with Unukalhai",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -14321,6 +14504,7 @@
      "quest": "An End to the Song",
      "location": "The Churning Mists (X:7, Y:27)",
      "information": "Speak with Aymeric, Unlocks as part of the Patch 3.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14405,6 +14589,7 @@
      "quest": "Towards the Firmament",
      "location": "Foundation (X:9.7, Y:11.5)",
      "information": "Requires Main Scenario Quest Litany of Peace",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14489,6 +14674,7 @@
      "quest": "Ascending to Empyreum",
      "location": "Foundation (X:9.9, Y:11.8)",
      "information": "Requires Main Scenario Quest Litany of Peace",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14581,6 +14767,7 @@
      "quest": "The Weeping City",
      "location": "The Sea of Clouds (X:6, Y:6)",
      "information": "Speak with Stacia; part of Shadow of Mhach",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14662,6 +14849,7 @@
      "quest": "Shadows of the First",
      "location": "Coerthas Central Highlands (X:33.5, Y:15.4)",
      "information": "Speak with Steadfast Temple Knight, Unlocks as part of the Patch 3.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14746,6 +14934,7 @@
      "quest": "Let Me Gubal That for You",
      "location": "Idyllshire (X:5.5, Y:6.6)",
      "information": "Speak with Midnight Dew",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14820,6 +15009,7 @@
      "quest": "The Fate of Stars",
      "location": "The Rising Stones (X:6.1, Y:5.2)",
      "information": "Speak with Unukalhai; part of the Warring Triad.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -14904,6 +15094,7 @@
      "quest": "Nidhogg's Rage",
      "location": "Mor Dhona (X:21.7, Y:8.6)",
      "information": "(Optional challenge content) Speak with Alys",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -14978,6 +15169,7 @@
      "quest": "A Refrain for the Undaunted",
      "location": "Mor Dhona (X:22, Y:9)",
      "information": "(Optional challenge content) Speak with Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -15052,6 +15244,7 @@
      "quest": "Griffin, Griffin on the Wall",
      "location": "East Shroud (X:22.3, Y:31.3)",
      "information": "Speak with Alphinaud, Unlocks as part of the Patch 3.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15136,6 +15329,7 @@
      "quest": "The Fires of Sohm Al",
      "location": "Idyllshire (X:4.6, Y:8.4)",
      "information": "Speak with Gossamer Moogle",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15210,6 +15404,7 @@
      "quest": "The Coeurl and the Colossus",
      "location": "The Dravanian Hinterlands (X:22, Y:19)",
      "information": "Speak with Mide; part of Alexander Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15291,6 +15486,7 @@
      "quest": "Balance unto All",
      "location": "The Rising Stones (X:6.1, Y:5.2)",
      "information": "(Optional challenge content) Speak with Unukalhai",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -15365,6 +15561,7 @@
      "quest": "The Last Pillar to Fall",
      "location": "The Rising Stones (X:6.1, Y:5.2)",
      "information": "Speak with Unukalhai; part of the Warring Triad.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15449,6 +15646,7 @@
      "quest": "Where Shadows Reign",
      "location": "The Sea of Clouds (X:6.2, Y:5.8)",
      "information": "Speak with Stacia; part of Shadow of Mhach",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15530,6 +15728,7 @@
      "quest": "Who Lives, Who Dies, Who Retells Your Story",
      "location": "Mor Dhona (X:22, Y:9)",
      "information": "(Optional challenge content) Speak with Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -15604,6 +15803,7 @@
      "quest": "A Demonic Duplicate",
      "location": "The Rising Stones (X:6.1, Y:5.2)",
      "information": "(Optional challenge content) Speak with Unukalhai",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -15686,6 +15886,7 @@
      "quest": "Not without Incident",
      "location": "Mor Dhona (X:22.2, Y:8.5)",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15763,6 +15964,7 @@
      "quest": "Knocking on Heaven's Door",
      "location": "The Ruby Sea (X:6.2, Y:11.7)",
      "information": "Must have cleared Palace of the Dead floor 50",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15848,6 +16050,7 @@
      "quest": "I Dream of Shirogane",
      "location": "Kugane (X:12.0, Y:9.9)",
      "information": "Requires By the Grace of Lord Lolorito",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15933,6 +16136,7 @@
      "quest": "One-star Veteran Clan Hunt",
      "location": "Kugane (X:10.3, Y:10.2)",
      "information": "Speak with Estrild",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -15999,6 +16203,7 @@
      "quest": "The Palace of Lost Souls",
      "location": "The Ruby Sea (X:20.2, Y:20.1)",
      "information": "Unlocked as Aether Currents quest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16076,6 +16281,7 @@
      "quest": "The Lord of the Revel",
      "location": "The Ruby Sea (X:5.5, Y:24.4)",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16153,6 +16359,7 @@
      "quest": "Heaven-sent",
      "location": "The Ruby Sea (X:6.8, Y:13.3)",
      "information": "Daily quests for Kojin. Requires Tide Goes in, Imperials Go Out",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16242,6 +16449,7 @@
      "quest": "Two-star Veteran Clan Hunt",
      "location": "Kugane (X:10.3, Y:10.2)",
      "information": "Speak with Estrild",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16308,6 +16516,7 @@
      "quest": "In the Footsteps of Bardam the Brave",
      "location": "The Azim Steppe(X:11.3, Y:11.2)",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16385,6 +16594,7 @@
      "quest": "Something Fishy This Way Comes",
      "location": "The Azim Steppe (X:17.4, Y:37.5)",
      "information": "Daily quests for Namazu. Has a large number of prerequisite quests, and requires In Crimson They Walked",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16474,6 +16684,7 @@
      "quest": "Three-star Veteran Clan Hunt",
      "location": "Kugane (X:10.3, Y:10.2)",
      "information": "Speak with Estrild",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16540,6 +16751,7 @@
      "quest": "The Die Is Cast",
      "location": "Yanxia (X:24.9, Y:12.8)",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16617,6 +16829,7 @@
      "quest": "The Lady of Bliss",
      "location": "The Fringes (X:28.1, Y:19.4)",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16694,6 +16907,7 @@
      "quest": "Brooding Broodmother",
      "location": "The Fringes (X:30.2, Y:25.7)",
      "information": "Daily quests for Ananta. Unlock quest is conclusion of split questline. Requires The Silence of the Gods",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16783,6 +16997,7 @@
      "quest": "The Price of Freedom",
      "location": "The Peaks (X:26.7, Y:29.8)",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16860,6 +17075,7 @@
      "quest": "Another Striking Opportunity",
      "location": "Rhalgr's Reach (X:12.3, Y:13.1)",
      "information": "DPS Check for various Raids and Trials",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -16941,6 +17157,7 @@
      "quest": "Elite Veteran Clan Hunt",
      "location": "Kugane (X:10.3, Y:10.2)",
      "information": "Speak with Estrild",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17015,6 +17232,7 @@
      "quest": "The Killer Instinct",
      "location": "Ul'dah - Steps of Nald (X:13, Y:9)",
      "information": "Requires the expansion Endwalker to accept the quest in Ul'dah.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17102,6 +17320,7 @@
      "quest": "Sage's Path",
      "location": "Limsa Lominsa Lower Decks (X:9.4, Y:12.9)",
      "information": "Requires the expansion Endwalker to accept the quest in Limsa Lominsa.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17189,6 +17408,7 @@
      "quest": "Stormblood",
      "location": "The Lochs (x33.1-22.8)",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17266,6 +17486,7 @@
      "quest": "Stormblood",
      "location": "The Lochs",
      "information": "Unlocks as part of the main Stormblood quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17340,6 +17561,7 @@
      "quest": "And We Shall Call it Eureka",
      "location": "Rhalgr's Reach (X:9.8, Y:12.5)",
      "information": "Requires Stormblood",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17419,6 +17641,7 @@
      "quest": "A Hingan Tale: Nashu Goes East",
      "location": "Kugane (X:10.6, Y:9.8)",
      "information": "Speak with Conspicuously Inconspicuous Man",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17493,6 +17716,7 @@
      "quest": "King of the Castle",
      "location": "Kugane (X:13.9, Y:13.4)",
      "information": "Talk to East Aldenard Trading Company Associate",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17567,6 +17791,7 @@
      "quest": "To Kill a Coeurl",
      "location": "Rhalgr's Reach (X:12.9, Y:12.8)",
      "information": "Talk to Ortwin",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17641,6 +17866,7 @@
      "quest": "The Hunt for Omega",
      "location": "Rhalgr's Reach (X:12.6, Y:12.4)",
      "information": "Speak with Wedge; part of Omega Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17722,6 +17948,7 @@
      "quest": "The Mad King's Trove",
      "location": "The Lochs (X:32.0, Y:33.0)",
      "information": "Unlocks as part of the Patch 4.1 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -17799,6 +18026,7 @@
      "quest": "Songs in the Key of Kugane",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -17873,6 +18101,7 @@
      "quest": "Songs in the Key of Kugane",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -17947,6 +18176,7 @@
      "quest": "A City Fallen",
      "location": "Kugane (X:5.8, Y:6.0)",
      "information": "Talk to Ramza bas Lexentale; part of Return to Ivalice",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18028,6 +18258,7 @@
      "quest": "An Auspicious Encounter",
      "location": "The Ruby Sea (X:5.7, Y:15.7)",
      "information": "Talk to Soroban; part of The Four Lords.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18112,6 +18343,7 @@
      "quest": "An Unwanted Truth",
      "location": "Rhalgr's Reach (X:13.2, Y:12.2)",
      "information": "Talk to Philiot, requires clearing The Fractal Continuum",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18201,6 +18433,7 @@
      "quest": "",
      "location": "Rhalgr's Reach (X:13.5, Y:12.4)",
      "information": "(Optional challenge content) Access the Magitek Terminal; requires The Anomaly",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -18275,6 +18508,7 @@
      "quest": "The New King on the Block",
      "location": "Kugane (X:9.7, Y:8.9)",
      "information": "Talk to the Hearty Hunter; requires Stormblood",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18364,6 +18598,7 @@
      "quest": "Songs in the Key of Kugane",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -18438,6 +18673,7 @@
      "quest": "",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Deltascape V4.0 (Savage)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -18504,6 +18740,7 @@
      "quest": "An Auspicious Encounter",
      "location": "The Ruby Sea (X:5.7, Y:15.7)",
      "information": "Talk to Soroban; part of The Four Lords.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18588,6 +18825,7 @@
      "quest": "Return to the Rift",
      "location": "Rhalgr's Reach (X:13.4, Y:12.4)",
      "information": "Speak with Jessie; part of Omega Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18669,6 +18907,7 @@
      "quest": "Tortoise in Time",
      "location": "The Ruby Sea (X:27.9, Y:16.4)",
      "information": "Talk to Bunchin; part of The Four Lords.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18753,6 +18992,7 @@
      "quest": "The Primary Agreement",
      "location": "Kienkan (X:6.1, Y:6.0)",
      "information": "Unlocks as part of the Patch 4.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18830,6 +19070,7 @@
      "quest": "Annihilation",
      "location": "The Prima Vista Bridge (X:6.1, Y:5.9)",
      "information": "Talk to Jenomis cen Lexentale; part of Return to Ivalice",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18907,6 +19148,7 @@
      "quest": "Feel the Burn",
      "location": "Kienkan (X:6.1, Y:6.0)",
      "information": "Unlocks as part of the Patch 4.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -18984,6 +19226,7 @@
      "quest": "Secret of the Ooze",
      "location": "Rhalgr's Reach (X:13.4, Y:12.4)",
      "information": "Talk to Sawney, requires completing An Overgrown Ambition after clearing Saint Mocianne's Arboretum",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -19088,6 +19331,7 @@
      "quest": "Songs in the Key of Kugane",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -19162,6 +19406,7 @@
      "quest": "",
      "location": "Rhalgr's Reach (X:13.5, Y:12.4)",
      "information": "(Optional challenge content) Access the Magitek Terminal; requires Test World of Ruin",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -19236,6 +19481,7 @@
      "quest": "Songs in the Key of Kugane",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -19310,6 +19556,7 @@
      "quest": "The Newer King on the Block",
      "location": "Kugane (X:9.7, Y:8.9)",
      "information": "(Optional challenge content) Talk to the Hearty Hunter; requires Stormblood",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -19399,6 +19646,7 @@
      "quest": "",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Sigmascape V4.0 (Savage)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -19465,6 +19713,7 @@
      "quest": "The Fire-bird Down Below",
      "location": "The Ruby Sea (X:27.8, Y:16.4)",
      "information": "Talk to Bunchin; part of The Four Lords.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -19549,6 +19798,7 @@
      "quest": "In the Beginning, There Was Chaos",
      "location": "Rhalgr's Reach (X:13.4, Y:12.4)",
      "information": "Speak with Jessie; part of Omega Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -19630,6 +19880,7 @@
      "quest": "The Face of War",
      "location": "Eorzean Alliance Headquarters (X:6.3, Y:6.1)",
      "information": "Unlocks as part of the Patch 4.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -19707,6 +19958,7 @@
      "quest": "Surpassing the Samurai",
      "location": "The Ruby Sea (X:27.8, Y:16.4)",
      "information": "Talk to Bunchin; part of The Four Lords.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -19791,6 +20043,7 @@
      "quest": "The Past Is Never Past",
      "location": "Kugane (X:10.4, Y:8.2)",
      "information": "Part of Even Further Hildibrand Adventures",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -19865,6 +20118,7 @@
      "quest": "The City of Lost Angels",
      "location": "The Prima Vista Tiring Room (X:5.9, Y:5.9)",
      "information": "Talk to Jenomis cen Lexentale; part of Return to Ivalice",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -19946,6 +20200,7 @@
      "quest": "Songs in the Key of Kugane",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -20020,6 +20275,7 @@
      "quest": "Songs in the Key of Kugane",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -20094,6 +20350,7 @@
      "quest": "",
      "location": "Rhalgr's Reach (X:13.5, Y:12.4)",
      "information": "(Optional challenge content) Access the Magitek Terminal",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -20161,6 +20418,7 @@
      "quest": "Nuts to You",
      "location": "The Crystarium (X:12.1, Y:15.0)",
      "information": "Speak with Hume Lout, requires Travelers of Norvrandt",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20242,6 +20500,7 @@
      "quest": "The Lightwardens",
      "location": "The Ocular (X:6.1, Y:5.9)",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20319,6 +20578,7 @@
      "quest": "The Key to the Castle",
      "location": "Il Mheg (X:14.3, Y:31.1)",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20396,6 +20656,7 @@
      "quest": "Acht-la Ormh Inn",
      "location": "Il Mheg (X:30.5, Y:7.6)",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20473,6 +20734,7 @@
      "quest": "Manic Pixie Dream Realm",
      "location": "The Crystarium (X:13.1, Y:15.3)",
      "information": "Daily quests for Pixies. Requires The Wheel Turns",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20562,6 +20824,7 @@
      "quest": "Two Nuts Too Nutty",
      "location": "The Crystarium (X:9.5, Y:9.3)",
      "information": "Speak with Halldor",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20628,6 +20891,7 @@
      "quest": "The Burden of Knowledge",
      "location": "The Rak'tika Greatwood (X:30.5, Y:17.4)",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20705,6 +20969,7 @@
      "quest": "The Stewards of Note",
      "location": "The Rak'tika Greatwood (X:21.0, Y:27.6)",
      "information": "Daily quests for Qitari. Unlock quest is conclusion of split questline. Requires Bearing With It",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20794,6 +21059,7 @@
      "quest": "How Do You Like Three Nuts",
      "location": "The Crystarium (X:9.5, Y:9.3)",
      "information": "Speak with Halldor",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20860,6 +21126,7 @@
      "quest": "A Fresh Start",
      "location": "Amh Araeng (X:15.8, Y:29.1)",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -20937,6 +21204,7 @@
      "quest": "It's Dwarfin' Time",
      "location": "Kholusia (X:15.7, Y:30.3)",
      "information": "Daily quests for Dwarves. Unlock quest is conclusion of split questline. Requires Meet the Tholls",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21026,6 +21294,7 @@
      "quest": "Extinguishing the Last Light",
      "location": "Kholusia (X:18.6, Y:17.7)",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21103,6 +21372,7 @@
      "quest": "Extinguishing the Last Light",
      "location": "Mt Gulg",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21176,6 +21446,7 @@
      "quest": "Yet Another Striking Opportunity",
      "location": "Eulmore (X:9.2, Y:9.9)",
      "information": "DPS Check for various Raids and Trials",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21257,6 +21528,7 @@
      "quest": "Too Many Nutters",
      "location": "The Crystarium (X:9.5, Y:9.3)",
      "information": "Speak with Halldor",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21331,6 +21603,7 @@
      "quest": "Enter the Viper",
      "location": "Ul'dah - Steps of Nald (X:9.3, Y:9.2)",
      "information": "Requires the expansion Dawntrail to accept the quest in Ul'dah.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21418,6 +21691,7 @@
      "quest": "The Joy of Pictomancy",
      "location": "Old Gridania (X:8.0, Y:10.3)",
      "information": "Requires the expansion Dawntrail to accept the quest in Gridania.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21505,6 +21779,7 @@
      "quest": "Shadowbringers",
      "location": "The Tempest (X:16.5, Y:30.4)",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21582,6 +21857,7 @@
      "quest": "Shadowbringers",
      "location": "Amaurot",
      "information": "Unlocks as part of the main Shadowbringers quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21656,6 +21932,7 @@
      "quest": "Akadaemia Anyder",
      "location": "Eulmore",
      "information": "Speak to Overwrought Ondo at the Derelicts in Eulmore.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21730,6 +22007,7 @@
      "quest": "By the Time You Hear This",
      "location": "The Crystarium",
      "information": "Speak to Bethana in the Crystarium.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21804,6 +22082,7 @@
      "quest": "In the Middle of Nowhere",
      "location": "The Crystarium (X:9.7, Y:12.3)",
      "information": "Speak with Anxious Crystarium Guard; part of Eden Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21885,6 +22164,7 @@
      "quest": "A Grand Adventure",
      "location": "The Rising Stones",
      "information": "Speak to the Crystal Exarch in Sullen, Unlocks as part of the Patch 5.1 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -21966,6 +22246,7 @@
      "quest": "Where Eagles Nest",
      "location": "Gangos (X:5.5, Y:5.4)",
      "information": "Requires Vows of Virtue, Deeds of Cruelty, The Bozja Incident, and Fire in the Forge.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22078,6 +22359,7 @@
      "quest": "Minstrel from Another Mother",
      "location": "The Crystarium (X:7.5, Y:12.5)",
      "information": "(Optional challenge content) Speak to the Minstreling Wanderer",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -22152,6 +22434,7 @@
      "quest": "Minstrel from Another Mother",
      "location": "The Crystarium (X:7.5, Y:12.5)",
      "information": "(Optional challenge content) Speak to the Minstreling Wanderer",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -22226,6 +22509,7 @@
      "quest": "On the Threshold",
      "location": "Kholusia (X:34.7, Y:18.2)",
      "information": "Speak with the Dig Site Chief; part of YoRHa: Dark Apocalypse",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22307,6 +22591,7 @@
      "quest": "Beneath the Surface",
      "location": "Lakeland (X:26.1, Y:32.5)",
      "information": "Speak with Urianger at the Split Hull, Unlocks as part of the Patch 5.2 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22391,6 +22676,7 @@
      "quest": "",
      "location": "Amh Araeng (X:26.8, Y:16.4)",
      "information": "(Optional challenge content) Speak with Lewrey",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -22450,6 +22736,7 @@
      "quest": "Minstrel from Another Mother",
      "location": "The Crystarium (X:7.5, Y:12.5)",
      "information": "(Optional challenge content) Speak to the Minstreling Wanderer.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -22527,6 +22814,7 @@
      "quest": "Blood and Thunder",
      "location": "The Crystarium (X:9.7, Y:12.3)",
      "information": "Requires Away with the Faerie; part of Eden Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22616,6 +22904,7 @@
      "quest": "Ruby Doomsday",
      "location": "The Lochs (X:36.4, Y:31.8)",
      "information": "Speak to the Warmachina Fanatic; part of The Sorrow of Werlyt.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22700,6 +22989,7 @@
      "quest": "The Converging Light",
      "location": "Kholusia (X:11.5, Y:33.1)",
      "information": "Speak with Y'shtola in Eulmore, Unlocks as part of the Patch 5.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22791,6 +23081,7 @@
      "quest": "Hope's Confluence",
      "location": "The Crystarium (X:12.7, Y:11.2)",
      "information": "Speak with The Crystal Exarch, Unlocks as part of the Patch 5.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22875,6 +23166,7 @@
      "quest": "Everything You Know Is Wrong",
      "location": "Excavation Tunnels (X:5.9, Y:4.7)",
      "information": "Speak with Anogg; part of YoRHa: Dark Apocalypse",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -22952,6 +23244,7 @@
      "quest": "Like Master, Like Pupil",
      "location": "Limsa Lominsa Upper Decks (X:9.0, Y:13.5)",
      "information": "Speak with Y'shtola at Maelstrom Command, Unlocks as part of the Patch 5.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -23043,6 +23336,7 @@
      "quest": "Ruby Doomsday",
      "location": "The Lochs (X:36.4, Y:31.8)",
      "information": "(Optional challenge content) Speak to the Warmachina Fanatic",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23117,6 +23411,7 @@
      "quest": "The Bozja Incident",
      "location": "Gangos (X:6.8, Y:5.2)",
      "information": "(Optional challenge content) Speak to the Wandering Dramaturge. No normal mode equivalent",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23194,6 +23489,7 @@
      "quest": "",
      "location": "Kugane (X:11.6, Y:12.6)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Eden's Gate: Sepulture (Savage)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23260,6 +23556,7 @@
      "quest": "Hope's Confluence",
      "location": "The Crystarium (X:7.5, Y:12.5)",
      "information": "(Optional challenge content) Speak to the Minstreling Wanderer.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23337,6 +23634,7 @@
      "quest": "",
      "location": "Amh Araeng (X:26.8, Y:16.4)",
      "information": "(Optional challenge content) Speak with Lewrey",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23396,6 +23694,7 @@
      "quest": "Blood of Emerald",
      "location": "The Lochs (X:11.3, Y:22.5)",
      "information": "Speak with the Resistance Officer; part of The Sorrow of Werlyt.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -23473,6 +23772,7 @@
      "quest": "Fear of the Dark",
      "location": "Amh Araeng (X:26.7, Y:16.7)",
      "information": "Speak with Yalfort; part of Eden Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -23554,6 +23854,7 @@
      "quest": "The Flames of War",
      "location": "Ul'dah (X:10.8, Y:11.4)",
      "information": "Speak with the Immortal Flames pilot at the airship landing in Ul'dah.\nUnlocks as part of the Patch 5.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -23643,6 +23944,7 @@
      "quest": "Duty in the Sky with Diamond",
      "location": "The Lochs (X:11.3, Y:22.5)",
      "information": "Speak with the Resistance Officer; part of The Sorrow of Werlyt.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -23720,6 +24022,7 @@
      "quest": "Brave New World",
      "location": "The Puppets' Bunker (X:9.8, Y:14.3)",
      "information": "Speak with Dig Site Chief; requires Konogg, Alone. Part of YoRHa: Dark Apocalypse",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -23812,6 +24115,7 @@
      "quest": "",
      "location": "The Lochs (X:11.3, Y:22.5)",
      "information": "(Optional challenge content) Speak with the Resistance Officer after clearing normal mode.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23867,6 +24171,7 @@
      "quest": "",
      "location": "Amh Araeng (X:26.8, Y:16.4)",
      "information": "(Optional challenge content) Speak with Lewrey",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23926,6 +24231,7 @@
      "quest": "",
      "location": "The Lochs (X:11.3, Y:22.5)",
      "information": "(Optional challenge content) Speak with the Resistance Officer after clearing normal mode.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -23989,6 +24295,7 @@
      "quest": "The Hunt for Specimens",
      "location": "Old Sharlayan (X:11.2, Y:12.0)",
      "information": "Speak with Diminutive Gleaner, requires Old Sharlayan, New to You",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24070,6 +24377,7 @@
      "quest": "In the Dark of the Tower",
      "location": "Thavnair (X:8.7, Y:8.2)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24147,6 +24455,7 @@
      "quest": "Gateway of the Gods",
      "location": "The Enceladeum (X:10.9, Y:7.9)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24224,6 +24533,7 @@
      "quest": "The Martyr",
      "location": "",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24291,6 +24601,7 @@
      "quest": "That Specimen Came from the Moon",
      "location": "Old Sharlayan (X:11.7, Y:13.2)",
      "information": "Speak with Northota, requires A Trip to the Moon",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24372,6 +24683,7 @@
      "quest": "Skies Aflame",
      "location": "Thavnair (X:25.5, Y:36.7)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24449,6 +24761,7 @@
      "quest": "Caging the Messenger",
      "location": "Elpis (X:13.2, Y:6.1)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24526,6 +24839,7 @@
      "quest": "Her Children, One and All",
      "location": "Labyrinthos (X:16.7, Y:28.3)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24603,6 +24917,7 @@
      "quest": "Her Children, One and All",
      "location": "The Mothercrystal (X:6.1, Y:6.1)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24680,6 +24995,7 @@
      "quest": "A Hunt for the Ages",
      "location": "Old Sharlayan (X:11.7, Y:13.2)",
      "information": "Speak with Northota, requires Unto the Heavens",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24761,6 +25077,7 @@
      "quest": "A Place to Train",
      "location": "Radz-at-Han (X:12.3, Y:10.7)",
      "information": "DPS Check for various Raids and Trials",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24842,6 +25159,7 @@
      "quest": "Perfect Specimens",
      "location": "Old Sharlayan (X:11.7, Y:13.2)",
      "information": "Speak with Northota",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24916,6 +25234,7 @@
      "quest": "Endwalker",
      "location": "Ultima Thule (X:21.4, Y:21.2)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -24993,6 +25312,7 @@
      "quest": "Endwalker",
      "location": "The Final Day (X:6.1, Y:6.2)",
      "information": "Unlocks as part of the main Endwalker quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25070,6 +25390,7 @@
      "quest": "Hippos Born to Run",
      "location": "Thavnair (X:25.3, Y:31.2)",
      "information": "Daily quests for Arkasodara. Unlock quest is conclusion of split questline. Requires Endwalker",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25159,6 +25480,7 @@
      "quest": "The Café at the End of the Universe",
      "location": "Ultima Thule (X:25.4, Y:26.3)",
      "information": "Daily quests for Omicrons. Requires Endwalker",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25248,6 +25570,7 @@
      "quest": "Must Be Dreaming(way)",
      "location": "Old Sharlayan (X:11.7, Y:10.9)",
      "information": "Daily quests for Loporrits. Requires Endwalker",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25337,6 +25660,7 @@
      "quest": "Delve into Myth",
      "location": "Mor Dhona (X:34.8, Y:19.2)",
      "information": "Requires Endwalker, and must have cleared Palace of the Dead floor 50",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25437,6 +25761,7 @@
      "quest": "The Sleeping Gentleman",
      "location": "Radz-at-Han (X:11.8, Y:11.2)",
      "information": "Speak with Excitable Youth",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25511,6 +25836,7 @@
      "quest": "Seeking Sanctuary",
      "location": "Old Sharlayan (X:11.9, Y:11.0)",
      "information": "Requires Endwalker",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25585,6 +25911,7 @@
      "quest": "A Cosmic Homecoming",
      "location": "Old Sharlayan (X:12.6, Y:13.6)",
      "information": "Requires Endwalker and a level 10+ Disciple of the Hand or Land",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25662,6 +25989,7 @@
      "quest": "Make It a Manderville",
      "location": "Radz-At-Han (X:11.8, Y:11.2)",
      "information": "Speak with House Manderville Manservant. Requires some progress in the Somehow Further Hildibrand Adventures.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25738,6 +26066,7 @@
      "quest": "A Spellbinding Read",
      "location": "Old Sharlayan (X:12.0, Y:13.4)",
      "information": "Speak with Shallow Moor.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25815,6 +26144,7 @@
      "quest": "Cutting the Cheese",
      "location": "Mare Lamentorum (X:11.8, Y:22.6)",
      "information": "Speak to Panic-stricken Loporrit in Old Sharlayan.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25892,6 +26222,7 @@
      "quest": "Where No Loporrit Has Gone Before",
      "location": "Ultima Thule (X:34.8, Y:28.8)",
      "information": "Speak to Jammingway in Old Sharlayan.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -25969,6 +26300,7 @@
      "quest": "Alzadaal's Legacy",
      "location": "Thavnair (X:16.0, Y:33.6)",
      "information": "Speak to the Y'shtola in Thavnair, Unlocks as part of the Patch 6.1 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26053,6 +26385,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -26127,6 +26460,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -26201,6 +26535,7 @@
      "quest": "The Crystal from Beyond",
      "location": "Old Sharlayan (X:9.6, Y:11.9)",
      "information": "Speak with Nemjiji; part of Pandaemonium Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26282,6 +26617,7 @@
      "quest": "The Realm of the Gods",
      "location": "The Omphalos (X:8.2, Y:6.3)",
      "information": "Speak with G'raha Tia; part of Myths of the Realm",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26363,6 +26699,7 @@
      "quest": "",
      "location": "Labyrinthos (X:8.4, Y:27.4)",
      "information": "(Optional challenge content) Speak with Nemjiji after completing Who Wards the Warders?",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -26437,6 +26774,7 @@
      "quest": "In Search of Azdaja",
      "location": "Alzadaal's Legacy (Zone) (X:13.1, Y:9.5)",
      "information": "Speak to Varshahn in Alzadaal's Legacy; unlocks as part of the Patch 6.2 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26521,6 +26859,7 @@
      "quest": "A Key to the Past",
      "location": "Central Thanalan (X:16.8, Y:23.6)",
      "information": "Speak with the Sil'dihn Subterrane foreman at the Sil'dih excavation site.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26605,6 +26944,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -26679,6 +27019,7 @@
      "quest": "The Wind Rises",
      "location": "Zero's Domain (X:5.8, Y:4.7)",
      "information": "Speak to Zero; unlocks as part of the Patch 6.2 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26763,6 +27104,7 @@
      "quest": "An Unwelcome Visitor",
      "location": "Labyrinthos (X:8.6, Y:27.5)",
      "information": "Speak with Claudien; part of Pandaemonium Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26844,6 +27186,7 @@
      "quest": "King of the Mountain",
      "location": "Garlemald (X:32, Y:16.6)",
      "information": "Speak to Alphinaud; unlocks as part of the Patch 6.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -26928,6 +27271,7 @@
      "quest": "Desires Untold",
      "location": "Thavnair (X:10.1, Y:10.1)",
      "information": "Speak to Nahbdeen; unlocks as part of the Patch 6.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27012,6 +27356,7 @@
      "quest": "Return to the Phantom Realm",
      "location": "Mor Dhona (X:23.9, Y:9.1)",
      "information": "Speak with Deryk; part of Myths of the Realm",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27093,6 +27438,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -27167,6 +27513,7 @@
      "quest": "Going Haam",
      "location": "Old Sharlayan (X:13.9, Y:16.0)",
      "information": "Speak to the cheery captain in Old Sharlayan; unlocks as part of the Patch 6.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27251,6 +27598,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Asphodelos: The Fourth Circle (Savage)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -27332,6 +27680,7 @@
      "quest": "",
      "location": "Labyrinthos (X:8.4, Y:27.4)",
      "information": "(Optional challenge content) Speak with Nemjiji after completing Truth Imperfect",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -27406,6 +27755,7 @@
      "quest": "Mononoke Aware",
      "location": "Kugane (X:8.9, Y:8.8)",
      "information": "Speak with Tsubaki in Kugane.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27490,6 +27840,7 @@
      "quest": "Stranger from Paradise",
      "location": "Thavnair (X:? Y:?)",
      "information": "Speak with Pasasun in Thavnair.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27574,6 +27925,7 @@
      "quest": "",
      "location": "Old Sharlayan (X:11.9, Y:13.3)",
      "information": "(Optional challenge content) Speak with Osmon after completing A Key to the Past.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -27651,6 +28003,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -27725,6 +28078,7 @@
      "quest": "Abyssal Dark",
      "location": "The Red Moon (X:5.8, Y:2.7)",
      "information": "Unlocks as part of the Patch 6.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27802,6 +28156,7 @@
      "quest": "Eater of Souls",
      "location": "Labyrinthos (X:8.6, Y:27.5)",
      "information": "Speak with Ruissenaud; part of Pandaemonium Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27883,6 +28238,7 @@
      "quest": "Down in the Dark",
      "location": "The Red Moon (X:6.0, Y:2.9)",
      "information": "Speak to Varshahn at The Red Moon (X:6.1, Y:3.5); unlocks as part of the Patch 6.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -27974,6 +28330,7 @@
      "quest": "Down in the Dark",
      "location": "The Red Moon (X:6.1, Y:3.5)",
      "information": "Unlocks as part of the Patch 6.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -28051,6 +28408,7 @@
      "quest": "The Heart of the Myth",
      "location": "The Omphalos (X:6.8, Y:8.4)",
      "information": "Speak with Deryk in Mor Dhona (X:23.9, Y:9.1); part of Myths of the Realm",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -28139,6 +28497,7 @@
      "quest": "Gentlemen at Heart",
      "location": "Thavnair (X:22, Y:34)",
      "information": "Part of Somehow Further Hildibrand Adventures",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -28213,6 +28572,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28287,6 +28647,7 @@
      "quest": "",
      "location": "Old Sharlayan (X:11.9, Y:13.3)",
      "information": "(Optional challenge content) Speak with Osmon after completing Another Sil'dihn Subterrane.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28364,6 +28725,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Talk to the Wandering Minstrel; requires Abyssos: The Eighth Circle (Savage)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28445,6 +28807,7 @@
      "quest": "",
      "location": "Labyrinthos (X:8.4, Y:27.4)",
      "information": "(Optional challenge content) Speak with Nemjiji after completing Guided by the Past",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28519,6 +28882,7 @@
      "quest": "",
      "location": "Old Sharlayan (X:11.9, Y:13.3)",
      "information": "(Optional challenge content) Speak with Osmon after completing Mononoke Aware.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28596,6 +28960,7 @@
      "quest": "I Wandered Sharlayan as a Minstrel",
      "location": "Old Sharlayan (X:12.7, Y:14.3)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28670,6 +29035,7 @@
      "quest": "",
      "location": "Old Sharlayan (X:11.9, Y:13.3)",
      "information": "(Optional challenge content) Speak with Osmon after completing Stranger from Paradise.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28747,6 +29113,7 @@
      "quest": "",
      "location": "Old Sharlayan (X:11.9, Y:13.3)",
      "information": "(Optional challenge content) Speak with Osmon after completing Another Mount Rokkon.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28824,6 +29191,7 @@
      "quest": "",
      "location": "Old Sharlayan (X:11.9, Y:13.3)",
      "information": "(Optional challenge content) Speak with Osmon after completing Another Aloalo Island.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -28909,6 +29277,7 @@
      "quest": "A New Dawn, a New Hunt",
      "location": "Tuliyollal (X:11.8, Y:13.7)",
      "information": "Speak with Wing of Protection Scout, requires The Rite of Succession",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -28990,6 +29359,7 @@
      "quest": "For All Turali",
      "location": "Tuliyollal (X:11.1, Y:15.0)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29064,6 +29434,7 @@
      "quest": "Pilgrimage of Light",
      "location": "The Crystarium (X:10.3, Y:10.7)",
      "information": "Requires Endwalker, and must have cleared Palace of the Dead floor 50",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29164,6 +29535,7 @@
      "quest": "",
      "location": "Il Mheg (X:29.9, Y:6.0)",
      "information": "Talk to Vanthau after reaching stone 99 of Pilgrim's Traverse",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29238,6 +29610,7 @@
      "quest": "Uncouth Customers",
      "location": "Tuliyollal (X:12.4, Y:14.5)",
      "information": "Speak with Br'uk Evu, requires The Feat of Pots",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29327,6 +29700,7 @@
      "quest": "Wrought in Wachumeqimeqi",
      "location": "Tuliyollal (X:16.1, Y:11.1)",
      "information": "Speak with Ropli, requires The Feat of Pots",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29416,6 +29790,7 @@
      "quest": "The High Luminary",
      "location": "Urqopacha (X:13.2, Y:32.4)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29490,6 +29865,7 @@
      "quest": "The Skyruin",
      "location": "Urqopacha (X:32.9, Y:28.6)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29564,6 +29940,7 @@
      "quest": "Why We Hunt",
      "location": "Tuliyollal (X:13.9, Y:13.7)",
      "information": "Speak with Bol Ogaw, requires The Leap to Yak T'el",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29645,6 +30022,7 @@
      "quest": "Road to the Golden City",
      "location": "Yak T'el (X:31.5, Y:32.6)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29719,6 +30097,7 @@
      "quest": "All Aboard",
      "location": "Shaaloani (X:18.6, Y:13.8)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29793,6 +30172,7 @@
      "quest": "The Resilient Son",
      "location": "Heritage Found (X:15.6, Y:5.1)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29867,6 +30247,7 @@
      "quest": "The Resilient Son",
      "location": "Heritage Found (X:15.6, Y:5.1)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests after completing Origenics",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -29956,6 +30337,7 @@
      "quest": "In Pursuit of Sphene",
      "location": "Tuliyollal (X:12.4, Y:12.9)",
      "information": "Speak with Mewazunte. Unlocks as part of the Dawntrail Main Scenario Quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30038,6 +30420,7 @@
      "quest": "Hunting the Hunter",
      "location": "Tuliyollal (X:13.9, Y:13.7)",
      "information": "Speak with Bol Ogaw, requires Through the Gate of Gold",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30119,6 +30502,7 @@
      "quest": "The Hunt Goes On",
      "location": "Tuliyollal (X:13.9, Y:13.7)",
      "information": "Speak with Bol Ogaw",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30193,6 +30577,7 @@
      "quest": "Dawntrail",
      "location": "Living Memory (X:11.4, Y:4.6)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30270,6 +30655,7 @@
      "quest": "Dawntrail",
      "location": "Living Memory (X:11.4, Y:4.6)",
      "information": "Unlocks as part of the Dawntrail Main Scenario Quests after completing Alexandria.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30362,6 +30748,7 @@
      "quest": "Trial by Spire",
      "location": "Solution Nine (X:19.9, Y:17.1)",
      "information": "Requires Dawntrail and A Striking Opportunity. DPS Check for various Raids and Trials",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30473,6 +30860,7 @@
      "quest": "An Intrepid New Enterprise",
      "location": "Tuliyollal (X:13.6, Y:12.9)",
      "information": "Daily quests for Pelupelu. Requires Dawntrail",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30562,6 +30950,7 @@
      "quest": "Cultivating Hope",
      "location": "Yak T'el (X:35.6, Y:32.0)",
      "information": "Daily quests for Mamool Ja. Requires Dawntrail and One Forest.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30669,6 +31058,7 @@
      "quest": "Frosty Neighbors",
      "location": "Urqopacha (X:32.1, Y:34.3)",
      "information": "Daily quests for Yok Huy. Requires Dawntrail and Brains and Brawn.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30776,6 +31166,7 @@
      "quest": "The Case of the Displaced Inspector",
      "location": "Tuliyollal (X:14.5, Y:12.5)",
      "information": "Speak with Nashu Mhakaracca",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -30850,6 +31241,7 @@
      "quest": "A Branch and Their Sapling",
      "location": "Il Mheg (X:29.8, Y:5.9)",
      "information": "(Optional challenge content) Requires clearing stone 100 of Pilgrim's Traverse",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -30932,6 +31324,7 @@
      "quest": "It Belongs in a Museum",
      "location": "Tuliyollal (X:14.0, Y:12.5)",
      "information": "Speak with Zeycihan in Tuliyollal.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31009,6 +31402,7 @@
      "quest": "Something Stray in the Neighborhood",
      "location": "Solution Nine (X:18.5, Y:18.2)",
      "information": "Speak with Nostalgia in Solution Nine.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31086,6 +31480,7 @@
      "quest": "A New Challenger Appears",
      "location": "Solution Nine (X:19.1, Y:18.8)",
      "information": "Speak with Metem; part of The Arcadion Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31167,6 +31562,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -31241,6 +31637,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -31315,6 +31712,7 @@
      "quest": "Fantastic Mr. Faux",
      "location": "Idyllshire (X:7.0, Y:5.9)",
      "information": "(Optional challenge content) Speak with the Painfully Ishgardian Man. Part of Faux Hollows; only available in 7.5x",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -31399,6 +31797,7 @@
      "quest": "One Last Hurrah",
      "location": "Tuliyollal (X:17.1, Y:11.8)",
      "information": "Speak with the Expedition Messenger; requires Dawntrail",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31488,6 +31887,7 @@
      "quest": "Arcane Artistry",
      "location": "The Phantom Village (X:6.6, Y:7.1)",
      "information": "Speak with Lydirceil; requires Unfamiliar Territory",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31569,6 +31969,7 @@
      "quest": "In Search of the Past",
      "location": "Solution Nine (X:6.2, Y:15.2)",
      "information": "Unlocks as part of the Post-Dawntrail Main Scenario Quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31646,6 +32047,7 @@
      "quest": "An Otherworldly Encounter",
      "location": "Tuliyollal (X:13.0, Y:11.6)",
      "information": "Part of Echoes of Vana'diel",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31720,6 +32122,7 @@
      "quest": "Descent to the Foundation",
      "location": "The Backroom (X:6.0, Y:6.3)",
      "information": "Unlocks as part of the Patch 7.2 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -31797,6 +32200,7 @@
      "quest": "",
      "location": "Solution Nine (X:22.4, Y:17.1)",
      "information": "(Optional challenge content) Speak with Gabbro after completing The Neoteric Witch",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -31871,6 +32275,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -31945,6 +32350,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -32019,6 +32425,7 @@
      "quest": "Descent to the Foundation",
      "location": "The Backroom (X:6.0, Y:6.3)",
      "information": "Unlocks as part of the Patch 7.2 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -32096,6 +32503,7 @@
      "quest": "Souls under Siege",
      "location": "Solution Nine (X:22.2, Y:16.6)",
      "information": "Speak with Yaana; part of The Arcadion Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -32177,6 +32585,7 @@
      "quest": "A Terminal Invitation",
      "location": "Living Memory (X:21.5, Y:36.9)",
      "information": "Unlocks as part of the Patch 7.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -32254,6 +32663,7 @@
      "quest": "A Terminal Invitation",
      "location": "Living Memory (X:21.5, Y:36.9)",
      "information": "Unlocks as part of the Patch 7.3 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -32331,6 +32741,7 @@
      "quest": "Dreams of Paradise",
      "location": "Tuliyollal (X:16.2, Y:3.9)",
      "information": "Part of Echoes of Vana'diel",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -32405,6 +32816,7 @@
      "quest": "The White Wanderer",
      "location": "Tuliyollal (X:13.4, Y:13.1)",
      "information": "Part of Guardian Arkveld Descends!",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -32479,6 +32891,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing Descent to the Foundation",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -32568,6 +32981,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel; requires completing AAC Light-heavyweight M4 (Savage)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -32657,6 +33071,7 @@
      "quest": "Beyond the Mountains",
      "location": "Alexandria Crater (X:5.9, Y:6.5)",
      "information": "Unlocks as part of the Patch 7.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -32734,6 +33149,7 @@
      "quest": "",
      "location": "Solution Nine (X:22.4, Y:17.1)",
      "information": "(Optional challenge content) Speak with Gabbro after completing The Lone Wolf",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -32808,6 +33224,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing A Terminal Invitation",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -32897,6 +33314,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing The White Wanderer",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -32986,6 +33404,7 @@
      "quest": "Where We Call Home",
      "location": "Treno (X:11.8, Y:15.1)",
      "information": "Unlocks as part of the Patch 7.4 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -33063,6 +33482,7 @@
      "quest": "Feral Fandom",
      "location": "Solution Nine (X:22.2, Y:16.6)",
      "information": "Speak with Yaana; part of The Arcadion Quests",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -33144,6 +33564,7 @@
      "quest": "Two Worlds Entwined",
      "location": "Main Hall (X:6.1, Y:6.1)",
      "information": "Unlocks as part of the Patch 7.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -33221,6 +33642,7 @@
      "quest": "Where We Call Home",
      "location": "Garlemald (X:32.1, Y:16.8)",
      "information": "Unlocks as part of the Patch 7.5 main quests.",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -33298,6 +33720,7 @@
      "quest": "The Hollow Promise",
      "location": "Tuliyollal (X:16.2, Y:3.9)",
      "information": "Part of Echoes of Vana'diel",
+     "optionalChallenge": false,
      "rich": {
       "unlock": [
        [
@@ -33372,6 +33795,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing Where We Call Home",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -33461,6 +33885,7 @@
      "quest": "Abridged Too Far",
      "location": "Old Sharlayan (X:11.9, Y:13.4)",
      "information": "(Optional challenge content) Speak with Memolivia after defeating three unique final bosses in The Merchant's Tale.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -33556,6 +33981,7 @@
      "quest": "",
      "location": "Solution Nine (X:22.4, Y:17.1)",
      "information": "(Optional challenge content) Speak with Gabbro after completing Glory Incarnate.",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -33633,6 +34059,7 @@
      "quest": "",
      "location": "Old Sharlayan (X:12.0, Y:13.4)",
      "information": "(Optional challenge content) Speak with Osmon after defeating all bosses in The Merchant's Tale (Advanced).",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -33710,6 +34137,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel after completing A Grave Presentiment",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
@@ -33799,6 +34227,7 @@
      "quest": "How the West Was Sung",
      "location": "Tuliyollal (X:11.2, Y:14.7)",
      "information": "(Optional challenge content) Speak to the Wandering Minstrel; requires completing AAC Heavyweight M4 (Savage)",
+     "optionalChallenge": true,
      "rich": {
       "unlock": [
        [
