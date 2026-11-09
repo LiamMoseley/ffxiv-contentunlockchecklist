@@ -67,7 +67,12 @@ const iconUrl = (icon: string) => `${import.meta.env.BASE_URL}icons/${iconFile(i
 /** The status box as a button; its click, like a click anywhere on the entry, reaches the entry's handler. */
 function StatusButton({ entry, status }: { entry: Entry; status: EntryStatus }) {
   return (
-    <button type="button" className="status" aria-label={`${entry.unlock}: ${STATUS_LABEL[status]}`} title={STATUS_LABEL[status]}>
+    <button
+      type="button"
+      className="status"
+      aria-label={`${entry.unlock}: ${STATUS_LABEL[status]}`}
+      title={STATUS_LABEL[status]}
+    >
       <StatusBox status={status} />
     </button>
   );
@@ -102,10 +107,7 @@ const levelParts = (entry: Entry) =>
 
 /** "Lv. 61 · Dungeon": a card's one-line summary. Level-cap entries show their item level instead. */
 const summary = (entry: Entry) =>
-  [
-    entry.level ? `Lv. ${entry.level}` : entry.itemLevel ? `iLv. ${entry.itemLevel}` : "",
-    entry.type.split("\n")[0],
-  ]
+  [entry.level ? `Lv. ${entry.level}` : entry.itemLevel ? `iLv. ${entry.itemLevel}` : "", entry.type.split("\n")[0]]
     .filter(Boolean)
     .join(" · ");
 
@@ -220,12 +222,24 @@ export function HintBar({
       </button>
       <div className="display-mode" role="group" aria-label="Display mode">
         <span className="display-mode-label">Display Mode</span>
-        <button type="button" aria-pressed={mode === "list"} aria-label="List" title="List" onClick={() => onMode("list")}>
+        <button
+          type="button"
+          aria-pressed={mode === "list"}
+          aria-label="List"
+          title="List"
+          onClick={() => onMode("list")}
+        >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
             <path d="M1 2h2v2H1zM5 2h8v2H5zM1 6h2v2H1zM5 6h8v2H5zM1 10h2v2H1zM5 10h8v2H5z" />
           </svg>
         </button>
-        <button type="button" aria-pressed={mode === "grid"} aria-label="Cards" title="Cards" onClick={() => onMode("grid")}>
+        <button
+          type="button"
+          aria-pressed={mode === "grid"}
+          aria-label="Cards"
+          title="Cards"
+          onClick={() => onMode("grid")}
+        >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
             <path d="M1 1h5v5H1zM8 1h5v5H8zM1 8h5v5H1zM8 8h5v5H8z" />
           </svg>

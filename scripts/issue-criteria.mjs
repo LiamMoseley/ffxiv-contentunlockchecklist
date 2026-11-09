@@ -46,7 +46,11 @@ if (command === "tick") {
   // A criterion can wrap onto continuation lines: insert after the last of them.
   let after = criterionAt[criterionAt.length - 1];
   while (after + 1 < lines.length && lines[after + 1].trim() !== "" && !/^(- |#)/.test(lines[after + 1])) after++;
-  result = [...lines.slice(0, after + 1), `- [${flags.has("--ticked") ? "x" : " "}] ${args.join(" ")}`, ...lines.slice(after + 1)];
+  result = [
+    ...lines.slice(0, after + 1),
+    `- [${flags.has("--ticked") ? "x" : " "}] ${args.join(" ")}`,
+    ...lines.slice(after + 1),
+  ];
 }
 
 const next = result.join("\n");

@@ -402,8 +402,8 @@ a:hover {
 /* The triangle is a layer of the skewed tab itself, so it always sits in the bottom-left corner */
 .tabs button.active::before {
   background:
-    linear-gradient(to top right, var(--yellow) 0 48%, rgba(246, 185, 59, 0.35) 48% 56%, transparent 56%) left
-      bottom / 11px 11px no-repeat,
+    linear-gradient(to top right, var(--yellow) 0 48%, rgba(246, 185, 59, 0.35) 48% 56%, transparent 56%) left bottom /
+      11px 11px no-repeat,
     linear-gradient(#9b9b9b, #767676 55%, #666);
   box-shadow:
     0 0 0 1px #000,
@@ -579,7 +579,15 @@ a.wiki-link:focus-visible {
 }
 .status-box.notInterested {
   border-color: #666;
-  background: linear-gradient(to top right, transparent calc(50% - 1px), #9a9a9a calc(50% - 1px), #9a9a9a calc(50% + 1px), transparent calc(50% + 1px)), #3a3a3a;
+  background:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      #9a9a9a calc(50% - 1px),
+      #9a9a9a calc(50% + 1px),
+      transparent calc(50% + 1px)
+    ),
+    #3a3a3a;
 }
 
 /* Entries as a grid of cards, as in the game's Actions & Traits window */
@@ -707,7 +715,9 @@ a.wiki-link:focus-visible {
 }
 .display-mode-label {
   margin-right: 12px;
-  font: 700 13px/1 "Barlow Condensed", sans-serif;
+  font:
+    700 13px/1 "Barlow Condensed",
+    sans-serif;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;

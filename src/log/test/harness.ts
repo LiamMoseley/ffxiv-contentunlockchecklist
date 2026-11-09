@@ -20,9 +20,7 @@ export function fixedClock(iso = "2026-11-03T12:00:00.000Z"): Clock & { set(iso:
   return { now: () => now, set: (next) => (now = new Date(next)) };
 }
 
-export function openLog(
-  options: { page?: WikiPage; storage?: Storage; clock?: Clock } = {},
-) {
+export function openLog(options: { page?: WikiPage; storage?: Storage; clock?: Clock } = {}) {
   const storage = options.storage ?? createMemoryStorage();
   const clock = options.clock ?? fixedClock();
   const log = createLog({

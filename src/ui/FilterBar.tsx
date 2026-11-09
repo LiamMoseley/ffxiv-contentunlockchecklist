@@ -61,7 +61,11 @@ export function FilterBar({
       <fieldset className="filter-checks">
         <legend>Filters</legend>
         <label>
-          <input type="checkbox" checked={filters.hideCompleted} onChange={(event) => set({ hideCompleted: event.target.checked })} />
+          <input
+            type="checkbox"
+            checked={filters.hideCompleted}
+            onChange={(event) => set({ hideCompleted: event.target.checked })}
+          />
           Hide completed entries.
         </label>
         <label>
