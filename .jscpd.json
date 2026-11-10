@@ -5,6 +5,5 @@
   "threshold": 0,
   "ignore": ["**/*.test.*", "**/bundled-content.json"],
   "reporters": ["consoleFull"],
-  "silent": true,
   "gitignore": true
 }

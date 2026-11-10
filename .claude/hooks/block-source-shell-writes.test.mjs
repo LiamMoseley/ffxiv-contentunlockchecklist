@@ -22,6 +22,9 @@ describe("block-source-shell-writes hook", () => {
     `sed -i -e 's|a|b|;s|c|d|' src/main.tsx`,
     `sed -n 1p x && sed -i.bak 's|a|b|' src/ui/App.tsx`,
     `sed --in-place 's|a|b|' scripts/sw.template.js`,
+    `sed -e 's/a/b; s/c/d/' -i src/x.ts`,
+    `sed -e "s/a/b && c/" -i src/x.ts`,
+    `sed -n 1p docs/prd.md; sed -i 's/a/b/' src/x.ts`,
   ])("blocks %s", (command) => {
     expect(blocks(command)).toBe(true);
   });
