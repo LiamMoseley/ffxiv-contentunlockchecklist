@@ -316,8 +316,9 @@ update never undoes my record.*
 - An entry is recognised by what it unlocks, the quest that unlocks it and its expansion. Adding or reordering
   entries, and editing an entry's level, location or notes, never affects progress.
 - Rewording a section heading never affects progress. Adding a duplicate of an entry in another
-  expansion never affects the existing entry's progress; moving an entry to a different expansion
-  does, and the progress is kept as an orphan.
+  expansion, or below it in the same one, never affects the existing entry's progress. Moving an
+  entry to a different expansion does, and the progress is kept as an orphan. Two identical rows in
+  one expansion are told apart by order only.
 - When an entry the player had progress on is renamed, the app recognises the likely new version and
   asks before moving the progress (a **suggested match**). Suggestions only pair an entry that
   disappeared in this update with one that is new in this update, in the same expansion, where the

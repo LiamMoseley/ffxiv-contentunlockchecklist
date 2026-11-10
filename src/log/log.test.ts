@@ -164,7 +164,7 @@ describe("entry IDs", () => {
     ]);
   });
 
-  describe("when the wiki adds a duplicate of a row the player has ticked", () => {
+  describe("when the wiki adds a duplicate of an entry the player has marked Completed", () => {
     const row = rowOf(realPage.html, SASTASHA);
     const tickedThenUpdated = async (before: WikiPage, after: WikiPage, tickedId: string) => {
       const wiki = fakeWiki(before);
@@ -183,6 +183,23 @@ describe("entry IDs", () => {
 
       expect(log.entryStatus("sastasha/its-probably-pirates@arr")).toBe("completed");
       expect(log.entryStatus("sastasha/its-probably-pirates@hw")).toBe("unmarked");
+    });
+
+    it("keeps the progress when the duplicate lands below it in the same expansion", async () => {
+      const after = editedPage((html) => editRow(html, SASTASHA, (r) => `${r}\n${row}`));
+      const log = await tickedThenUpdated(realPage, after, "sastasha/its-probably-pirates@arr");
+
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr")).toBe("completed");
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr#2")).toBe("unmarked");
+    });
+
+    // The one case the ID cannot tell apart: identical rows in one expansion differ only by order.
+    it("hands the progress to a duplicate that lands above it in the same expansion (ADR-0003)", async () => {
+      const after = editedPage((html) => insertRowAtTopOf(html, "Level 1 - 50", row));
+      const log = await tickedThenUpdated(realPage, after, "sastasha/its-probably-pirates@arr");
+
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr")).toBe("completed");
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr#2")).toBe("unmarked");
     });
 
     it("keeps the progress when the duplicate lands in an earlier expansion", async () => {
