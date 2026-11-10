@@ -960,6 +960,22 @@ describe("searching the log", () => {
     log.setFilters({ search: "sastasha zzzz" });
     expect(shownNames(log)).toEqual([]);
   });
+
+  it("searches only the selected expansion and tab, even when entries in other expansions match", () => {
+    const { log } = openLog();
+    log.setFilters({ search: "dungeon" });
+    log.setSelection({ expansion: "all" });
+    const everywhere = log.listing().sections.filter((s) => s.entries.length > 0);
+    expect(new Set(everywhere.map((s) => s.id.split("-")[0])).size).toBeGreaterThan(1);
+
+    log.setSelection({ expansion: "arr", tab: "levelling" });
+    const inView = log.listing().sections;
+    expect(inView.map((s) => s.id)).toEqual(["arr-levelling"]);
+    const listed = inView.flatMap((s) => s.entries);
+    expect(listed.length).toBeGreaterThan(0);
+    expect(listed.length).toBeLessThan(everywhere.flatMap((s) => s.entries).length);
+    expect(log.completeShownCount()).toBe(listed.length);
+  });
 });
 
 describe("filtering the log", () => {

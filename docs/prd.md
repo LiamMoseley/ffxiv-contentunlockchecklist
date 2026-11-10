@@ -188,7 +188,8 @@ quickly.*
 **US-10. Search.**
 *As a player, I want to search for an entry by name, quest or place, so that I can find it without
 scrolling.*
-- Search matches any word in any field and looks across every section.
+- Search matches any word in any field and looks across every section in view: the selected expansion and
+  tab, or every section on the All tile.
 - A keyboard shortcut moves focus to the search box.
 
 **US-11. Filter by type.**
