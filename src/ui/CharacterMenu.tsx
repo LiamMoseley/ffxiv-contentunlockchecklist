@@ -67,7 +67,7 @@ export function CharacterMenu({
       return;
     }
     onChange(
-      `Imported ${entryCount(entriesAdded)}:${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
+      `Imported ${entryCount(entriesAdded)}: ${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
     );
   };
 
