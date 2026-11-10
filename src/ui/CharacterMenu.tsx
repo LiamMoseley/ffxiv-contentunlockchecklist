@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import type { BackupError, Character, CharacterError, Log } from "../log";
+import { entryCount, MAX_LEVEL, type BackupError, type Character, type CharacterError, type Log } from "../log";
+import { DialogBackdrop } from "./Dialog";
 import { ConfirmDialog } from "./Messages";
 import { Count, ProgressBar } from "./ProgressBar";
-import { useModal } from "./useModal";
 
 const ERROR_TEXT: Record<CharacterError, string> = {
   nameRequired: "Enter a name.",
-  invalidLevel: "Level must be a whole number from 1 to 100.",
+  invalidLevel: `Level must be a whole number from 1 to ${MAX_LEVEL}.`,
   unknownWorld: "Choose a World from the list.",
   nameTaken: "Another character already has this name on this World.",
   notFound: "That character no longer exists.",
@@ -36,7 +36,6 @@ export function CharacterMenu({
   onChange: (message?: string) => void;
 }) {
   const [mode, setMode] = useState<Mode>({ kind: "list" });
-  const trapTab = useModal();
   const current = log.currentCharacter();
   const label = log.characterLabel(current);
   const onlyOne = log.characters().length === 1;
@@ -68,110 +67,102 @@ export function CharacterMenu({
       return;
     }
     onChange(
-      `Imported ${entriesAdded} ${entriesAdded === 1 ? "entry" : "entries"}: ${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
+      `Imported ${entryCount(entriesAdded)}:${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
     );
   };
 
-  if (mode.kind === "form") {
-    return (
-      <CharacterForm
-        log={log}
-        editing={mode.editing}
-        onCancel={() => setMode({ kind: "list" })}
-        onSaved={(saved, adding) => {
-          if (adding) log.switchCharacter(saved.id);
-          onChange(adding ? `Added ${log.characterLabel(saved)}.` : `Saved ${log.characterLabel(saved)}.`);
-          setMode({ kind: "list" });
-        }}
-      />
-    );
-  }
+  const forming = mode.kind === "form";
 
+  // The menu and its form share one backdrop, so focus returns to the title bar's button only when the menu closes.
   return (
     <>
-      <div
-        className="dialog-backdrop"
-        onClick={(event) => {
-          if (event.target === event.currentTarget) onClose();
-        }}
-        onKeyDown={(event) => {
-          trapTab(event);
-          if (event.key === "Escape") onClose();
-        }}
-      >
-        <div className="dialog character-menu" role="dialog" aria-modal="true" aria-labelledby="character-menu-title">
-          <h2 id="character-menu-title">Characters</h2>
-          <ul className="character-list">
-            {log.characters().map((character) => {
-              const progress = log.characterProgress(character.id);
-              const isCurrent = character.id === current.id;
-              return (
-                <li key={character.id}>
-                  <button
-                    type="button"
-                    className={`character-row${isCurrent ? " current" : ""}`}
-                    aria-current={isCurrent}
-                    autoFocus={isCurrent}
-                    onClick={() => {
-                      log.switchCharacter(character.id);
-                      onChange();
-                    }}
-                  >
-                    <span className="character-row-name">{log.characterLabel(character)}</span>
-                    <span className="character-row-level">
-                      {character.level !== null ? `Level ${character.level}` : "No level"}
-                    </span>
-                    <ProgressBar progress={progress} label={`${log.characterLabel(character)} progress`} thin />
-                    <Count progress={progress} />
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          <h3 className="character-section-title">Character</h3>
-          <div className="dialog-buttons character-actions">
-            <button type="button" onClick={() => setMode({ kind: "form", editing: null })}>
-              Add
-            </button>
-            <button type="button" onClick={() => setMode({ kind: "form", editing: current })}>
-              Edit
-            </button>
-            <button type="button" onClick={() => setMode({ kind: "confirm", action: "reset" })}>
-              Reset
-            </button>
-            <button
-              type="button"
-              disabled={onlyOne}
-              title={onlyOne ? "The last character can't be deleted" : undefined}
-              onClick={() => setMode({ kind: "confirm", action: "delete" })}
-            >
-              Delete
-            </button>
+      <DialogBackdrop onClose={forming ? () => setMode({ kind: "list" }) : onClose} closeOnBackdropClick={!forming}>
+        {mode.kind === "form" ? (
+          <CharacterForm
+            log={log}
+            editing={mode.editing}
+            onCancel={() => setMode({ kind: "list" })}
+            onSaved={(saved, adding) => {
+              if (adding) log.switchCharacter(saved.id);
+              onChange(adding ? `Added ${log.characterLabel(saved)}.` : `Saved ${log.characterLabel(saved)}.`);
+              setMode({ kind: "list" });
+            }}
+          />
+        ) : (
+          <div className="dialog character-menu" role="dialog" aria-modal="true" aria-labelledby="character-menu-title">
+            <h2 id="character-menu-title">Characters</h2>
+            <ul className="character-list">
+              {log.characters().map((character) => {
+                const progress = log.characterProgress(character.id);
+                const isCurrent = character.id === current.id;
+                return (
+                  <li key={character.id}>
+                    <button
+                      type="button"
+                      className={`character-row${isCurrent ? " current" : ""}`}
+                      aria-current={isCurrent}
+                      autoFocus={isCurrent}
+                      onClick={() => {
+                        log.switchCharacter(character.id);
+                        onChange();
+                      }}
+                    >
+                      <span className="character-row-name">{log.characterLabel(character)}</span>
+                      <span className="character-row-level">
+                        {character.level !== null ? `Level ${character.level}` : "No level"}
+                      </span>
+                      <ProgressBar progress={progress} label={`${log.characterLabel(character)} progress`} thin />
+                      <Count progress={progress} />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <h3 className="character-section-title">Character</h3>
+            <div className="dialog-buttons character-actions">
+              <button type="button" onClick={() => setMode({ kind: "form", editing: null })}>
+                Add
+              </button>
+              <button type="button" onClick={() => setMode({ kind: "form", editing: current })}>
+                Edit
+              </button>
+              <button type="button" onClick={() => setMode({ kind: "confirm", action: "reset" })}>
+                Reset
+              </button>
+              <button
+                type="button"
+                disabled={onlyOne}
+                title={onlyOne ? "The last character can't be deleted" : undefined}
+                onClick={() => setMode({ kind: "confirm", action: "delete" })}
+              >
+                Delete
+              </button>
+            </div>
+            <h3 className="character-section-title">Backup</h3>
+            <div className="dialog-buttons character-actions">
+              <button type="button" onClick={exportBackup}>
+                Export
+              </button>
+              <button type="button" onClick={() => fileRef.current?.click()}>
+                Import
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="application/json,.json"
+                hidden
+                aria-label="Backup file"
+                onChange={(event) => void importBackup(event.target)}
+              />
+            </div>
+            <div className="dialog-buttons character-actions character-footer">
+              <button type="button" className="primary" onClick={onClose}>
+                Close
+              </button>
+            </div>
           </div>
-          <h3 className="character-section-title">Backup</h3>
-          <div className="dialog-buttons character-actions">
-            <button type="button" onClick={exportBackup}>
-              Export
-            </button>
-            <button type="button" onClick={() => fileRef.current?.click()}>
-              Import
-            </button>
-            <input
-              ref={fileRef}
-              type="file"
-              accept="application/json,.json"
-              hidden
-              aria-label="Backup file"
-              onChange={(event) => void importBackup(event.target)}
-            />
-          </div>
-          <div className="dialog-buttons character-actions character-footer">
-            <button type="button" className="primary" onClick={onClose}>
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
+        )}
+      </DialogBackdrop>
       {mode.kind === "confirm" && mode.action === "reset" && (
         <ConfirmDialog
           title="Reset progress"
@@ -218,7 +209,6 @@ function CharacterForm({
   const [level, setLevel] = useState(editing?.level?.toString() ?? "");
   const [error, setError] = useState<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
-  const trapTab = useModal();
   useEffect(() => nameRef.current?.select(), []);
 
   const submit = (event: FormEvent) => {
@@ -230,56 +220,48 @@ function CharacterForm({
   };
 
   return (
-    <div
-      className="dialog-backdrop"
-      onKeyDown={(event) => {
-        trapTab(event);
-        if (event.key === "Escape") onCancel();
-      }}
+    <form
+      className="dialog character-form"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="character-form-title"
+      onSubmit={submit}
+      noValidate
     >
-      <form
-        className="dialog character-form"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="character-form-title"
-        onSubmit={submit}
-        noValidate
-      >
-        <h2 id="character-form-title">{editing ? "Edit character" : "Add character"}</h2>
-        <label>
-          Name
-          <input ref={nameRef} value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" />
-        </label>
-        <label>
-          World (optional)
-          <select value={world} onChange={(e) => setWorld(e.target.value)}>
-            <option value="">No World</option>
-            {log.worlds().map((w) => (
-              <option key={w} value={w}>
-                {w}
-              </option>
-            ))}
-          </select>
-        </label>
-        <p className="form-data-center">Data Center: {log.dataCenterOf(world) ?? "none"}</p>
-        <label>
-          Level (optional)
-          <input value={level} onChange={(e) => setLevel(e.target.value)} inputMode="numeric" autoComplete="off" />
-        </label>
-        {error && (
-          <p className="form-error" role="alert">
-            {error}
-          </p>
-        )}
-        <div className="dialog-buttons">
-          <button type="button" onClick={onCancel}>
-            Cancel
-          </button>
-          <button type="submit" className="primary">
-            {editing ? "Save" : "Add"}
-          </button>
-        </div>
-      </form>
-    </div>
+      <h2 id="character-form-title">{editing ? "Edit character" : "Add character"}</h2>
+      <label>
+        Name
+        <input ref={nameRef} value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" />
+      </label>
+      <label>
+        World (optional)
+        <select value={world} onChange={(e) => setWorld(e.target.value)}>
+          <option value="">No World</option>
+          {log.worlds().map((w) => (
+            <option key={w} value={w}>
+              {w}
+            </option>
+          ))}
+        </select>
+      </label>
+      <p className="form-data-center">Data Center: {log.dataCenterOf(world) ?? "none"}</p>
+      <label>
+        Level (optional)
+        <input value={level} onChange={(e) => setLevel(e.target.value)} inputMode="numeric" autoComplete="off" />
+      </label>
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
+      <div className="dialog-buttons">
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button type="submit" className="primary">
+          {editing ? "Save" : "Add"}
+        </button>
+      </div>
+    </form>
   );
 }

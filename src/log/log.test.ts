@@ -1293,7 +1293,7 @@ describe("available now", () => {
   };
 
   it("asks for a level while the character has none", () => {
-    expect(withLevel(null).availableNow()).toEqual({ level: null, sections: [], hidden: 0 });
+    expect(withLevel(null).availableNow()).toEqual({ level: null, sections: [], filteredOut: 0 });
   });
 
   it("lists levelling entries at or below the character level, across expansions", () => {
@@ -1349,7 +1349,7 @@ describe("available now", () => {
     const log = withLevel(15);
     log.showAvailableNow();
     log.completeShown();
-    expect(log.availableNow()).toEqual({ level: 15, sections: [], hidden: 0 });
+    expect(log.availableNow()).toEqual({ level: 15, sections: [], filteredOut: 0 });
     log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level: 50 });
     expect(availableIds(log).length).toBeGreaterThan(0);
   });
@@ -1371,10 +1371,10 @@ describe("available now", () => {
     const found = availableIds(log);
     expect(found).toContain(SASTASHA);
     expect(found.length).toBeLessThan(all.length);
-    expect(log.availableNow().hidden).toBe(all.length - found.length);
+    expect(log.availableNow().filteredOut).toBe(all.length - found.length);
 
     log.setFilters({ search: "zzzz" });
-    expect(log.availableNow()).toEqual({ level: 15, sections: [], hidden: all.length });
+    expect(log.availableNow()).toEqual({ level: 15, sections: [], filteredOut: all.length });
 
     log.setFilters({ search: "", type: "Dungeon" });
     const dungeons = log
@@ -1385,7 +1385,7 @@ describe("available now", () => {
   });
 
   it("hides nothing when no filter is set", () => {
-    expect(withLevel(15).availableNow().hidden).toBe(0);
+    expect(withLevel(15).availableNow().filteredOut).toBe(0);
   });
 });
 

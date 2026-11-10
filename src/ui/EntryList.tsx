@@ -1,7 +1,14 @@
 import { createContext, useContext, type KeyboardEvent } from "react";
-import { entryIcon, iconFile, WIKI_IMAGE_BASE, type Entry, type EntryStatus, type RichText } from "../log";
-
-export type DisplayMode = "list" | "grid";
+import {
+  entryIcon,
+  entryName,
+  iconFile,
+  WIKI_IMAGE_BASE,
+  type DisplayMode,
+  type Entry,
+  type EntryStatus,
+  type RichText,
+} from "../log";
 
 export const STATUS_LABEL: Record<EntryStatus, string> = {
   unmarked: "Unmarked",
@@ -190,7 +197,7 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
       {entries.map((entry) => {
         const status = statusOf(entry.id);
         const icon = entryIcon(entry);
-        const name = entry.unlock.replaceAll("\n", " ");
+        const name = entryName(entry);
         return (
           <li key={entry.id} className={`entry-card ${status}`} title={name} {...entryProps(actions, entry.id)}>
             <span className="card-icon">{icon && <WikiIcon icon={icon.icon} size={36} />}</span>

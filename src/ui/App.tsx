@@ -1,7 +1,20 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { cacheWikiIcons } from "../adapters/offline";
-import type { ChangeResult, Listing, Log, Section, SectionKind, Storage, UpdatePreview } from "../log";
-import { EntryGrid, EntryTable, HintBar, NewBadge, type DisplayMode, type EntryActions } from "./EntryList";
+import {
+  entryCount,
+  readDisplayMode,
+  writeDisplayMode,
+  type ChangeResult,
+  type DisplayMode,
+  type Entry,
+  type Listing,
+  type Log,
+  type Section,
+  type Selection,
+  type Storage,
+  type UpdatePreview,
+} from "../log";
+import { EntryGrid, EntryTable, HintBar, NewBadge, type EntryActions } from "./EntryList";
 import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
 import { FilterBar } from "./FilterBar";
@@ -13,21 +26,10 @@ import { SectionTabs, type TabChoice } from "./SectionTabs";
 const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
 
 /** A section tab: one of the expansion's two sections, or both. */
-type TabKey = SectionKind | "all";
+type TabKey = Selection["tab"];
 
 /** The wiki writes "Level 51 - 60"; the window shows "Level 51–60". */
 const sectionTitle = (section: Section) => section.heading.replace(/\s*-\s*/, "–");
-
-const DISPLAY_MODE_KEY = "contentUnlockLog.displayMode";
-
-/** The remembered display mode; storage that is unavailable or holds anything else means the list. */
-function readDisplayMode(preferences: Storage): DisplayMode {
-  try {
-    return preferences.read(DISPLAY_MODE_KEY) === "grid" ? "grid" : "list";
-  } catch {
-    return "list";
-  }
-}
 
 /** `preferences` keeps device settings, such as the display mode, apart from the player's progress. */
 export function App({ log, preferences }: { log: Log; preferences: Storage }) {
@@ -73,20 +75,15 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
 
   const chooseDisplayMode = (mode: DisplayMode) => {
     setDisplayMode(mode);
-    try {
-      preferences.write(DISPLAY_MODE_KEY, mode);
-    } catch {
-      // The choice still holds for this visit when the device will not store it.
-    }
+    writeDisplayMode(preferences, mode);
   };
   const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
   const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
   const toastCount = useRef(0);
   const [confirmingUpdate, setConfirmingUpdate] = useState(false);
-  const [updateOpen, setUpdateOpen] = useState(false);
-  // Review opens the update the notice offers; the Update action fetches its own.
-  const [reviewing, setReviewing] = useState<UpdatePreview | null>(null);
+  // The update dialog: Review opens the update the notice offers (`preview`); the Update action fetches its own.
+  const [update, setUpdate] = useState<{ preview?: UpdatePreview } | null>(null);
   // The automatic check runs once as the app opens; the Log core decides whether it is due and what it finds.
   const autoChecked = useRef(false);
   useEffect(() => {
@@ -180,15 +177,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // Complete Shown and Clear Shown act on what the open view lists.
   const completeCount = log.completeShownCount();
   const clearCount = log.clearShownCount();
-  const entries = (n: number) => `${n} ${n === 1 ? "entry" : "entries"}`;
 
   const confirmBulk = () => {
     if (confirming === "complete") {
       const n = completeCount;
-      announce(`Marked ${entries(n)} Completed.`, log.completeShown());
+      announce(`Marked ${entryCount(n)} Completed.`, log.completeShown());
     } else if (confirming === "clear") {
       const n = clearCount;
-      announce(`Cleared ${entries(n)}.`, log.clearShown());
+      announce(`Cleared ${entryCount(n)}.`, log.clearShown());
     }
     setConfirming(null);
   };
@@ -234,7 +230,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <main className="main">
             <UpdateNotice
               log={log}
-              onReview={(preview) => setReviewing(preview)}
+              onReview={(preview) => setUpdate({ preview })}
               onDismiss={() => {
                 log.dismissUpdateNotice();
                 refresh();
@@ -254,7 +250,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               onMarkSeen={() => {
                 const n = log.markNewSeen();
                 refresh();
-                say(`Marked ${entries(n)} as seen.`);
+                say(`Marked ${entryCount(n)} as seen.`);
               }}
             />
             <div className={`tabs-row${availableOpen ? " available" : ""}`}>
@@ -274,7 +270,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               )}
               <button
                 type="button"
-                className="filters-toggle"
+                className="available-toggle"
                 aria-pressed={availableOpen}
                 onClick={() => {
                   // Available now replaces the NEW view; coming back lands on the normal view.
@@ -359,31 +355,19 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             confirmLabel="Update"
             onConfirm={() => {
               setConfirmingUpdate(false);
-              setUpdateOpen(true);
+              setUpdate({});
             }}
             onCancel={() => setConfirmingUpdate(false)}
           />
         )}
-        {updateOpen && (
+        {update && (
           <UpdateDialog
             log={log}
-            onClose={() => setUpdateOpen(false)}
+            preview={update.preview}
+            onClose={() => setUpdate(null)}
             onChecked={refresh}
             onApplied={(message) => {
-              setUpdateOpen(false);
-              refresh();
-              say(message);
-            }}
-          />
-        )}
-        {reviewing && (
-          <UpdateDialog
-            log={log}
-            preview={reviewing}
-            onClose={() => setReviewing(null)}
-            onChecked={refresh}
-            onApplied={(message) => {
-              setReviewing(null);
+              setUpdate(null);
               refresh();
               say(message);
             }}
@@ -395,8 +379,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             title={confirming === "complete" ? "Complete Shown" : "Clear Shown"}
             text={
               confirming === "complete"
-                ? `Mark ${entries(completeCount)} Completed? Not interested entries are left alone.`
-                : `Set ${entries(clearCount)} back to Unmarked?`
+                ? `Mark ${entryCount(completeCount)} Completed? Not interested entries are left alone.`
+                : `Set ${entryCount(clearCount)} back to Unmarked?`
             }
             confirmLabel={confirming === "complete" ? "Complete" : "Clear"}
             onConfirm={confirmBulk}
@@ -460,8 +444,7 @@ function AvailableNow({
   actions: EntryActions;
   onSetLevel: () => void;
 }) {
-  const { level, sections, hidden } = listing;
-  const Entries = mode === "grid" ? EntryGrid : EntryTable;
+  const { level, sections, filteredOut } = listing;
   if (level === null) {
     return (
       <p className="section-empty available-empty">
@@ -472,7 +455,7 @@ function AvailableNow({
       </p>
     );
   }
-  if (sections.length === 0 && hidden > 0) {
+  if (sections.length === 0 && filteredOut > 0) {
     return <p className="section-empty available-empty">All available entries are hidden by the search or filters.</p>;
   }
   if (sections.length === 0) {
@@ -486,15 +469,60 @@ function AvailableNow({
     );
   }
   return (
+    <SectionGroups
+      log={log}
+      sections={sections}
+      idPrefix="available"
+      expansionNames={expansionNames}
+      mode={mode}
+      actions={actions}
+    />
+  );
+}
+
+/** Grid or table: the one place the display mode picks how a list of entries is drawn. */
+function Entries({
+  log,
+  entries,
+  mode,
+  actions,
+}: {
+  log: Log;
+  entries: Entry[];
+  mode: DisplayMode;
+  actions: EntryActions;
+}) {
+  const Layout = mode === "grid" ? EntryGrid : EntryTable;
+  return <Layout entries={entries} statusOf={log.entryStatus} isNew={log.isNew} actions={actions} />;
+}
+
+/** The sections the Available now and NEW views list: a plain heading over each section's entries. */
+function SectionGroups({
+  log,
+  sections,
+  idPrefix,
+  expansionNames,
+  mode,
+  actions,
+}: {
+  log: Log;
+  sections: Section[];
+  /** Keeps heading IDs apart from the other views'. */
+  idPrefix: string;
+  expansionNames: Map<string, string>;
+  mode: DisplayMode;
+  actions: EntryActions;
+}) {
+  return (
     <>
       {sections.map((section) => (
-        <section key={section.id} className="section" aria-labelledby={`available-${section.id}-heading`}>
+        <section key={section.id} className="section" aria-labelledby={`${idPrefix}-${section.id}-heading`}>
           <div className="section-head">
-            <h2 id={`available-${section.id}-heading`}>
+            <h2 id={`${idPrefix}-${section.id}-heading`}>
               {expansionNames.get(section.expansionId)} <span>{sectionTitle(section)}</span>
             </h2>
           </div>
-          <Entries entries={section.entries} statusOf={log.entryStatus} isNew={log.isNew} actions={actions} />
+          <Entries log={log} entries={section.entries} mode={mode} actions={actions} />
         </section>
       ))}
     </>
@@ -575,23 +603,18 @@ function NewEntriesView({
   mode: DisplayMode;
   actions: EntryActions;
 }) {
-  const Entries = mode === "grid" ? EntryGrid : EntryTable;
   if (sections.length === 0) {
     return <p className="section-empty">All NEW entries are hidden by the search or filters.</p>;
   }
   return (
-    <>
-      {sections.map((section) => (
-        <section key={section.id} className="section" aria-labelledby={`new-${section.id}-heading`}>
-          <div className="section-head">
-            <h2 id={`new-${section.id}-heading`}>
-              {expansionNames.get(section.expansionId)} <span>{sectionTitle(section)}</span>
-            </h2>
-          </div>
-          <Entries entries={section.entries} statusOf={log.entryStatus} isNew={log.isNew} actions={actions} />
-        </section>
-      ))}
-    </>
+    <SectionGroups
+      log={log}
+      sections={sections}
+      idPrefix="new"
+      expansionNames={expansionNames}
+      mode={mode}
+      actions={actions}
+    />
   );
 }
 
@@ -610,7 +633,6 @@ function SectionPanel({
 }) {
   const progress = log.sectionProgress(section.id);
   const shown = section.entries;
-  const Entries = mode === "grid" ? EntryGrid : EntryTable;
   return (
     <section className="section" aria-labelledby={`${section.id}-heading`}>
       <div className="section-head">
@@ -623,7 +645,7 @@ function SectionPanel({
       {shown.length === 0 ? (
         <p className="section-empty">All entries in this section are hidden by the search or filters.</p>
       ) : (
-        <Entries entries={shown} statusOf={log.entryStatus} isNew={log.isNew} actions={actions} />
+        <Entries log={log} entries={shown} mode={mode} actions={actions} />
       )}
     </section>
   );

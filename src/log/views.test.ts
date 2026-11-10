@@ -88,18 +88,18 @@ describe("the open view and what it lists", () => {
     expect(listed.flatMap((s) => s.entries.map((e) => e.unlock))).toEqual(["Sastasha (Hard)"]);
   });
 
-  it("lists NEW entries and Available now by their own rules, with Available now's level and hidden count", async () => {
+  it("lists NEW entries and Available now by their own rules, with Available now's level and filtered-out count", async () => {
     const { log } = await openWithNewAndLevel();
 
     log.showNewEntries();
-    expect(log.listing()).toMatchObject({ view: "new", level: null, hidden: 0 });
+    expect(log.listing()).toMatchObject({ view: "new", level: null, filteredOut: 0 });
     expect(log.listing().sections.flatMap((s) => s.entries.map((e) => e.unlock))).toEqual(["Dungeon Alpha"]);
 
     log.showAvailableNow();
     log.setFilters({ search: "sastasha" });
     const available = log.listing();
     expect(available.level).toBe(30);
-    expect(available.hidden).toBeGreaterThan(0);
+    expect(available.filteredOut).toBeGreaterThan(0);
     expect(available.sections.flatMap((s) => s.entries.map((e) => e.unlock))).toContain("Sastasha");
   });
 
@@ -140,7 +140,7 @@ describe("the open view and what it lists", () => {
     it("count nothing in Available now while the character has no level", () => {
       const { log } = openLog();
       log.showAvailableNow();
-      expect(log.listing()).toEqual({ view: "available", level: null, sections: [], hidden: 0 });
+      expect(log.listing()).toEqual({ view: "available", level: null, sections: [], filteredOut: 0 });
       expect(log.completeShownCount()).toBe(0);
       expect(log.clearShownCount()).toBe(0);
     });

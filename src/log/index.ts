@@ -3,6 +3,7 @@ export { type BackupError } from "./backup";
 export { type Filters, type OptionalChallengeFilter } from "./filters";
 export {
   createLog,
+  MAX_LEVEL,
   type Selection,
   type CharacterDetails,
   type CharacterError,
@@ -20,7 +21,10 @@ export {
   type Storage,
   type Clock,
 } from "./log";
+export { readDisplayMode, writeDisplayMode, type DisplayMode } from "./preferences";
 export {
+  entryCount,
+  entryName,
   parseContentUnlockPage,
   type Content,
   type Entry,
