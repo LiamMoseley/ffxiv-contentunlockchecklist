@@ -168,11 +168,16 @@ function readRows(table: HTMLElement): Row[] {
         quest: field("quest"),
         location: field("location"),
         information: field("information"),
-        optionalChallenge: /optional challenge content/i.test(field("information")),
+        optionalChallenge: hasOptionalChallengeTag(cellFor("information")),
         rich,
       },
     ];
   });
+}
+
+/** The wiki's tag is the bold text "Optional challenge content"; the same words in other text are not the tag. */
+function hasOptionalChallengeTag(cell: HTMLElement | undefined): boolean {
+  return !!cell?.querySelectorAll("b").some((b) => cleanText(b.text) === "Optional challenge content");
 }
 
 /** A cell's text with markup removed; line breaks become newlines and a lone "-" means no value. */

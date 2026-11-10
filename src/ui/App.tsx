@@ -68,7 +68,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-  const [railCollapsed, setRailCollapsed] = useState(false);
+  const railCollapsed = log.railCollapsed();
   const [displayMode, setDisplayMode] = useState<DisplayMode>(() => readDisplayMode(preferences));
 
   const chooseDisplayMode = (mode: DisplayMode) => {
@@ -225,7 +225,10 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             noneChosen={viewingNew}
             onChoose={setExpansion}
             collapsed={railCollapsed}
-            onToggleCollapsed={() => setRailCollapsed(!railCollapsed)}
+            onToggleCollapsed={() => {
+              log.setRailCollapsed(!railCollapsed);
+              refresh();
+            }}
           />
 
           <main className="main">
@@ -416,7 +419,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         </div>
 
         <footer className="footer-bar">
-          <span>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
+          <span>An unofficial, personal tool. FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
           <span className="footer-source">
             <span>
               Content from <a href={WIKI_PAGE_URL}>Content Unlock</a> on the community FFXIV wiki.
@@ -432,6 +435,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
                 <path d="M6 1h2v6h2.5L7 10.5 3.5 7H6V1ZM2 11.5h10V13H2v-1.5Z" />
               </svg>
+              {!online && <span className="update-offline">Offline</span>}
             </button>
           </span>
         </footer>
