@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useModal } from "./useModal";
+import { DialogBackdrop } from "./Dialog";
 
 const TOAST_MS = 6000;
 
@@ -41,16 +41,9 @@ export function ConfirmDialog({
   onCancel: () => void;
 }) {
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const trapTab = useModal();
   useEffect(() => cancelRef.current?.focus(), []);
   return (
-    <div
-      className="dialog-backdrop"
-      onKeyDown={(event) => {
-        trapTab(event);
-        if (event.key === "Escape") onCancel();
-      }}
-    >
+    <DialogBackdrop onClose={onCancel}>
       <div
         className="dialog"
         role="alertdialog"
@@ -69,6 +62,6 @@ export function ConfirmDialog({
           </button>
         </div>
       </div>
-    </div>
+    </DialogBackdrop>
   );
 }

@@ -56,6 +56,12 @@ export type Content = {
   sections: Section[];
 };
 
+/** What an entry is called wherever it is named: its unlock (its quest when it has none) on one line. */
+export const entryName = (entry: Entry): string => (entry.unlock || entry.quest).replaceAll("\n", " ");
+
+/** "1 entry", "2 entries": a count with its noun. */
+export const entryCount = (n: number): string => `${n} ${n === 1 ? "entry" : "entries"}`;
+
 /** Turns the wiki's Content Unlock page into expansions, sections and entries. */
 export function parseContentUnlockPage(page: WikiPage): Content {
   const root = parse(page.html);

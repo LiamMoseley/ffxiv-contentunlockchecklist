@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { StatusBox } from "./EntryList";
-import { useModal } from "./useModal";
-import type { Entry, Log, SuggestedMatch, UpdatePreview } from "../log";
+import { DialogBackdrop } from "./Dialog";
+import { entryName, type Entry, type Log, type SuggestedMatch, type UpdatePreview } from "../log";
 
 type State =
   | { phase: "checking" }
@@ -23,8 +23,6 @@ const FIELD_NAMES = {
 /** The fields listed under a new or removed entry, when it has a value for them. */
 const DETAIL_FIELDS = ["level", "itemLevel", "type", "quest", "location"] as const;
 
-const name = (entry: Entry) => entry.unlock || entry.quest;
-
 /** A field's value as the dialog shows it: an empty one as "none", the optional challenge tag as yes or no. */
 const show = (value: string | boolean) =>
   typeof value === "boolean" ? (value ? "yes" : "no") : value.replace(/\s*\n\s*/g, "; ") || "none";
@@ -34,7 +32,7 @@ function EntryDetails({ entry }: { entry: Entry }) {
   const fields = DETAIL_FIELDS.filter((f) => entry[f] !== "");
   return (
     <li className="update-item">
-      <strong className="update-name">{name(entry)}</strong>
+      <strong className="update-name">{entryName(entry)}</strong>
       <ul className="update-diff">
         {fields.map((f) => (
           <li key={f}>
@@ -75,7 +73,6 @@ export function UpdateDialog({
       cancelled = true;
     };
   }, [log]);
-  const trapTab = useModal();
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => closeRef.current?.focus(), [state.phase]);
 
@@ -92,13 +89,7 @@ export function UpdateDialog({
   };
 
   return (
-    <div
-      className="dialog-backdrop"
-      onKeyDown={(event) => {
-        trapTab(event);
-        if (event.key === "Escape") onClose();
-      }}
-    >
+    <DialogBackdrop onClose={onClose}>
       <div className="dialog update-dialog" role="dialog" aria-modal="true" aria-labelledby="update-title">
         <h2 id="update-title">Update from the wiki</h2>
         {state.phase === "checking" && <p role="status">Checking the wiki…</p>}
@@ -129,7 +120,7 @@ export function UpdateDialog({
           )}
         </div>
       </div>
-    </div>
+    </DialogBackdrop>
   );
 }
 
@@ -164,7 +155,7 @@ function Matches({
                 >
                   <StatusBox status={accepted.includes(m) ? "completed" : "unmarked"} />
                   <span>
-                    <strong className="update-name">{name(m.from)}</strong> → <strong>{name(m.to)}</strong>
+                    <strong className="update-name">{entryName(m.from)}</strong> → <strong>{entryName(m.to)}</strong>
                   </span>
                 </button>
               </li>
@@ -202,7 +193,7 @@ function Preview({ preview }: { preview: UpdatePreview }) {
             <ul className="update-items">
               {changed.map((c) => (
                 <li key={c.after.id} className="update-item">
-                  <strong className="update-name">{name(c.after)}</strong>
+                  <strong className="update-name">{entryName(c.after)}</strong>
                   <ul className="update-diff">
                     {c.fields.map((f) => (
                       <li key={f}>

@@ -1,4 +1,4 @@
-import { parseContentUnlockPage, type Content, type Entry, type Section, type SectionKind } from "./content";
+import { entryName, parseContentUnlockPage, type Content, type Entry, type Section, type SectionKind } from "./content";
 import { iconsUsed } from "./icons";
 import { pairKey, suggestMatches, type SuggestedMatch } from "./suggestions";
 import { diffContent, type UpdateCheck, type UpdatePreview, type WikiSource } from "./update";
@@ -34,7 +34,7 @@ export type Available = {
   level: number | null;
   sections: Section[];
   /** Reachable Unmarked entries the search and filters leave out. */
-  hidden: number;
+  filteredOut: number;
 };
 
 /** Which view is open: the expansion and tab sections, every NEW entry, or what is available now. */
@@ -43,10 +43,10 @@ export type LogView = "sections" | "new" | "available";
 /**
  * What the open view lists: its sections with the entries that pass the search and filters. The sections view
  * keeps a section whose entries are all filtered out (so the UI can say so); the other views leave it out.
- * `level` and `hidden` are Available now's: the character's level (null with none) and the reachable entries
+ * `level` and `filteredOut` are Available now's: the character's level (null with none) and the reachable entries
  * the search and filters leave out. They are null and 0 in the other views.
  */
-export type Listing = { view: LogView; sections: Section[]; level: number | null; hidden: number };
+export type Listing = { view: LogView; sections: Section[]; level: number | null; filteredOut: number };
 
 /** `content` is the bundled copy; a copy applied from the wiki and stored on the device takes its place. */
 export type LogOptions = { content: Content; storage: Storage; clock: Clock; wiki: WikiSource };
@@ -66,7 +66,11 @@ export type ImportResult =
   | { ok: true; charactersAdded: number; charactersMerged: number; entriesAdded: number }
   | { ok: false; error: BackupError };
 
-const MAX_LEVEL = 100;
+/** The highest level a character can have. */
+export const MAX_LEVEL = 100;
+
+/** Whether a level is a whole number the game allows. */
+const isLevel = (level: number): boolean => Number.isInteger(level) && level >= 1 && level <= MAX_LEVEL;
 
 /** The one World rule, for adding, editing and importing: blank stays blank, a known World is normalised, any other is null. */
 function acceptedWorld(typed: string): string | null {
@@ -109,7 +113,7 @@ const NEXT_STATUS: Record<EntryStatus, EntryStatus> = {
 export function createLog({ content: bundled, storage, clock, wiki }: LogOptions) {
   // A device keeps whichever copy has the higher revision (ADR-0002): its own stored copy, unless it has none.
   // A bundled copy newer than the stored one is offered for review further down, never applied silently.
-  const stored = loadContent();
+  const stored = loadContentAt(CONTENT_KEY);
   let content = stored ?? bundled;
   const bundledIcons = new Set(iconsUsed(bundled));
   const now = () => clock.now().toISOString();
@@ -125,29 +129,45 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     storage.write(PROGRESS_KEY, JSON.stringify(progress));
   }
 
-  /** The copy applied from the wiki on this device, if there is a usable one. */
-  function loadContent(): Content | null {
+  /** The JSON stored under a key; null when there is none or it does not parse. */
+  function loadJson(key: string): unknown {
     try {
-      const saved = JSON.parse(storage.read(CONTENT_KEY) ?? "null") as Content | null;
-      return saved && Array.isArray(saved.sections) && Array.isArray(saved.expansions) ? saved : null;
+      return JSON.parse(storage.read(key) ?? "null");
     } catch {
       return null;
     }
   }
 
+  /** The strings in a stored list; anything else in it, or a stored value that is no list, counts for nothing. */
+  function loadStrings(key: string): string[] {
+    const saved = loadJson(key);
+    return Array.isArray(saved) ? saved.filter((item): item is string => typeof item === "string") : [];
+  }
+
+  /** The content stored under a key, if there is a usable copy: the one applied from the wiki, or the one held for review. */
+  function loadContentAt(key: string): Content | null {
+    const saved = loadJson(key) as Content | null;
+    return saved && Array.isArray(saved.sections) && Array.isArray(saved.expansions) ? saved : null;
+  }
+
+  /** Finds a section of the current content, or throws. */
+  function sectionOrThrow(sectionId: string): Section {
+    const section = content.sections.find((s) => s.id === sectionId);
+    if (!section) throw new Error(`No section ${sectionId}`);
+    return section;
+  }
+
+  /** Finds an expansion of the current content, or throws. */
+  function expansionOrThrow(expansionId: string) {
+    const expansion = content.expansions.find((e) => e.id === expansionId);
+    if (!expansion) throw new Error(`No expansion ${expansionId}`);
+    return expansion;
+  }
+
   /** IDs of the entries the most recently applied update added and the player has not marked as seen. Shared by every character. */
-  let newIds: string[] = loadNewIds();
+  let newIds: string[] = loadStrings(NEW_KEY);
   /** Which view is open; only one is at a time. A view choice for this visit only. */
   let openView: LogView = "sections";
-
-  function loadNewIds(): string[] {
-    try {
-      const saved = JSON.parse(storage.read(NEW_KEY) ?? "[]") as unknown;
-      return Array.isArray(saved) ? saved.filter((id): id is string => typeof id === "string") : [];
-    } catch {
-      return [];
-    }
-  }
 
   /** The NEW entries still in the log, in the wiki's order. */
   const currentNew = (): Entry[] => {
@@ -172,28 +192,26 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
    * Everything the current character can reach now and has not marked: levelling entries at or below
    * their level (a range such as "56-60" by its lower bound), and level-cap entries once they have the
    * expansion's level cap. A character with no level gets `level: null` and nothing. The search and filters
-   * apply; `hidden` counts the reachable entries they leave out.
+   * apply; `filteredOut` counts the reachable entries they leave out.
    */
   function availableNow(): Available {
     const level = currentCharacter().level;
-    if (level === null) return { level, sections: [], hidden: 0 };
-    let hidden = 0;
+    if (level === null) return { level, sections: [], filteredOut: 0 };
+    let filteredOut = 0;
     const sections = content.sections.flatMap((section) => {
-      const expansion = content.expansions.find((e) => e.id === section.expansionId);
-      if (!expansion) throw new Error(`No expansion ${section.expansionId}`);
-      const cap = expansion.levelCap;
+      const cap = expansionOrThrow(section.expansionId).levelCap;
       const reachable = (entry: Entry) =>
         section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
       const reached = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
       const entries = reached.filter((e) => passesFilters(e, "unmarked", filters));
-      hidden += reached.length - entries.length;
+      filteredOut += reached.length - entries.length;
       return entries.length > 0 ? [{ ...section, entries }] : [];
     });
-    return { level, sections, hidden };
+    return { level, sections, filteredOut };
   }
 
   function listing(): Listing {
-    if (openView === "new") return { view: openView, sections: newSections(), level: null, hidden: 0 };
+    if (openView === "new") return { view: openView, sections: newSections(), level: null, filteredOut: 0 };
     if (openView === "available") return { view: openView, ...availableNow() };
     const { expansion, tab } = selection;
     const chosen = content.sections.filter(
@@ -203,7 +221,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       ...s,
       entries: s.entries.filter((e) => passesFilters(e, entryStatus(e.id), filters)),
     }));
-    return { view: openView, sections, level: null, hidden: 0 };
+    return { view: openView, sections, level: null, filteredOut: 0 };
   }
 
   /** The IDs of the entries the open view lists, which Complete Shown and Clear Shown act on. */
@@ -224,12 +242,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
 
   /** Reads the remembered view, keeping each saved value that is still valid and the default for the rest. */
   function restoreView() {
-    let saved: Partial<StoredView> = {};
-    try {
-      saved = JSON.parse(storage.read(VIEW_KEY) ?? "{}") ?? {};
-    } catch {
-      return;
-    }
+    const saved = (loadJson(VIEW_KEY) ?? {}) as Partial<StoredView>;
     if (saved.expansion === "all" || content.expansions.some((e) => e.id === saved.expansion))
       selection.expansion = saved.expansion!;
     if (saved.tab && TABS.includes(saved.tab)) selection.tab = saved.tab;
@@ -295,8 +308,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     const level = details.level ?? null;
     if (!name) return { ok: false, error: "nameRequired" };
     if (world === null) return { ok: false, error: "unknownWorld" };
-    if (level !== null && (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL))
-      return { ok: false, error: "invalidLevel" };
+    if (level !== null && !isLevel(level)) return { ok: false, error: "invalidLevel" };
     if (isTaken(name, world, ignoreId)) return { ok: false, error: "nameTaken" };
     return { ok: true, details: { name, world, dataCenter: dataCenterOfWorld(world) ?? "", level } };
   }
@@ -343,7 +355,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     const stamp = now();
     const records = { ...progress.statuses[characterId] };
     for (const [entryId, status] of next) {
-      const before = records[entryId]?.status ?? "unmarked";
+      const before = statusOf(characterId, entryId);
       if (before === status) continue;
       earlier.set(entryId, before);
       records[entryId] = { status, updatedAt: stamp };
@@ -447,13 +459,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
           name: incoming.name.trim(),
           world: acceptedWorld(incoming.world) ?? "",
           dataCenter: dataCenterOfWorld(acceptedWorld(incoming.world) ?? "") ?? "",
-          level:
-            incoming.level !== null &&
-            Number.isInteger(incoming.level) &&
-            incoming.level >= 1 &&
-            incoming.level <= MAX_LEVEL
-              ? incoming.level
-              : null,
+          level: incoming.level !== null && isLevel(incoming.level) ? incoming.level : null,
           updatedAt: now(),
           deleted: false,
         };
@@ -481,22 +487,15 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
   }
 
   /** Keys of the pairs the player declined; they are never suggested again. */
-  function declinedPairs(): Set<string> {
-    try {
-      const saved = JSON.parse(storage.read(DECLINED_KEY) ?? "[]") as unknown;
-      return new Set(Array.isArray(saved) ? saved.filter((k): k is string => typeof k === "string") : []);
-    } catch {
-      return new Set();
-    }
-  }
+  const declinedPairs = (): Set<string> => new Set(loadStrings(DECLINED_KEY));
 
   /** Moves every character's status from the orphan to the entry that replaces it, as one saved change. */
   function moveStatuses({ from, to }: SuggestedMatch) {
     const stamp = now();
     let moved = false;
-    for (const records of Object.values(progress.statuses)) {
-      const status = records[from.id]?.status ?? "unmarked";
-      if (status === "unmarked" || (records[to.id]?.status ?? "unmarked") !== "unmarked") continue;
+    for (const [characterId, records] of Object.entries(progress.statuses)) {
+      const status = statusOf(characterId, from.id);
+      if (status === "unmarked" || statusOf(characterId, to.id) !== "unmarked") continue;
       records[to.id] = { status, updatedAt: stamp };
       records[from.id] = { status: "unmarked", updatedAt: stamp };
       moved = true;
@@ -605,21 +604,14 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
 
   // A copy the device is holding for review (a fetched update not yet applied or dismissed) and a bundled copy
   // newer than the device's own are both offered like a fetched update; the newer revision wins.
-  for (const candidate of [loadOffered(), stored && bundled.revisionId > stored.revisionId ? bundled : null]) {
+  for (const candidate of [
+    loadContentAt(OFFERED_KEY),
+    stored && bundled.revisionId > stored.revisionId ? bundled : null,
+  ]) {
     if (!candidate || candidate.revisionId <= content.revisionId || candidate.revisionId <= (offered?.revisionId ?? 0))
       continue;
     const check = compareWith(candidate);
     if (check.status === "changes") offered = check.preview;
-  }
-
-  /** The fetched update kept for review, if there is a usable one. */
-  function loadOffered(): Content | null {
-    try {
-      const saved = JSON.parse(storage.read(OFFERED_KEY) ?? "null") as Content | null;
-      return saved && Array.isArray(saved.sections) && Array.isArray(saved.expansions) ? saved : null;
-    } catch {
-      return null;
-    }
   }
 
   return {
@@ -672,7 +664,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       const entries = currentNew();
       if (entries.length === 0) return null;
       return {
-        names: entries.slice(0, NOTICE_NAMES).map((e) => e.unlock.replaceAll("\n", " ")),
+        names: entries.slice(0, NOTICE_NAMES).map(entryName),
         more: Math.max(0, entries.length - NOTICE_NAMES),
       };
     },
@@ -776,13 +768,11 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     /** Available now's own reading of the listing: see `listing`. */
     availableNow,
     sectionProgress(sectionId: string): ProgressCount {
-      const section = content.sections.find((s) => s.id === sectionId);
-      if (!section) throw new Error(`No section ${sectionId}`);
-      return progressOf([section]);
+      return progressOf([sectionOrThrow(sectionId)]);
     },
     /** Progress across both of the expansion's sections. */
     expansionProgress(expansionId: string): ProgressCount {
-      if (!content.expansions.some((e) => e.id === expansionId)) throw new Error(`No expansion ${expansionId}`);
+      expansionOrThrow(expansionId);
       return progressOf(content.sections.filter((s) => s.expansionId === expansionId));
     },
     /** Progress across every section of the log. */
