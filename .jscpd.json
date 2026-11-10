@@ -1,0 +1,9 @@
+{
+  "path": ["src", "scripts"],
+  "minLines": 8,
+  "minTokens": 80,
+  "threshold": 0,
+  "ignore": ["**/*.test.*", "**/bundled-content.json"],
+  "reporters": ["consoleFull"],
+  "gitignore": true
+}

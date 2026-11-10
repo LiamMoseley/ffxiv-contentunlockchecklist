@@ -1454,6 +1454,7 @@ describe("backup export and import", () => {
       charactersAdded: 1,
       charactersMerged: 0,
       entriesAdded: 3,
+      message: "Imported 3 entries: 1 character added, 0 filled in. Undo to revert.",
     });
     const aria = log.characters().find((c) => c.name === "Aria")!;
     expect(aria).toMatchObject({ world: "Balmung", dataCenter: "Crystal", level: 50 });
@@ -1477,6 +1478,7 @@ describe("backup export and import", () => {
       charactersAdded: 0,
       charactersMerged: 1,
       entriesAdded: 3,
+      message: "Imported 3 entries: 0 characters added, 1 filled in. Undo to revert.",
     });
     expect(log.characters()).toHaveLength(2);
     expect(log.currentCharacter().id).toBe(local.id);
@@ -1502,7 +1504,11 @@ describe("backup export and import", () => {
     source.setEntryStatus(SASTASHA, "unmarked");
     const { log } = openLog();
 
-    expect(log.importBackup(source.exportBackup().json)).toMatchObject({ ok: true, entriesAdded: 0 });
+    expect(log.importBackup(source.exportBackup().json)).toMatchObject({
+      ok: true,
+      entriesAdded: 0,
+      message: "Nothing to import: this device already has everything in that backup.",
+    });
   });
 
   it("writes imported statuses as a new change with a fresh timestamp", () => {
@@ -1550,7 +1556,13 @@ describe("backup export and import", () => {
       ],
     });
 
-    expect(log.importBackup(file)).toEqual({ ok: true, charactersAdded: 1, charactersMerged: 0, entriesAdded: 1 });
+    expect(log.importBackup(file)).toEqual({
+      ok: true,
+      charactersAdded: 1,
+      charactersMerged: 0,
+      entriesAdded: 1,
+      message: "Imported 1 entry: 1 character added, 0 filled in. Undo to revert.",
+    });
     expect(log.characters().find((c) => c.name === "Dax")).toMatchObject({ dataCenter: "Crystal", level: null });
   });
 
@@ -1564,6 +1576,7 @@ describe("backup export and import", () => {
       charactersAdded: 0,
       charactersMerged: 1,
       entriesAdded: 0,
+      message: "Nothing to import: this device already has everything in that backup.",
     });
     expect(log.undo()).toBe(true);
     expect(names(log)).not.toContain("Aria");

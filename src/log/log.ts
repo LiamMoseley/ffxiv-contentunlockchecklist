@@ -1,4 +1,12 @@
-import { entryName, parseContentUnlockPage, type Content, type Entry, type Section, type SectionKind } from "./content";
+import {
+  entryCount,
+  entryName,
+  parseContentUnlockPage,
+  type Content,
+  type Entry,
+  type Section,
+  type SectionKind,
+} from "./content";
 import { iconsUsed } from "./icons";
 import { pairKey, suggestMatches, type SuggestedMatch } from "./suggestions";
 import { diffContent, type UpdateCheck, type UpdatePreview, type WikiSource } from "./update";
@@ -61,9 +69,9 @@ export type CharacterResult = { ok: true; character: Character } | { ok: false; 
 /** A backup file ready to save. */
 export type BackupFile = { fileName: string; json: string };
 
-/** What an import did: characters added, existing characters it filled in, and entries it set. */
+/** What an import did: characters added, existing characters it filled in, entries it set, and the message to show. */
 export type ImportResult =
-  | { ok: true; charactersAdded: number; charactersMerged: number; entriesAdded: number }
+  | { ok: true; charactersAdded: number; charactersMerged: number; entriesAdded: number; message: string }
   | { ok: false; error: BackupError };
 
 /** The highest level a character can have. */
@@ -478,7 +486,12 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     if (importedCharacterIds.length > 0) save();
     if (importedCharacterIds.length > 0 || earlierByCharacter.size > 0)
       history.push({ importedCharacterIds, earlierByCharacter });
-    return { ok: true, charactersAdded: importedCharacterIds.length, charactersMerged, entriesAdded };
+    const charactersAdded = importedCharacterIds.length;
+    const message =
+      charactersAdded === 0 && entriesAdded === 0
+        ? "Nothing to import: this device already has everything in that backup."
+        : `Imported ${entryCount(entriesAdded)}: ${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`;
+    return { ok: true, charactersAdded, charactersMerged, entriesAdded, message };
   }
 
   /** Whether any character that is not deleted has marked the entry. */

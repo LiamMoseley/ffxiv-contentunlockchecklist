@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { entryCount, MAX_LEVEL, type BackupError, type Character, type CharacterError, type Log } from "../log";
+import { MAX_LEVEL, type BackupError, type Character, type CharacterError, type Log } from "../log";
 import { DialogBackdrop } from "./Dialog";
 import { ConfirmDialog } from "./Messages";
 import { Count, ProgressBar } from "./ProgressBar";
@@ -61,14 +61,7 @@ export function CharacterMenu({
       onChange(IMPORT_ERROR_TEXT[result.error]);
       return;
     }
-    const { charactersAdded, charactersMerged, entriesAdded } = result;
-    if (charactersAdded === 0 && entriesAdded === 0) {
-      onChange("Nothing to import: this device already has everything in that backup.");
-      return;
-    }
-    onChange(
-      `Imported ${entryCount(entriesAdded)}: ${charactersAdded} character${charactersAdded === 1 ? "" : "s"} added, ${charactersMerged} filled in. Undo to revert.`,
-    );
+    onChange(result.message);
   };
 
   const forming = mode.kind === "form";
