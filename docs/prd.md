@@ -173,8 +173,9 @@ quickly.*
 
 **US-8. Undo a mistake.**
 *As a player, I want to undo an accidental change, so that a mis-tap doesn't cost me my record.*
-- Every change to progress shows a brief message with an **Undo** option. This covers single ticks,
-  bulk changes, reset, import and deleting a character.
+- Every change to progress can be undone. Bulk changes, reset, import and deleting a character show a
+  brief message with an **Undo** option; a single status change shows no message, and the Undo button
+  in the hint bar undoes it.
 - Undo restores the exact previous state. A standard keyboard shortcut does the same.
 - Undo history belongs to the device and the current visit; it doesn't survive a reload.
 
@@ -190,7 +191,7 @@ quickly.*
 scrolling.*
 - Search matches any word in any field and looks across every section in view: the selected expansion and
   tab, or every section on the All tile.
-- A keyboard shortcut moves focus to the search box.
+- Keyboard shortcuts move focus to the search box: `/` and Ctrl/Cmd+K.
 
 **US-11. Filter by type.**
 *As a player, I want to see only one kind of content (for example dungeons), so that I can work through
@@ -223,7 +224,7 @@ know what to do next.*
   expansion's level cap.
 - Item level isn't tracked for characters. Level-cap entries show their item level so the player can
   judge it themselves.
-- If the character has no level set, the player is asked for one.
+- If the character has no level set, Available now says so in a sentence with a **Set level** button.
 - Completing an entry removes it from this view straight away.
 - When nothing is left, the app says so and suggests raising the level.
 
@@ -244,7 +245,8 @@ tell them apart.*
 - A name only has to be unique on its World, as in the game. Characters with no World set count as
   sharing one World, so two characters with the same name and no World aren't allowed.
 - Renaming a character, or adding its World later, keeps its progress.
-- Choosing a known World fills in its Data Center automatically. Unknown Worlds can still be typed in.
+- Choosing a known World fills in its Data Center automatically. A World must be chosen from the list (or left blank), so a Data Center can't be entered on its own.
+  Adding or editing a character and importing a backup apply the same rule.
 - Characters are shown as "Name (World)" wherever they're named.
 
 **US-17. Delete or reset safely.**
@@ -280,8 +282,8 @@ to another device.*
 **US-20. Update the list from the wiki.**
 *As a player, I want to fetch the latest list after a game patch, so that new content appears in my
 log.*
-- An **Update** action checks the wiki and reports what changed (new, changed and removed entries)
-  before applying anything.
+- An **Update** action first asks for confirmation before it fetches from the wiki, then checks the wiki
+  and reports what changed (new, changed and removed entries) before applying anything.
 - If nothing changed, the app says it's up to date.
 - New entries are tagged **NEW** until the player marks them as seen, or until the next update.
 - While there are NEW entries not yet seen, a notice names up to three of them (then "and N more"),

@@ -13,6 +13,7 @@ const ERROR_TEXT: Record<CharacterError, string> = {
 };
 
 const IMPORT_ERROR_TEXT: Record<BackupError, string> = {
+  unknownWorld: "That backup names a World this app does not know.",
   notABackup: "That file is not a backup from this app.",
   newerVersion: "That backup was made by a newer version of the app. Update the app to read it.",
 };

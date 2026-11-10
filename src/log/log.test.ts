@@ -667,6 +667,10 @@ describe("adding characters", () => {
     expect(known.ok && [known.character.world, known.character.dataCenter]).toEqual(["Zodiark", "Light"]);
     expect(log.addCharacter({ name: "Bren", world: "Newworld" })).toEqual({ ok: false, error: "unknownWorld" });
     expect(log.characters()).toHaveLength(2);
+    expect(log.editCharacter(known.ok ? known.character.id : "", { name: "Alia", world: "Newworld" })).toEqual({
+      ok: false,
+      error: "unknownWorld",
+    });
     expect(log.dataCenterOf("Ragnarok")).toBe("Chaos");
     expect(log.dataCenterOf("Newworld")).toBeNull();
     expect(log.worlds()).toContain("Zodiark");
@@ -1564,6 +1568,39 @@ describe("backup export and import", () => {
     expect(log.undo()).toBe(true);
     expect(names(log)).not.toContain("Aria");
     expect(log.canUndo()).toBe(false);
+  });
+
+  it("rejects a backup naming an unknown World, as adding a character does, and changes nothing", () => {
+    const { log, storage } = openLog();
+    const stored = storage.read("contentUnlockLog.progress");
+    const backup = JSON.stringify({
+      formatVersion: 1,
+      exportedAt: T2,
+      characters: [
+        { name: "Aria", world: "Balmung", dataCenter: "Crystal", level: 50, updatedAt: T1, statuses: {} },
+        { name: "Bren", world: "Newworld", dataCenter: "", level: null, updatedAt: T1, statuses: {} },
+      ],
+    });
+
+    expect(log.importBackup(backup)).toEqual({ ok: false, error: "unknownWorld" });
+    expect(storage.read("contentUnlockLog.progress")).toBe(stored);
+    expect(log.canUndo()).toBe(false);
+  });
+
+  it("still imports a blank World, and stores a known World under its canonical spelling", () => {
+    const { log } = openLog();
+    const backup = JSON.stringify({
+      formatVersion: 1,
+      exportedAt: T2,
+      characters: [
+        { name: "Aria", world: " balmung ", dataCenter: "", level: null, updatedAt: T1, statuses: {} },
+        { name: "Bree", world: "", dataCenter: "", level: null, updatedAt: T1, statuses: {} },
+      ],
+    });
+
+    expect(log.importBackup(backup)).toMatchObject({ ok: true, charactersAdded: 2 });
+    expect(log.characters().find((c) => c.name === "Aria")).toMatchObject({ world: "Balmung", dataCenter: "Crystal" });
+    expect(log.characters().find((c) => c.name === "Bree")).toMatchObject({ world: "", dataCenter: "" });
   });
 
   it("rejects a file that is not a backup, or from a newer format, and changes nothing", () => {
