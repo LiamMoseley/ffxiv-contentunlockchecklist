@@ -52,7 +52,7 @@
    "heading": "Level 1 - 50",
    "entries": [
     {
-     "id": "level-1-class-quest",
+     "id": "level-1-class-quest@arr",
      "level": "1",
      "itemLevel": "",
      "unlock": "Level 1 Class Quest",
@@ -108,7 +108,7 @@
      }
     },
     {
-     "id": "level-5-class-quest",
+     "id": "level-5-class-quest@arr",
      "level": "5",
      "itemLevel": "",
      "unlock": "Level 5 Class Quest",
@@ -156,7 +156,7 @@
      }
     },
     {
-     "id": "mist-access/where-the-heart-is-mist",
+     "id": "mist-access/where-the-heart-is-mist@arr",
      "level": "5",
      "itemLevel": "",
      "unlock": "Mist access",
@@ -224,7 +224,7 @@
      }
     },
     {
-     "id": "the-goblet-access/where-the-heart-is-the-goblet",
+     "id": "the-goblet-access/where-the-heart-is-the-goblet@arr",
      "level": "5",
      "itemLevel": "",
      "unlock": "The Goblet access",
@@ -292,7 +292,7 @@
      }
     },
     {
-     "id": "guildleves-inn-access/spirithold-broken-way-down-in-the-hole-just-deserts",
+     "id": "guildleves-inn-access/spirithold-broken-way-down-in-the-hole-just-deserts@arr",
      "level": "10",
      "itemLevel": "",
      "unlock": "Guildleves\nInn Access",
@@ -491,7 +491,7 @@
      }
     },
     {
-     "id": "level-10-class-quest",
+     "id": "level-10-class-quest@arr",
      "level": "10",
      "itemLevel": "",
      "unlock": "Level 10 Class Quest",
@@ -571,7 +571,7 @@
      }
     },
     {
-     "id": "rank-2-hunting-log/you-need-to-complete-rank-1-first",
+     "id": "rank-2-hunting-log/you-need-to-complete-rank-1-first@arr",
      "level": "10",
      "itemLevel": "",
      "unlock": "Rank 2 Hunting Log",
@@ -626,7 +626,7 @@
      }
     },
     {
-     "id": "the-lavender-beds-access/where-the-heart-is-the-lavender-beds",
+     "id": "the-lavender-beds-access/where-the-heart-is-the-lavender-beds@arr",
      "level": "10",
      "itemLevel": "",
      "unlock": "The Lavender Beds access",
@@ -694,7 +694,7 @@
      }
     },
     {
-     "id": "guildhests/simply-the-hest-gridania-simply-the-hest-uldah-simply-the-hest-limsa-lominsa",
+     "id": "guildhests/simply-the-hest-gridania-simply-the-hest-uldah-simply-the-hest-limsa-lominsa@arr",
      "level": "10",
      "itemLevel": "",
      "unlock": "Guildhests",
@@ -805,7 +805,7 @@
      }
     },
     {
-     "id": "duty-roulette-guildhests",
+     "id": "duty-roulette-guildhests@arr",
      "level": "10",
      "itemLevel": "",
      "unlock": "Duty Roulette: Guildhests",
@@ -858,7 +858,7 @@
      }
     },
     {
-     "id": "level-15-class-quest",
+     "id": "level-15-class-quest@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Level 15 Class Quest",
@@ -906,7 +906,7 @@
      }
     },
     {
-     "id": "dye/color-your-world",
+     "id": "dye/color-your-world@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Dye",
@@ -983,7 +983,7 @@
      }
     },
     {
-     "id": "cast-glamour-glamour-plate/if-i-had-a-glamour-a-selfimproving-man",
+     "id": "cast-glamour-glamour-plate/if-i-had-a-glamour-a-selfimproving-man@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Cast Glamour\nGlamour Plate",
@@ -1097,7 +1097,7 @@
      }
     },
     {
-     "id": "master-recipes-glamours-set/absolutely-glamourous-submission-impossible",
+     "id": "master-recipes-glamours-set/absolutely-glamourous-submission-impossible@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Master Recipes: Glamours Set",
@@ -1197,7 +1197,7 @@
      }
     },
     {
-     "id": "aesthetician/beauty-is-only-scalp-deep",
+     "id": "aesthetician/beauty-is-only-scalp-deep@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Aesthetician",
@@ -1259,7 +1259,7 @@
      }
     },
     {
-     "id": "the-gold-saucer/it-could-happen-to-you",
+     "id": "the-gold-saucer/it-could-happen-to-you@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "The Gold Saucer",
@@ -1350,7 +1350,7 @@
      }
     },
     {
-     "id": "challenge-log/rising-to-the-challenge",
+     "id": "challenge-log/rising-to-the-challenge@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Challenge Log",
@@ -1421,7 +1421,7 @@
      }
     },
     {
-     "id": "hall-of-the-novice",
+     "id": "hall-of-the-novice@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Hall of the Novice",
@@ -1502,7 +1502,7 @@
      }
     },
     {
-     "id": "sastasha/its-probably-pirates",
+     "id": "sastasha/its-probably-pirates@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Sastasha",
@@ -1580,7 +1580,7 @@
      }
     },
     {
-     "id": "party-finder",
+     "id": "party-finder@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Party Finder",
@@ -1633,7 +1633,7 @@
      }
     },
     {
-     "id": "airships/the-lominsan-envoy-the-uldahn-envoy-the-gridanian-envoy",
+     "id": "airships/the-lominsan-envoy-the-uldahn-envoy-the-gridanian-envoy@arr",
      "level": "15",
      "itemLevel": "",
      "unlock": "Airships",
@@ -1721,7 +1721,7 @@
      }
     },
     {
-     "id": "the-tamtara-deepcroft/fire-in-the-gloom",
+     "id": "the-tamtara-deepcroft/fire-in-the-gloom@arr",
      "level": "16",
      "itemLevel": "",
      "unlock": "The Tam-Tara Deepcroft",
@@ -1799,7 +1799,7 @@
      }
     },
     {
-     "id": "duty-roulette-leveling",
+     "id": "duty-roulette-leveling@arr",
      "level": "16",
      "itemLevel": "",
      "unlock": "Duty Roulette: Leveling",
@@ -1852,7 +1852,7 @@
      }
     },
     {
-     "id": "retainers/the-scions-of-the-seventh-dawn",
+     "id": "retainers/the-scions-of-the-seventh-dawn@arr",
      "level": "17",
      "itemLevel": "",
      "unlock": "Retainers",
@@ -1940,7 +1940,7 @@
      }
     },
     {
-     "id": "retainer-ventures/an-illconceived-venture-an-illconceived-venture-an-illconceived-venture",
+     "id": "retainer-ventures/an-illconceived-venture-an-illconceived-venture-an-illconceived-venture@arr",
      "level": "17",
      "itemLevel": "",
      "unlock": "Retainer Ventures",
@@ -2056,7 +2056,7 @@
      }
     },
     {
-     "id": "copperbell-mines/into-a-copper-hell",
+     "id": "copperbell-mines/into-a-copper-hell@arr",
      "level": "17",
      "itemLevel": "",
      "unlock": "Copperbell Mines",
@@ -2134,7 +2134,7 @@
      }
     },
     {
-     "id": "palace-of-the-dead/the-house-that-death-built",
+     "id": "palace-of-the-dead/the-house-that-death-built@arr",
      "level": "17",
      "itemLevel": "",
      "unlock": "Palace of the Dead",
@@ -2209,7 +2209,7 @@
      }
     },
     {
-     "id": "ceremony-of-eternal-bonding/the-ties-that-bind",
+     "id": "ceremony-of-eternal-bonding/the-ties-that-bind@arr",
      "level": "17",
      "itemLevel": "",
      "unlock": "Ceremony of Eternal Bonding",
@@ -2272,7 +2272,7 @@
      }
     },
     {
-     "id": "materia-extraction/forging-the-spirit",
+     "id": "materia-extraction/forging-the-spirit@arr",
      "level": "19",
      "itemLevel": "",
      "unlock": "Materia Extraction",
@@ -2350,7 +2350,7 @@
      }
     },
     {
-     "id": "materia-melding/waking-the-spirit",
+     "id": "materia-melding/waking-the-spirit@arr",
      "level": "19",
      "itemLevel": "",
      "unlock": "Materia Melding",
@@ -2427,7 +2427,7 @@
      }
     },
     {
-     "id": "level-20-class-quest",
+     "id": "level-20-class-quest@arr",
      "level": "20",
      "itemLevel": "",
      "unlock": "Level 20 Class Quest",
@@ -2475,7 +2475,7 @@
      }
     },
     {
-     "id": "rank-3-hunting-log/you-need-to-complete-rank-2-first",
+     "id": "rank-3-hunting-log/you-need-to-complete-rank-2-first@arr",
      "level": "20",
      "itemLevel": "",
      "unlock": "Rank 3 Hunting Log",
@@ -2530,7 +2530,7 @@
      }
     },
     {
-     "id": "halatali/hallo-halatali",
+     "id": "halatali/hallo-halatali@arr",
      "level": "20",
      "itemLevel": "",
      "unlock": "Halatali",
@@ -2608,7 +2608,7 @@
      }
     },
     {
-     "id": "the-bowl-of-embers/lord-of-the-inferno",
+     "id": "the-bowl-of-embers/lord-of-the-inferno@arr",
      "level": "20",
      "itemLevel": "",
      "unlock": "The Bowl of Embers",
@@ -2690,7 +2690,7 @@
      }
     },
     {
-     "id": "grand-companies/the-company-you-keep",
+     "id": "grand-companies/the-company-you-keep@arr",
      "level": "20",
      "itemLevel": "",
      "unlock": "Grand Companies",
@@ -2751,7 +2751,7 @@
      }
     },
     {
-     "id": "mount-access/my-little-chocobo",
+     "id": "mount-access/my-little-chocobo@arr",
      "level": "20",
      "itemLevel": "",
      "unlock": "Mount Access",
@@ -2812,7 +2812,7 @@
      }
     },
     {
-     "id": "sightseeing-log/a-sight-to-behold",
+     "id": "sightseeing-log/a-sight-to-behold@arr",
      "level": "20",
      "itemLevel": "",
      "unlock": "Sightseeing Log",
@@ -2882,7 +2882,7 @@
      }
     },
     {
-     "id": "the-thousand-maws-of-totorak/into-the-beasts-maw",
+     "id": "the-thousand-maws-of-totorak/into-the-beasts-maw@arr",
      "level": "24",
      "itemLevel": "",
      "unlock": "The Thousand Maws of Toto-Rak",
@@ -2960,7 +2960,7 @@
      }
     },
     {
-     "id": "level-25-class-quest",
+     "id": "level-25-class-quest@arr",
      "level": "25",
      "itemLevel": "",
      "unlock": "Level 25 Class Quest",
@@ -3008,7 +3008,7 @@
      }
     },
     {
-     "id": "advanced-materia-melding/melding-materia-muchly",
+     "id": "advanced-materia-melding/melding-materia-muchly@arr",
      "level": "25",
      "itemLevel": "",
      "unlock": "Advanced Materia Melding",
@@ -3085,7 +3085,7 @@
      }
     },
     {
-     "id": "haukke-manor/skeletons-in-her-closet",
+     "id": "haukke-manor/skeletons-in-her-closet@arr",
      "level": "28",
      "itemLevel": "",
      "unlock": "Haukke Manor",
@@ -3163,7 +3163,7 @@
      }
     },
     {
-     "id": "white-wolf-gate-access/broadening-horizons",
+     "id": "white-wolf-gate-access/broadening-horizons@arr",
      "level": "29",
      "itemLevel": "",
      "unlock": "White Wolf Gate Access",
@@ -3239,7 +3239,7 @@
      }
     },
     {
-     "id": "level-30-class-quest",
+     "id": "level-30-class-quest@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Level 30 Class Quest",
@@ -3287,7 +3287,7 @@
      }
     },
     {
-     "id": "level-30-job-quest",
+     "id": "level-30-job-quest@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Level 30 Job Quest",
@@ -3350,7 +3350,7 @@
      }
     },
     {
-     "id": "rank-4-hunting-log/you-need-to-complete-rank-3-first",
+     "id": "rank-4-hunting-log/you-need-to-complete-rank-3-first@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Rank 4 Hunting Log",
@@ -3405,7 +3405,7 @@
      }
     },
     {
-     "id": "desynthesis/gone-to-pieces",
+     "id": "desynthesis/gone-to-pieces@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Desynthesis",
@@ -3476,7 +3476,7 @@
      }
     },
     {
-     "id": "wolves-den-pier/a-pup-no-longer-maelstrom-a-pup-no-longer-twin-adder-a-pup-no-longer-immortal-flames",
+     "id": "wolves-den-pier/a-pup-no-longer-maelstrom-a-pup-no-longer-twin-adder-a-pup-no-longer-immortal-flames@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Wolves' Den Pier",
@@ -3637,7 +3637,7 @@
      }
     },
     {
-     "id": "crystalline-conflict/the-crystal-lines-call",
+     "id": "crystalline-conflict/the-crystal-lines-call@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Crystalline Conflict",
@@ -3718,7 +3718,7 @@
      }
     },
     {
-     "id": "daily-challenge-frontline/like-civilized-men-and-women-maelstrom-like-civilized-men-and-women-twin-adder-like-civilized-men-and-women-immortal-flames",
+     "id": "daily-challenge-frontline/like-civilized-men-and-women-maelstrom-like-civilized-men-and-women-twin-adder-like-civilized-men-and-women-immortal-flames@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Daily Challenge: Frontline",
@@ -3856,7 +3856,7 @@
      }
     },
     {
-     "id": "rival-wings/earning-your-wings",
+     "id": "rival-wings/earning-your-wings@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Rival Wings",
@@ -3930,7 +3930,7 @@
      }
     },
     {
-     "id": "companion-chocobo-saddlebag/my-feisty-little-chocobo",
+     "id": "companion-chocobo-saddlebag/my-feisty-little-chocobo@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Companion\nChocobo Saddlebag",
@@ -4015,7 +4015,7 @@
      }
     },
     {
-     "id": "chocobo-raising/bird-in-hand",
+     "id": "chocobo-raising/bird-in-hand@arr",
      "level": "30",
      "itemLevel": "",
      "unlock": "Chocobo Raising",
@@ -4092,7 +4092,7 @@
      }
     },
     {
-     "id": "brayfloxs-longstop/the-things-we-do-for-cheese",
+     "id": "brayfloxs-longstop/the-things-we-do-for-cheese@arr",
      "level": "32",
      "itemLevel": "",
      "unlock": "Brayflox's Longstop",
@@ -4170,7 +4170,7 @@
      }
     },
     {
-     "id": "the-navel/lord-of-crags",
+     "id": "the-navel/lord-of-crags@arr",
      "level": "34",
      "itemLevel": "",
      "unlock": "The Navel",
@@ -4252,7 +4252,7 @@
      }
     },
     {
-     "id": "level-35-job-quest",
+     "id": "level-35-job-quest@arr",
      "level": "35",
      "itemLevel": "",
      "unlock": "Level 35 Job Quest",
@@ -4300,7 +4300,7 @@
      }
     },
     {
-     "id": "the-sunken-temple-of-qarn/braving-new-depths",
+     "id": "the-sunken-temple-of-qarn/braving-new-depths@arr",
      "level": "35",
      "itemLevel": "",
      "unlock": "The Sunken Temple of Qarn",
@@ -4378,7 +4378,7 @@
      }
     },
     {
-     "id": "treasure-hunt/treasures-and-tribulations",
+     "id": "treasure-hunt/treasures-and-tribulations@arr",
      "level": "36",
      "itemLevel": "",
      "unlock": "Treasure Hunt",
@@ -4461,7 +4461,7 @@
      }
     },
     {
-     "id": "cutters-cry/dishonor-before-death",
+     "id": "cutters-cry/dishonor-before-death@arr",
      "level": "38",
      "itemLevel": "",
      "unlock": "Cutter's Cry",
@@ -4539,7 +4539,7 @@
      }
     },
     {
-     "id": "level-40-job-quest",
+     "id": "level-40-job-quest@arr",
      "level": "40",
      "itemLevel": "",
      "unlock": "Level 40 Job Quest",
@@ -4587,7 +4587,7 @@
      }
     },
     {
-     "id": "rank-5-hunting-log/you-need-to-complete-rank-4-first",
+     "id": "rank-5-hunting-log/you-need-to-complete-rank-4-first@arr",
      "level": "40",
      "itemLevel": "",
      "unlock": "Rank 5 Hunting Log",
@@ -4642,7 +4642,7 @@
      }
     },
     {
-     "id": "the-stone-vigil/in-pursuit-of-the-past",
+     "id": "the-stone-vigil/in-pursuit-of-the-past@arr",
      "level": "41",
      "itemLevel": "",
      "unlock": "The Stone Vigil",
@@ -4720,7 +4720,7 @@
      }
     },
     {
-     "id": "ixal-daily-quests/a-bad-bladder",
+     "id": "ixal-daily-quests/a-bad-bladder@arr",
      "level": "41",
      "itemLevel": "",
      "unlock": "Ixal Daily Quests",
@@ -4805,7 +4805,7 @@
      }
     },
     {
-     "id": "kobold-daily-quests/highway-robbery",
+     "id": "kobold-daily-quests/highway-robbery@arr",
      "level": "41",
      "itemLevel": "",
      "unlock": "Kobold Daily Quests",
@@ -4880,7 +4880,7 @@
      }
     },
     {
-     "id": "sylph-daily-quests/seeking-solace",
+     "id": "sylph-daily-quests/seeking-solace@arr",
      "level": "42",
      "itemLevel": "",
      "unlock": "Sylph Daily Quests",
@@ -4955,7 +4955,7 @@
      }
     },
     {
-     "id": "amaljaa-daily-quests/peace-for-thanalan",
+     "id": "amaljaa-daily-quests/peace-for-thanalan@arr",
      "level": "43",
      "itemLevel": "",
      "unlock": "Amalj'aa Daily Quests",
@@ -5030,7 +5030,7 @@
      }
     },
     {
-     "id": "sahagin-daily-quests/they-came-from-the-deep",
+     "id": "sahagin-daily-quests/they-came-from-the-deep@arr",
      "level": "44",
      "itemLevel": "",
      "unlock": "Sahagin Daily Quests",
@@ -5105,7 +5105,7 @@
      }
     },
     {
-     "id": "dzemael-darkhold/fort-of-fear",
+     "id": "dzemael-darkhold/fort-of-fear@arr",
      "level": "44",
      "itemLevel": "",
      "unlock": "Dzemael Darkhold",
@@ -5180,7 +5180,7 @@
      }
     },
     {
-     "id": "the-howling-eye/lady-of-the-vortex",
+     "id": "the-howling-eye/lady-of-the-vortex@arr",
      "level": "44",
      "itemLevel": "",
      "unlock": "The Howling Eye",
@@ -5262,7 +5262,7 @@
      }
     },
     {
-     "id": "level-45-job-quest",
+     "id": "level-45-job-quest@arr",
      "level": "45",
      "itemLevel": "",
      "unlock": "Level 45 Job Quest",
@@ -5310,7 +5310,7 @@
      }
     },
     {
-     "id": "the-aurum-vale/going-for-gold",
+     "id": "the-aurum-vale/going-for-gold@arr",
      "level": "47",
      "itemLevel": "",
      "unlock": "The Aurum Vale",
@@ -5385,7 +5385,7 @@
      }
     },
     {
-     "id": "adventurer-squadrons/squadron-and-commander",
+     "id": "adventurer-squadrons/squadron-and-commander@arr",
      "level": "47",
      "itemLevel": "",
      "unlock": "Adventurer Squadrons",
@@ -5438,7 +5438,7 @@
      }
     },
     {
-     "id": "hall-of-the-novice-tactical-exercises/hearts-on-fire",
+     "id": "hall-of-the-novice-tactical-exercises/hearts-on-fire@arr",
      "level": "49",
      "itemLevel": "",
      "unlock": "Hall of the Novice: Tactical Exercises",
@@ -5516,7 +5516,7 @@
      }
     },
     {
-     "id": "level-50-job-quest",
+     "id": "level-50-job-quest@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Level 50 Job Quest",
@@ -5564,7 +5564,7 @@
      }
     },
     {
-     "id": "castrum-meridianum/rock-the-castrum",
+     "id": "castrum-meridianum/rock-the-castrum@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Castrum Meridianum",
@@ -5642,7 +5642,7 @@
      }
     },
     {
-     "id": "the-praetorium/the-ultimate-weapon",
+     "id": "the-praetorium/the-ultimate-weapon@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "The Praetorium",
@@ -5720,7 +5720,7 @@
      }
     },
     {
-     "id": "the-porta-decumana/the-ultimate-weapon",
+     "id": "the-porta-decumana/the-ultimate-weapon@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "The Porta Decumana",
@@ -5788,7 +5788,7 @@
      }
     },
     {
-     "id": "duty-roulette-main-scenario",
+     "id": "duty-roulette-main-scenario@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Duty Roulette: Main Scenario",
@@ -5841,7 +5841,7 @@
      }
     },
     {
-     "id": "duty-roulette-trials",
+     "id": "duty-roulette-trials@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Duty Roulette: Trials",
@@ -5894,7 +5894,7 @@
      }
     },
     {
-     "id": "duty-roulette-alliance-raid",
+     "id": "duty-roulette-alliance-raid@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Duty Roulette: Alliance Raid",
@@ -5954,7 +5954,7 @@
      }
     },
     {
-     "id": "hildibrand-adventures/the-rise-and-fall-of-gentlemen",
+     "id": "hildibrand-adventures/the-rise-and-fall-of-gentlemen@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Hildibrand Adventures",
@@ -6025,7 +6025,7 @@
      }
     },
     {
-     "id": "the-hunt/let-the-hunt-begin-maelstrom-let-the-hunt-begin-immortal-flames-let-the-hunt-begin-twin-adder",
+     "id": "the-hunt/let-the-hunt-begin-maelstrom-let-the-hunt-begin-immortal-flames-let-the-hunt-begin-twin-adder@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "The Hunt",
@@ -6134,7 +6134,7 @@
      }
     },
     {
-     "id": "zodiac-weapon/the-weaponsmith-of-legend",
+     "id": "zodiac-weapon/the-weaponsmith-of-legend@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Zodiac Weapon",
@@ -6204,7 +6204,7 @@
      }
     },
     {
-     "id": "master-recipes-crafting/just-tooling-around",
+     "id": "master-recipes-crafting/just-tooling-around@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Master Recipes: Crafting",
@@ -6288,7 +6288,7 @@
      }
     },
     {
-     "id": "mount-upgrade/magiteknical-difficulties",
+     "id": "mount-upgrade/magiteknical-difficulties@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Mount Upgrade",
@@ -6368,7 +6368,7 @@
      }
     },
     {
-     "id": "intersocietal-quests/call-of-the-wild-immortal-flames-call-of-the-wild-maelstrom-call-of-the-wild-twin-adder",
+     "id": "intersocietal-quests/call-of-the-wild-immortal-flames-call-of-the-wild-maelstrom-call-of-the-wild-twin-adder@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Intersocietal Quests",
@@ -6492,7 +6492,7 @@
      }
     },
     {
-     "id": "delivery-moogle-quests/of-errant-epistles",
+     "id": "delivery-moogle-quests/of-errant-epistles@arr",
      "level": "50",
      "itemLevel": "",
      "unlock": "Delivery Moogle Quests",
@@ -6571,7 +6571,7 @@
    "heading": "Level 50",
    "entries": [
     {
-     "id": "samurai/the-way-of-the-samurai",
+     "id": "samurai/the-way-of-the-samurai@arr",
      "level": "",
      "itemLevel": "",
      "unlock": "Samurai",
@@ -6645,7 +6645,7 @@
      }
     },
     {
-     "id": "red-mage/taking-the-red",
+     "id": "red-mage/taking-the-red@arr",
      "level": "",
      "itemLevel": "",
      "unlock": "Red Mage",
@@ -6719,7 +6719,7 @@
      }
     },
     {
-     "id": "blue-mage/out-of-the-blue",
+     "id": "blue-mage/out-of-the-blue@arr",
      "level": "",
      "itemLevel": "",
      "unlock": "Blue Mage",
@@ -6802,7 +6802,7 @@
      }
     },
     {
-     "id": "beastmaster/strangers-in-the-wood",
+     "id": "beastmaster/strangers-in-the-wood@arr",
      "level": "",
      "itemLevel": "",
      "unlock": "Beastmaster",
@@ -6892,7 +6892,7 @@
      }
     },
     {
-     "id": "amdapor-keep/ghosts-of-amdapor",
+     "id": "amdapor-keep/ghosts-of-amdapor@arr",
      "level": "",
      "itemLevel": "45",
      "unlock": "Amdapor Keep",
@@ -6978,7 +6978,7 @@
      }
     },
     {
-     "id": "the-wanderers-palace/trauma-queen",
+     "id": "the-wanderers-palace/trauma-queen@arr",
      "level": "",
      "itemLevel": "45",
      "unlock": "The Wanderer's Palace",
@@ -7043,7 +7043,7 @@
      }
     },
     {
-     "id": "pharos-sirius/sirius-business",
+     "id": "pharos-sirius/sirius-business@arr",
      "level": "",
      "itemLevel": "48",
      "unlock": "Pharos Sirius",
@@ -7108,7 +7108,7 @@
      }
     },
     {
-     "id": "copperbell-mines-hard/out-of-sight-out-of-mine",
+     "id": "copperbell-mines-hard/out-of-sight-out-of-mine@arr",
      "level": "",
      "itemLevel": "48",
      "unlock": "Copperbell Mines (Hard)",
@@ -7173,7 +7173,7 @@
      }
     },
     {
-     "id": "haukke-manor-hard/maniac-manor",
+     "id": "haukke-manor-hard/maniac-manor@arr",
      "level": "",
      "itemLevel": "48",
      "unlock": "Haukke Manor (Hard)",
@@ -7238,7 +7238,7 @@
      }
     },
     {
-     "id": "the-bowl-of-embers-hard/ifrit-bleeds-we-can-kill-it",
+     "id": "the-bowl-of-embers-hard/ifrit-bleeds-we-can-kill-it@arr",
      "level": "",
      "itemLevel": "49",
      "unlock": "The Bowl of Embers (Hard)",
@@ -7360,7 +7360,7 @@
      }
     },
     {
-     "id": "the-labyrinth-of-the-ancients/labyrinth-of-the-ancients",
+     "id": "the-labyrinth-of-the-ancients/labyrinth-of-the-ancients@arr",
      "level": "",
      "itemLevel": "50",
      "unlock": "The Labyrinth of the Ancients",
@@ -7464,7 +7464,7 @@
      }
     },
     {
-     "id": "battle-on-the-big-bridge/the-three-collectors",
+     "id": "battle-on-the-big-bridge/the-three-collectors@arr",
      "level": "",
      "itemLevel": "50",
      "unlock": "Battle on the Big Bridge",
@@ -7542,7 +7542,7 @@
      }
     },
     {
-     "id": "a-relic-reborn-the-chimera/a-relic-reborn",
+     "id": "a-relic-reborn-the-chimera/a-relic-reborn@arr",
      "level": "",
      "itemLevel": "52",
      "unlock": "A Relic Reborn: The Chimera",
@@ -7607,7 +7607,7 @@
      }
     },
     {
-     "id": "a-relic-reborn-the-hydra/a-relic-reborn",
+     "id": "a-relic-reborn-the-hydra/a-relic-reborn@arr",
      "level": "",
      "itemLevel": "52",
      "unlock": "A Relic Reborn: The Hydra",
@@ -7672,7 +7672,7 @@
      }
     },
     {
-     "id": "the-howling-eye-hard/in-for-garuda-awakening",
+     "id": "the-howling-eye-hard/in-for-garuda-awakening@arr",
      "level": "",
      "itemLevel": "52",
      "unlock": "The Howling Eye (Hard)",
@@ -7779,7 +7779,7 @@
      }
     },
     {
-     "id": "thornmarch-hard/you-have-selected-regicide",
+     "id": "thornmarch-hard/you-have-selected-regicide@arr",
      "level": "",
      "itemLevel": "54",
      "unlock": "Thornmarch (Hard)",
@@ -7857,7 +7857,7 @@
      }
     },
     {
-     "id": "the-lost-city-of-amdapor/one-night-in-amdapor",
+     "id": "the-lost-city-of-amdapor/one-night-in-amdapor@arr",
      "level": "",
      "itemLevel": "55",
      "unlock": "The Lost City of Amdapor",
@@ -7922,7 +7922,7 @@
      }
     },
     {
-     "id": "halatali-hard/this-times-for-fun",
+     "id": "halatali-hard/this-times-for-fun@arr",
      "level": "",
      "itemLevel": "55",
      "unlock": "Halatali (Hard)",
@@ -8008,7 +8008,7 @@
      }
     },
     {
-     "id": "brayfloxs-longstop-hard/curds-and-slay",
+     "id": "brayfloxs-longstop-hard/curds-and-slay@arr",
      "level": "",
      "itemLevel": "55",
      "unlock": "Brayflox's Longstop (Hard)",
@@ -8073,7 +8073,7 @@
      }
     },
     {
-     "id": "the-navel-hard/in-a-titan-spot",
+     "id": "the-navel-hard/in-a-titan-spot@arr",
      "level": "",
      "itemLevel": "57",
      "unlock": "The Navel (Hard)",
@@ -8180,7 +8180,7 @@
      }
     },
     {
-     "id": "the-whorleater-hard/lord-of-the-whorl",
+     "id": "the-whorleater-hard/lord-of-the-whorl@arr",
      "level": "",
      "itemLevel": "60",
      "unlock": "The Whorleater (Hard)",
@@ -8258,7 +8258,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-ultimas-bane/the-ultimate-ballad",
+     "id": "the-minstrels-ballad-ultimas-bane/the-ultimate-ballad@arr",
      "level": "",
      "itemLevel": "61",
      "unlock": "The Minstrel's Ballad: Ultima's Bane",
@@ -8329,7 +8329,7 @@
      }
     },
     {
-     "id": "the-striking-tree-hard/levin-an-impression",
+     "id": "the-striking-tree-hard/levin-an-impression@arr",
      "level": "",
      "itemLevel": "65",
      "unlock": "The Striking Tree (Hard)",
@@ -8407,7 +8407,7 @@
      }
     },
     {
-     "id": "the-howling-eye-extreme/galeforce-warning",
+     "id": "the-howling-eye-extreme/galeforce-warning@arr",
      "level": "",
      "itemLevel": "65",
      "unlock": "The Howling Eye (Extreme)",
@@ -8490,7 +8490,7 @@
      }
     },
     {
-     "id": "the-navel-extreme/quake-me-up-before-you-oghomoro",
+     "id": "the-navel-extreme/quake-me-up-before-you-oghomoro@arr",
      "level": "",
      "itemLevel": "67",
      "unlock": "The Navel (Extreme)",
@@ -8573,7 +8573,7 @@
      }
     },
     {
-     "id": "the-bowl-of-embers-extreme/ifrit-aint-broke",
+     "id": "the-bowl-of-embers-extreme/ifrit-aint-broke@arr",
      "level": "",
      "itemLevel": "70",
      "unlock": "The Bowl of Embers (Extreme)",
@@ -8656,7 +8656,7 @@
      }
     },
     {
-     "id": "the-binding-coil-of-bahamut/primal-awakening",
+     "id": "the-binding-coil-of-bahamut/primal-awakening@arr",
      "level": "",
      "itemLevel": "70-82",
      "unlock": "The Binding Coil of Bahamut",
@@ -8746,7 +8746,7 @@
      }
     },
     {
-     "id": "syrcus-tower/syrcus-tower",
+     "id": "syrcus-tower/syrcus-tower@arr",
      "level": "",
      "itemLevel": "70",
      "unlock": "Syrcus Tower",
@@ -8850,7 +8850,7 @@
      }
     },
     {
-     "id": "hullbreaker-isle/king-of-the-hull",
+     "id": "hullbreaker-isle/king-of-the-hull@arr",
      "level": "",
      "itemLevel": "70",
      "unlock": "Hullbreaker Isle",
@@ -8915,7 +8915,7 @@
      }
     },
     {
-     "id": "the-tamtara-deepcroft-hard/corpse-groom",
+     "id": "the-tamtara-deepcroft-hard/corpse-groom@arr",
      "level": "",
      "itemLevel": "70",
      "unlock": "The Tam-Tara Deepcroft (Hard)",
@@ -8980,7 +8980,7 @@
      }
     },
     {
-     "id": "the-stone-vigil-hard/blood-for-stone",
+     "id": "the-stone-vigil-hard/blood-for-stone@arr",
      "level": "",
      "itemLevel": "70",
      "unlock": "The Stone Vigil (Hard)",
@@ -9045,7 +9045,7 @@
      }
     },
     {
-     "id": "sastasha-hard/its-definitely-pirates",
+     "id": "sastasha-hard/its-definitely-pirates@arr",
      "level": "",
      "itemLevel": "80",
      "unlock": "Sastasha (Hard)",
@@ -9110,7 +9110,7 @@
      }
     },
     {
-     "id": "the-sunken-temple-of-qarn-hard/the-wrath-of-qarn",
+     "id": "the-sunken-temple-of-qarn-hard/the-wrath-of-qarn@arr",
      "level": "",
      "itemLevel": "80",
      "unlock": "The Sunken Temple of Qarn (Hard)",
@@ -9196,7 +9196,7 @@
      }
     },
     {
-     "id": "snowcloak/the-path-of-the-righteous",
+     "id": "snowcloak/the-path-of-the-righteous@arr",
      "level": "",
      "itemLevel": "80",
      "unlock": "Snowcloak",
@@ -9274,7 +9274,7 @@
      }
     },
     {
-     "id": "the-dragons-neck/the-coliseum-conundrum",
+     "id": "the-dragons-neck/the-coliseum-conundrum@arr",
      "level": "",
      "itemLevel": "80",
      "unlock": "The Dragon's Neck",
@@ -9352,7 +9352,7 @@
      }
     },
     {
-     "id": "thornmarch-extreme/the-king-lives",
+     "id": "thornmarch-extreme/the-king-lives@arr",
      "level": "",
      "itemLevel": "80",
      "unlock": "Thornmarch (Extreme)",
@@ -9427,7 +9427,7 @@
      }
     },
     {
-     "id": "the-whorleater-extreme/whorl-of-a-time",
+     "id": "the-whorleater-extreme/whorl-of-a-time@arr",
      "level": "",
      "itemLevel": "80",
      "unlock": "The Whorleater (Extreme)",
@@ -9502,7 +9502,7 @@
      }
     },
     {
-     "id": "the-akh-afah-amphitheatre-hard/the-instruments-of-our-deliverance",
+     "id": "the-akh-afah-amphitheatre-hard/the-instruments-of-our-deliverance@arr",
      "level": "",
      "itemLevel": "80",
      "unlock": "The Akh Afah Amphitheatre (Hard)",
@@ -9580,7 +9580,7 @@
      }
     },
     {
-     "id": "the-striking-tree-extreme/judgment-bolts-and-lightning",
+     "id": "the-striking-tree-extreme/judgment-bolts-and-lightning@arr",
      "level": "",
      "itemLevel": "85",
      "unlock": "The Striking Tree (Extreme)",
@@ -9680,7 +9680,7 @@
      }
     },
     {
-     "id": "the-chrysalis/an-uninvited-ascian",
+     "id": "the-chrysalis/an-uninvited-ascian@arr",
      "level": "",
      "itemLevel": "90",
      "unlock": "The Chrysalis",
@@ -9758,7 +9758,7 @@
      }
     },
     {
-     "id": "duty-roulette-highlevel-dungeons",
+     "id": "duty-roulette-highlevel-dungeons@arr",
      "level": "",
      "itemLevel": "96",
      "unlock": "Duty Roulette: High-level Dungeons",
@@ -9804,7 +9804,7 @@
      }
     },
     {
-     "id": "battle-in-the-big-keep/her-last-vow",
+     "id": "battle-in-the-big-keep/her-last-vow@arr",
      "level": "",
      "itemLevel": "90",
      "unlock": "Battle in the Big Keep",
@@ -9882,7 +9882,7 @@
      }
     },
     {
-     "id": "the-world-of-darkness/the-world-of-darkness",
+     "id": "the-world-of-darkness/the-world-of-darkness@arr",
      "level": "",
      "itemLevel": "90",
      "unlock": "The World of Darkness",
@@ -9986,7 +9986,7 @@
      }
     },
     {
-     "id": "amdapor-keep-hard/for-keeps-sake",
+     "id": "amdapor-keep-hard/for-keeps-sake@arr",
      "level": "",
      "itemLevel": "90",
      "unlock": "Amdapor Keep (Hard)",
@@ -10072,7 +10072,7 @@
      }
     },
     {
-     "id": "the-wanderers-palace-hard/not-easy-being-green",
+     "id": "the-wanderers-palace-hard/not-easy-being-green@arr",
      "level": "",
      "itemLevel": "90",
      "unlock": "The Wanderer's Palace (Hard)",
@@ -10158,7 +10158,7 @@
      }
     },
     {
-     "id": "the-keeper-of-the-lake/bestlaid-schemes",
+     "id": "the-keeper-of-the-lake/bestlaid-schemes@arr",
      "level": "",
      "itemLevel": "90",
      "unlock": "The Keeper of the Lake",
@@ -10236,7 +10236,7 @@
      }
     },
     {
-     "id": "urths-fount/fear-and-odin-in-the-shroud",
+     "id": "urths-fount/fear-and-odin-in-the-shroud@arr",
      "level": "",
      "itemLevel": "95",
      "unlock": "Urth's Fount",
@@ -10322,7 +10322,7 @@
      }
     },
     {
-     "id": "the-akh-afah-amphitheatre-extreme/drop-dead-shiva",
+     "id": "the-akh-afah-amphitheatre-extreme/drop-dead-shiva@arr",
      "level": "",
      "itemLevel": "95",
      "unlock": "The Akh Afah Amphitheatre (Extreme)",
@@ -10415,7 +10415,7 @@
      }
     },
     {
-     "id": "the-second-coil-of-bahamut/another-turn-in-the-coil",
+     "id": "the-second-coil-of-bahamut/another-turn-in-the-coil@arr",
      "level": "",
      "itemLevel": "90-105",
      "unlock": "The Second Coil of Bahamut",
@@ -10515,7 +10515,7 @@
      }
     },
     {
-     "id": "the-second-coil-of-bahamut-savage/sing-me-another-song",
+     "id": "the-second-coil-of-bahamut-savage/sing-me-another-song@arr",
      "level": "",
      "itemLevel": "105",
      "unlock": "The Second Coil of Bahamut (Savage)",
@@ -10595,7 +10595,7 @@
      }
     },
     {
-     "id": "the-final-coil-of-bahamut/fragments-of-truth",
+     "id": "the-final-coil-of-bahamut/fragments-of-truth@arr",
      "level": "",
      "itemLevel": "110-123",
      "unlock": "The Final Coil of Bahamut",
@@ -10703,7 +10703,7 @@
    "heading": "Level 51 - 60",
    "entries": [
     {
-     "id": "dark-knight/a-dark-spectacle",
+     "id": "dark-knight/a-dark-spectacle@hw",
      "level": "50",
      "itemLevel": "",
      "unlock": "Dark Knight",
@@ -10813,7 +10813,7 @@
      }
     },
     {
-     "id": "astrologian/whats-your-sign",
+     "id": "astrologian/whats-your-sign@hw",
      "level": "50",
      "itemLevel": "",
      "unlock": "Astrologian",
@@ -10923,7 +10923,7 @@
      }
     },
     {
-     "id": "machinist/so-you-want-to-be-a-machinist",
+     "id": "machinist/so-you-want-to-be-a-machinist@hw",
      "level": "50",
      "itemLevel": "",
      "unlock": "Machinist",
@@ -11033,7 +11033,7 @@
      }
     },
     {
-     "id": "collectables/inscrutable-tastes",
+     "id": "collectables/inscrutable-tastes@hw",
      "level": "50",
      "itemLevel": "",
      "unlock": "Collectables ",
@@ -11128,7 +11128,7 @@
      }
     },
     {
-     "id": "the-dusk-vigil/for-all-the-nights-to-come",
+     "id": "the-dusk-vigil/for-all-the-nights-to-come@hw",
      "level": "51",
      "itemLevel": "",
      "unlock": "The Dusk Vigil",
@@ -11203,7 +11203,7 @@
      }
     },
     {
-     "id": "heavensward-sightseeing-log-unlock/sights-of-the-north",
+     "id": "heavensward-sightseeing-log-unlock/sights-of-the-north@hw",
      "level": "52",
      "itemLevel": "",
      "unlock": "Heavensward Sightseeing Log Unlock",
@@ -11273,7 +11273,7 @@
      }
     },
     {
-     "id": "vath-daily-quests/the-naming-of-vath",
+     "id": "vath-daily-quests/the-naming-of-vath@hw",
      "level": "53",
      "itemLevel": "",
      "unlock": "Vath Daily Quests",
@@ -11363,7 +11363,7 @@
      }
     },
     {
-     "id": "sohm-al/mourn-in-passing",
+     "id": "sohm-al/mourn-in-passing@hw",
      "level": "53",
      "itemLevel": "",
      "unlock": "Sohm Al",
@@ -11438,7 +11438,7 @@
      }
     },
     {
-     "id": "thok-ast-thok-hard/lord-of-the-hive",
+     "id": "thok-ast-thok-hard/lord-of-the-hive@hw",
      "level": "53",
      "itemLevel": "",
      "unlock": "Thok ast Thok (Hard)",
@@ -11513,7 +11513,7 @@
      }
     },
     {
-     "id": "clan-hunt/let-the-clan-hunt-begin",
+     "id": "clan-hunt/let-the-clan-hunt-begin@hw",
      "level": "53",
      "itemLevel": "",
      "unlock": "Clan Hunt",
@@ -11580,7 +11580,7 @@
      }
     },
     {
-     "id": "the-aery/into-the-aery",
+     "id": "the-aery/into-the-aery@hw",
      "level": "55",
      "itemLevel": "",
      "unlock": "The Aery",
@@ -11655,7 +11655,7 @@
      }
     },
     {
-     "id": "moogle-daily-quests/tricks-and-stones",
+     "id": "moogle-daily-quests/tricks-and-stones@hw",
      "level": "56",
      "itemLevel": "",
      "unlock": "Moogle Daily Quests",
@@ -11745,7 +11745,7 @@
      }
     },
     {
-     "id": "level-2-clan-marks/better-bill-hunting",
+     "id": "level-2-clan-marks/better-bill-hunting@hw",
      "level": "56",
      "itemLevel": "",
      "unlock": "Level 2 Clan marks",
@@ -11812,7 +11812,7 @@
      }
     },
     {
-     "id": "scholasticate-quests/keeping-the-ledger",
+     "id": "scholasticate-quests/keeping-the-ledger@hw",
      "level": "56-60",
      "itemLevel": "",
      "unlock": "Scholasticate Quests",
@@ -11912,7 +11912,7 @@
      }
     },
     {
-     "id": "the-vault/a-knights-calling",
+     "id": "the-vault/a-knights-calling@hw",
      "level": "57",
      "itemLevel": "",
      "unlock": "The Vault",
@@ -11987,7 +11987,7 @@
      }
     },
     {
-     "id": "the-limitless-blue-hard/bolt-chain-and-island",
+     "id": "the-limitless-blue-hard/bolt-chain-and-island@hw",
      "level": "57",
      "itemLevel": "",
      "unlock": "The Limitless Blue (Hard)",
@@ -12062,7 +12062,7 @@
      }
     },
     {
-     "id": "vanu-vanu-daily-quests/three-beaks-to-the-wind",
+     "id": "vanu-vanu-daily-quests/three-beaks-to-the-wind@hw",
      "level": "57",
      "itemLevel": "",
      "unlock": "Vanu Vanu Daily Quests",
@@ -12152,7 +12152,7 @@
      }
     },
     {
-     "id": "the-great-gubal-library/forbidden-knowledge",
+     "id": "the-great-gubal-library/forbidden-knowledge@hw",
      "level": "59",
      "itemLevel": "",
      "unlock": "The Great Gubal Library",
@@ -12227,7 +12227,7 @@
      }
     },
     {
-     "id": "level-3-clan-marks/top-marks",
+     "id": "level-3-clan-marks/top-marks@hw",
      "level": "59",
      "itemLevel": "",
      "unlock": "Level 3 Clan marks",
@@ -12294,7 +12294,7 @@
      }
     },
     {
-     "id": "heavensward-elite-marks/elite-and-dangerous",
+     "id": "heavensward-elite-marks/elite-and-dangerous@hw",
      "level": "60",
      "itemLevel": "",
      "unlock": "Heavensward Elite Marks",
@@ -12361,7 +12361,7 @@
      }
     },
     {
-     "id": "further-hildibrand-adventures/a-gentleman-falls-rather-than-flies",
+     "id": "further-hildibrand-adventures/a-gentleman-falls-rather-than-flies@hw",
      "level": "60",
      "itemLevel": "",
      "unlock": "Further Hildibrand Adventures",
@@ -12436,7 +12436,7 @@
      }
     },
     {
-     "id": "anima-weapons/an-unexpected-proposal",
+     "id": "anima-weapons/an-unexpected-proposal@hw",
      "level": "60",
      "itemLevel": "",
      "unlock": "Anima Weapons",
@@ -12503,7 +12503,7 @@
      }
     },
     {
-     "id": "tales-of-the-dragonsong-war-quests/the-paths-we-walk",
+     "id": "tales-of-the-dragonsong-war-quests/the-paths-we-walk@hw",
      "level": "60",
      "itemLevel": "",
      "unlock": "Tales of the Dragonsong War Quests",
@@ -12593,7 +12593,7 @@
      }
     },
     {
-     "id": "stone-sky-sea/a-striking-opportunity",
+     "id": "stone-sky-sea/a-striking-opportunity@hw",
      "level": "60",
      "itemLevel": "",
      "unlock": "Stone, Sky, Sea",
@@ -12675,7 +12675,7 @@
      }
     },
     {
-     "id": "custom-deliveries/arms-wide-open",
+     "id": "custom-deliveries/arms-wide-open@hw",
      "level": "60",
      "itemLevel": "",
      "unlock": "Custom Deliveries",
@@ -12765,7 +12765,7 @@
    "heading": "Level 60",
    "entries": [
     {
-     "id": "gunbreaker/the-makings-of-a-gunbreaker",
+     "id": "gunbreaker/the-makings-of-a-gunbreaker@hw",
      "level": "",
      "itemLevel": "",
      "unlock": "Gunbreaker",
@@ -12839,7 +12839,7 @@
      }
     },
     {
-     "id": "dancer/shall-we-dance",
+     "id": "dancer/shall-we-dance@hw",
      "level": "",
      "itemLevel": "",
      "unlock": "Dancer",
@@ -12913,7 +12913,7 @@
      }
     },
     {
-     "id": "the-aetherochemical-research-facility/heavensward",
+     "id": "the-aetherochemical-research-facility/heavensward@hw",
      "level": "",
      "itemLevel": "142",
      "unlock": "The Aetherochemical Research Facility",
@@ -12995,7 +12995,7 @@
      }
     },
     {
-     "id": "the-singularity-reactor/heavensward",
+     "id": "the-singularity-reactor/heavensward@hw",
      "level": "",
      "itemLevel": "142",
      "unlock": "The Singularity Reactor",
@@ -13077,7 +13077,7 @@
      }
     },
     {
-     "id": "neverreap/reap-what-you-sow",
+     "id": "neverreap/reap-what-you-sow@hw",
      "level": "",
      "itemLevel": "145",
      "unlock": "Neverreap",
@@ -13152,7 +13152,7 @@
      }
     },
     {
-     "id": "the-fractal-continuum/do-it-for-gilly",
+     "id": "the-fractal-continuum/do-it-for-gilly@hw",
      "level": "",
      "itemLevel": "145",
      "unlock": "The Fractal Continuum",
@@ -13227,7 +13227,7 @@
      }
     },
     {
-     "id": "the-limitless-blue-extreme/the-diabolical-bismarck",
+     "id": "the-limitless-blue-extreme/the-diabolical-bismarck@hw",
      "level": "",
      "itemLevel": "165",
      "unlock": "The Limitless Blue (Extreme)",
@@ -13302,7 +13302,7 @@
      }
     },
     {
-     "id": "alexander-gordias/disarmed",
+     "id": "alexander-gordias/disarmed@hw",
      "level": "",
      "itemLevel": "170",
      "unlock": "Alexander: Gordias",
@@ -13384,7 +13384,7 @@
      }
     },
     {
-     "id": "saint-mociannes-arboretum/an-overgrown-ambition",
+     "id": "saint-mociannes-arboretum/an-overgrown-ambition@hw",
      "level": "",
      "itemLevel": "170",
      "unlock": "Saint Mocianne's Arboretum",
@@ -13459,7 +13459,7 @@
      }
     },
     {
-     "id": "pharos-sirius-hard/things-are-getting-sirius",
+     "id": "pharos-sirius-hard/things-are-getting-sirius@hw",
      "level": "",
      "itemLevel": "170",
      "unlock": "Pharos Sirius (Hard)",
@@ -13564,7 +13564,7 @@
      }
     },
     {
-     "id": "thok-ast-thok-extreme/thok-around-the-clock",
+     "id": "thok-ast-thok-extreme/thok-around-the-clock@hw",
      "level": "",
      "itemLevel": "175",
      "unlock": "Thok ast Thok (Extreme)",
@@ -13639,7 +13639,7 @@
      }
     },
     {
-     "id": "the-void-ark/to-rule-the-skies",
+     "id": "the-void-ark/to-rule-the-skies@hw",
      "level": "",
      "itemLevel": "175",
      "unlock": "The Void Ark",
@@ -13721,7 +13721,7 @@
      }
     },
     {
-     "id": "the-antitower/the-word-of-the-mother",
+     "id": "the-antitower/the-word-of-the-mother@hw",
      "level": "",
      "itemLevel": "180",
      "unlock": "The Antitower",
@@ -13806,7 +13806,7 @@
      }
     },
     {
-     "id": "the-lost-city-of-amdapor-hard/one-more-night-in-amdapor",
+     "id": "the-lost-city-of-amdapor-hard/one-more-night-in-amdapor@hw",
      "level": "",
      "itemLevel": "180",
      "unlock": "The Lost City of Amdapor (Hard)",
@@ -13914,7 +13914,7 @@
      }
     },
     {
-     "id": "alexander-gordias-savage/a-song-of-steam-and-steel",
+     "id": "alexander-gordias-savage/a-song-of-steam-and-steel@hw",
      "level": "",
      "itemLevel": "190",
      "unlock": "Alexander: Gordias (Savage)",
@@ -13989,7 +13989,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-thordans-reign/thordans-reign",
+     "id": "the-minstrels-ballad-thordans-reign/thordans-reign@hw",
      "level": "",
      "itemLevel": "190",
      "unlock": "The Minstrel's Ballad: Thordan's Reign",
@@ -14064,7 +14064,7 @@
      }
     },
     {
-     "id": "containment-bay-s1t7/when-the-bough-wakes",
+     "id": "containment-bay-s1t7/when-the-bough-wakes@hw",
      "level": "",
      "itemLevel": "190",
      "unlock": "Containment Bay S1T7",
@@ -14149,7 +14149,7 @@
      }
     },
     {
-     "id": "alexander-midas/rearmed",
+     "id": "alexander-midas/rearmed@hw",
      "level": "",
      "itemLevel": "200",
      "unlock": "Alexander: Midas",
@@ -14231,7 +14231,7 @@
      }
     },
     {
-     "id": "sohr-khai/winning-over-the-wyrm",
+     "id": "sohr-khai/winning-over-the-wyrm@hw",
      "level": "",
      "itemLevel": "200",
      "unlock": "Sohr Khai",
@@ -14316,7 +14316,7 @@
      }
     },
     {
-     "id": "hullbreaker-isle-hard/storming-the-hull",
+     "id": "hullbreaker-isle-hard/storming-the-hull@hw",
      "level": "",
      "itemLevel": "200",
      "unlock": "Hullbreaker Isle (Hard)",
@@ -14421,7 +14421,7 @@
      }
     },
     {
-     "id": "containment-bay-s1t7-extreme/a-fiendish-likeness",
+     "id": "containment-bay-s1t7-extreme/a-fiendish-likeness@hw",
      "level": "",
      "itemLevel": "205",
      "unlock": "Containment Bay S1T7 (Extreme)",
@@ -14496,7 +14496,7 @@
      }
     },
     {
-     "id": "the-final-steps-of-faith/an-end-to-the-song",
+     "id": "the-final-steps-of-faith/an-end-to-the-song@hw",
      "level": "",
      "itemLevel": "205",
      "unlock": "The Final Steps of Faith",
@@ -14581,7 +14581,7 @@
      }
     },
     {
-     "id": "ishgardian-restoration/towards-the-firmament",
+     "id": "ishgardian-restoration/towards-the-firmament@hw",
      "level": "",
      "itemLevel": "",
      "unlock": "Ishgardian Restoration",
@@ -14666,7 +14666,7 @@
      }
     },
     {
-     "id": "empyreum-access/ascending-to-empyreum",
+     "id": "empyreum-access/ascending-to-empyreum@hw",
      "level": "",
      "itemLevel": "",
      "unlock": "Empyreum access",
@@ -14759,7 +14759,7 @@
      }
     },
     {
-     "id": "the-weeping-city-of-mhach/the-weeping-city",
+     "id": "the-weeping-city-of-mhach/the-weeping-city@hw",
      "level": "",
      "itemLevel": "205",
      "unlock": "The Weeping City of Mhach",
@@ -14841,7 +14841,7 @@
      }
     },
     {
-     "id": "xelphatol/shadows-of-the-first",
+     "id": "xelphatol/shadows-of-the-first@hw",
      "level": "",
      "itemLevel": "210",
      "unlock": "Xelphatol",
@@ -14926,7 +14926,7 @@
      }
     },
     {
-     "id": "the-great-gubal-library-hard/let-me-gubal-that-for-you",
+     "id": "the-great-gubal-library-hard/let-me-gubal-that-for-you@hw",
      "level": "",
      "itemLevel": "210",
      "unlock": "The Great Gubal Library (Hard)",
@@ -15001,7 +15001,7 @@
      }
     },
     {
-     "id": "containment-bay-p1t6/the-fate-of-stars",
+     "id": "containment-bay-p1t6/the-fate-of-stars@hw",
      "level": "",
      "itemLevel": "220",
      "unlock": "Containment Bay P1T6",
@@ -15086,7 +15086,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-nidhoggs-rage/nidhoggs-rage",
+     "id": "the-minstrels-ballad-nidhoggs-rage/nidhoggs-rage@hw",
      "level": "",
      "itemLevel": "220",
      "unlock": "The Minstrel's Ballad: Nidhogg's Rage",
@@ -15161,7 +15161,7 @@
      }
     },
     {
-     "id": "alexander-midas-savage/a-refrain-for-the-undaunted",
+     "id": "alexander-midas-savage/a-refrain-for-the-undaunted@hw",
      "level": "",
      "itemLevel": "225",
      "unlock": "Alexander: Midas (Savage)",
@@ -15236,7 +15236,7 @@
      }
     },
     {
-     "id": "baelsars-wall/griffin-griffin-on-the-wall",
+     "id": "baelsars-wall/griffin-griffin-on-the-wall@hw",
      "level": "",
      "itemLevel": "230",
      "unlock": "Baelsar's Wall",
@@ -15321,7 +15321,7 @@
      }
     },
     {
-     "id": "sohm-al-hard/the-fires-of-sohm-al",
+     "id": "sohm-al-hard/the-fires-of-sohm-al@hw",
      "level": "",
      "itemLevel": "230",
      "unlock": "Sohm Al (Hard)",
@@ -15396,7 +15396,7 @@
      }
     },
     {
-     "id": "alexander-the-creator/the-coeurl-and-the-colossus",
+     "id": "alexander-the-creator/the-coeurl-and-the-colossus@hw",
      "level": "",
      "itemLevel": "230",
      "unlock": "Alexander: The Creator",
@@ -15478,7 +15478,7 @@
      }
     },
     {
-     "id": "containment-bay-p1t6-extreme/balance-unto-all",
+     "id": "containment-bay-p1t6-extreme/balance-unto-all@hw",
      "level": "",
      "itemLevel": "235",
      "unlock": "Containment Bay P1T6 (Extreme)",
@@ -15553,7 +15553,7 @@
      }
     },
     {
-     "id": "containment-bay-z1t9/the-last-pillar-to-fall",
+     "id": "containment-bay-z1t9/the-last-pillar-to-fall@hw",
      "level": "",
      "itemLevel": "235",
      "unlock": "Containment Bay Z1T9",
@@ -15638,7 +15638,7 @@
      }
     },
     {
-     "id": "dun-scaith/where-shadows-reign",
+     "id": "dun-scaith/where-shadows-reign@hw",
      "level": "",
      "itemLevel": "235",
      "unlock": "Dun Scaith",
@@ -15720,7 +15720,7 @@
      }
     },
     {
-     "id": "alexander-the-creator-savage/who-lives-who-dies-who-retells-your-story",
+     "id": "alexander-the-creator-savage/who-lives-who-dies-who-retells-your-story@hw",
      "level": "",
      "itemLevel": "245",
      "unlock": "Alexander: The Creator (Savage)",
@@ -15795,7 +15795,7 @@
      }
     },
     {
-     "id": "containment-bay-z1t9-extreme/a-demonic-duplicate",
+     "id": "containment-bay-z1t9-extreme/a-demonic-duplicate@hw",
      "level": "",
      "itemLevel": "250",
      "unlock": "Containment Bay Z1T9 (Extreme)",
@@ -15878,7 +15878,7 @@
    "heading": "Level 61 - 70",
    "entries": [
     {
-     "id": "the-sirensong-sea/not-without-incident",
+     "id": "the-sirensong-sea/not-without-incident@sb",
      "level": "61",
      "itemLevel": "240",
      "unlock": "The Sirensong Sea",
@@ -15956,7 +15956,7 @@
      }
     },
     {
-     "id": "heavenonhigh/knocking-on-heavens-door",
+     "id": "heavenonhigh/knocking-on-heavens-door@sb",
      "level": "61",
      "itemLevel": "",
      "unlock": "Heaven-on-High",
@@ -16042,7 +16042,7 @@
      }
     },
     {
-     "id": "shirogane-access/i-dream-of-shirogane",
+     "id": "shirogane-access/i-dream-of-shirogane@sb",
      "level": "61",
      "itemLevel": "",
      "unlock": "Shirogane access",
@@ -16128,7 +16128,7 @@
      }
     },
     {
-     "id": "veteran-clan-hunt/onestar-veteran-clan-hunt",
+     "id": "veteran-clan-hunt/onestar-veteran-clan-hunt@sb",
      "level": "61",
      "itemLevel": "",
      "unlock": "Veteran Clan Hunt",
@@ -16195,7 +16195,7 @@
      }
     },
     {
-     "id": "shisui-of-the-violet-tides/the-palace-of-lost-souls",
+     "id": "shisui-of-the-violet-tides/the-palace-of-lost-souls@sb",
      "level": "63",
      "itemLevel": "245",
      "unlock": "Shisui of the Violet Tides",
@@ -16273,7 +16273,7 @@
      }
     },
     {
-     "id": "the-pool-of-tribute/the-lord-of-the-revel",
+     "id": "the-pool-of-tribute/the-lord-of-the-revel@sb",
      "level": "63",
      "itemLevel": "",
      "unlock": "The Pool of Tribute",
@@ -16351,7 +16351,7 @@
      }
     },
     {
-     "id": "kojin-daily-quests/heavensent",
+     "id": "kojin-daily-quests/heavensent@sb",
      "level": "63",
      "itemLevel": "",
      "unlock": "Kojin Daily Quests",
@@ -16441,7 +16441,7 @@
      }
     },
     {
-     "id": "twostar-veteran-clan-mark-bills/twostar-veteran-clan-hunt",
+     "id": "twostar-veteran-clan-mark-bills/twostar-veteran-clan-hunt@sb",
      "level": "63",
      "itemLevel": "",
      "unlock": "Two-star Veteran Clan mark bills",
@@ -16508,7 +16508,7 @@
      }
     },
     {
-     "id": "bardams-mettle/in-the-footsteps-of-bardam-the-brave",
+     "id": "bardams-mettle/in-the-footsteps-of-bardam-the-brave@sb",
      "level": "65",
      "itemLevel": "250",
      "unlock": "Bardam's Mettle",
@@ -16586,7 +16586,7 @@
      }
     },
     {
-     "id": "namazu-daily-quests/something-fishy-this-way-comes",
+     "id": "namazu-daily-quests/something-fishy-this-way-comes@sb",
      "level": "66",
      "itemLevel": "",
      "unlock": "Namazu Daily Quests",
@@ -16676,7 +16676,7 @@
      }
     },
     {
-     "id": "threestar-veteran-clan-mark-bills/threestar-veteran-clan-hunt",
+     "id": "threestar-veteran-clan-mark-bills/threestar-veteran-clan-hunt@sb",
      "level": "66",
      "itemLevel": "",
      "unlock": "Three-star Veteran Clan mark bills",
@@ -16743,7 +16743,7 @@
      }
     },
     {
-     "id": "doma-castle/the-die-is-cast",
+     "id": "doma-castle/the-die-is-cast@sb",
      "level": "67",
      "itemLevel": "255",
      "unlock": "Doma Castle",
@@ -16821,7 +16821,7 @@
      }
     },
     {
-     "id": "emanation/the-lady-of-bliss",
+     "id": "emanation/the-lady-of-bliss@sb",
      "level": "67",
      "itemLevel": "",
      "unlock": "Emanation",
@@ -16899,7 +16899,7 @@
      }
     },
     {
-     "id": "ananta-daily-quests/brooding-broodmother",
+     "id": "ananta-daily-quests/brooding-broodmother@sb",
      "level": "67",
      "itemLevel": "",
      "unlock": "Ananta Daily Quests",
@@ -16989,7 +16989,7 @@
      }
     },
     {
-     "id": "castrum-abania/the-price-of-freedom",
+     "id": "castrum-abania/the-price-of-freedom@sb",
      "level": "69",
      "itemLevel": "260",
      "unlock": "Castrum Abania",
@@ -17067,7 +17067,7 @@
      }
     },
     {
-     "id": "the-circles-of-answering/another-striking-opportunity",
+     "id": "the-circles-of-answering/another-striking-opportunity@sb",
      "level": "70",
      "itemLevel": "",
      "unlock": "The Circles of Answering",
@@ -17149,7 +17149,7 @@
      }
     },
     {
-     "id": "stormblood-elite-marks/elite-veteran-clan-hunt",
+     "id": "stormblood-elite-marks/elite-veteran-clan-hunt@sb",
      "level": "70",
      "itemLevel": "",
      "unlock": "Stormblood Elite Marks",
@@ -17224,7 +17224,7 @@
    "heading": "Level 70",
    "entries": [
     {
-     "id": "reaper/the-killer-instinct",
+     "id": "reaper/the-killer-instinct@sb",
      "level": "",
      "itemLevel": "",
      "unlock": "Reaper",
@@ -17312,7 +17312,7 @@
      }
     },
     {
-     "id": "sage/sages-path",
+     "id": "sage/sages-path@sb",
      "level": "",
      "itemLevel": "",
      "unlock": "Sage",
@@ -17400,7 +17400,7 @@
      }
     },
     {
-     "id": "ala-mhigo/stormblood",
+     "id": "ala-mhigo/stormblood@sb",
      "level": "",
      "itemLevel": "280",
      "unlock": "Ala Mhigo",
@@ -17478,7 +17478,7 @@
      }
     },
     {
-     "id": "the-royal-menagerie/stormblood",
+     "id": "the-royal-menagerie/stormblood@sb",
      "level": "",
      "itemLevel": "280",
      "unlock": "The Royal Menagerie",
@@ -17553,7 +17553,7 @@
      }
     },
     {
-     "id": "the-forbidden-land-eureka/and-we-shall-call-it-eureka",
+     "id": "the-forbidden-land-eureka/and-we-shall-call-it-eureka@sb",
      "level": "",
      "itemLevel": "",
      "unlock": "The Forbidden Land, Eureka",
@@ -17633,7 +17633,7 @@
      }
     },
     {
-     "id": "even-further-hildibrand-adventures/a-hingan-tale-nashu-goes-east",
+     "id": "even-further-hildibrand-adventures/a-hingan-tale-nashu-goes-east@sb",
      "level": "",
      "itemLevel": "",
      "unlock": "Even Further Hildibrand Adventures",
@@ -17708,7 +17708,7 @@
      }
     },
     {
-     "id": "kugane-castle/king-of-the-castle",
+     "id": "kugane-castle/king-of-the-castle@sb",
      "level": "",
      "itemLevel": "280",
      "unlock": "Kugane Castle",
@@ -17783,7 +17783,7 @@
      }
     },
     {
-     "id": "the-temple-of-the-fist/to-kill-a-coeurl",
+     "id": "the-temple-of-the-fist/to-kill-a-coeurl@sb",
      "level": "",
      "itemLevel": "280",
      "unlock": "The Temple of the Fist",
@@ -17858,7 +17858,7 @@
      }
     },
     {
-     "id": "omega-deltascape/the-hunt-for-omega",
+     "id": "omega-deltascape/the-hunt-for-omega@sb",
      "level": "",
      "itemLevel": "295",
      "unlock": "Omega: Deltascape",
@@ -17940,7 +17940,7 @@
      }
     },
     {
-     "id": "the-drowned-city-of-skalla/the-mad-kings-trove",
+     "id": "the-drowned-city-of-skalla/the-mad-kings-trove@sb",
      "level": "",
      "itemLevel": "300",
      "unlock": "The Drowned City of Skalla",
@@ -18018,7 +18018,7 @@
      }
     },
     {
-     "id": "the-pool-of-tribute-extreme/songs-in-the-key-of-kugane",
+     "id": "the-pool-of-tribute-extreme/songs-in-the-key-of-kugane@sb",
      "level": "",
      "itemLevel": "300",
      "unlock": "The Pool of Tribute (Extreme)",
@@ -18093,7 +18093,7 @@
      }
     },
     {
-     "id": "emanation-extreme/songs-in-the-key-of-kugane",
+     "id": "emanation-extreme/songs-in-the-key-of-kugane@sb",
      "level": "",
      "itemLevel": "300",
      "unlock": "Emanation (Extreme)",
@@ -18168,7 +18168,7 @@
      }
     },
     {
-     "id": "the-royal-city-of-rabanastre/a-city-fallen",
+     "id": "the-royal-city-of-rabanastre/a-city-fallen@sb",
      "level": "",
      "itemLevel": "305",
      "unlock": "The Royal City of Rabanastre",
@@ -18250,7 +18250,7 @@
      }
     },
     {
-     "id": "hells-lid/an-auspicious-encounter",
+     "id": "hells-lid/an-auspicious-encounter@sb",
      "level": "",
      "itemLevel": "310",
      "unlock": "Hells' Lid",
@@ -18335,7 +18335,7 @@
      }
     },
     {
-     "id": "the-fractal-continuum-hard/an-unwanted-truth",
+     "id": "the-fractal-continuum-hard/an-unwanted-truth@sb",
      "level": "",
      "itemLevel": "310",
      "unlock": "The Fractal Continuum (Hard)",
@@ -18425,7 +18425,7 @@
      }
     },
     {
-     "id": "omega-deltascape-savage",
+     "id": "omega-deltascape-savage@sb",
      "level": "",
      "itemLevel": "310-320",
      "unlock": "Omega: Deltascape (Savage)",
@@ -18500,7 +18500,7 @@
      }
     },
     {
-     "id": "the-great-hunt/the-new-king-on-the-block",
+     "id": "the-great-hunt/the-new-king-on-the-block@sb",
      "level": "",
      "itemLevel": "320",
      "unlock": "The Great Hunt",
@@ -18590,7 +18590,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-shinryus-domain/songs-in-the-key-of-kugane",
+     "id": "the-minstrels-ballad-shinryus-domain/songs-in-the-key-of-kugane@sb",
      "level": "",
      "itemLevel": "320",
      "unlock": "The Minstrel's Ballad: Shinryu's Domain",
@@ -18665,7 +18665,7 @@
      }
     },
     {
-     "id": "the-unending-coil-of-bahamut-ultimate",
+     "id": "the-unending-coil-of-bahamut-ultimate@sb",
      "level": "",
      "itemLevel": "320",
      "unlock": "The Unending Coil of Bahamut (Ultimate)",
@@ -18732,7 +18732,7 @@
      }
     },
     {
-     "id": "the-jade-stoa/an-auspicious-encounter",
+     "id": "the-jade-stoa/an-auspicious-encounter@sb",
      "level": "",
      "itemLevel": "325",
      "unlock": "The Jade Stoa",
@@ -18817,7 +18817,7 @@
      }
     },
     {
-     "id": "omega-sigmascape/return-to-the-rift",
+     "id": "omega-sigmascape/return-to-the-rift@sb",
      "level": "",
      "itemLevel": "325",
      "unlock": "Omega: Sigmascape",
@@ -18899,7 +18899,7 @@
      }
     },
     {
-     "id": "the-swallows-compass/tortoise-in-time",
+     "id": "the-swallows-compass/tortoise-in-time@sb",
      "level": "",
      "itemLevel": "330",
      "unlock": "The Swallow's Compass",
@@ -18984,7 +18984,7 @@
      }
     },
     {
-     "id": "castrum-fluminis/the-primary-agreement",
+     "id": "castrum-fluminis/the-primary-agreement@sb",
      "level": "",
      "itemLevel": "335",
      "unlock": "Castrum Fluminis",
@@ -19062,7 +19062,7 @@
      }
     },
     {
-     "id": "the-ridorana-lighthouse/annihilation",
+     "id": "the-ridorana-lighthouse/annihilation@sb",
      "level": "",
      "itemLevel": "335",
      "unlock": "The Ridorana Lighthouse",
@@ -19140,7 +19140,7 @@
      }
     },
     {
-     "id": "the-burn/feel-the-burn",
+     "id": "the-burn/feel-the-burn@sb",
      "level": "",
      "itemLevel": "340",
      "unlock": "The Burn",
@@ -19218,7 +19218,7 @@
      }
     },
     {
-     "id": "saint-mociannes-arboretum-hard/secret-of-the-ooze",
+     "id": "saint-mociannes-arboretum-hard/secret-of-the-ooze@sb",
      "level": "",
      "itemLevel": "340",
      "unlock": "Saint Mocianne's Arboretum (Hard)",
@@ -19323,7 +19323,7 @@
      }
     },
     {
-     "id": "the-jade-stoa-extreme/songs-in-the-key-of-kugane",
+     "id": "the-jade-stoa-extreme/songs-in-the-key-of-kugane@sb",
      "level": "",
      "itemLevel": "340",
      "unlock": "The Jade Stoa (Extreme)",
@@ -19398,7 +19398,7 @@
      }
     },
     {
-     "id": "omega-sigmascape-savage",
+     "id": "omega-sigmascape-savage@sb",
      "level": "",
      "itemLevel": "340-350",
      "unlock": "Omega: Sigmascape (Savage)",
@@ -19473,7 +19473,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-tsukuyomis-pain/songs-in-the-key-of-kugane",
+     "id": "the-minstrels-ballad-tsukuyomis-pain/songs-in-the-key-of-kugane@sb",
      "level": "",
      "itemLevel": "350",
      "unlock": "The Minstrel's Ballad: Tsukuyomi's Pain",
@@ -19548,7 +19548,7 @@
      }
     },
     {
-     "id": "the-great-hunt-extreme/the-newer-king-on-the-block",
+     "id": "the-great-hunt-extreme/the-newer-king-on-the-block@sb",
      "level": "",
      "itemLevel": "350",
      "unlock": "The Great Hunt (Extreme)",
@@ -19638,7 +19638,7 @@
      }
     },
     {
-     "id": "the-weapons-refrain-ultimate",
+     "id": "the-weapons-refrain-ultimate@sb",
      "level": "",
      "itemLevel": "350",
      "unlock": "The Weapon's Refrain (Ultimate)",
@@ -19705,7 +19705,7 @@
      }
     },
     {
-     "id": "hells-kier/the-firebird-down-below",
+     "id": "hells-kier/the-firebird-down-below@sb",
      "level": "",
      "itemLevel": "355",
      "unlock": "Hells' Kier",
@@ -19790,7 +19790,7 @@
      }
     },
     {
-     "id": "omega-alphascape/in-the-beginning-there-was-chaos",
+     "id": "omega-alphascape/in-the-beginning-there-was-chaos@sb",
      "level": "",
      "itemLevel": "355",
      "unlock": "Omega: Alphascape",
@@ -19872,7 +19872,7 @@
      }
     },
     {
-     "id": "the-ghimlyt-dark/the-face-of-war",
+     "id": "the-ghimlyt-dark/the-face-of-war@sb",
      "level": "",
      "itemLevel": "360",
      "unlock": "The Ghimlyt Dark",
@@ -19950,7 +19950,7 @@
      }
     },
     {
-     "id": "the-wreath-of-snakes/surpassing-the-samurai",
+     "id": "the-wreath-of-snakes/surpassing-the-samurai@sb",
      "level": "",
      "itemLevel": "365",
      "unlock": "The Wreath of Snakes",
@@ -20035,7 +20035,7 @@
      }
     },
     {
-     "id": "kugane-ohashi/the-past-is-never-past",
+     "id": "kugane-ohashi/the-past-is-never-past@sb",
      "level": "",
      "itemLevel": "365",
      "unlock": "Kugane Ohashi",
@@ -20110,7 +20110,7 @@
      }
     },
     {
-     "id": "the-orbonne-monastery/the-city-of-lost-angels",
+     "id": "the-orbonne-monastery/the-city-of-lost-angels@sb",
      "level": "",
      "itemLevel": "365",
      "unlock": "The Orbonne Monastery",
@@ -20192,7 +20192,7 @@
      }
     },
     {
-     "id": "hells-kier-extreme/songs-in-the-key-of-kugane",
+     "id": "hells-kier-extreme/songs-in-the-key-of-kugane@sb",
      "level": "",
      "itemLevel": "370",
      "unlock": "Hells' Kier (Extreme)",
@@ -20267,7 +20267,7 @@
      }
     },
     {
-     "id": "the-wreath-of-snakes-extreme/songs-in-the-key-of-kugane",
+     "id": "the-wreath-of-snakes-extreme/songs-in-the-key-of-kugane@sb",
      "level": "",
      "itemLevel": "370",
      "unlock": "The Wreath of Snakes (Extreme)",
@@ -20342,7 +20342,7 @@
      }
     },
     {
-     "id": "omega-alphascape-savage",
+     "id": "omega-alphascape-savage@sb",
      "level": "",
      "itemLevel": "370-380",
      "unlock": "Omega: Alphascape (Savage)",
@@ -20410,7 +20410,7 @@
    "heading": "Level 71 - 80",
    "entries": [
     {
-     "id": "nutsy-clan-hunt/nuts-to-you",
+     "id": "nutsy-clan-hunt/nuts-to-you@shb",
      "level": "70",
      "itemLevel": "",
      "unlock": "Nutsy Clan Hunt",
@@ -20492,7 +20492,7 @@
      }
     },
     {
-     "id": "holminster-switch/the-lightwardens",
+     "id": "holminster-switch/the-lightwardens@shb",
      "level": "71",
      "itemLevel": "370",
      "unlock": "Holminster Switch",
@@ -20570,7 +20570,7 @@
      }
     },
     {
-     "id": "dohn-mheg/the-key-to-the-castle",
+     "id": "dohn-mheg/the-key-to-the-castle@shb",
      "level": "73",
      "itemLevel": "375",
      "unlock": "Dohn Mheg",
@@ -20648,7 +20648,7 @@
      }
     },
     {
-     "id": "the-dancing-plague/achtla-ormh-inn",
+     "id": "the-dancing-plague/achtla-ormh-inn@shb",
      "level": "73",
      "itemLevel": "",
      "unlock": "The Dancing Plague",
@@ -20726,7 +20726,7 @@
      }
     },
     {
-     "id": "pixie-daily-quests/manic-pixie-dream-realm",
+     "id": "pixie-daily-quests/manic-pixie-dream-realm@shb",
      "level": "73",
      "itemLevel": "",
      "unlock": "Pixie Daily Quests",
@@ -20816,7 +20816,7 @@
      }
     },
     {
-     "id": "twonut-clan-mark-bills/two-nuts-too-nutty",
+     "id": "twonut-clan-mark-bills/two-nuts-too-nutty@shb",
      "level": "73",
      "itemLevel": "",
      "unlock": "Two-nut Clan mark bills",
@@ -20883,7 +20883,7 @@
      }
     },
     {
-     "id": "the-qitana-ravel/the-burden-of-knowledge",
+     "id": "the-qitana-ravel/the-burden-of-knowledge@shb",
      "level": "75",
      "itemLevel": "380",
      "unlock": "The Qitana Ravel",
@@ -20961,7 +20961,7 @@
      }
     },
     {
-     "id": "qitari-daily-quests/the-stewards-of-note",
+     "id": "qitari-daily-quests/the-stewards-of-note@shb",
      "level": "75",
      "itemLevel": "",
      "unlock": "Qitari Daily Quests",
@@ -21051,7 +21051,7 @@
      }
     },
     {
-     "id": "threenut-clan-mark-bills/how-do-you-like-three-nuts",
+     "id": "threenut-clan-mark-bills/how-do-you-like-three-nuts@shb",
      "level": "76",
      "itemLevel": "",
      "unlock": "Three-nut Clan mark bills",
@@ -21118,7 +21118,7 @@
      }
     },
     {
-     "id": "malikahs-well/a-fresh-start",
+     "id": "malikahs-well/a-fresh-start@shb",
      "level": "77",
      "itemLevel": "385",
      "unlock": "Malikah's Well",
@@ -21196,7 +21196,7 @@
      }
     },
     {
-     "id": "dwarf-daily-quests/its-dwarfin-time",
+     "id": "dwarf-daily-quests/its-dwarfin-time@shb",
      "level": "78",
      "itemLevel": "",
      "unlock": "Dwarf Daily Quests",
@@ -21286,7 +21286,7 @@
      }
     },
     {
-     "id": "mt-gulg/extinguishing-the-last-light",
+     "id": "mt-gulg/extinguishing-the-last-light@shb",
      "level": "79",
      "itemLevel": "390",
      "unlock": "Mt. Gulg",
@@ -21364,7 +21364,7 @@
      }
     },
     {
-     "id": "the-crown-of-the-immaculate/extinguishing-the-last-light",
+     "id": "the-crown-of-the-immaculate/extinguishing-the-last-light@shb",
      "level": "79",
      "itemLevel": "",
      "unlock": "The Crown of the Immaculate",
@@ -21438,7 +21438,7 @@
      }
     },
     {
-     "id": "the-lawns/yet-another-striking-opportunity",
+     "id": "the-lawns/yet-another-striking-opportunity@shb",
      "level": "80",
      "itemLevel": "",
      "unlock": "The Lawns",
@@ -21520,7 +21520,7 @@
      }
     },
     {
-     "id": "shadowbringers-elite-marks/too-many-nutters",
+     "id": "shadowbringers-elite-marks/too-many-nutters@shb",
      "level": "80",
      "itemLevel": "",
      "unlock": "Shadowbringers Elite Marks",
@@ -21595,7 +21595,7 @@
    "heading": "Level 80",
    "entries": [
     {
-     "id": "viper/enter-the-viper",
+     "id": "viper/enter-the-viper@shb",
      "level": "",
      "itemLevel": "",
      "unlock": "Viper",
@@ -21683,7 +21683,7 @@
      }
     },
     {
-     "id": "pictomancer/the-joy-of-pictomancy",
+     "id": "pictomancer/the-joy-of-pictomancy@shb",
      "level": "",
      "itemLevel": "",
      "unlock": "Pictomancer",
@@ -21771,7 +21771,7 @@
      }
     },
     {
-     "id": "amaurot/shadowbringers",
+     "id": "amaurot/shadowbringers@shb",
      "level": "",
      "itemLevel": "410",
      "unlock": "Amaurot",
@@ -21849,7 +21849,7 @@
      }
     },
     {
-     "id": "the-dying-gasp/shadowbringers",
+     "id": "the-dying-gasp/shadowbringers@shb",
      "level": "",
      "itemLevel": "410",
      "unlock": "The Dying Gasp",
@@ -21924,7 +21924,7 @@
      }
     },
     {
-     "id": "akadaemia-anyder/akadaemia-anyder",
+     "id": "akadaemia-anyder/akadaemia-anyder@shb",
      "level": "",
      "itemLevel": "410",
      "unlock": "Akadaemia Anyder",
@@ -21999,7 +21999,7 @@
      }
     },
     {
-     "id": "the-twinning/by-the-time-you-hear-this",
+     "id": "the-twinning/by-the-time-you-hear-this@shb",
      "level": "",
      "itemLevel": "410",
      "unlock": "The Twinning",
@@ -22074,7 +22074,7 @@
      }
     },
     {
-     "id": "edens-gate/in-the-middle-of-nowhere",
+     "id": "edens-gate/in-the-middle-of-nowhere@shb",
      "level": "",
      "itemLevel": "425",
      "unlock": "Eden's Gate",
@@ -22156,7 +22156,7 @@
      }
     },
     {
-     "id": "the-grand-cosmos/a-grand-adventure",
+     "id": "the-grand-cosmos/a-grand-adventure@shb",
      "level": "",
      "itemLevel": "430",
      "unlock": "The Grand Cosmos",
@@ -22238,7 +22238,7 @@
      }
     },
     {
-     "id": "the-bozjan-southern-front/where-eagles-nest",
+     "id": "the-bozjan-southern-front/where-eagles-nest@shb",
      "level": "",
      "itemLevel": "",
      "unlock": "The Bozjan Southern Front",
@@ -22351,7 +22351,7 @@
      }
     },
     {
-     "id": "the-dancing-plague-extreme/minstrel-from-another-mother",
+     "id": "the-dancing-plague-extreme/minstrel-from-another-mother@shb",
      "level": "",
      "itemLevel": "430",
      "unlock": "The Dancing Plague (Extreme)",
@@ -22426,7 +22426,7 @@
      }
     },
     {
-     "id": "the-crown-of-the-immaculate-extreme/minstrel-from-another-mother",
+     "id": "the-crown-of-the-immaculate-extreme/minstrel-from-another-mother@shb",
      "level": "",
      "itemLevel": "430",
      "unlock": "The Crown of the Immaculate (Extreme)",
@@ -22501,7 +22501,7 @@
      }
     },
     {
-     "id": "the-copied-factory/on-the-threshold",
+     "id": "the-copied-factory/on-the-threshold@shb",
      "level": "",
      "itemLevel": "435",
      "unlock": "The Copied Factory",
@@ -22583,7 +22583,7 @@
      }
     },
     {
-     "id": "anamnesis-anyder/beneath-the-surface",
+     "id": "anamnesis-anyder/beneath-the-surface@shb",
      "level": "",
      "itemLevel": "440",
      "unlock": "Anamnesis Anyder",
@@ -22668,7 +22668,7 @@
      }
     },
     {
-     "id": "edens-gate-savage",
+     "id": "edens-gate-savage@shb",
      "level": "",
      "itemLevel": "440-450",
      "unlock": "Eden's Gate (Savage)",
@@ -22728,7 +22728,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-hadess-elegy/minstrel-from-another-mother",
+     "id": "the-minstrels-ballad-hadess-elegy/minstrel-from-another-mother@shb",
      "level": "",
      "itemLevel": "450",
      "unlock": "The Minstrel's Ballad: Hades's Elegy",
@@ -22806,7 +22806,7 @@
      }
     },
     {
-     "id": "edens-verse/blood-and-thunder",
+     "id": "edens-verse/blood-and-thunder@shb",
      "level": "",
      "itemLevel": "455",
      "unlock": "Eden's Verse",
@@ -22896,7 +22896,7 @@
      }
     },
     {
-     "id": "cinder-drift/ruby-doomsday",
+     "id": "cinder-drift/ruby-doomsday@shb",
      "level": "",
      "itemLevel": "455",
      "unlock": "Cinder Drift",
@@ -22981,7 +22981,7 @@
      }
     },
     {
-     "id": "the-heroes-gauntlet/the-converging-light",
+     "id": "the-heroes-gauntlet/the-converging-light@shb",
      "level": "",
      "itemLevel": "460",
      "unlock": "The Heroes' Gauntlet",
@@ -23073,7 +23073,7 @@
      }
     },
     {
-     "id": "the-seat-of-sacrifice/hopes-confluence",
+     "id": "the-seat-of-sacrifice/hopes-confluence@shb",
      "level": "",
      "itemLevel": "465",
      "unlock": "The Seat of Sacrifice",
@@ -23158,7 +23158,7 @@
      }
     },
     {
-     "id": "the-puppets-bunker/everything-you-know-is-wrong",
+     "id": "the-puppets-bunker/everything-you-know-is-wrong@shb",
      "level": "",
      "itemLevel": "465",
      "unlock": "The Puppets' Bunker",
@@ -23236,7 +23236,7 @@
      }
     },
     {
-     "id": "matoyas-relict/like-master-like-pupil",
+     "id": "matoyas-relict/like-master-like-pupil@shb",
      "level": "",
      "itemLevel": "470",
      "unlock": "Matoya's Relict",
@@ -23328,7 +23328,7 @@
      }
     },
     {
-     "id": "cinder-drift-extreme/ruby-doomsday",
+     "id": "cinder-drift-extreme/ruby-doomsday@shb",
      "level": "",
      "itemLevel": "470",
      "unlock": "Cinder Drift (Extreme)",
@@ -23403,7 +23403,7 @@
      }
     },
     {
-     "id": "memoria-misera-extreme/the-bozja-incident",
+     "id": "memoria-misera-extreme/the-bozja-incident@shb",
      "level": "",
      "itemLevel": "470",
      "unlock": "Memoria Misera (Extreme)",
@@ -23481,7 +23481,7 @@
      }
     },
     {
-     "id": "the-epic-of-alexander-ultimate",
+     "id": "the-epic-of-alexander-ultimate@shb",
      "level": "",
      "itemLevel": "475",
      "unlock": "The Epic of Alexander (Ultimate)",
@@ -23548,7 +23548,7 @@
      }
     },
     {
-     "id": "the-seat-of-sacrifice-extreme/hopes-confluence",
+     "id": "the-seat-of-sacrifice-extreme/hopes-confluence@shb",
      "level": "",
      "itemLevel": "480",
      "unlock": "The Seat of Sacrifice (Extreme)",
@@ -23626,7 +23626,7 @@
      }
     },
     {
-     "id": "edens-verse-savage",
+     "id": "edens-verse-savage@shb",
      "level": "",
      "itemLevel": "480-490",
      "unlock": "Eden's Verse (Savage)",
@@ -23686,7 +23686,7 @@
      }
     },
     {
-     "id": "castrum-marinum/blood-of-emerald",
+     "id": "castrum-marinum/blood-of-emerald@shb",
      "level": "",
      "itemLevel": "485",
      "unlock": "Castrum Marinum",
@@ -23764,7 +23764,7 @@
      }
     },
     {
-     "id": "edens-promise/fear-of-the-dark",
+     "id": "edens-promise/fear-of-the-dark@shb",
      "level": "",
      "itemLevel": "485",
      "unlock": "Eden's Promise",
@@ -23846,7 +23846,7 @@
      }
     },
     {
-     "id": "paglthan/the-flames-of-war",
+     "id": "paglthan/the-flames-of-war@shb",
      "level": "",
      "itemLevel": "490",
      "unlock": "Paglth'an",
@@ -23936,7 +23936,7 @@
      }
     },
     {
-     "id": "the-cloud-deck/duty-in-the-sky-with-diamond",
+     "id": "the-cloud-deck/duty-in-the-sky-with-diamond@shb",
      "level": "",
      "itemLevel": "495",
      "unlock": "The Cloud Deck",
@@ -24014,7 +24014,7 @@
      }
     },
     {
-     "id": "tower-at-paradigms-breach/brave-new-world",
+     "id": "tower-at-paradigms-breach/brave-new-world@shb",
      "level": "",
      "itemLevel": "495",
      "unlock": "Tower at Paradigm's Breach",
@@ -24107,7 +24107,7 @@
      }
     },
     {
-     "id": "castrum-marinum-extreme",
+     "id": "castrum-marinum-extreme@shb",
      "level": "",
      "itemLevel": "500",
      "unlock": "Castrum Marinum (Extreme)",
@@ -24163,7 +24163,7 @@
      }
     },
     {
-     "id": "edens-promise-savage",
+     "id": "edens-promise-savage@shb",
      "level": "",
      "itemLevel": "500-510",
      "unlock": "Eden's Promise (Savage)",
@@ -24223,7 +24223,7 @@
      }
     },
     {
-     "id": "the-cloud-deck-extreme",
+     "id": "the-cloud-deck-extreme@shb",
      "level": "",
      "itemLevel": "510",
      "unlock": "The Cloud Deck (Extreme)",
@@ -24287,7 +24287,7 @@
    "heading": "Level 81 - 90",
    "entries": [
     {
-     "id": "guildship-hunt/the-hunt-for-specimens",
+     "id": "guildship-hunt/the-hunt-for-specimens@ew",
      "level": "80",
      "itemLevel": "",
      "unlock": "Guildship Hunt",
@@ -24369,7 +24369,7 @@
      }
     },
     {
-     "id": "the-tower-of-zot/in-the-dark-of-the-tower",
+     "id": "the-tower-of-zot/in-the-dark-of-the-tower@ew",
      "level": "81",
      "itemLevel": "",
      "unlock": "The Tower of Zot",
@@ -24447,7 +24447,7 @@
      }
     },
     {
-     "id": "the-tower-of-babil/gateway-of-the-gods",
+     "id": "the-tower-of-babil/gateway-of-the-gods@ew",
      "level": "83",
      "itemLevel": "",
      "unlock": "The Tower of Babil",
@@ -24525,7 +24525,7 @@
      }
     },
     {
-     "id": "the-dark-inside/the-martyr",
+     "id": "the-dark-inside/the-martyr@ew",
      "level": "83",
      "itemLevel": "",
      "unlock": "The Dark Inside",
@@ -24593,7 +24593,7 @@
      }
     },
     {
-     "id": "associate-guildship-mark-bills/that-specimen-came-from-the-moon",
+     "id": "associate-guildship-mark-bills/that-specimen-came-from-the-moon@ew",
      "level": "83",
      "itemLevel": "",
      "unlock": "Associate guildship mark bills",
@@ -24675,7 +24675,7 @@
      }
     },
     {
-     "id": "vanaspati/skies-aflame",
+     "id": "vanaspati/skies-aflame@ew",
      "level": "85",
      "itemLevel": "",
      "unlock": "Vanaspati",
@@ -24753,7 +24753,7 @@
      }
     },
     {
-     "id": "ktisis-hyperboreia/caging-the-messenger",
+     "id": "ktisis-hyperboreia/caging-the-messenger@ew",
      "level": "87",
      "itemLevel": "",
      "unlock": "Ktisis Hyperboreia",
@@ -24831,7 +24831,7 @@
      }
     },
     {
-     "id": "the-aitiascope/her-children-one-and-all",
+     "id": "the-aitiascope/her-children-one-and-all@ew",
      "level": "89",
      "itemLevel": "",
      "unlock": "The Aitiascope",
@@ -24909,7 +24909,7 @@
      }
     },
     {
-     "id": "the-mothercrystal/her-children-one-and-all",
+     "id": "the-mothercrystal/her-children-one-and-all@ew",
      "level": "89",
      "itemLevel": "",
      "unlock": "The Mothercrystal",
@@ -24987,7 +24987,7 @@
      }
     },
     {
-     "id": "senior-guildship-mark-bills/a-hunt-for-the-ages",
+     "id": "senior-guildship-mark-bills/a-hunt-for-the-ages@ew",
      "level": "89",
      "itemLevel": "",
      "unlock": "Senior guildship mark bills",
@@ -25069,7 +25069,7 @@
      }
     },
     {
-     "id": "the-burning-field/a-place-to-train",
+     "id": "the-burning-field/a-place-to-train@ew",
      "level": "90",
      "itemLevel": "",
      "unlock": "The Burning Field",
@@ -25151,7 +25151,7 @@
      }
     },
     {
-     "id": "endwalker-elite-marks/perfect-specimens",
+     "id": "endwalker-elite-marks/perfect-specimens@ew",
      "level": "90",
      "itemLevel": "",
      "unlock": "Endwalker Elite Marks",
@@ -25226,7 +25226,7 @@
    "heading": "Level 90",
    "entries": [
     {
-     "id": "the-dead-ends/endwalker",
+     "id": "the-dead-ends/endwalker@ew",
      "level": "",
      "itemLevel": "540",
      "unlock": "The Dead Ends",
@@ -25304,7 +25304,7 @@
      }
     },
     {
-     "id": "the-final-day/endwalker",
+     "id": "the-final-day/endwalker@ew",
      "level": "",
      "itemLevel": "540",
      "unlock": "The Final Day",
@@ -25382,7 +25382,7 @@
      }
     },
     {
-     "id": "arkasodara-daily-quests/hippos-born-to-run",
+     "id": "arkasodara-daily-quests/hippos-born-to-run@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Arkasodara Daily Quests",
@@ -25472,7 +25472,7 @@
      }
     },
     {
-     "id": "omicron-daily-quests/the-café-at-the-end-of-the-universe",
+     "id": "omicron-daily-quests/the-café-at-the-end-of-the-universe@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Omicron Daily Quests",
@@ -25562,7 +25562,7 @@
      }
     },
     {
-     "id": "loporrit-daily-quests/must-be-dreamingway",
+     "id": "loporrit-daily-quests/must-be-dreamingway@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Loporrit Daily Quests",
@@ -25652,7 +25652,7 @@
      }
     },
     {
-     "id": "eureka-orthos/delve-into-myth",
+     "id": "eureka-orthos/delve-into-myth@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Eureka Orthos",
@@ -25753,7 +25753,7 @@
      }
     },
     {
-     "id": "somehow-further-hildibrand-adventures/the-sleeping-gentleman",
+     "id": "somehow-further-hildibrand-adventures/the-sleeping-gentleman@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Somehow Further Hildibrand Adventures",
@@ -25828,7 +25828,7 @@
      }
     },
     {
-     "id": "island-sanctuary/seeking-sanctuary",
+     "id": "island-sanctuary/seeking-sanctuary@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Island Sanctuary",
@@ -25903,7 +25903,7 @@
      }
     },
     {
-     "id": "cosmic-exploration/a-cosmic-homecoming",
+     "id": "cosmic-exploration/a-cosmic-homecoming@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Cosmic Exploration",
@@ -25981,7 +25981,7 @@
      }
     },
     {
-     "id": "manderville-weapons/make-it-a-manderville",
+     "id": "manderville-weapons/make-it-a-manderville@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "Manderville Weapons",
@@ -26058,7 +26058,7 @@
      }
     },
     {
-     "id": "the-merchants-tale/a-spellbinding-read",
+     "id": "the-merchants-tale/a-spellbinding-read@ew",
      "level": "",
      "itemLevel": "",
      "unlock": "The Merchant's Tale",
@@ -26136,7 +26136,7 @@
      }
     },
     {
-     "id": "smileton/cutting-the-cheese",
+     "id": "smileton/cutting-the-cheese@ew",
      "level": "",
      "itemLevel": "540",
      "unlock": "Smileton",
@@ -26214,7 +26214,7 @@
      }
     },
     {
-     "id": "the-stigma-dreamscape/where-no-loporrit-has-gone-before",
+     "id": "the-stigma-dreamscape/where-no-loporrit-has-gone-before@ew",
      "level": "",
      "itemLevel": "540",
      "unlock": "The Stigma Dreamscape",
@@ -26292,7 +26292,7 @@
      }
     },
     {
-     "id": "alzadaals-legacy/alzadaals-legacy",
+     "id": "alzadaals-legacy/alzadaals-legacy@ew",
      "level": "",
      "itemLevel": "560",
      "unlock": "Alzadaal's Legacy",
@@ -26377,7 +26377,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-zodiarks-fall/i-wandered-sharlayan-as-a-minstrel",
+     "id": "the-minstrels-ballad-zodiarks-fall/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "560",
      "unlock": "The Minstrel's Ballad: Zodiark's Fall",
@@ -26452,7 +26452,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-hydaelyns-call/i-wandered-sharlayan-as-a-minstrel",
+     "id": "the-minstrels-ballad-hydaelyns-call/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "560",
      "unlock": "The Minstrel's Ballad: Hydaelyn's Call",
@@ -26527,7 +26527,7 @@
      }
     },
     {
-     "id": "asphodelos/the-crystal-from-beyond",
+     "id": "asphodelos/the-crystal-from-beyond@ew",
      "level": "",
      "itemLevel": "565",
      "unlock": "Asphodelos",
@@ -26609,7 +26609,7 @@
      }
     },
     {
-     "id": "aglaia/the-realm-of-the-gods",
+     "id": "aglaia/the-realm-of-the-gods@ew",
      "level": "",
      "itemLevel": "565",
      "unlock": "Aglaia",
@@ -26691,7 +26691,7 @@
      }
     },
     {
-     "id": "asphodelos-savage",
+     "id": "asphodelos-savage@ew",
      "level": "",
      "itemLevel": "570-580",
      "unlock": "Asphodelos (Savage)",
@@ -26766,7 +26766,7 @@
      }
     },
     {
-     "id": "the-fell-court-of-troia/in-search-of-azdaja",
+     "id": "the-fell-court-of-troia/in-search-of-azdaja@ew",
      "level": "",
      "itemLevel": "575",
      "unlock": "The Fell Court of Troia",
@@ -26851,7 +26851,7 @@
      }
     },
     {
-     "id": "the-sildihn-subterrane/a-key-to-the-past",
+     "id": "the-sildihn-subterrane/a-key-to-the-past@ew",
      "level": "",
      "itemLevel": "575",
      "unlock": "The Sil'dihn Subterrane",
@@ -26936,7 +26936,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-endsingers-aria/i-wandered-sharlayan-as-a-minstrel",
+     "id": "the-minstrels-ballad-endsingers-aria/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "580",
      "unlock": "The Minstrel's Ballad: Endsinger's Aria",
@@ -27011,7 +27011,7 @@
      }
     },
     {
-     "id": "storms-crown/the-wind-rises",
+     "id": "storms-crown/the-wind-rises@ew",
      "level": "",
      "itemLevel": "585",
      "unlock": "Storm's Crown",
@@ -27096,7 +27096,7 @@
      }
     },
     {
-     "id": "abyssos/an-unwelcome-visitor",
+     "id": "abyssos/an-unwelcome-visitor@ew",
      "level": "",
      "itemLevel": "585",
      "unlock": "Abyssos",
@@ -27178,7 +27178,7 @@
      }
     },
     {
-     "id": "lapis-manalis/king-of-the-mountain",
+     "id": "lapis-manalis/king-of-the-mountain@ew",
      "level": "",
      "itemLevel": "590",
      "unlock": "Lapis Manalis",
@@ -27263,7 +27263,7 @@
      }
     },
     {
-     "id": "mount-ordeals/desires-untold",
+     "id": "mount-ordeals/desires-untold@ew",
      "level": "",
      "itemLevel": "595",
      "unlock": "Mount Ordeals",
@@ -27348,7 +27348,7 @@
      }
     },
     {
-     "id": "euphrosyne/return-to-the-phantom-realm",
+     "id": "euphrosyne/return-to-the-phantom-realm@ew",
      "level": "",
      "itemLevel": "595",
      "unlock": "Euphrosyne",
@@ -27430,7 +27430,7 @@
      }
     },
     {
-     "id": "storms-crown-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "id": "storms-crown-extreme/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "600",
      "unlock": "Storm's Crown (Extreme)",
@@ -27505,7 +27505,7 @@
      }
     },
     {
-     "id": "the-aetherfont/going-haam",
+     "id": "the-aetherfont/going-haam@ew",
      "level": "",
      "itemLevel": "605",
      "unlock": "The Aetherfont",
@@ -27590,7 +27590,7 @@
      }
     },
     {
-     "id": "dragonsongs-reprise-ultimate/i-wandered-sharlayan-as-a-minstrel",
+     "id": "dragonsongs-reprise-ultimate/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "605",
      "unlock": "Dragonsong's Reprise (Ultimate)",
@@ -27672,7 +27672,7 @@
      }
     },
     {
-     "id": "abyssos-savage",
+     "id": "abyssos-savage@ew",
      "level": "",
      "itemLevel": "600–610",
      "unlock": "Abyssos (Savage)",
@@ -27747,7 +27747,7 @@
      }
     },
     {
-     "id": "mount-rokkon/mononoke-aware",
+     "id": "mount-rokkon/mononoke-aware@ew",
      "level": "",
      "itemLevel": "605",
      "unlock": "Mount Rokkon",
@@ -27832,7 +27832,7 @@
      }
     },
     {
-     "id": "aloalo-island/stranger-from-paradise",
+     "id": "aloalo-island/stranger-from-paradise@ew",
      "level": "",
      "itemLevel": "605",
      "unlock": "Aloalo Island",
@@ -27917,7 +27917,7 @@
      }
     },
     {
-     "id": "another-sildihn-subterrane",
+     "id": "another-sildihn-subterrane@ew",
      "level": "",
      "itemLevel": "610",
      "unlock": "Another Sil'dihn Subterrane",
@@ -27995,7 +27995,7 @@
      }
     },
     {
-     "id": "mount-ordeals-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "id": "mount-ordeals-extreme/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "610",
      "unlock": "Mount Ordeals (Extreme)",
@@ -28070,7 +28070,7 @@
      }
     },
     {
-     "id": "the-voidcast-dais/abyssal-dark",
+     "id": "the-voidcast-dais/abyssal-dark@ew",
      "level": "",
      "itemLevel": "615",
      "unlock": "The Voidcast Dais",
@@ -28148,7 +28148,7 @@
      }
     },
     {
-     "id": "anabaseios/eater-of-souls",
+     "id": "anabaseios/eater-of-souls@ew",
      "level": "",
      "itemLevel": "615",
      "unlock": "Anabaseios",
@@ -28230,7 +28230,7 @@
      }
     },
     {
-     "id": "the-lunar-subterrane/down-in-the-dark",
+     "id": "the-lunar-subterrane/down-in-the-dark@ew",
      "level": "",
      "itemLevel": "620",
      "unlock": "The Lunar Subterrane",
@@ -28322,7 +28322,7 @@
      }
     },
     {
-     "id": "the-abyssal-fracture/down-in-the-dark",
+     "id": "the-abyssal-fracture/down-in-the-dark@ew",
      "level": "",
      "itemLevel": "625",
      "unlock": "The Abyssal Fracture",
@@ -28400,7 +28400,7 @@
      }
     },
     {
-     "id": "thaleia/the-heart-of-the-myth",
+     "id": "thaleia/the-heart-of-the-myth@ew",
      "level": "",
      "itemLevel": "625",
      "unlock": "Thaleia",
@@ -28489,7 +28489,7 @@
      }
     },
     {
-     "id": "the-gilded-araya/gentlemen-at-heart",
+     "id": "the-gilded-araya/gentlemen-at-heart@ew",
      "level": "",
      "itemLevel": "625",
      "unlock": "The Gilded Araya",
@@ -28564,7 +28564,7 @@
      }
     },
     {
-     "id": "the-voidcast-dais-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "id": "the-voidcast-dais-extreme/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "630",
      "unlock": "The Voidcast Dais (Extreme)",
@@ -28639,7 +28639,7 @@
      }
     },
     {
-     "id": "another-sildihn-subterrane-savage",
+     "id": "another-sildihn-subterrane-savage@ew",
      "level": "",
      "itemLevel": "635",
      "unlock": "Another Sil'dihn Subterrane (Savage)",
@@ -28717,7 +28717,7 @@
      }
     },
     {
-     "id": "the-omega-protocol-ultimate/i-wandered-sharlayan-as-a-minstrel",
+     "id": "the-omega-protocol-ultimate/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "635",
      "unlock": "The Omega Protocol (Ultimate)",
@@ -28799,7 +28799,7 @@
      }
     },
     {
-     "id": "anabaseios-savage",
+     "id": "anabaseios-savage@ew",
      "level": "",
      "itemLevel": "630–640",
      "unlock": "Anabaseios (Savage)",
@@ -28874,7 +28874,7 @@
      }
     },
     {
-     "id": "another-mount-rokkon",
+     "id": "another-mount-rokkon@ew",
      "level": "",
      "itemLevel": "640",
      "unlock": "Another Mount Rokkon",
@@ -28952,7 +28952,7 @@
      }
     },
     {
-     "id": "the-abyssal-fracture-extreme/i-wandered-sharlayan-as-a-minstrel",
+     "id": "the-abyssal-fracture-extreme/i-wandered-sharlayan-as-a-minstrel@ew",
      "level": "",
      "itemLevel": "640",
      "unlock": "The Abyssal Fracture (Extreme)",
@@ -29027,7 +29027,7 @@
      }
     },
     {
-     "id": "another-aloalo-island",
+     "id": "another-aloalo-island@ew",
      "level": "",
      "itemLevel": "640",
      "unlock": "Another Aloalo Island",
@@ -29105,7 +29105,7 @@
      }
     },
     {
-     "id": "another-mount-rokkon-savage",
+     "id": "another-mount-rokkon-savage@ew",
      "level": "",
      "itemLevel": "665",
      "unlock": "Another Mount Rokkon (Savage)",
@@ -29183,7 +29183,7 @@
      }
     },
     {
-     "id": "another-aloalo-island-savage",
+     "id": "another-aloalo-island-savage@ew",
      "level": "",
      "itemLevel": "665",
      "unlock": "Another Aloalo Island (Savage)",
@@ -29269,7 +29269,7 @@
    "heading": "Level 91 - 100",
    "entries": [
     {
-     "id": "dawn-hunt/a-new-dawn-a-new-hunt",
+     "id": "dawn-hunt/a-new-dawn-a-new-hunt@dt",
      "level": "90",
      "itemLevel": "",
      "unlock": "Dawn Hunt",
@@ -29351,7 +29351,7 @@
      }
     },
     {
-     "id": "ihuykatumu/for-all-turali",
+     "id": "ihuykatumu/for-all-turali@dt",
      "level": "91",
      "itemLevel": "",
      "unlock": "Ihuykatumu",
@@ -29426,7 +29426,7 @@
      }
     },
     {
-     "id": "pilgrims-traverse/pilgrimage-of-light",
+     "id": "pilgrims-traverse/pilgrimage-of-light@dt",
      "level": "91",
      "itemLevel": "",
      "unlock": "Pilgrim's Traverse",
@@ -29527,7 +29527,7 @@
      }
     },
     {
-     "id": "the-final-verse",
+     "id": "the-final-verse@dt",
      "level": "91",
      "itemLevel": "",
      "unlock": "The Final Verse",
@@ -29602,7 +29602,7 @@
      }
     },
     {
-     "id": "dawntrail-role-quests/uncouth-customers",
+     "id": "dawntrail-role-quests/uncouth-customers@dt",
      "level": "92",
      "itemLevel": "",
      "unlock": "Dawntrail Role Quests",
@@ -29692,7 +29692,7 @@
      }
     },
     {
-     "id": "wachumeqimeqi-deliveries/wrought-in-wachumeqimeqi",
+     "id": "wachumeqimeqi-deliveries/wrought-in-wachumeqimeqi@dt",
      "level": "92",
      "itemLevel": "",
      "unlock": "Wachumeqimeqi Deliveries",
@@ -29782,7 +29782,7 @@
      }
     },
     {
-     "id": "worqor-zormor/the-high-luminary",
+     "id": "worqor-zormor/the-high-luminary@dt",
      "level": "93",
      "itemLevel": "",
      "unlock": "Worqor Zormor",
@@ -29857,7 +29857,7 @@
      }
     },
     {
-     "id": "worqor-lar-dor/the-skyruin",
+     "id": "worqor-lar-dor/the-skyruin@dt",
      "level": "93",
      "itemLevel": "",
      "unlock": "Worqor Lar Dor",
@@ -29932,7 +29932,7 @@
      }
     },
     {
-     "id": "intermediate-dawn-mark-bills/why-we-hunt",
+     "id": "intermediate-dawn-mark-bills/why-we-hunt@dt",
      "level": "94",
      "itemLevel": "",
      "unlock": "Intermediate Dawn mark bills",
@@ -30014,7 +30014,7 @@
      }
     },
     {
-     "id": "the-skydeep-cenote/road-to-the-golden-city",
+     "id": "the-skydeep-cenote/road-to-the-golden-city@dt",
      "level": "95",
      "itemLevel": "",
      "unlock": "The Skydeep Cenote",
@@ -30089,7 +30089,7 @@
      }
     },
     {
-     "id": "vanguard/all-aboard",
+     "id": "vanguard/all-aboard@dt",
      "level": "97",
      "itemLevel": "",
      "unlock": "Vanguard",
@@ -30164,7 +30164,7 @@
      }
     },
     {
-     "id": "origenics/the-resilient-son",
+     "id": "origenics/the-resilient-son@dt",
      "level": "99",
      "itemLevel": "",
      "unlock": "Origenics",
@@ -30239,7 +30239,7 @@
      }
     },
     {
-     "id": "everkeep/the-resilient-son",
+     "id": "everkeep/the-resilient-son@dt",
      "level": "99",
      "itemLevel": "",
      "unlock": "Everkeep",
@@ -30329,7 +30329,7 @@
      }
     },
     {
-     "id": "artifact-weapons-dawntrail-artifact-armor-dawntrail/in-pursuit-of-sphene",
+     "id": "artifact-weapons-dawntrail-artifact-armor-dawntrail/in-pursuit-of-sphene@dt",
      "level": "99",
      "itemLevel": "",
      "unlock": "Artifact Weapons (Dawntrail)\nArtifact Armor (Dawntrail)",
@@ -30412,7 +30412,7 @@
      }
     },
     {
-     "id": "advanced-dawn-mark-bills/hunting-the-hunter",
+     "id": "advanced-dawn-mark-bills/hunting-the-hunter@dt",
      "level": "99",
      "itemLevel": "",
      "unlock": "Advanced Dawn mark bills",
@@ -30494,7 +30494,7 @@
      }
     },
     {
-     "id": "dawntrail-elite-marks/the-hunt-goes-on",
+     "id": "dawntrail-elite-marks/the-hunt-goes-on@dt",
      "level": "100",
      "itemLevel": "",
      "unlock": "Dawntrail Elite Marks",
@@ -30569,7 +30569,7 @@
    "heading": "Level 100",
    "entries": [
     {
-     "id": "alexandria/dawntrail",
+     "id": "alexandria/dawntrail@dt",
      "level": "",
      "itemLevel": "670",
      "unlock": "Alexandria",
@@ -30647,7 +30647,7 @@
      }
     },
     {
-     "id": "the-interphos/dawntrail",
+     "id": "the-interphos/dawntrail@dt",
      "level": "",
      "itemLevel": "670",
      "unlock": "The Interphos",
@@ -30740,7 +30740,7 @@
      }
     },
     {
-     "id": "the-spire-of-trial/trial-by-spire",
+     "id": "the-spire-of-trial/trial-by-spire@dt",
      "level": "",
      "itemLevel": "",
      "unlock": "The Spire of Trial",
@@ -30852,7 +30852,7 @@
      }
     },
     {
-     "id": "pelupelu-daily-quests/an-intrepid-new-enterprise",
+     "id": "pelupelu-daily-quests/an-intrepid-new-enterprise@dt",
      "level": "",
      "itemLevel": "",
      "unlock": "Pelupelu Daily Quests",
@@ -30942,7 +30942,7 @@
      }
     },
     {
-     "id": "mamool-ja-daily-quests/cultivating-hope",
+     "id": "mamool-ja-daily-quests/cultivating-hope@dt",
      "level": "",
      "itemLevel": "",
      "unlock": "Mamool Ja Daily Quests",
@@ -31050,7 +31050,7 @@
      }
     },
     {
-     "id": "yok-huy-daily-quests/frosty-neighbors",
+     "id": "yok-huy-daily-quests/frosty-neighbors@dt",
      "level": "",
      "itemLevel": "",
      "unlock": "Yok Huy Daily Quests",
@@ -31158,7 +31158,7 @@
      }
     },
     {
-     "id": "inconceivably-further-hildibrand-adventures/the-case-of-the-displaced-inspector",
+     "id": "inconceivably-further-hildibrand-adventures/the-case-of-the-displaced-inspector@dt",
      "level": "",
      "itemLevel": "",
      "unlock": "Inconceivably Further Hildibrand Adventures",
@@ -31233,7 +31233,7 @@
      }
     },
     {
-     "id": "the-final-verse-quantum/a-branch-and-their-sapling",
+     "id": "the-final-verse-quantum/a-branch-and-their-sapling@dt",
      "level": "",
      "itemLevel": "",
      "unlock": "The Final Verse (Quantum)",
@@ -31316,7 +31316,7 @@
      }
     },
     {
-     "id": "tender-valley/it-belongs-in-a-museum",
+     "id": "tender-valley/it-belongs-in-a-museum@dt",
      "level": "",
      "itemLevel": "670",
      "unlock": "Tender Valley",
@@ -31394,7 +31394,7 @@
      }
     },
     {
-     "id": "the-strayborough-deadwalk/something-stray-in-the-neighborhood",
+     "id": "the-strayborough-deadwalk/something-stray-in-the-neighborhood@dt",
      "level": "",
      "itemLevel": "670",
      "unlock": "The Strayborough Deadwalk",
@@ -31472,7 +31472,7 @@
      }
     },
     {
-     "id": "aac-lightheavyweight-tier/a-new-challenger-appears",
+     "id": "aac-lightheavyweight-tier/a-new-challenger-appears@dt",
      "level": "",
      "itemLevel": "685",
      "unlock": "AAC Light-heavyweight Tier",
@@ -31554,7 +31554,7 @@
      }
     },
     {
-     "id": "worqor-lar-dor-extreme/how-the-west-was-sung",
+     "id": "worqor-lar-dor-extreme/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "690",
      "unlock": "Worqor Lar Dor (Extreme)",
@@ -31629,7 +31629,7 @@
      }
     },
     {
-     "id": "everkeep-extreme/how-the-west-was-sung",
+     "id": "everkeep-extreme/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "690",
      "unlock": "Everkeep (Extreme)",
@@ -31704,7 +31704,7 @@
      }
     },
     {
-     "id": "shinryus-domain-unreal/fantastic-mr-faux",
+     "id": "shinryus-domain-unreal/fantastic-mr-faux@dt",
      "level": "",
      "itemLevel": "690",
      "unlock": "Shinryu's Domain (Unreal)",
@@ -31789,7 +31789,7 @@
      }
     },
     {
-     "id": "occult-crescent/one-last-hurrah",
+     "id": "occult-crescent/one-last-hurrah@dt",
      "level": "",
      "itemLevel": "690",
      "unlock": "Occult Crescent",
@@ -31879,7 +31879,7 @@
      }
     },
     {
-     "id": "phantom-weapons/arcane-artistry",
+     "id": "phantom-weapons/arcane-artistry@dt",
      "level": "",
      "itemLevel": "690",
      "unlock": "Phantom Weapons",
@@ -31961,7 +31961,7 @@
      }
     },
     {
-     "id": "yuweyawata-field-station/in-search-of-the-past",
+     "id": "yuweyawata-field-station/in-search-of-the-past@dt",
      "level": "",
      "itemLevel": "690",
      "unlock": "Yuweyawata Field Station",
@@ -32039,7 +32039,7 @@
      }
     },
     {
-     "id": "jeuno-the-first-walk/an-otherworldly-encounter",
+     "id": "jeuno-the-first-walk/an-otherworldly-encounter@dt",
      "level": "",
      "itemLevel": "695",
      "unlock": "Jeuno: The First Walk",
@@ -32114,7 +32114,7 @@
      }
     },
     {
-     "id": "the-underkeep/descent-to-the-foundation",
+     "id": "the-underkeep/descent-to-the-foundation@dt",
      "level": "",
      "itemLevel": "705",
      "unlock": "The Underkeep",
@@ -32192,7 +32192,7 @@
      }
     },
     {
-     "id": "aac-lightheavyweight-tier-savage",
+     "id": "aac-lightheavyweight-tier-savage@dt",
      "level": "",
      "itemLevel": "700-710",
      "unlock": "AAC Light-heavyweight Tier (Savage)",
@@ -32267,7 +32267,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-sphenes-burden/how-the-west-was-sung",
+     "id": "the-minstrels-ballad-sphenes-burden/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "710",
      "unlock": "The Minstrel's Ballad: Sphene's Burden",
@@ -32342,7 +32342,7 @@
      }
     },
     {
-     "id": "the-cloud-of-darkness-chaotic/how-the-west-was-sung",
+     "id": "the-cloud-of-darkness-chaotic/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "710",
      "unlock": "The Cloud of Darkness (Chaotic)",
@@ -32417,7 +32417,7 @@
      }
     },
     {
-     "id": "recollection/descent-to-the-foundation",
+     "id": "recollection/descent-to-the-foundation@dt",
      "level": "",
      "itemLevel": "715",
      "unlock": "Recollection",
@@ -32495,7 +32495,7 @@
      }
     },
     {
-     "id": "aac-cruiserweight-tier/souls-under-siege",
+     "id": "aac-cruiserweight-tier/souls-under-siege@dt",
      "level": "",
      "itemLevel": "715",
      "unlock": "AAC Cruiserweight Tier",
@@ -32577,7 +32577,7 @@
      }
     },
     {
-     "id": "the-meso-terminal/a-terminal-invitation",
+     "id": "the-meso-terminal/a-terminal-invitation@dt",
      "level": "",
      "itemLevel": "720",
      "unlock": "The Meso Terminal",
@@ -32655,7 +32655,7 @@
      }
     },
     {
-     "id": "the-ageless-necropolis/a-terminal-invitation",
+     "id": "the-ageless-necropolis/a-terminal-invitation@dt",
      "level": "",
      "itemLevel": "725",
      "unlock": "The Ageless Necropolis",
@@ -32733,7 +32733,7 @@
      }
     },
     {
-     "id": "san-doria-the-second-walk/dreams-of-paradise",
+     "id": "san-doria-the-second-walk/dreams-of-paradise@dt",
      "level": "",
      "itemLevel": "725",
      "unlock": "San d'Oria: The Second Walk",
@@ -32808,7 +32808,7 @@
      }
     },
     {
-     "id": "the-windward-wilds/the-white-wanderer",
+     "id": "the-windward-wilds/the-white-wanderer@dt",
      "level": "",
      "itemLevel": "725",
      "unlock": "The Windward Wilds",
@@ -32883,7 +32883,7 @@
      }
     },
     {
-     "id": "recollection-extreme/how-the-west-was-sung",
+     "id": "recollection-extreme/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "730",
      "unlock": "Recollection (Extreme)",
@@ -32973,7 +32973,7 @@
      }
     },
     {
-     "id": "futures-rewritten-ultimate/how-the-west-was-sung",
+     "id": "futures-rewritten-ultimate/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "735",
      "unlock": "Futures Rewritten (Ultimate)",
@@ -33063,7 +33063,7 @@
      }
     },
     {
-     "id": "mistwake/beyond-the-mountains",
+     "id": "mistwake/beyond-the-mountains@dt",
      "level": "",
      "itemLevel": "735",
      "unlock": "Mistwake",
@@ -33141,7 +33141,7 @@
      }
     },
     {
-     "id": "aac-cruiserweight-tier-savage",
+     "id": "aac-cruiserweight-tier-savage@dt",
      "level": "",
      "itemLevel": "730-740",
      "unlock": "AAC Cruiserweight Tier (Savage)",
@@ -33216,7 +33216,7 @@
      }
     },
     {
-     "id": "the-minstrels-ballad-necrons-embrace/how-the-west-was-sung",
+     "id": "the-minstrels-ballad-necrons-embrace/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "740",
      "unlock": "The Minstrel's Ballad: Necron's Embrace",
@@ -33306,7 +33306,7 @@
      }
     },
     {
-     "id": "the-windward-wilds-extreme/how-the-west-was-sung",
+     "id": "the-windward-wilds-extreme/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "740",
      "unlock": "The Windward Wilds (Extreme)",
@@ -33396,7 +33396,7 @@
      }
     },
     {
-     "id": "hell-on-rails/where-we-call-home",
+     "id": "hell-on-rails/where-we-call-home@dt",
      "level": "",
      "itemLevel": "745",
      "unlock": "Hell on Rails",
@@ -33474,7 +33474,7 @@
      }
     },
     {
-     "id": "aac-heavyweight-tier/feral-fandom",
+     "id": "aac-heavyweight-tier/feral-fandom@dt",
      "level": "",
      "itemLevel": "745",
      "unlock": "AAC Heavyweight Tier",
@@ -33556,7 +33556,7 @@
      }
     },
     {
-     "id": "the-clyteum/two-worlds-entwined",
+     "id": "the-clyteum/two-worlds-entwined@dt",
      "level": "",
      "itemLevel": "750",
      "unlock": "The Clyteum",
@@ -33634,7 +33634,7 @@
      }
     },
     {
-     "id": "the-unmaking/where-we-call-home",
+     "id": "the-unmaking/where-we-call-home@dt",
      "level": "",
      "itemLevel": "755",
      "unlock": "The Unmaking",
@@ -33712,7 +33712,7 @@
      }
     },
     {
-     "id": "windurst-the-third-walk/the-hollow-promise",
+     "id": "windurst-the-third-walk/the-hollow-promise@dt",
      "level": "",
      "itemLevel": "755",
      "unlock": "Windurst: The Third Walk",
@@ -33787,7 +33787,7 @@
      }
     },
     {
-     "id": "hell-on-rails-extreme/how-the-west-was-sung",
+     "id": "hell-on-rails-extreme/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "760",
      "unlock": "Hell on Rails (Extreme)",
@@ -33877,7 +33877,7 @@
      }
     },
     {
-     "id": "the-merchants-tale-advanced/abridged-too-far",
+     "id": "the-merchants-tale-advanced/abridged-too-far@dt",
      "level": "",
      "itemLevel": "760",
      "unlock": "The Merchant's Tale (Advanced)",
@@ -33973,7 +33973,7 @@
      }
     },
     {
-     "id": "aac-heavyweight-tier-savage",
+     "id": "aac-heavyweight-tier-savage@dt",
      "level": "",
      "itemLevel": "760-770",
      "unlock": "AAC Heavyweight Tier (Savage)",
@@ -34051,7 +34051,7 @@
      }
     },
     {
-     "id": "another-merchants-tale",
+     "id": "another-merchants-tale@dt",
      "level": "",
      "itemLevel": "770",
      "unlock": "Another Merchant's Tale",
@@ -34129,7 +34129,7 @@
      }
     },
     {
-     "id": "the-unmaking-extreme/how-the-west-was-sung",
+     "id": "the-unmaking-extreme/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "770",
      "unlock": "The Unmaking (Extreme)",
@@ -34219,7 +34219,7 @@
      }
     },
     {
-     "id": "dancing-mad-ultimate/how-the-west-was-sung",
+     "id": "dancing-mad-ultimate/how-the-west-was-sung@dt",
      "level": "",
      "itemLevel": "795",
      "unlock": "Dancing Mad (Ultimate)",

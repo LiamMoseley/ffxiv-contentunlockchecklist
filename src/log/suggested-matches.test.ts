@@ -4,7 +4,7 @@ import { createMemoryStorage } from "../adapters/memoryStorage";
 import { editRow, editedPage, insertRowAtTopOf, openLog, realPage, rowOf } from "./test/harness";
 
 describe("suggested matches for renamed entries", () => {
-  const SASTASHA_ID = "sastasha/its-probably-pirates";
+  const SASTASHA_ID = "sastasha/its-probably-pirates@arr";
   type OpenLog = ReturnType<typeof openLog>["log"];
 
   const page = (edit: (row: string) => string, revision = 1): WikiPage => ({
@@ -179,7 +179,7 @@ describe("suggested matches for renamed entries", () => {
     log.applyUpdate(preview, []);
 
     expect(storage.read("contentUnlockLog.declinedMatches")).toBe(
-      '["sastasha/its-probably-pirates\\nsastashas/its-probably-pirates"]',
+      '["sastasha/its-probably-pirates@arr\\nsastashas/its-probably-pirates@arr"]',
     );
     expect(log.entryStatus(SASTASHA_ID)).toBe("completed");
     expect(log.entryStatus(preview.suggestions[0].to.id)).toBe("unmarked");
