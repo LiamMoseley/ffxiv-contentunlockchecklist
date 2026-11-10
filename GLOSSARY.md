@@ -19,6 +19,9 @@ _Avoid_: Level band, table, category
 **Expansion**:
 A major release of the game that raises the level cap (A Realm Reborn to Dawntrail); it groups exactly two sections.
 
+**View**:
+The entries the player is looking at: the selected expansion and tab, everything on the All tile, or the NEW entries or Available now lists. Search and filters narrow a view; they never widen it.
+
 **Unlock**:
 The in-game act of gaining access to a piece of content, usually by completing a quest. A verb or event, never a row.
 
