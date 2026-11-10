@@ -12,4 +12,6 @@ The skills speak in terms of five canonical triage roles. This file maps those r
 
 When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
 
+A ticket that rereads a PRD story (widens or narrows a behaviour the player sees) is `needs-info`, with the question put to the owner, until the owner confirms the reading. #50 read "every section" as every expansion and went out as `ready-for-agent`; the owner had meant the sections in view.
+
 Edit the "Label in our tracker" column to match whatever vocabulary you actually use.
