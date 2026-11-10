@@ -16,6 +16,12 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 
 `gh` reads work from both Bash and PowerShell (checked on gh 2.102). In PowerShell, backticks and `\"` inside a double-quoted `--body` break parsing: pass bodies with `--body-file` (written with the Write tool into the session's scratchpad directory, never the repo, so `git add -A` can't commit it) or a single-quoted string.
 
+## Before implementing
+
+A `ready-for-human` ticket asks for the owner's decision, so read its comments first. If a decision is missing, ask the owner (one question per undecided item) and build only what they answer. A ticket with its decisions recorded is implemented as usual.
+
+The spec lives twice: in the parent issue's body (#1) and in `docs/prd.md`. A change to a story or Implementation Decision edits both, and the criteria below require them to agree. Edit an issue body with `node scripts/issue-body.mjs get <n> <file>`, the Edit tool on the file, then `set <n> <file>`, with the file in the scratchpad directory.
+
 ## Acceptance criteria
 
 A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticket body is the record of which ones were met. When implementing a ticket, after `/code-review`'s Spec axis has passed. The axis passes only when every "implemented but wrong" finding is fixed or shown to be false; list any finding left over in the PR body:
