@@ -102,22 +102,17 @@ function placeholderExpansion(levelCap: number, minLevel = levelCap): Expansion 
 }
 
 /**
- * Gives each row its entry ID: the normalised unlock name plus quest names. Rows that share one are
- * told apart by expansion, then by order of appearance within it. Every row of a shared name is
- * qualified, so a duplicate added elsewhere on the page never takes over an existing entry's ID.
+ * Gives each row its entry ID: the normalised unlock name plus quest names, then the expansion. Rows
+ * that still share one are told apart by order of appearance within the expansion. Every row is
+ * qualified by its expansion, so a duplicate added in another expansion never renames an existing entry.
  */
 function withEntryIds(sections: ParsedSection[]): Section[] {
   const nameOf = (row: Row) => [row.unlock, row.quest].map(normalise).filter(Boolean).join("/");
-  const rowsPerName = new Map<string, number>();
-  for (const row of sections.flatMap((s) => s.rows)) {
-    rowsPerName.set(nameOf(row), (rowsPerName.get(nameOf(row)) ?? 0) + 1);
-  }
   const seenInExpansion = new Map<string, number>();
   return sections.map(({ rows, ...section }) => ({
     ...section,
     entries: rows.map((row) => {
       const name = nameOf(row);
-      if (rowsPerName.get(name) === 1) return { id: name, ...row };
       const inExpansion = `${name}@${section.expansionId}`;
       const position = (seenInExpansion.get(inExpansion) ?? 0) + 1;
       seenInExpansion.set(inExpansion, position);

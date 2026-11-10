@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { entryIcon, iconFile, iconsUsed, parseContentUnlockPage, type Segment, type WikiPage } from "./index";
 import { createMemoryStorage } from "../adapters/memoryStorage";
-import { editRow, editedPage, fixedClock, insertRowAtTopOf, openLog, realPage, rowOf } from "./test/harness";
+import { editRow, editedPage, fakeWiki, fixedClock, insertRowAtTopOf, openLog, realPage, rowOf } from "./test/harness";
 
 describe("content from the real Content Unlock page", () => {
   it("groups the page into the six expansions, each with a levelling and a level-cap section", () => {
@@ -95,9 +95,9 @@ describe("entry IDs", () => {
   };
   const originalSastashaId = () => idOf(realPage, "Sastasha")[0];
 
-  it("are derived from the normalised unlock name plus quest names, or the unlock name alone when there is no quest", () => {
-    expect(idOf(realPage, "Sastasha")).toEqual(["sastasha/its-probably-pirates"]);
-    expect(idOf(realPage, "Party Finder")).toEqual(["party-finder"]);
+  it("are derived from the normalised unlock name plus quest names (or the unlock name alone when there is no quest), then the expansion", () => {
+    expect(idOf(realPage, "Sastasha")).toEqual(["sastasha/its-probably-pirates@arr"]);
+    expect(idOf(realPage, "Party Finder")).toEqual(["party-finder@arr"]);
   });
 
   it("are unique across the real page", () => {
@@ -164,25 +164,57 @@ describe("entry IDs", () => {
     ]);
   });
 
-  it("never hand an entry's ID to a duplicate added in an earlier expansion", () => {
+  describe("when the wiki adds a duplicate of an entry the player has marked Completed", () => {
     const row = rowOf(realPage.html, SASTASHA);
-    const movedToHeavensward = row.replace("<td>15</td>", "<td>55</td>");
-    const original = editedPage((html) => insertRowAtTopOf(html.replace(row, ""), "Level 51 - 60", movedToHeavensward));
-    const withEarlierDuplicate = editedPage(() => insertRowAtTopOf(original.html, "Level 1 - 50", row));
-    const levelOf = (page: WikiPage, id: string) =>
-      openLog({ page })
-        .log.sections()
-        .flatMap((s) => s.entries)
-        .find((e) => e.id === id)?.level;
+    const tickedThenUpdated = async (before: WikiPage, after: WikiPage, tickedId: string) => {
+      const wiki = fakeWiki(before);
+      const { log } = openLog({ page: before, wiki });
+      log.cycleEntryStatus(tickedId);
+      wiki.serve({ ...after, revisionId: before.revisionId + 1 });
+      const check = await log.checkForUpdate();
+      if (check.status !== "changes") throw new Error(`expected changes, got ${check.status}`);
+      log.applyUpdate(check.preview);
+      return log;
+    };
 
-    const [idBefore] = idOf(original, "Sastasha");
-    expect(levelOf(original, idBefore)).toBe("55");
-    expect(levelOf(withEarlierDuplicate, idBefore) ?? "orphaned").not.toBe("15");
+    it("keeps the progress when the duplicate lands in a later expansion", async () => {
+      const after = editedPage((html) => insertRowAtTopOf(html, "Level 51 - 60", row));
+      const log = await tickedThenUpdated(realPage, after, "sastasha/its-probably-pirates@arr");
+
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr")).toBe("completed");
+      expect(log.entryStatus("sastasha/its-probably-pirates@hw")).toBe("unmarked");
+    });
+
+    it("keeps the progress when the duplicate lands below it in the same expansion", async () => {
+      const after = editedPage((html) => editRow(html, SASTASHA, (r) => `${r}\n${row}`));
+      const log = await tickedThenUpdated(realPage, after, "sastasha/its-probably-pirates@arr");
+
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr")).toBe("completed");
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr#2")).toBe("unmarked");
+    });
+
+    // The one case the ID cannot tell apart: identical rows in one expansion differ only by order.
+    it("hands the progress to a duplicate that lands above it in the same expansion (ADR-0003)", async () => {
+      const after = editedPage((html) => insertRowAtTopOf(html, "Level 1 - 50", row));
+      const log = await tickedThenUpdated(realPage, after, "sastasha/its-probably-pirates@arr");
+
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr")).toBe("completed");
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr#2")).toBe("unmarked");
+    });
+
+    it("keeps the progress when the duplicate lands in an earlier expansion", async () => {
+      const before = editedPage((html) => insertRowAtTopOf(html.replace(row, ""), "Level 51 - 60", row));
+      const after = editedPage(() => insertRowAtTopOf(before.html, "Level 1 - 50", row));
+      const log = await tickedThenUpdated(before, after, "sastasha/its-probably-pirates@hw");
+
+      expect(log.entryStatus("sastasha/its-probably-pirates@hw")).toBe("completed");
+      expect(log.entryStatus("sastasha/its-probably-pirates@arr")).toBe("unmarked");
+    });
   });
 });
 
 describe("entry status", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("starts Unmarked for every entry", () => {
     const { log } = openLog();
@@ -203,22 +235,22 @@ describe("entry status", () => {
   it("changes only the entry it is cycled on", () => {
     const { log } = openLog();
     log.cycleEntryStatus(SASTASHA);
-    expect(log.entryStatus("party-finder")).toBe("unmarked");
+    expect(log.entryStatus("party-finder@arr")).toBe("unmarked");
   });
 });
 
 describe("progress", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("keeps entry statuses across a reload", () => {
     const { log, storage } = openLog();
     log.cycleEntryStatus(SASTASHA);
-    log.cycleEntryStatus("party-finder");
-    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder@arr");
+    log.cycleEntryStatus("party-finder@arr");
 
     const { log: reloaded } = openLog({ storage });
     expect(reloaded.entryStatus(SASTASHA)).toBe("completed");
-    expect(reloaded.entryStatus("party-finder")).toBe("notInterested");
+    expect(reloaded.entryStatus("party-finder@arr")).toBe("notInterested");
   });
 
   it("starts with a single default character whose random ID survives a reload", () => {
@@ -238,9 +270,9 @@ describe("progress", () => {
     clock.set("2026-11-03T11:00:00.000Z");
     log.cycleEntryStatus(SASTASHA);
     clock.set("2026-11-03T12:00:00.000Z");
-    log.cycleEntryStatus("party-finder");
-    log.cycleEntryStatus("party-finder");
-    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder@arr");
+    log.cycleEntryStatus("party-finder@arr");
+    log.cycleEntryStatus("party-finder@arr");
 
     const id = log.currentCharacter().id;
     expect(JSON.parse(storage.read("contentUnlockLog.progress")!)).toEqual({
@@ -259,7 +291,7 @@ describe("progress", () => {
       statuses: {
         [id]: {
           [SASTASHA]: { status: "completed", updatedAt: "2026-11-03T11:00:00.000Z" },
-          "party-finder": { status: "unmarked", updatedAt: "2026-11-03T12:00:00.000Z" },
+          "party-finder@arr": { status: "unmarked", updatedAt: "2026-11-03T12:00:00.000Z" },
         },
       },
     });
@@ -267,7 +299,7 @@ describe("progress", () => {
 });
 
 describe("section progress", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("counts Completed entries out of every entry in the section", () => {
     const { log } = openLog();
@@ -281,7 +313,7 @@ describe("section progress", () => {
     const { log } = openLog();
     log.cycleEntryStatus(SASTASHA);
     log.cycleEntryStatus(SASTASHA);
-    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder@arr");
 
     expect(log.entryStatus(SASTASHA)).toBe("notInterested");
     expect(log.sectionProgress("arr-levelling")).toEqual({ completed: 1, total: 85 });
@@ -295,15 +327,15 @@ describe("section progress", () => {
 });
 
 describe("expansion progress", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("counts Completed entries across both of the expansion's sections, leaving Not interested out", () => {
     const { log } = openLog();
     expect(log.expansionProgress("arr")).toEqual({ completed: 0, total: 137 });
 
     log.cycleEntryStatus(SASTASHA);
-    log.cycleEntryStatus("party-finder");
-    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder@arr");
+    log.cycleEntryStatus("party-finder@arr");
     expect(log.expansionProgress("arr")).toEqual({ completed: 1, total: 136 });
   });
 
@@ -319,9 +351,9 @@ describe("overall progress", () => {
     const { log } = openLog();
     expect(log.overallProgress()).toEqual({ completed: 0, total: 429 });
 
-    log.cycleEntryStatus("sastasha/its-probably-pirates");
-    log.cycleEntryStatus("party-finder");
-    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("sastasha/its-probably-pirates@arr");
+    log.cycleEntryStatus("party-finder@arr");
+    log.cycleEntryStatus("party-finder@arr");
     expect(log.overallProgress()).toEqual({ completed: 1, total: 428 });
   });
 });
@@ -425,7 +457,7 @@ describe("wiki links and icons in entries", () => {
 describe("setting an entry status directly", () => {
   it("sets Not interested from any status, as the X key does", () => {
     const { log } = openLog();
-    const id = "sastasha/its-probably-pirates";
+    const id = "sastasha/its-probably-pirates@arr";
     log.setEntryStatus(id, "notInterested");
     expect(log.entryStatus(id)).toBe("notInterested");
     log.cycleEntryStatus(id);
@@ -436,7 +468,7 @@ describe("setting an entry status directly", () => {
 });
 
 describe("undo", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("has nothing to undo on a fresh log", () => {
     const { log } = openLog();
@@ -456,7 +488,7 @@ describe("undo", () => {
 });
 
 describe("undo as a new change", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("writes the earlier status back with a fresh timestamp, never a rewind", () => {
     const clock = fixedClock("2026-11-03T10:00:00.000Z");
@@ -477,10 +509,10 @@ describe("undo as a new change", () => {
     const { log } = openLog();
     log.cycleEntryStatus(SASTASHA);
     log.cycleEntryStatus(SASTASHA);
-    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder@arr");
 
     log.undo();
-    expect(log.entryStatus("party-finder")).toBe("unmarked");
+    expect(log.entryStatus("party-finder@arr")).toBe("unmarked");
     expect(log.entryStatus(SASTASHA)).toBe("notInterested");
     log.undo();
     expect(log.entryStatus(SASTASHA)).toBe("completed");
@@ -657,7 +689,7 @@ describe("adding characters", () => {
 });
 
 describe("switching characters", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
   const added = (log: ReturnType<typeof openLog>["log"], name: string) => {
     const result = log.addCharacter({ name });
     if (!result.ok) throw new Error(result.error);
@@ -676,11 +708,11 @@ describe("switching characters", () => {
     expect(log.overallProgress().completed).toBe(0);
     // The first character's Completed Sastasha does not count against this one's Complete Shown.
     expect(log.completeShownCount()).toBe(log.listing().sections.flatMap((s) => s.entries).length);
-    log.setEntryStatus("party-finder", "notInterested");
+    log.setEntryStatus("party-finder@arr", "notInterested");
 
     log.switchCharacter(first.id);
     expect(log.entryStatus(SASTASHA)).toBe("completed");
-    expect(log.entryStatus("party-finder")).toBe("unmarked");
+    expect(log.entryStatus("party-finder@arr")).toBe("unmarked");
     expect(log.overallProgress().completed).toBe(1);
   });
 
@@ -717,8 +749,8 @@ describe("switching characters", () => {
     const first = log.currentCharacter();
     const second = added(log, "Alia");
     log.cycleEntryStatus(SASTASHA);
-    log.cycleEntryStatus("party-finder");
-    log.cycleEntryStatus("party-finder");
+    log.cycleEntryStatus("party-finder@arr");
+    log.cycleEntryStatus("party-finder@arr");
 
     const entryCount = log.sections().flatMap((s) => s.entries).length;
     expect(log.characterProgress(first.id)).toEqual({ completed: 1, total: entryCount - 1 });
@@ -727,7 +759,7 @@ describe("switching characters", () => {
 });
 
 describe("editing characters", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("changes name, World, Data Center and level, and keeps the character's progress and ID", () => {
     const { log, storage } = openLog();
@@ -784,7 +816,7 @@ describe("editing characters", () => {
 });
 
 describe("resetting a character", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("clears only the current character's progress, Not interested included", () => {
     const { log } = openLog();
@@ -792,7 +824,7 @@ describe("resetting a character", () => {
     const second = log.addCharacter({ name: "Alia" });
     if (!second.ok) throw new Error();
     log.cycleEntryStatus(SASTASHA);
-    log.setEntryStatus("party-finder", "notInterested");
+    log.setEntryStatus("party-finder@arr", "notInterested");
     log.switchCharacter(second.character.id);
     log.cycleEntryStatus(SASTASHA);
     log.switchCharacter(first.id);
@@ -800,7 +832,7 @@ describe("resetting a character", () => {
     expect(log.resetCharacter().changed).toBe(2);
 
     expect(log.entryStatus(SASTASHA)).toBe("unmarked");
-    expect(log.entryStatus("party-finder")).toBe("unmarked");
+    expect(log.entryStatus("party-finder@arr")).toBe("unmarked");
     expect(log.characterProgress(first.id).completed).toBe(0);
     expect(log.characterProgress(second.character.id).completed).toBe(1);
   });
@@ -828,7 +860,7 @@ describe("resetting a character", () => {
 });
 
 describe("deleting a character", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
   const twoCharacters = () => {
     const opened = openLog();
     const first = opened.log.currentCharacter();
@@ -984,7 +1016,7 @@ describe("filtering the log", () => {
     log.setSelection({ expansion: "all" });
     return log.listing().sections.flatMap((s) => s.entries);
   };
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
 
   it("lists every content type with its entry count", () => {
     const { log } = openLog();
@@ -1213,7 +1245,7 @@ describe("optional challenge entries", () => {
 });
 
 describe("available now", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
   type OpenedLog = ReturnType<typeof openLog>["log"];
   const availableIds = (log: OpenedLog) => log.availableNow().sections.flatMap((s) => s.entries.map((e) => e.id));
   const withLevel = (level: number | null) => {
@@ -1320,7 +1352,7 @@ describe("available now", () => {
 });
 
 describe("backup export and import", () => {
-  const SASTASHA = "sastasha/its-probably-pirates";
+  const SASTASHA = "sastasha/its-probably-pirates@arr";
   const ORPHAN = "an-entry-the-wiki-dropped";
   const T1 = "2026-11-03T10:00:00.000Z";
   const T2 = "2026-11-03T11:00:00.000Z";
@@ -1332,7 +1364,7 @@ describe("backup export and import", () => {
     device.log.editCharacter(device.log.currentCharacter().id, { name: "Aria", world: "Balmung", level: 50 });
     clock.set(T2);
     device.log.setEntryStatus(SASTASHA, "completed");
-    device.log.setEntryStatus("party-finder", "notInterested");
+    device.log.setEntryStatus("party-finder@arr", "notInterested");
     device.log.setEntryStatus(ORPHAN, "completed");
     return device;
   }
@@ -1357,7 +1389,7 @@ describe("backup export and import", () => {
           updatedAt: T1,
           statuses: {
             [SASTASHA]: { status: "completed", updatedAt: T2 },
-            "party-finder": { status: "notInterested", updatedAt: T2 },
+            "party-finder@arr": { status: "notInterested", updatedAt: T2 },
             [ORPHAN]: { status: "completed", updatedAt: T2 },
           },
         },
@@ -1390,7 +1422,7 @@ describe("backup export and import", () => {
     expect(aria.id).toMatch(/^[0-9a-f-]{36}$/);
     log.switchCharacter(aria.id);
     expect(log.entryStatus(SASTASHA)).toBe("completed");
-    expect(log.entryStatus("party-finder")).toBe("notInterested");
+    expect(log.entryStatus("party-finder@arr")).toBe("notInterested");
     const exported = JSON.parse(log.exportBackup().json).characters;
     expect(exported.find((c: { name: string }) => c.name === "Aria").statuses).toHaveProperty(ORPHAN);
   });
@@ -1418,11 +1450,11 @@ describe("backup export and import", () => {
     const { log } = openLog();
     log.editCharacter(log.currentCharacter().id, { name: "Aria", world: "Balmung" });
     log.setEntryStatus(SASTASHA, "notInterested");
-    log.setEntryStatus("party-finder", "completed");
+    log.setEntryStatus("party-finder@arr", "completed");
 
     expect(log.importBackup(backup.json)).toMatchObject({ ok: true, entriesAdded: 1 });
     expect(log.entryStatus(SASTASHA)).toBe("notInterested");
-    expect(log.entryStatus("party-finder")).toBe("completed");
+    expect(log.entryStatus("party-finder@arr")).toBe("completed");
     expect(log.entryStatus(ORPHAN)).toBe("completed");
   });
 
@@ -1453,14 +1485,14 @@ describe("backup export and import", () => {
 
     const { log } = openLog();
     log.editCharacter(log.currentCharacter().id, { name: "Aria", world: "Balmung" });
-    log.setEntryStatus("party-finder", "completed");
+    log.setEntryStatus("party-finder@arr", "completed");
     expect(log.importBackup(source.exportBackup().json)).toMatchObject({ charactersAdded: 1, charactersMerged: 1 });
     expect(names(log)).toContain("Cleo");
 
     expect(log.undo()).toBe(true);
     expect(names(log)).not.toContain("Cleo");
     expect(log.entryStatus(SASTASHA)).toBe("unmarked");
-    expect(log.entryStatus("party-finder")).toBe("completed");
+    expect(log.entryStatus("party-finder@arr")).toBe("completed");
   });
 
   it("reads a literal version 1 backup, deriving the Data Center and dropping an out-of-range level", () => {
@@ -1521,8 +1553,8 @@ describe("backup export and import", () => {
 describe("updating from the wiki", () => {
   const SASTASHA = ">Sastasha</a></td>";
   const COPPERBELL = ">Copperbell Mines</a></td>";
-  const SASTASHA_ID = "sastasha/its-probably-pirates";
-  const COPPERBELL_ID = "copperbell-mines/into-a-copper-hell";
+  const SASTASHA_ID = "sastasha/its-probably-pirates@arr";
+  const COPPERBELL_ID = "copperbell-mines/into-a-copper-hell@arr";
   const newRevision = (page: WikiPage): WikiPage => ({ ...page, revisionId: page.revisionId + 1 });
 
   it("says the log is up to date when the wiki has nothing new", async () => {
