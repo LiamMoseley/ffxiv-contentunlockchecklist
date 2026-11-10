@@ -64,9 +64,15 @@ export type BackupFile = { fileName: string; json: string };
 /** What an import did: characters added, existing characters it filled in, and entries it set. */
 export type ImportResult =
   | { ok: true; charactersAdded: number; charactersMerged: number; entriesAdded: number }
-  | { ok: false; error: BackupError | "unknownWorld" };
+  | { ok: false; error: BackupError };
 
 const MAX_LEVEL = 100;
+
+/** The one World rule, for adding, editing and importing: blank stays blank, a known World is normalised, any other is null. */
+function acceptedWorld(typed: string): string | null {
+  const world = typed.trim();
+  return world === "" ? "" : knownWorld(world);
+}
 
 const PROGRESS_KEY = "contentUnlockLog.progress";
 const CURRENT_KEY = "contentUnlockLog.currentCharacter";
@@ -285,8 +291,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     ignoreId?: string,
   ): { ok: true; details: Required<CharacterDetails> & { dataCenter: string } } | { ok: false; error: CharacterError } {
     const name = details.name.trim();
-    const typedWorld = (details.world ?? "").trim();
-    const world = typedWorld === "" ? "" : knownWorld(typedWorld);
+    const world = acceptedWorld(details.world ?? "");
     const level = details.level ?? null;
     if (!name) return { ok: false, error: "nameRequired" };
     if (world === null) return { ok: false, error: "unknownWorld" };
@@ -426,8 +431,8 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
   function importBackup(text: string): ImportResult {
     const parsed = parseBackup(text);
     if (!parsed.ok) return parsed;
-    // The same rule as adding a character: a World is blank or known. Checked first so a refusal changes nothing.
-    if (parsed.backup.characters.some((c) => c.world.trim() !== "" && knownWorld(c.world.trim()) === null))
+    // Checked first so a refusal changes nothing.
+    if (parsed.backup.characters.some((c) => acceptedWorld(c.world) === null))
       return { ok: false, error: "unknownWorld" };
     const importedCharacterIds: string[] = [];
     const earlierByCharacter = new Map<string, Map<string, EntryStatus>>();
@@ -440,8 +445,8 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         local = {
           id: crypto.randomUUID(),
           name: incoming.name.trim(),
-          world: incoming.world.trim(),
-          dataCenter: dataCenterOfWorld(incoming.world.trim()) ?? "",
+          world: acceptedWorld(incoming.world) ?? "",
+          dataCenter: dataCenterOfWorld(acceptedWorld(incoming.world) ?? "") ?? "",
           level:
             incoming.level !== null &&
             Number.isInteger(incoming.level) &&

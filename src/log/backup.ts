@@ -22,7 +22,7 @@ export type Backup = {
   characters: BackupCharacter[];
 };
 
-export type BackupError = "notABackup" | "newerVersion";
+export type BackupError = "notABackup" | "newerVersion" | "unknownWorld";
 
 const STATUSES: EntryStatus[] = ["unmarked", "completed", "notInterested"];
 
