@@ -92,7 +92,7 @@ export type Selection = { expansion: string; tab: SectionKind | "all" };
 const TABS: Selection["tab"][] = ["levelling", "levelCap", "all"];
 
 /** The device's remembered view: the selection and the filters, apart from the search text. */
-type StoredView = Selection & Omit<Filters, "search">;
+type StoredView = Selection & Omit<Filters, "search"> & { railCollapsed: boolean };
 
 const NEXT_STATUS: Record<EntryStatus, EntryStatus> = {
   unmarked: "completed",
@@ -212,6 +212,8 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
 
   let selection: Selection = { expansion: content.expansions[0]?.id ?? "all", tab: "levelling" };
   let filters: Filters = { ...DEFAULT_FILTERS };
+  /** Whether the tile column is collapsed; remembered on the device with the view. */
+  let railCollapsed = false;
   restoreView();
 
   /** Reads the remembered view, keeping each saved value that is still valid and the default for the rest. */
@@ -230,6 +232,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       filters.optionalChallenge = saved.optionalChallenge;
     if (typeof saved.hideCompleted === "boolean") filters.hideCompleted = saved.hideCompleted;
     if (typeof saved.hideNotInterested === "boolean") filters.hideNotInterested = saved.hideNotInterested;
+    if (typeof saved.railCollapsed === "boolean") railCollapsed = saved.railCollapsed;
   }
 
   function saveView() {
@@ -239,6 +242,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       optionalChallenge: filters.optionalChallenge,
       hideCompleted: filters.hideCompleted,
       hideNotInterested: filters.hideNotInterested,
+      railCollapsed,
     };
     storage.write(VIEW_KEY, JSON.stringify(stored));
   }
@@ -728,6 +732,12 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       if (!valid) return;
       selection = { ...selection, ...next };
       endNewView();
+      saveView();
+    },
+    /** Whether the tile column is collapsed, remembered on the device. */
+    railCollapsed: (): boolean => railCollapsed,
+    setRailCollapsed(collapsed: boolean) {
+      railCollapsed = collapsed;
       saveView();
     },
     /** What currently narrows the log. Everything but the search is remembered on the device. */

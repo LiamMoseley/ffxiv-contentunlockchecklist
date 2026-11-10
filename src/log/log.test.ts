@@ -1182,6 +1182,7 @@ describe("remembering the view on the device", () => {
       optionalChallenge: "only",
       hideCompleted: true,
       hideNotInterested: true,
+      railCollapsed: false,
     });
   });
 
@@ -1214,6 +1215,22 @@ describe("remembering the view on the device", () => {
     expect(log.filters()).toMatchObject({ type: null, optionalChallenge: "all", hideCompleted: false });
   });
 
+  it("remembers whether the tile column is collapsed, with the rest of the view", () => {
+    const { log, storage } = openLog();
+    expect(log.railCollapsed()).toBe(false);
+    log.setRailCollapsed(true);
+
+    expect(JSON.parse(storage.read("contentUnlockLog.view")!)).toMatchObject({ railCollapsed: true });
+    expect(openLog({ storage }).log.railCollapsed()).toBe(true);
+  });
+
+  it("ignores a remembered tile column value that is not a boolean", () => {
+    const storage = createMemoryStorage();
+    storage.write("contentUnlockLog.view", JSON.stringify({ railCollapsed: "yes" }));
+
+    expect(openLog({ storage }).log.railCollapsed()).toBe(false);
+  });
+
   it("opens normally when the remembered view is not JSON", () => {
     const storage = createMemoryStorage();
     storage.write("contentUnlockLog.view", "{oops");
@@ -1233,6 +1250,23 @@ describe("optional challenge entries", () => {
 
     expect(optional).toHaveLength(81);
     expect(optional.every((e) => /optional challenge content/i.test(e.information))).toBe(true);
+  });
+
+  it("do not include an entry whose other text only mentions the phrase", () => {
+    const SASTASHA = ">Sastasha</a></td>";
+    const page = editedPage((html) =>
+      editRow(html, SASTASHA, (row) => row.replace("Unlocks in the", "Not optional challenge content, unlocks in the")),
+    );
+    const { log } = openLog({ page });
+    const sastasha = log
+      .sections()
+      .flatMap((s) => s.entries)
+      .find((e) => e.id === "sastasha/its-probably-pirates@arr")!;
+
+    expect(sastasha.information).toContain("optional challenge content");
+    expect(sastasha.optionalChallenge).toBe(false);
+    log.setFilters({ optionalChallenge: "only" });
+    expect(log.listing().sections.flatMap((s) => s.entries.map((e) => e.id))).not.toContain(sastasha.id);
   });
 
   it("do not include entries whose free text merely says optional", () => {
