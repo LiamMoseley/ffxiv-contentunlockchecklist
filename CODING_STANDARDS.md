@@ -24,4 +24,6 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **A ticket agrees with the PRD and `GLOSSARY.md`.** Flag a ticket or acceptance criterion that widens or narrows what a PRD story or a glossary term (Section, View) says: the owner confirms the reading before it is built. Search and filters narrow a view and never widen it.
 
+**One validation rule per field, shared by every path that writes it.** Adding, editing and importing a character all go through the same function for the World (`acceptedWorld`), so a rule changed in one cannot drift in another. A test that exercises each path guards it.
+
 **One query decides what a view lists.** Every view that lists entries gets its list from one Log core query, and everything derived from that list (Complete Shown and Clear Shown, counts, badges, empty states) uses the same query. A second list built in a component, such as bulk actions reading the section view while a different view is open, drifts from what the player sees.
