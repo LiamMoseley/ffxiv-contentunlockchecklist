@@ -36,9 +36,10 @@ function scriptWritesSource() {
 }
 // `sed -i` with a source path anywhere in the command. The sed script may hold `|`, `;` or `&` (`s|a|b|` is common),
 // so the path is not looked for between the flag and the end of the script: only the flag must sit in sed's own
-// arguments, before any pipe or `;`/`&` token.
+// arguments, before any pipe or `;`/`&` token. A `;` or `&` glued to a word ends sed's arguments too
+// (`sed -n 1p f.md; grep -i x` has no `sed -i`), so a token that ends in one is sed's last.
 const sedEditsInPlace =
-  mentionsSource && /\bsed\b(?:\s+(?![|;&])\S+)*?\s+(?:-\w*i\S*|--in-place\S*)(?=\s|$)/.test(command);
+  mentionsSource && /\bsed\b(?:\s+(?![|;&])\S*[^\s|;&](?=\s))*?\s+(?:-\w*i\S*|--in-place\S*)(?=\s|$)/.test(command);
 const writesSource =
   evalWritesSource ||
   scriptWritesSource() ||

@@ -20,7 +20,7 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 
 A `ready-for-human` ticket asks for the owner's decision, so read its comments first. If a decision is missing, ask the owner (one question per undecided item) and build only what they answer. A ticket with its decisions recorded is implemented as usual.
 
-The spec lives twice: in the parent issue's body (#1) and in `docs/prd.md`. A change to a story or Implementation Decision edits both, and the criteria below require them to agree. Edit an issue body with `node scripts/issue-body.mjs get <n> <file>`, the Edit tool on the file, then `set <n> <file>`, with the file in the scratchpad directory.
+The spec is `docs/prd.md`; issue #1 is closed and keeps the first release's original text as history, so a change to a story or Implementation Decision edits the PRD only. Edit an issue body with `node scripts/issue-body.mjs get <n> <file>`, the Edit tool on the file, then `set <n> <file>`, with the file in the scratchpad directory.
 
 ## Acceptance criteria
 
