@@ -12,7 +12,8 @@ const ERROR_TEXT: Record<CharacterError, string> = {
   notFound: "That character no longer exists.",
 };
 
-const IMPORT_ERROR_TEXT: Record<BackupError, string> = {
+const IMPORT_ERROR_TEXT: Record<BackupError | "unknownWorld", string> = {
+  unknownWorld: "That backup names a World this app does not know.",
   notABackup: "That file is not a backup from this app.",
   newerVersion: "That backup was made by a newer version of the app. Update the app to read it.",
 };

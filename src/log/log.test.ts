@@ -1566,6 +1566,23 @@ describe("backup export and import", () => {
     expect(log.canUndo()).toBe(false);
   });
 
+  it("rejects a backup naming an unknown World, as adding a character does, and changes nothing", () => {
+    const { log, storage } = openLog();
+    const stored = storage.read("contentUnlockLog.progress");
+    const backup = JSON.stringify({
+      formatVersion: 1,
+      exportedAt: T2,
+      characters: [
+        { name: "Aria", world: "Balmung", dataCenter: "Crystal", level: 50, updatedAt: T1, statuses: {} },
+        { name: "Bren", world: "Newworld", dataCenter: "", level: null, updatedAt: T1, statuses: {} },
+      ],
+    });
+
+    expect(log.importBackup(backup)).toEqual({ ok: false, error: "unknownWorld" });
+    expect(storage.read("contentUnlockLog.progress")).toBe(stored);
+    expect(log.canUndo()).toBe(false);
+  });
+
   it("rejects a file that is not a backup, or from a newer format, and changes nothing", () => {
     const { log, storage } = openLog();
     const stored = storage.read("contentUnlockLog.progress");

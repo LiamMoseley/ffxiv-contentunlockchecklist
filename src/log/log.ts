@@ -64,7 +64,7 @@ export type BackupFile = { fileName: string; json: string };
 /** What an import did: characters added, existing characters it filled in, and entries it set. */
 export type ImportResult =
   | { ok: true; charactersAdded: number; charactersMerged: number; entriesAdded: number }
-  | { ok: false; error: BackupError };
+  | { ok: false; error: BackupError | "unknownWorld" };
 
 const MAX_LEVEL = 100;
 
@@ -426,6 +426,9 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
   function importBackup(text: string): ImportResult {
     const parsed = parseBackup(text);
     if (!parsed.ok) return parsed;
+    // The same rule as adding a character: a World is blank or known. Checked first so a refusal changes nothing.
+    if (parsed.backup.characters.some((c) => c.world.trim() !== "" && knownWorld(c.world.trim()) === null))
+      return { ok: false, error: "unknownWorld" };
     const importedCharacterIds: string[] = [];
     const earlierByCharacter = new Map<string, Map<string, EntryStatus>>();
     let charactersMerged = 0;
