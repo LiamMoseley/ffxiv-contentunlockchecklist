@@ -408,7 +408,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               title={online ? "Update from the wiki" : "You're offline: Update needs the wiki"}
               onClick={() => setConfirmingUpdate(true)}
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <svg
+                className="update-icon"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="currentColor"
+                aria-hidden="true"
+              >
                 <path d="M6 1h2v6h2.5L7 10.5 3.5 7H6V1ZM2 11.5h10V13H2v-1.5Z" />
               </svg>
               {!online && (

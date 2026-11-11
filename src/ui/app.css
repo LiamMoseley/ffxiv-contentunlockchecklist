@@ -854,7 +854,7 @@ a.wiki-link:focus-visible {
   border-color: rgba(90, 74, 48, 0.45);
   cursor: not-allowed;
 }
-.update-button:disabled > svg:first-child {
+.update-button:disabled .update-icon {
   opacity: 0.45;
 }
 /* Sits on the button's bottom-right corner without changing the button's size */
