@@ -457,7 +457,7 @@ properly; don't promote the prototype code.
   toggle uses the same pill and, when open, shows an inset bevel and a gold label. The Update
   button keeps its bordered look. Hover, pressed and focus states are consistent across all of them.
 - **Text fields:** Search, the Type and Optional challenges drop-downs and the Characters form fields
-  look like the game's text fields: a dark recessed box with a thin light-grey border, small rounded
+  look like the game's text fields: a light-grey recessed box with dark text and a thin grey border, small rounded
   corners and a faint inner shadow. Hover brightens the border; focus shows a gold border and soft glow.
   The drop-downs stay native controls with the closed box styled and a custom chevron. The Filters
   checkboxes use the status-box look, without a pop or glow.
