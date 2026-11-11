@@ -598,6 +598,38 @@ a:hover {
   font-size: 14px;
   line-height: 1.35;
 }
+/*
+ * Fixed layout, so every section's table shares one set of column widths and nothing shifts while scrolling (#88).
+ * Chosen against the bundled content: the percentages leave Information about 160px at 1001px, and its
+ * 'iLv. 110-123' is the widest Level text (85px). Recheck them if a wiki update adds longer cells.
+ */
+@media (min-width: 1001px) {
+  .entries {
+    table-layout: fixed;
+  }
+  .entries .col-status {
+    width: 44px;
+  }
+  .entries .col-level {
+    width: 96px;
+  }
+  .entries .col-unlock {
+    width: 20%;
+  }
+  .entries .col-type {
+    width: 10%;
+  }
+  .entries .col-quest {
+    width: 18%;
+  }
+  .entries .col-location {
+    width: 12%;
+  }
+  /* Information takes whatever is left */
+  .entries td {
+    overflow-wrap: anywhere;
+  }
+}
 .entries th {
   padding: 2px 8px 4px;
   text-align: left;
@@ -717,7 +749,12 @@ a.wiki-link:focus-visible {
 .flash-completed {
   position: relative;
 }
-.flash-completed::after {
+/*
+ * On a table row the sheen hangs off the Unlock cell, which is never positioned: a pseudo-element on the <tr>
+ * itself becomes an anonymous cell and resizes the row (#88), and the Status cell is absolutely positioned in cards.
+ */
+.entry-card.flash-completed::after,
+tr.flash-completed > td.unlock::after {
   content: "";
   position: absolute;
   inset: 0;

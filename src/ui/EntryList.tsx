@@ -156,6 +156,15 @@ export type EntryListProps = {
 export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps) {
   return (
     <table className="entries">
+      <colgroup>
+        <col className="col-status" />
+        <col className="col-level" />
+        <col className="col-unlock" />
+        <col className="col-type" />
+        <col className="col-quest" />
+        <col className="col-location" />
+        <col className="col-information" />
+      </colgroup>
       <thead>
         <tr>
           <th>Status</th>
