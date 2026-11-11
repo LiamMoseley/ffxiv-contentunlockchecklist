@@ -298,7 +298,9 @@ log.*
 - Content in a level band the app doesn't recognise yet (for example a new expansion) still appears,
   under a placeholder expansion named by its levels (for example "Level 101–110"), until the app
   learns its real name.
-- While the device is offline, **Update** stays visible but disabled, and says it's offline. If an
+- While the device is offline, **Update** stays visible but disabled, and shows it's offline with its
+  download icon marked by a small red slashed badge, not a text label. Its accessible name and tooltip
+  still say it's offline. If an
   update fails anyway, the app says the wiki couldn't be reached and changes nothing.
 
 **US-21. Be told when there's an update.**
@@ -450,9 +452,27 @@ properly; don't promote the prototype code.
   inspired by the crafting window's Progress bar. A full bar switches to the blue Quality fill.
 - **Links:** wiki links are blue, as on the wiki, on exactly the words the wiki links. The blue is
   lightened so it stays readable on the charcoal window.
-- **Buttons:** embossed grey pill-shaped buttons with a black edge, in a footer bar.
-- **Dialogs and messages:** pop-ups use the same window style. Messages appear briefly near the bottom
-  of the screen.
+- **Buttons:** embossed grey pill-shaped buttons with a black edge, in a footer bar. The Available now
+  and Filters toggles use the same pill; when on, they show an inset bevel and a gold label. The Update
+  button keeps its bordered look. Hover, pressed and focus states are consistent across all of them.
+- **Text fields:** Search, the Type and Optional challenges drop-downs and the Characters form fields
+  look like the game's text fields: a dark recessed box with a thin light-grey border, small rounded
+  corners and a faint inner shadow. Hover brightens the border; focus shows a gold border and soft glow.
+  The drop-downs stay native controls with the closed box styled and a custom chevron. The Filters
+  checkboxes use the status-box look, without a pop or glow.
+- **Dialogs and messages:** pop-ups use the same window style, framed in the thicker bronze gradient
+  with a highlight on the grey body, shared by every dialog, menu and message. Dialogs fade and scale in.
+  Messages appear briefly near the bottom of the screen.
+- **Site icon:** the browser tab shows the Main Scenario Quest icon; the home-screen icon is the same
+  icon on a dark tile with a bronze border.
+- **Motion:** feedback and orientation only, never needed to read a state, and switched off by the
+  reduced-motion setting.
+  - Setting an entry's status by hand pops its status box with a glow and sweeps a sheen across the row:
+    gold for Completed, grey for Not interested. Returning to Unmarked reverses quietly. Nothing plays
+    on load, on switching character, view, section or expansion, or for bulk actions, Undo or updates.
+  - Progress bar fills animate, with a brief flash when an expansion reaches 100%.
+  - Switching expansion or section fades the list in with a short upward slide, and the rail's active
+    marker slides to the chosen expansion.
 - **Sync status:** when sync is on, its status is visible at a glance, in the same visual language,
   without getting in the way.
 - **Typography:** a condensed face for titles and a clean, readable sans-serif for content. The app
