@@ -471,8 +471,9 @@ properly; don't promote the prototype code.
   icon on a dark tile with a bronze border.
 - **Motion:** feedback and orientation only, never needed to read a state, and switched off by the
   reduced-motion setting.
-  - Setting an entry's status by hand pops its status box with a glow and sweeps a sheen across the row:
-    gold for Completed, grey for Not interested. Returning to Unmarked reverses quietly. Nothing plays
+  - Setting an entry to Completed by hand pops its status box with a gold glow and sweeps a gold sheen
+    across the row, ending off the row's far edge. Setting Not interested or returning to Unmarked changes
+    quietly, with no animation. Nothing plays
     on load, on switching character, view, section or expansion, or for bulk actions, Undo or updates.
   - Progress bar fills animate, with a brief flash when an expansion reaches 100%.
   - Switching expansion or section fades the list in with a short upward slide, and the rail's active

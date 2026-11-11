@@ -188,6 +188,24 @@ a:hover {
     linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08) 50%, rgba(0, 0, 0, 0.12)),
     linear-gradient(90deg, #2448b8, #2f7fd8 45%, #3fc0dc 80%, #57dcc8);
 }
+.bar.flash {
+  animation: bar-flash 0.7s ease-out;
+}
+@keyframes bar-flash {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 2px #000,
+      0 0 0 1px #111,
+      0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  30% {
+    box-shadow:
+      inset 0 1px 2px #000,
+      0 0 0 1px #57dcc8,
+      0 0 12px 3px rgba(87, 220, 200, 0.8);
+  }
+}
 .count {
   font: 300 15px/1 var(--font-body);
   color: #e6e6e6;
@@ -656,6 +674,46 @@ a.wiki-link:focus-visible {
       transparent calc(50% + 1px)
     ),
     #3a3a3a;
+}
+
+/* Setting an entry to Completed by hand: the box pops with a gold glow and a gold sheen sweeps the row */
+.flash-completed {
+  position: relative;
+}
+.flash-completed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(240, 195, 90, 0.45), transparent) no-repeat -40% 0 / 40% 100%;
+  /* Starts and ends fully off the row (a 40%-wide band sits clear of it at -70% and 170%), and stays at the end */
+  animation: sheen 0.3s ease-out forwards;
+}
+@keyframes sheen {
+  from {
+    background-position: -70% 0;
+  }
+  to {
+    background-position: 170% 0;
+  }
+}
+.status-box.completed.flash {
+  --glow: 240, 195, 90;
+  animation: box-pop 0.3s ease-out;
+}
+@keyframes box-pop {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(var(--glow), 0.9);
+  }
+  40% {
+    transform: scale(1.35);
+    box-shadow: 0 0 10px 4px rgba(var(--glow), 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(var(--glow), 0);
+  }
 }
 
 /* Entries as a grid of cards, as in the game's Actions & Traits window */
