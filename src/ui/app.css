@@ -1451,17 +1451,7 @@ a.wiki-link:focus-visible {
   display: block;
   width: 100%;
   margin-top: 3px;
-  padding: 6px 8px;
-  border: 1px solid #1d1d1d;
-  border-radius: 3px;
-  background: #1c1c1c;
-  color: #eee;
-  font: inherit;
   font-size: 14px;
-}
-.character-form select:focus-visible,
-.character-form input:focus-visible {
-  outline: 2px solid #f0c35a;
 }
 .character-form .form-error {
   margin: 0 0 12px;
@@ -1578,19 +1568,107 @@ a.wiki-link:focus-visible {
 .filter-search {
   flex: 1 1 200px;
 }
+/* Game-style text fields: a dark recessed box with a thin light-grey border (Search, drop-downs, Characters form) */
 .filter-field input,
-.filter-field select {
-  padding: 4px 8px;
-  border: 1px solid #1d1d1d;
+.filter-field select,
+.character-form input,
+.character-form select {
+  box-sizing: border-box;
+  padding: 5px 8px;
+  border: 1px solid #8a8a8a;
   border-radius: 3px;
-  background: #1c1c1c;
-  color: #eee;
+  background-color: #1c1c1c;
+  box-shadow: inset 0 1px 3px #000;
+  color: var(--text);
   font: inherit;
   font-size: 13px;
+  text-align: left;
+  transition:
+    border-color 0.12s,
+    box-shadow 0.12s;
+}
+.filter-field input:hover:not(:disabled),
+.filter-field select:hover:not(:disabled),
+.character-form input:hover:not(:disabled),
+.character-form select:hover:not(:disabled) {
+  border-color: #c8c8c8;
 }
 .filter-field input:focus-visible,
-.filter-field select:focus-visible {
+.filter-field select:focus-visible,
+.character-form input:focus-visible,
+.character-form select:focus-visible {
+  border-color: var(--gold);
+  box-shadow:
+    inset 0 1px 3px #000,
+    0 0 6px 1px rgba(240, 195, 90, 0.45);
+  outline: none;
+}
+.filter-field input:disabled,
+.filter-field select:disabled,
+.character-form input:disabled,
+.character-form select:disabled {
+  opacity: 0.5;
+}
+.filter-field input::placeholder,
+.character-form input::placeholder {
+  color: var(--text-faint);
+  opacity: 0.75;
+}
+/* Drop-downs stay native selects; only the closed box is drawn, with a chevron in place of the browser arrow */
+.filter-field select,
+.character-form select {
+  appearance: none;
+  padding-right: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23d8d8d8' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.filter-field select option,
+.character-form select option {
+  background: #1c1c1c;
+  color: var(--text);
+}
+/* The Search clear (x) button, in the same light grey */
+.filter-field input[type="search"]::-webkit-search-cancel-button {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M1 1l8 8M9 1l-8 8' stroke='%23d8d8d8' stroke-width='1.6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+/* The Filters checkboxes look like status boxes: dark box, gold fill when ticked */
+.filter-checks input[type="checkbox"] {
+  appearance: none;
+  box-sizing: border-box;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 1px solid #8a8a8a;
+  border-radius: 3px;
+  background: #1c1c1c;
+  box-shadow: inset 0 1px 2px #000;
+  cursor: pointer;
+}
+.filter-checks input[type="checkbox"]:hover:not(:disabled) {
+  border-color: #c8c8c8;
+}
+.filter-checks input[type="checkbox"]:checked {
+  border-color: #fff0c2;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M2 6.5l3 3 5-6' fill='none' stroke='%231c1c1c' stroke-width='2'/%3E%3C/svg%3E")
+      center / 12px no-repeat,
+    var(--yellow);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+.filter-checks input[type="checkbox"]:focus-visible {
   outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+.filter-checks input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 .filter-checks {
   display: flex;
