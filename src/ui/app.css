@@ -692,21 +692,36 @@ a.wiki-link:focus-visible {
   inset: 0;
   pointer-events: none;
   background: linear-gradient(100deg, transparent, rgba(var(--flash), 0.45), transparent) no-repeat -40% 0 / 40% 100%;
-  animation: sheen 0.3s ease-out;
+  /* Starts and ends fully off the row (a 40%-wide band sits clear of it at -70% and 170%), and stays at the end */
+  animation: sheen 0.3s ease-out forwards;
 }
 @keyframes sheen {
-  to {
-    background-position: 140% 0;
+  from {
+    background-position: -70% 0;
   }
-}
-.status-box.flash {
-  animation: box-pop 0.3s ease-out;
+  to {
+    background-position: 170% 0;
+  }
 }
 .status-box.completed.flash {
   --glow: 240, 195, 90;
+  animation: box-pop 0.3s ease-out;
 }
+/* Not interested only glows: the box does not grow */
 .status-box.notInterested.flash {
   --glow: 150, 150, 150;
+  animation: box-glow 0.3s ease-out;
+}
+@keyframes box-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--glow), 0.9);
+  }
+  40% {
+    box-shadow: 0 0 10px 4px rgba(var(--glow), 0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--glow), 0);
+  }
 }
 @keyframes box-pop {
   0% {
