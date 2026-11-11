@@ -195,10 +195,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // On a switch the old list stays up while React renders the new one in the background, so the rail
   // marker and tabs move at once instead of freezing behind a long list. Under the same key (ticking,
   // filtering) the live listing shows, so those changes stay immediate.
-  const current = { key: availableOpen ? "available" : `${expansion}:${activeTab}`, listing };
-  const deferred = useDeferredValue(current);
-  const shown = deferred.key === current.key ? current : deferred;
-  const shownListing = shown.listing;
+  // Only the key is deferred (a string, so an unchanged key schedules no second render); the last
+  // listing rendered under the key on show is kept to hold the old list up meanwhile.
+  const listKey = availableOpen ? "available" : `${expansion}:${activeTab}`;
+  const shownKey = useDeferredValue(listKey);
+  const switching = shownKey !== listKey;
+  const lastShown = useRef(listing);
+  if (!switching) lastShown.current = listing;
+  const shownListing = switching ? lastShown.current : listing;
 
   const activeFilters = log.activeFilterCount();
   // Complete Shown and Clear Shown act on what the open view lists.
@@ -325,7 +329,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
               )}
               <div className="scroll">
-                <SwitchFade switchKey={shown.key}>
+                <SwitchFade switchKey={shownKey}>
                   {shownListing.view === "available" ? (
                     <AvailableNow
                       log={log}
@@ -413,13 +417,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <HintBar mode={displayMode} onMode={chooseDisplayMode} canUndo={log.canUndo()} onUndo={undo} />
 
           <div className="button-footer" role="group" aria-label="Shown entries">
-            <button type="button" disabled={clearCount === 0} onClick={() => setConfirming("clear")}>
+            <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
               Clear Shown
             </button>
             <span className="chevron" aria-hidden="true">
               ︾
             </span>
-            <button type="button" disabled={completeCount === 0} onClick={() => setConfirming("complete")}>
+            <button type="button" disabled={completeCount === 0 || switching} onClick={() => setConfirming("complete")}>
               Complete Shown
             </button>
           </div>
