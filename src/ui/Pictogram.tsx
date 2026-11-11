@@ -12,6 +12,8 @@ const PATHS: Record<string, string> = {
   ew: "M14.5 2.5a9.5 9.5 0 1 0 7 13.6A7.5 7.5 0 0 1 14.5 2.5z",
   // Sun on the horizon: Dawntrail
   dt: "M6 15a6 6 0 0 1 12 0zM2 16.5h20v2H2zM5 20.5h14v2H5zM11 3h2v4h-2zM3.5 7l1.4-1.4 2.8 2.8-1.4 1.4zM16.3 8.4l2.8-2.8 1.4 1.4-2.8 2.8z",
+  // Tick in a circle: Available now
+  available: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.5 14.5L6 12l1.4-1.4 3.1 3.1 6.1-6.1L18 9l-7.5 7.5z",
   // Four squares: every expansion
   all: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
 };

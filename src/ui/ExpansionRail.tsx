@@ -15,14 +15,16 @@ export function ExpansionRail({
   onChoose,
   collapsed,
   onToggleCollapsed,
-  inactive = false,
   noneChosen = false,
+  availableOpen = false,
+  onChooseAvailable,
 }: {
+  /** Available now is showing: its tile is highlighted. */
+  availableOpen?: boolean;
+  onChooseAvailable: () => void;
   /** Another view (the NEW entries) is showing: no tile is highlighted, but each still works. */
   noneChosen?: boolean;
   log: Log;
-  /** The tiles do nothing (Available now covers every expansion): greyed out, none chosen. */
-  inactive?: boolean;
   chosen: ExpansionChoice;
   onChoose: (choice: ExpansionChoice) => void;
   collapsed: boolean;
@@ -32,14 +34,23 @@ export function ExpansionRail({
   return (
     <nav className="rail" aria-label="Expansions">
       <Tile
+        className="available"
+        pictogram="available"
+        name="Available now"
+        shortName="Now"
+        detail="What you can do at your current level"
+        chosen={availableOpen}
+        onClick={onChooseAvailable}
+      />
+      <div className="rail-gap" role="separator" />
+      <Tile
         className="all"
         pictogram="all"
         name="All"
         shortName="All"
         detail="Every expansion"
         progress={overall}
-        inactive={inactive}
-        chosen={!inactive && !noneChosen && chosen === "all"}
+        chosen={!noneChosen && chosen === "all"}
         onClick={() => onChoose("all")}
       />
       <div className="rail-gap" role="separator" />
@@ -51,8 +62,7 @@ export function ExpansionRail({
           shortName={expansion.shortName}
           detail={`Level ${expansion.minLevel}–${expansion.levelCap}`}
           progress={log.expansionProgress(expansion.id)}
-          inactive={inactive}
-          chosen={!inactive && !noneChosen && chosen === expansion.id}
+          chosen={!noneChosen && chosen === expansion.id}
           hasNew={log.expansionHasNew(expansion.id)}
           onClick={() => onChoose(expansion.id)}
         />
@@ -81,11 +91,9 @@ function Tile({
   detail,
   progress,
   chosen,
-  inactive,
   hasNew = false,
   onClick,
 }: {
-  inactive: boolean;
   /** The expansion has NEW entries not yet seen. */
   hasNew?: boolean;
   className?: string;
@@ -93,21 +101,20 @@ function Tile({
   name: string;
   shortName: string;
   detail: string;
-  progress: ProgressCount;
+  progress?: ProgressCount;
   chosen: boolean;
   onClick: () => void;
 }) {
   return (
     <button
       type="button"
-      className={`rail-item ${className}${chosen ? " chosen" : ""}${inactive ? " inactive" : ""}`}
+      className={`rail-item ${className}${chosen ? " chosen" : ""}`}
       aria-pressed={chosen}
-      disabled={inactive}
       onClick={onClick}
       title={
-        inactive
-          ? "Not used in Available now"
-          : `${name} · ${detail} · ${progress.completed}/${progress.total}${hasNew ? " · NEW entries" : ""}`
+        progress
+          ? `${name} · ${detail} · ${progress.completed}/${progress.total}${hasNew ? " · NEW entries" : ""}`
+          : `${name} · ${detail}`
       }
     >
       <span className="tile">
@@ -122,10 +129,12 @@ function Tile({
           </span>
         </span>
         <span className="rail-detail">{detail}</span>
-        <span className="rail-progress">
-          <ProgressBar progress={progress} label={`${name} progress`} thin />
-          <Count progress={progress} />
-        </span>
+        {progress && (
+          <span className="rail-progress">
+            <ProgressBar progress={progress} label={`${name} progress`} thin />
+            <Count progress={progress} />
+          </span>
+        )}
       </span>
     </button>
   );
