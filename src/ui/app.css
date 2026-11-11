@@ -1161,8 +1161,7 @@ a.wiki-link:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
-/* On: Filters open, Available now active. Inset bevel and a gold label */
-.available-toggle[aria-pressed="true"]:not(:disabled),
+/* On: Filters open. Inset bevel and a gold label. Available now stays a plain pill */
 .filters-toggle[aria-expanded="true"]:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);

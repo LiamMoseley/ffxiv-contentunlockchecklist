@@ -453,7 +453,8 @@ properly; don't promote the prototype code.
 - **Links:** wiki links are blue, as on the wiki, on exactly the words the wiki links. The blue is
   lightened so it stays readable on the charcoal window.
 - **Buttons:** embossed grey pill-shaped buttons with a black edge, in a footer bar. The Available now
-  and Filters toggles use the same pill; when on, they show an inset bevel and a gold label. The Update
+  and Filters toggles use the same pill; Available now (and its Back to the log label) stays a plain
+  pill, and Filters, when open, shows an inset bevel and a gold label. The Update
   button keeps its bordered look. Hover, pressed and focus states are consistent across all of them.
 - **Text fields:** Search, the Type and Optional challenges drop-downs and the Characters form fields
   look like the game's text fields: a dark recessed box with a thin light-grey border, small rounded
