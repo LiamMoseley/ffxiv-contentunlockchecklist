@@ -749,7 +749,12 @@ a.wiki-link:focus-visible {
 .flash-completed {
   position: relative;
 }
-.flash-completed::after {
+/*
+ * On a table row the sheen hangs off the Unlock cell, which is never positioned: a pseudo-element on the <tr>
+ * itself becomes an anonymous cell and resizes the row (#88), and the Status cell is absolutely positioned in cards.
+ */
+.entry-card.flash-completed::after,
+tr.flash-completed > td.unlock::after {
   content: "";
   position: absolute;
   inset: 0;
