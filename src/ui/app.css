@@ -546,6 +546,12 @@ a:hover {
     transform: translateY(8px);
   }
 }
+/* Firefox-based browsers hitch on this fade after a long list mounts (#84), so they switch with no fade. */
+@supports (-moz-appearance: none) {
+  .switch-fade {
+    animation: none;
+  }
+}
 
 /* Section heading panel: expansion and section, a bar and a count */
 .section {
