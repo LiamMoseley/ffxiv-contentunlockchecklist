@@ -17,11 +17,11 @@ export function ExpansionRail({
   onToggleCollapsed,
   noneChosen = false,
   availableOpen = false,
-  onToggleAvailable,
+  onChooseAvailable,
 }: {
   /** Available now is showing: its tile is highlighted. */
   availableOpen?: boolean;
-  onToggleAvailable: () => void;
+  onChooseAvailable: () => void;
   /** Another view (the NEW entries) is showing: no tile is highlighted, but each still works. */
   noneChosen?: boolean;
   log: Log;
@@ -40,7 +40,7 @@ export function ExpansionRail({
         shortName="Now"
         detail="What you can do at your current level"
         chosen={availableOpen}
-        onClick={onToggleAvailable}
+        onClick={onChooseAvailable}
       />
       <div className="rail-gap" role="separator" />
       <Tile

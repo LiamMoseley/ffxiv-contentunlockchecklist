@@ -219,10 +219,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             chosen={expansion}
             noneChosen={viewingNew || availableOpen}
             availableOpen={availableOpen}
-            onToggleAvailable={() => {
-              // Available now replaces the NEW view; coming back lands on the normal view.
-              if (availableOpen) log.showAllEntries();
-              else log.showAvailableNow();
+            onChooseAvailable={() => {
+              // Available now replaces the NEW view; choosing a tile leaves it.
+              log.showAvailableNow();
               refresh();
             }}
             onChoose={setExpansion}
