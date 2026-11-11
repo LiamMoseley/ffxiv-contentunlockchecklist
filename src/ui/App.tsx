@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState, type ReactNode } from "react";
+import { useDeferredValue, useEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { cacheWikiIcons } from "../adapters/offline";
 import {
   entryCount,
@@ -192,6 +192,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         ];
   const activeTab: TabKey = expansion === "all" ? "all" : tab;
 
+  // On a switch the old list stays up while React renders the new one in the background, so the rail
+  // marker and tabs move at once instead of freezing behind a long list. Under the same key (ticking,
+  // filtering) the live listing shows, so those changes stay immediate.
+  const current = { key: availableOpen ? "available" : `${expansion}:${activeTab}`, listing };
+  const deferred = useDeferredValue(current);
+  const shown = deferred.key === current.key ? current : deferred;
+  const shownListing = shown.listing;
+
   const activeFilters = log.activeFilterCount();
   // Complete Shown and Clear Shown act on what the open view lists.
   const completeCount = log.completeShownCount();
@@ -317,26 +325,26 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
               )}
               <div className="scroll">
-                <SwitchFade switchKey={availableOpen ? "available" : `${expansion}:${activeTab}`}>
-                  {availableOpen ? (
+                <SwitchFade switchKey={shown.key}>
+                  {shownListing.view === "available" ? (
                     <AvailableNow
                       log={log}
-                      listing={listing}
+                      listing={shownListing}
                       expansionNames={expansionNames}
                       mode={displayMode}
                       actions={actions}
                       onSetLevel={() => setCharacterMenuOpen(true)}
                     />
-                  ) : viewingNew ? (
+                  ) : shownListing.view === "new" ? (
                     <NewEntriesView
                       log={log}
-                      sections={listing.sections}
+                      sections={shownListing.sections}
                       expansionNames={expansionNames}
                       mode={displayMode}
                       actions={actions}
                     />
                   ) : (
-                    listing.sections.map((section) => (
+                    shownListing.sections.map((section) => (
                       <SectionPanel
                         key={section.id}
                         log={log}
