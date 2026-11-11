@@ -25,6 +25,7 @@ describe("block-source-shell-writes hook", () => {
     `sed -e 's/a/b; s/c/d/' -i src/x.ts`,
     `sed -e "s/a/b && c/" -i src/x.ts`,
     `sed -n 1p docs/prd.md; sed -i 's/a/b/' src/x.ts`,
+    `cat > /tmp/e.mjs <<'EOF'\nfs.writeFileSync("src/ui/app.css", s)\nEOF\nnode /tmp/e.mjs`,
   ])("blocks %s", (command) => {
     expect(blocks(command)).toBe(true);
   });
@@ -34,6 +35,7 @@ describe("block-source-shell-writes hook", () => {
     `grep -i foo src/log/log.ts | sed 's|a|b|'`,
     `sed -i 's|a|b|' notes.txt`,
     `git status`,
+    `node /tmp/read.mjs src/log/log.ts`,
     `sed -n 1,5p docs/prd.md; grep -n -i level docs/prd.md; sed -n 3p src/log/log.ts`,
     `sed -n 1,5p docs/prd.md && grep -i level src/log/log.ts`,
   ])("allows %s", (command) => {
