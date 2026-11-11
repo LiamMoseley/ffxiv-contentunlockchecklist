@@ -317,7 +317,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
               )}
               <div className="scroll">
-                <SwitchFade switchKey={`${expansion}:${activeTab}`}>
+                <SwitchFade switchKey={availableOpen ? "available" : `${expansion}:${activeTab}`}>
                   {availableOpen ? (
                     <AvailableNow
                       log={log}
