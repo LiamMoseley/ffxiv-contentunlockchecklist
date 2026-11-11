@@ -25,6 +25,21 @@ import { SectionTabs, type TabChoice } from "./SectionTabs";
 
 const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
 
+/** Rows mounted with the fade on a switch, about a screenful and a half; the rest follows after paint. */
+const FIRST_STAGE_ROWS = 60;
+
+/** The sections cut to their first `limit` entries in all; a section left with none is dropped. */
+function firstRows(sections: Section[], limit: number): Section[] {
+  const kept: Section[] = [];
+  let left = limit;
+  for (const section of sections) {
+    if (left <= 0) break;
+    kept.push(section.entries.length <= left ? section : { ...section, entries: section.entries.slice(0, left) });
+    left -= section.entries.length;
+  }
+  return kept;
+}
+
 /** A section tab: one of the expansion's two sections, or both. */
 type TabKey = Selection["tab"];
 
@@ -202,7 +217,27 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const switching = shownKey !== listKey;
   const lastShown = useRef(listing);
   if (!switching) lastShown.current = listing;
-  const shownListing = switching ? lastShown.current : listing;
+  const baseListing = switching ? lastShown.current : listing;
+
+  // A switch mounts the first screenful of rows with the fade, then the rest straight after paint:
+  // React cannot split one DOM commit, and All's ~430 rows in one block stall a Firefox-based browser.
+  // Ticking and filtering stay under the same key, so they render in full at once.
+  const [full, setFull] = useState({ key: shownKey, done: true });
+  if (full.key !== shownKey) setFull({ key: shownKey, done: false });
+  useEffect(() => {
+    let timer = 0;
+    const frame = requestAnimationFrame(() => {
+      timer = window.setTimeout(() => setFull({ key: shownKey, done: true }), 0);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+    };
+  }, [shownKey]);
+  const staged = full.key === shownKey && !full.done;
+  const shownListing: Listing = staged
+    ? { ...baseListing, sections: firstRows(baseListing.sections, FIRST_STAGE_ROWS) }
+    : baseListing;
 
   const activeFilters = log.activeFilterCount();
   // Complete Shown and Clear Shown act on what the open view lists.
