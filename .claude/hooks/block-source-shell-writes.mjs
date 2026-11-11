@@ -23,6 +23,9 @@ function scriptWritesSource() {
   const runs = command.matchAll(/\b(?:node|tsx)\s+(?:--?\S+\s+)*["']?([^\s"'|;&]+\.(?:mjs|cjs|js|ts))/g);
   for (const [, path] of runs) {
     if (new RegExp(SOURCE).test(path)) continue;
+    // The command may create the script itself (`cat > x.mjs <<EOF … EOF; node x.mjs`): the file does not exist yet,
+    // so judge the command's own text.
+    if (mentionsSource && /\b(?:write|append|copy|rename|rm|unlink)\w*(?:Sync)?\s*\(/.test(command)) return true;
     const local = process.platform === "win32" ? path.replace(/^\/([a-z])\//i, "$1:/") : path;
     try {
       const text = readFileSync(resolve(toolInput.cwd ?? process.cwd(), local), "utf8");

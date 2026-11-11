@@ -1,0 +1,11 @@
+# Verifying offline support
+
+Read `docs/agents/verifying-the-ui.md` first for the general pane recipes.
+
+- **Check offline support in Claude in Chrome, not the browser pane.** The pane cannot register a service worker (even a one-line one fails with "unknown error occurred when fetching the script"), and dev mode never registers one. `scripts/sw.test.mjs` covers the worker's logic against fakes; the real browser shows what fakes cannot (it found a `Vary: Origin` mismatch). Recipe, in order:
+  - `npm run build`, then `npm run preview -- --port 4173 --strictPort` in the background. Not `npx vite preview --base /…`: Git Bash rewrites a leading `/` argument into a `C:/Program Files/Git/…` path.
+  - `navigate` to `http://localhost:4173/`, wait about 4 seconds, then in `javascript_tool` read `navigator.serviceWorker.getRegistration()` (`active.state`), `navigator.serviceWorker.controller`, and `caches.keys()` with each cache's `keys().length` (shell cache about 62 files, `runtime-v1` the font files).
+  - **Go offline by stopping the server:** `for pid in $(netstat -ano | grep ":4173 " | grep LISTEN | awk '{print $5}' | sort -u); do taskkill //F //PID $pid; done` (PowerShell's `Stop-Process` by port fails on PID 0). `navigate` again and check `#root` is not empty, `document.images` all have `naturalWidth > 0`, and `document.fonts` lists the four families as loaded. The wiki and Google stay reachable, so a resource's `workerStart > 0` and `transferSize === 0` show it came from the worker.
+  - **A new deploy:** rebuild, restart the server, `navigate` once, wait about 5 seconds, then `caches.keys()` lists only the new `shell-<version>` and `runtime-v1`.
+  - **A wiki icon the app does not ship:** wrap `window.fetch` (the "show a wiki update" recipe in `docs/agents/verifying-updates.md`) to replace `48px-Housing_icon.png` with `60px-Housing_icon.png` in `body.parse.text`, run Update from the footer, then check the three `<img>` elements with `consolegameswiki` in their `src` have `referrerPolicy` `no-referrer`, loaded, and that `runtime-v1` holds the URL. An icon-only change is adopted without a preview ("The log is up to date").
+  - **Clean up:** `unregister()` each registration, `caches.delete` each cache, remove the `contentUnlockLog.*` keys, stop the server.
