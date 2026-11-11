@@ -418,12 +418,10 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               >
                 <path d="M6 1h2v6h2.5L7 10.5 3.5 7H6V1ZM2 11.5h10V13H2v-1.5Z" />
               </svg>
-              {!online && (
-                <svg className="update-offline-sign" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-                  <circle cx="9" cy="9" r="7.25" fill="none" stroke="#d0382c" strokeWidth="2" />
-                  <path d="M4.2 13.8 13.8 4.2" stroke="#d0382c" strokeWidth="2" strokeLinecap="butt" />
-                </svg>
-              )}
+              <span
+                className={online ? "update-dot update-dot-online" : "update-dot update-dot-offline"}
+                aria-hidden="true"
+              />
             </button>
           </span>
         </footer>
