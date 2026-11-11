@@ -38,7 +38,7 @@ export function ExpansionRail({
         pictogram="available"
         name="Available now"
         shortName="Now"
-        detail="What you can do at your level"
+        detail="What you can do at your current level"
         chosen={availableOpen}
         onClick={onToggleAvailable}
       />
