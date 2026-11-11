@@ -706,7 +706,7 @@ a.wiki-link:focus-visible {
   --glow: 240, 195, 90;
 }
 .status-box.notInterested.flash {
-  --glow: 140, 140, 140;
+  --glow: 150, 150, 150;
 }
 @keyframes box-pop {
   0% {

@@ -1,4 +1,4 @@
-import { createContext, useContext, type AnimationEvent, type KeyboardEvent } from "react";
+import { createContext, useContext, type KeyboardEvent } from "react";
 import {
   entryIcon,
   entryName,
@@ -22,7 +22,6 @@ export type EntryActions = {
   onNotInterested: (entryId: string) => void;
   /** The entry the player just set to Completed or Not interested, which plays its animation. */
   flash?: EntryFlash | null;
-  onFlashEnd?: () => void;
 };
 
 export type EntryFlash = { entryId: string; status: EntryStatus };
@@ -100,18 +99,12 @@ function StatusButton({ entry, status, flash }: { entry: Entry; status: EntrySta
   );
 }
 
-/** What an entry's row needs to play its status animation: a class, a key to restart it, and the end handler. */
+/** What an entry's row needs to play its status animation: whether it is flashing, and the class that plays it. */
 function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
   const flashing = actions.flash?.entryId === entry.id && actions.flash.status === status;
   return {
     flashing,
-    className: flashing ? ` ${status === "completed" ? "flash-completed" : "flash-notInterested"}` : "",
-    // The sheen is the longest animation; the status box's pop ends sooner and is ignored.
-    onAnimationEnd: flashing
-      ? (event: AnimationEvent) => {
-          if (event.animationName === "sheen") actions.onFlashEnd?.();
-        }
-      : undefined,
+    className: flashing ? (status === "completed" ? "flash-completed" : "flash-notInterested") : "",
   };
 }
 
@@ -179,12 +172,7 @@ export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps
           const status = statusOf(entry.id);
           const flash = flashProps(actions, entry, status);
           return (
-            <tr
-              key={entry.id}
-              className={status + flash.className}
-              onAnimationEnd={flash.onAnimationEnd}
-              {...entryProps(actions, entry.id)}
-            >
+            <tr key={entry.id} className={`${status} ${flash.className}`} {...entryProps(actions, entry.id)}>
               <td className="status-cell">
                 <StatusButton entry={entry} status={status} flash={flash.flashing} />
               </td>
@@ -228,9 +216,8 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
         return (
           <li
             key={entry.id}
-            className={`entry-card ${status}${flash.className}`}
+            className={`entry-card ${status} ${flash.className}`}
             title={name}
-            onAnimationEnd={flash.onAnimationEnd}
             {...entryProps(actions, entry.id)}
           >
             <span className="card-icon">{icon && <WikiIcon icon={icon.icon} size={36} />}</span>

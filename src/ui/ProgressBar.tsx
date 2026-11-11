@@ -1,5 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import type { ProgressCount } from "../log";
+
+/** True while the player's own status change is playing, so a bar it fills may flash. */
+export const ChangedByHandContext = createContext(false);
 
 /**
  * Crafting-window style bar: a recessed track with a glossy green fill, which switches to
@@ -9,13 +12,14 @@ export function ProgressBar({ progress, label, thin }: { progress: ProgressCount
   const { completed, total } = progress;
   const fraction = total === 0 ? 0 : completed / total;
   const full = total > 0 && completed === total;
-  // A bar that is already full when it appears stays still; one that fills while shown flashes once.
+  // A bar flashes once when the player's own change fills it; loading, switching and bulk actions leave it still.
+  const byHand = useContext(ChangedByHandContext);
   const wasFull = useRef(full);
   const [flashing, setFlashing] = useState(false);
   useEffect(() => {
-    if (full && !wasFull.current) setFlashing(true);
+    if (full && !wasFull.current && byHand) setFlashing(true);
     wasFull.current = full;
-  }, [full]);
+  }, [full, byHand]);
   return (
     <span
       className={`bar${thin ? " thin" : ""}${full ? " full" : ""}${full && flashing ? " flash" : ""}`}
