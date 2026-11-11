@@ -1,8 +1,8 @@
 /**
  * Ticks or adds acceptance criteria on a GitHub issue, changing nothing else in its body.
  *
- *   node scripts/issue-criteria.mjs tick   <issue> <n>...|all [--dry]
- *   node scripts/issue-criteria.mjs untick <issue> <n>...|all [--dry]
+ *   node scripts/issue-criteria.mjs tick   <issue> <n|a-b>...|all [--dry]
+ *   node scripts/issue-criteria.mjs untick <issue> <n|a-b>...|all [--dry]
  *   node scripts/issue-criteria.mjs add    <issue> "<criterion text>" [--ticked] [--dry]
  *   node scripts/issue-criteria.mjs reword <issue> <n> "<new text>" [--dry]   (only when the owner changes a requirement)
  *
@@ -20,7 +20,7 @@ const gh = (...args) => execFileSync("gh", args, { encoding: "utf8" });
 const [command, issue, ...rest] = process.argv.slice(2);
 const flags = new Set(rest.filter((a) => a.startsWith("--")));
 const args = rest.filter((a) => !a.startsWith("--"));
-const usage = 'Usage: issue-criteria.mjs tick|untick <issue> <n>...|all | add <issue> "<text>" [--ticked] [--dry]';
+const usage = 'Usage: issue-criteria.mjs tick|untick <issue> <n|a-b>...|all | add <issue> "<text>" [--ticked] [--dry]';
 if (!["tick", "untick", "add", "reword"].includes(command) || !/^\d+$/.test(issue ?? "") || args.length === 0) {
   console.error(usage);
   process.exit(1);
@@ -34,9 +34,17 @@ if (criterionAt.length === 0) {
   process.exit(1);
 }
 
+/** `3` is [3]; `1-5` is [1, 2, 3, 4, 5]. Anything else, including a backwards range, is NaN and reported as bad. */
+function expandNumbers(token) {
+  const range = /^(\d+)-(\d+)$/.exec(token);
+  if (!range || Number(range[1]) > Number(range[2])) return [Number(token)];
+  const [from, to] = [Number(range[1]), Number(range[2])];
+  return Array.from({ length: to - from + 1 }, (_, i) => from + i);
+}
+
 let result;
 if (command === "tick" || command === "untick") {
-  const chosen = args[0] === "all" ? criterionAt.map((_, i) => i + 1) : args.map(Number);
+  const chosen = args[0] === "all" ? criterionAt.map((_, i) => i + 1) : args.flatMap(expandNumbers);
   const bad = chosen.filter((n) => !Number.isInteger(n) || n < 1 || n > criterionAt.length);
   if (bad.length > 0) {
     console.error(`No criterion ${bad.join(", ")}: the issue has ${criterionAt.length}.`);

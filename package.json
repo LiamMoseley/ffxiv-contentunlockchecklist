@@ -15,7 +15,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "duplication": "jscpd",
+    "duplication": "jscpd --silent || jscpd",
     "unused-css": "node scripts/unused-css.mjs",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run unused-css && npm run duplication && npm test"
   },
