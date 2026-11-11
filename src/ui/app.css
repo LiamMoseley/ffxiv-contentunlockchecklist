@@ -247,8 +247,28 @@ a:hover {
 .rail-item:hover {
   background: rgba(255, 255, 255, 0.04);
 }
-.rail-item.chosen {
+/* The chosen tile's highlight is one marker that slides between tiles (placed by ExpansionRail) */
+.rail {
+  position: relative;
+  isolation: isolate;
+}
+.rail > .rail-marker {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  border-radius: 6px;
   background: linear-gradient(90deg, rgba(255, 231, 160, 0.12), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.18s ease-out,
+    width 0.18s ease-out,
+    height 0.18s ease-out,
+    opacity 0.18s ease-out;
+}
+.rail > .rail-marker.on {
+  opacity: 1;
 }
 .new-badge {
   display: inline-block;
@@ -514,6 +534,17 @@ a:hover {
   padding: 4px 10px 8px 4px;
   scrollbar-width: thin;
   scrollbar-color: #8a8a8a #2a2a2a;
+}
+
+/* Switching expansion or section: the list fades in with a short upward slide */
+.switch-fade {
+  animation: switch-fade 0.18s ease-out;
+}
+@keyframes switch-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 /* Section heading panel: expansion and section, a bar and a count */
@@ -1061,7 +1092,7 @@ a.wiki-link:focus-visible {
     min-width: 0;
     padding: 4px 2px;
   }
-  .rail-item.chosen {
+  .rail > .rail-marker {
     background: linear-gradient(rgba(255, 231, 160, 0.12), transparent);
   }
   .tile {

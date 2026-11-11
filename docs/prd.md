@@ -476,8 +476,8 @@ properly; don't promote the prototype code.
     quietly, with no animation. Nothing plays
     on load, on switching character, view, section or expansion, or for bulk actions, Undo or updates.
   - Progress bar fills animate, with a brief flash when an expansion reaches 100%.
-  - Switching expansion or section fades the list in with a short upward slide, and the rail's active
-    marker slides to the chosen expansion.
+  - Switching expansion or section, or to or from Available now, fades the list in with a short upward
+    slide, and the rail's active marker slides to the chosen tile.
 - **Sync status:** when sync is on, its status is visible at a glance, in the same visual language,
   without getting in the way.
 - **Typography:** a condensed face for titles and a clean, readable sans-serif for content. The app

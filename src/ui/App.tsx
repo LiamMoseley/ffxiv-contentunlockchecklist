@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { cacheWikiIcons } from "../adapters/offline";
 import {
   entryCount,
@@ -192,6 +192,18 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         ];
   const activeTab: TabKey = expansion === "all" ? "all" : tab;
 
+  // On a switch the old list stays up while React renders the new one in the background, so the rail
+  // marker and tabs move at once instead of freezing behind a long list. Under the same key (ticking,
+  // filtering) the live listing shows, so those changes stay immediate.
+  // Only the key is deferred (a string, so an unchanged key schedules no second render); the last
+  // listing rendered under the key on show is kept to hold the old list up meanwhile.
+  const listKey = availableOpen ? "available" : `${expansion}:${activeTab}`;
+  const shownKey = useDeferredValue(listKey);
+  const switching = shownKey !== listKey;
+  const lastShown = useRef(listing);
+  if (!switching) lastShown.current = listing;
+  const shownListing = switching ? lastShown.current : listing;
+
   const activeFilters = log.activeFilterCount();
   // Complete Shown and Clear Shown act on what the open view lists.
   const completeCount = log.completeShownCount();
@@ -317,35 +329,37 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
               )}
               <div className="scroll">
-                {availableOpen ? (
-                  <AvailableNow
-                    log={log}
-                    listing={listing}
-                    expansionNames={expansionNames}
-                    mode={displayMode}
-                    actions={actions}
-                    onSetLevel={() => setCharacterMenuOpen(true)}
-                  />
-                ) : viewingNew ? (
-                  <NewEntriesView
-                    log={log}
-                    sections={listing.sections}
-                    expansionNames={expansionNames}
-                    mode={displayMode}
-                    actions={actions}
-                  />
-                ) : (
-                  listing.sections.map((section) => (
-                    <SectionPanel
-                      key={section.id}
+                <SwitchFade switchKey={shownKey}>
+                  {shownListing.view === "available" ? (
+                    <AvailableNow
                       log={log}
-                      section={section}
-                      expansionName={expansionNames.get(section.expansionId) ?? ""}
+                      listing={shownListing}
+                      expansionNames={expansionNames}
+                      mode={displayMode}
+                      actions={actions}
+                      onSetLevel={() => setCharacterMenuOpen(true)}
+                    />
+                  ) : shownListing.view === "new" ? (
+                    <NewEntriesView
+                      log={log}
+                      sections={shownListing.sections}
+                      expansionNames={expansionNames}
                       mode={displayMode}
                       actions={actions}
                     />
-                  ))
-                )}
+                  ) : (
+                    shownListing.sections.map((section) => (
+                      <SectionPanel
+                        key={section.id}
+                        log={log}
+                        section={section}
+                        expansionName={expansionNames.get(section.expansionId) ?? ""}
+                        mode={displayMode}
+                        actions={actions}
+                      />
+                    ))
+                  )}
+                </SwitchFade>
               </div>
             </main>
           </div>
@@ -403,13 +417,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <HintBar mode={displayMode} onMode={chooseDisplayMode} canUndo={log.canUndo()} onUndo={undo} />
 
           <div className="button-footer" role="group" aria-label="Shown entries">
-            <button type="button" disabled={clearCount === 0} onClick={() => setConfirming("clear")}>
+            <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
               Clear Shown
             </button>
             <span className="chevron" aria-hidden="true">
               ︾
             </span>
-            <button type="button" disabled={completeCount === 0} onClick={() => setConfirming("complete")}>
+            <button type="button" disabled={completeCount === 0 || switching} onClick={() => setConfirming("complete")}>
               Complete Shown
             </button>
           </div>
@@ -445,6 +459,21 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         </div>
       </div>
     </ChangedByHandContext.Provider>
+  );
+}
+
+/**
+ * Fades its list in with a short upward slide when `switchKey` changes (a new expansion or section).
+ * The first render, and every later change to the list under the same key, play nothing.
+ */
+function SwitchFade({ switchKey, children }: { switchKey: string; children: ReactNode }) {
+  const [state, setState] = useState({ key: switchKey, animate: false });
+  if (state.key !== switchKey) setState({ key: switchKey, animate: true });
+  // Keyed, so a switch remounts the wrapper and restarts the animation; the class then stays put.
+  return (
+    <div key={switchKey} className={state.animate ? "switch-fade" : undefined}>
+      {children}
+    </div>
   );
 }
 
