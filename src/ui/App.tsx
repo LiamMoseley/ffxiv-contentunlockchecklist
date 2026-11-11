@@ -14,7 +14,7 @@ import {
   type Storage,
   type UpdatePreview,
 } from "../log";
-import { EntryGrid, EntryTable, HintBar, NewBadge, type EntryActions } from "./EntryList";
+import { EntryGrid, EntryTable, HintBar, NewBadge, type EntryActions, type EntryFlash } from "./EntryList";
 import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
 import { FilterBar } from "./FilterBar";
@@ -142,15 +142,27 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // The entry whose status the player just changed by hand, so only that row animates. Bulk actions, Undo,
+  // updates and switching lists never set it, and it clears once the animation ends.
+  const [flash, setFlash] = useState<EntryFlash | null>(null);
+  const flashEntry = (entryId: string) => {
+    const status = log.entryStatus(entryId);
+    setFlash(status === "unmarked" ? null : { entryId, status });
+  };
+
   const actions: EntryActions = {
     onCycle: (entryId) => {
       const result = log.cycleEntryStatus(entryId);
       announce(null, result);
+      flashEntry(entryId);
     },
     onNotInterested: (entryId) => {
       const result = log.setEntryStatus(entryId, "notInterested");
       announce(null, result);
+      flashEntry(entryId);
     },
+    flash,
+    onFlashEnd: () => setFlash(null),
   };
 
   const expansionNames = new Map(log.expansions().map((e) => [e.id, e.name]));

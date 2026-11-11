@@ -1,4 +1,4 @@
-import { createContext, useContext, type KeyboardEvent } from "react";
+import { createContext, useContext, type AnimationEvent, type KeyboardEvent } from "react";
 import {
   entryIcon,
   entryName,
@@ -20,11 +20,16 @@ export const STATUS_LABEL: Record<EntryStatus, string> = {
 export type EntryActions = {
   onCycle: (entryId: string) => void;
   onNotInterested: (entryId: string) => void;
+  /** The entry the player just set to Completed or Not interested, which plays its animation. */
+  flash?: EntryFlash | null;
+  onFlashEnd?: () => void;
 };
 
+export type EntryFlash = { entryId: string; status: EntryStatus };
+
 /** The three-state tick-box: empty, yellow, or grey with a diagonal stroke. */
-export function StatusBox({ status }: { status: EntryStatus }) {
-  return <span className={`status-box ${status}`} aria-hidden="true" />;
+export function StatusBox({ status, flash }: { status: EntryStatus; flash?: boolean }) {
+  return <span className={`status-box ${status}${flash ? " flash" : ""}`} aria-hidden="true" />;
 }
 
 /** A cell's text with the wiki's icons and links, one block per line. */
@@ -82,7 +87,7 @@ function WikiIcon({ icon, size }: { icon: string; size: number }) {
 }
 
 /** The status box as a button; its click, like a click anywhere on the entry, reaches the entry's handler. */
-function StatusButton({ entry, status }: { entry: Entry; status: EntryStatus }) {
+function StatusButton({ entry, status, flash }: { entry: Entry; status: EntryStatus; flash: boolean }) {
   return (
     <button
       type="button"
@@ -90,9 +95,24 @@ function StatusButton({ entry, status }: { entry: Entry; status: EntryStatus }) 
       aria-label={`${entry.unlock}: ${STATUS_LABEL[status]}`}
       title={STATUS_LABEL[status]}
     >
-      <StatusBox status={status} />
+      <StatusBox status={status} flash={flash} />
     </button>
   );
+}
+
+/** What an entry's row needs to play its status animation: a class, a key to restart it, and the end handler. */
+function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
+  const flashing = actions.flash?.entryId === entry.id && actions.flash.status === status;
+  return {
+    flashing,
+    className: flashing ? ` ${status === "completed" ? "flash-completed" : "flash-notInterested"}` : "",
+    // The sheen is the longest animation; the status box's pop ends sooner and is ignored.
+    onAnimationEnd: flashing
+      ? (event: AnimationEvent) => {
+          if (event.animationName === "sheen") actions.onFlashEnd?.();
+        }
+      : undefined,
+  };
 }
 
 /**
@@ -157,10 +177,16 @@ export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps
       <tbody>
         {entries.map((entry) => {
           const status = statusOf(entry.id);
+          const flash = flashProps(actions, entry, status);
           return (
-            <tr key={entry.id} className={status} {...entryProps(actions, entry.id)}>
+            <tr
+              key={entry.id}
+              className={status + flash.className}
+              onAnimationEnd={flash.onAnimationEnd}
+              {...entryProps(actions, entry.id)}
+            >
               <td className="status-cell">
-                <StatusButton entry={entry} status={status} />
+                <StatusButton entry={entry} status={status} flash={flash.flashing} />
               </td>
               <td data-label="Level" className="level">
                 {levelParts(entry).map((part) => (
@@ -198,8 +224,15 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
         const status = statusOf(entry.id);
         const icon = entryIcon(entry);
         const name = entryName(entry);
+        const flash = flashProps(actions, entry, status);
         return (
-          <li key={entry.id} className={`entry-card ${status}`} title={name} {...entryProps(actions, entry.id)}>
+          <li
+            key={entry.id}
+            className={`entry-card ${status}${flash.className}`}
+            title={name}
+            onAnimationEnd={flash.onAnimationEnd}
+            {...entryProps(actions, entry.id)}
+          >
             <span className="card-icon">{icon && <WikiIcon icon={icon.icon} size={36} />}</span>
             <span className="card-text">
               <b>
@@ -209,7 +242,7 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
               <small>{summary(entry)}</small>
             </span>
             <span className="card-status">
-              <StatusButton entry={entry} status={status} />
+              <StatusButton entry={entry} status={status} flash={flash.flashing} />
             </span>
           </li>
         );

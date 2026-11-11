@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { ProgressCount } from "../log";
 
 /**
@@ -8,9 +9,17 @@ export function ProgressBar({ progress, label, thin }: { progress: ProgressCount
   const { completed, total } = progress;
   const fraction = total === 0 ? 0 : completed / total;
   const full = total > 0 && completed === total;
+  // A bar that is already full when it appears stays still; one that fills while shown flashes once.
+  const wasFull = useRef(full);
+  const [flashing, setFlashing] = useState(false);
+  useEffect(() => {
+    if (full && !wasFull.current) setFlashing(true);
+    wasFull.current = full;
+  }, [full]);
   return (
     <span
-      className={`bar${thin ? " thin" : ""}${full ? " full" : ""}`}
+      className={`bar${thin ? " thin" : ""}${full ? " full" : ""}${full && flashing ? " flash" : ""}`}
+      onAnimationEnd={() => setFlashing(false)}
       role="progressbar"
       aria-label={label}
       aria-valuemin={0}
