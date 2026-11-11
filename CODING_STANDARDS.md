@@ -6,6 +6,8 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **The agreed test seam is the Log core's commands and queries.** Write tests there, with the in-memory adapters and the fixed clock. This is pre-agreed: don't ask again before writing them.
 
+**`src/ui/app.test.tsx` is a render smoke test, outside the seam.** It mounts `<App>` on the bundled content under jsdom and clicks every rail tile and section tab, so a component that throws or loops on render (an unbounded `setState` in an effect) fails `npm run check` instead of showing a black page in the browser. It asserts no look or behaviour: UI rules still belong in the Log core ("Keep the UI thin"). A new UI feature that needs a browser API jsdom lacks stubs it in that file's `beforeAll`.
+
 **Persisted formats are contracts.** Tests may assert directly on the stored progress (ADR-0001) and the backup file, against literal expected values, because later versions of the app and future sync must read them unchanged. Every storage key the Log core writes counts, not only the progress: a new key gets a literal assertion on its key and value (`storage-keys.test.ts` fails a `contentUnlockLog.*` key in `log.ts` that no other test names). Everything else goes through the Log core's commands and queries.
 
 **The service worker and the shell-write hook have their own tests, beside the code.** `scripts/sw.test.mjs` runs `scripts/sw.template.js` against fake `caches`, `fetch` and `self`; `.claude/hooks/block-source-shell-writes.test.mjs` feeds the hook commands. A change to either adds a case there. They are not part of the Log core, so the seam above does not apply to them.

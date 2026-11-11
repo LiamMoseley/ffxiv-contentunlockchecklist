@@ -35,7 +35,7 @@ A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticke
 
 ## Before committing or pushing
 
-Review before opening a PR too: if any commit on the branch postdates the last `/code-review` (owner follow-ups, UI tweaks made after the first review), run `/code-review` on those commits first. Only a commit that changes no behaviour (wording, formatting, a CSS tweak) may skip it, and you name it under the PR body's review findings. A commit that adds logic, including fixes made after a review, is reviewed again.
+Review before opening a PR too: if any commit on the branch postdates the last `/code-review` (owner follow-ups, UI tweaks made after the first review), run `/code-review` on those commits first. Only a commit that changes no behaviour (wording, formatting, a CSS tweak) may skip it, and you name it under the PR body's review findings. A commit that adds logic is reviewed again, with one stop: a commit that only fixes the findings of that review is not (the loop would never end) when `npm run check` passes and you checked the fix in the browser. Name it under the PR body's review findings.
 
 Review again before updating a PR that has had follow-up changes from the owner: run `/code-review` on the new commits, since the first review covered only the first diff. Then check the branch's PR state: `gh pr list --head <branch> --state all --json number,state`. If the PR is `MERGED` or `CLOSED`, a push never reaches it: branch from a fresh `origin/main`, carry the new commits over and open a new PR.
 
