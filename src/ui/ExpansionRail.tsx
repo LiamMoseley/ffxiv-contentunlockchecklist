@@ -42,6 +42,7 @@ export function ExpansionRail({
 
   // The active marker is one element that slides between tiles, so it is placed from the chosen
   // tile's box. It follows the rail's and the tiles' sizes (collapsing, a narrow window, web fonts).
+  // No dependency list on purpose: every render may choose another tile, and `place` ignores no-ops.
   useLayoutEffect(() => {
     const rail = railRef.current;
     if (!rail) return;

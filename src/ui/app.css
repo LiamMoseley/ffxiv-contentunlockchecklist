@@ -250,12 +250,11 @@ a:hover {
 /* The chosen tile's highlight is one marker that slides between tiles (placed by ExpansionRail) */
 .rail {
   position: relative;
-}
-.rail > * {
-  position: relative;
+  isolation: isolate;
 }
 .rail > .rail-marker {
   position: absolute;
+  z-index: -1;
   top: 0;
   left: 0;
   border-radius: 6px;
