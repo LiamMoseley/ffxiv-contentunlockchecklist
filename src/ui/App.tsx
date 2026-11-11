@@ -418,10 +418,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               >
                 <path d="M6 1h2v6h2.5L7 10.5 3.5 7H6V1ZM2 11.5h10V13H2v-1.5Z" />
               </svg>
-              <span
-                className={online ? "update-dot update-dot-online" : "update-dot update-dot-offline"}
-                aria-hidden="true"
-              />
+              {!online && <span className="update-offline-dot" aria-hidden="true" />}
             </button>
           </span>
         </footer>

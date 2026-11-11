@@ -301,7 +301,8 @@ log.*
   learns its real name.
 - While the device is offline, **Update** stays visible but disabled, and shows it's offline with its
   download icon marked by a small red dot at its bottom-right, not a text label. Its accessible name and tooltip
-  still say it's offline. While online, the same spot shows a small green dot. If an
+  still say it's offline. While online it shows the icon alone, with no dot, so it never looks like an
+  update is waiting. If an
   update fails anyway, the app says the wiki couldn't be reached and changes nothing.
 
 **US-21. Be told when there's an update.**

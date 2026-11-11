@@ -849,7 +849,7 @@ a.wiki-link:focus-visible {
   background: rgba(0, 0, 0, 0.35);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
 }
-/* Disabled dims the icon and border, not the whole button, so the dot keeps its colour */
+/* Disabled dims the icon and border, not the whole button, so the offline dot keeps its red */
 .update-button:disabled {
   border-color: rgba(90, 74, 48, 0.45);
   cursor: not-allowed;
@@ -857,8 +857,8 @@ a.wiki-link:focus-visible {
 .update-button:disabled .update-icon {
   opacity: 0.45;
 }
-/* A status dot at the icon's bottom-right, inside the button so its size doesn't change: green online, red offline */
-.update-dot {
+/* A red dot at the icon's bottom-right, inside the button so its size doesn't change */
+.update-offline-dot {
   position: absolute;
   right: 4px;
   bottom: 3px;
@@ -866,11 +866,6 @@ a.wiki-link:focus-visible {
   height: 7px;
   border: 1px solid #1a1a1a;
   border-radius: 50%;
-}
-.update-dot-online {
-  background: #3fa34d;
-}
-.update-dot-offline {
   background: #d0382c;
 }
 
