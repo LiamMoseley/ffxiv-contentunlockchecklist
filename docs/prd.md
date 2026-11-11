@@ -462,7 +462,9 @@ properly; don't promote the prototype code.
   The drop-downs stay native controls with the closed box styled and a custom chevron. The Filters
   checkboxes use the status-box look, without a pop or glow.
 - **Dialogs and messages:** pop-ups use the same window style, framed in the thicker bronze gradient
-  with a highlight on the grey body, shared by every dialog, menu and message. Dialogs fade and scale in.
+  with a highlight on the grey body, shared by every dialog, menu and message. Each dialog's title sits
+  in a title bar like the window's, with a black line beneath it, and its buttons sit in a footer band
+  under a matching black line. Dialogs fade and scale in.
   Messages appear briefly near the bottom of the screen.
 - **Site icon:** the browser tab shows the Main Scenario Quest icon; the home-screen icon is the same
   icon on a dark tile with a bronze border.
