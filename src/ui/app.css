@@ -676,7 +676,7 @@ a.wiki-link:focus-visible {
     #3a3a3a;
 }
 
-/* Setting a status by hand: the box glows (Completed also pops) and, for Completed only, a gold sheen sweeps the row */
+/* Setting an entry to Completed by hand: the box pops with a gold glow and a gold sheen sweeps the row */
 .flash-completed {
   position: relative;
 }
@@ -700,22 +700,6 @@ a.wiki-link:focus-visible {
 .status-box.completed.flash {
   --glow: 240, 195, 90;
   animation: box-pop 0.3s ease-out;
-}
-/* Not interested only glows: the box does not grow */
-.status-box.notInterested.flash {
-  --glow: 150, 150, 150;
-  animation: box-glow 0.3s ease-out;
-}
-@keyframes box-glow {
-  0% {
-    box-shadow: 0 0 0 0 rgba(var(--glow), 0.9);
-  }
-  40% {
-    box-shadow: 0 0 10px 4px rgba(var(--glow), 0.8);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(var(--glow), 0);
-  }
 }
 @keyframes box-pop {
   0% {

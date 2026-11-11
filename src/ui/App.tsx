@@ -147,7 +147,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const [flash, setFlash] = useState<EntryFlash | null>(null);
   const flashEntry = (entryId: string) => {
     const status = log.entryStatus(entryId);
-    setFlash(status === "unmarked" ? null : { entryId, status });
+    // Only Completed animates; Not interested and Unmarked change quietly.
+    setFlash(status === "completed" ? { entryId, status } : null);
   };
 
   const actions: EntryActions = {

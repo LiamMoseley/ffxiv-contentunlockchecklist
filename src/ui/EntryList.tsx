@@ -104,7 +104,6 @@ function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
   const flashing = actions.flash?.entryId === entry.id && actions.flash.status === status;
   return {
     flashing,
-    // Only Completed sweeps a sheen across the row; Not interested glows on its box alone.
     className: flashing && status === "completed" ? "flash-completed" : "",
   };
 }
