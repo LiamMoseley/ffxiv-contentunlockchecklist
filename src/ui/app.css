@@ -846,13 +846,13 @@ a.wiki-link:focus-visible {
   color: var(--text);
   border-color: #a07c47;
 }
+.update-button:active:not(:disabled) {
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
+}
 .update-button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
-}
-.update-button:focus-visible {
-  outline: 2px solid #a07c47;
-  outline-offset: 2px;
 }
 
 /* Footer bar */
@@ -1098,8 +1098,15 @@ a.wiki-link:focus-visible {
 .hint-bar .undo,
 .new-notice button,
 .available-empty button,
+.available-toggle,
+.filters-toggle,
 .dialog-buttons button {
   display: inline-flex;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s,
+    box-shadow 0.15s;
   align-items: center;
   justify-content: center;
   height: 26px;
@@ -1120,6 +1127,8 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:hover:not(:disabled),
 .new-notice button:hover:not(:disabled),
 .available-empty button:hover:not(:disabled),
+.available-toggle:hover:not(:disabled),
+.filters-toggle:hover:not(:disabled),
 .dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
@@ -1127,6 +1136,8 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:active:not(:disabled),
 .new-notice button:active:not(:disabled),
 .available-empty button:active:not(:disabled),
+.available-toggle:active:not(:disabled),
+.filters-toggle:active:not(:disabled),
 .dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
@@ -1144,9 +1155,19 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:focus-visible,
 .new-notice button:focus-visible,
 .available-empty button:focus-visible,
+.available-toggle:focus-visible,
+.filters-toggle:focus-visible,
+.update-button:focus-visible,
 .dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
+}
+/* On: Filters open, Available now active. Inset bevel and a gold label */
+.available-toggle[aria-pressed="true"]:not(:disabled),
+.filters-toggle[aria-expanded="true"]:not(:disabled) {
+  background: linear-gradient(#333, #444);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
+  color: var(--gold);
 }
 .hint-bar .undo {
   padding: 0 14px;
@@ -1484,19 +1505,13 @@ a.wiki-link:focus-visible {
   flex: 1;
   min-width: 0;
 }
+/* The embossed pill comes from the shared rule above; these only size and place the toggles */
 .filters-toggle,
 .available-toggle {
   flex: none;
-  height: 24px;
   margin-right: 14px;
-  padding: 0 12px;
-  border: 1px solid #1d1d1d;
-  border-radius: 3px;
-  background: linear-gradient(#5a5a5a, #3f3f3f);
-  color: #f2f2f2;
-  font: inherit;
+  padding: 0 14px;
   font-size: 13px;
-  text-shadow: 0 1px 1px #000;
 }
 /* A yellow count badge: filters are narrowing the log, even while the panel is closed */
 .filters-active {
@@ -1513,14 +1528,6 @@ a.wiki-link:focus-visible {
   vertical-align: 1px;
   text-align: center;
   text-shadow: none;
-}
-.filters-toggle:hover,
-.available-toggle:hover {
-  background: linear-gradient(#686868, #494949);
-}
-.filters-toggle:focus-visible,
-.available-toggle:focus-visible {
-  outline: 2px solid var(--gold);
 }
 
 /* Search and filters */
