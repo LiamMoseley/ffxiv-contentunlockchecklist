@@ -30,5 +30,6 @@ Start the app with `preview_start {name: "dev"}` (`.claude/launch.json`).
   - **A new deploy:** rebuild, restart the server, `navigate` once, wait about 5 seconds, then `caches.keys()` lists only the new `shell-<version>` and `runtime-v1`.
   - **A wiki icon the app does not ship:** wrap `window.fetch` (the "show a wiki update" recipe above) to replace `48px-Housing_icon.png` with `60px-Housing_icon.png` in `body.parse.text`, run Update from the footer, then check the three `<img>` elements with `consolegameswiki` in their `src` have `referrerPolicy` `no-referrer`, loaded, and that `runtime-v1` holds the URL. An icon-only change is adopted without a preview ("The log is up to date").
   - **Clean up:** `unregister()` each registration, `caches.delete` each cache, remove the `contentUnlockLog.*` keys, stop the server.
+- **Look at an image file (an icon, a generated PNG) with `Read`.** One call shows it. The pane opens a local file as a static snapshot: `screenshot` can hit the wrong tab and `navigate` rejects `about:blank`. Use the pane for pages the dev server renders.
 - **Stop the server** with `preview_stop` when done. Test data stays in the pane's local storage.
 - **Restart a stopped server with `preview_start {name: "dev"}`.** `navigate` to localhost fails and leaves a blank pane.
