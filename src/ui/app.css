@@ -1104,7 +1104,6 @@ a.wiki-link:focus-visible {
   display: inline-flex;
   cursor: pointer;
   transition:
-    background-color 0.15s,
     color 0.15s,
     box-shadow 0.15s;
   align-items: center;
