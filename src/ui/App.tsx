@@ -411,7 +411,12 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
                 <path d="M6 1h2v6h2.5L7 10.5 3.5 7H6V1ZM2 11.5h10V13H2v-1.5Z" />
               </svg>
-              {!online && <span className="update-offline">Offline</span>}
+              {!online && (
+                <svg className="update-offline-badge" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+                  <circle cx="5" cy="5" r="4.25" fill="#d93025" stroke="#1a1a1a" strokeWidth="1" />
+                  <path d="M2.6 7.4 7.4 2.6" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" />
+                </svg>
+              )}
             </button>
           </span>
         </footer>
