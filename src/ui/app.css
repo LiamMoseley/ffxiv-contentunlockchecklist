@@ -1451,7 +1451,6 @@ a.wiki-link:focus-visible {
   display: block;
   width: 100%;
   margin-top: 3px;
-  font-size: 14px;
 }
 .character-form .form-error {
   margin: 0 0 12px;
@@ -1665,6 +1664,11 @@ a.wiki-link:focus-visible {
 .filter-checks input[type="checkbox"]:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 1px;
+}
+@media (forced-colors: active) {
+  .filter-checks input[type="checkbox"] {
+    appearance: auto;
+  }
 }
 .filter-checks input[type="checkbox"]:disabled {
   opacity: 0.5;
