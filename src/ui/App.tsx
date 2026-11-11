@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { cacheWikiIcons } from "../adapters/offline";
 import {
   entryCount,
@@ -317,35 +317,37 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
               )}
               <div className="scroll">
-                {availableOpen ? (
-                  <AvailableNow
-                    log={log}
-                    listing={listing}
-                    expansionNames={expansionNames}
-                    mode={displayMode}
-                    actions={actions}
-                    onSetLevel={() => setCharacterMenuOpen(true)}
-                  />
-                ) : viewingNew ? (
-                  <NewEntriesView
-                    log={log}
-                    sections={listing.sections}
-                    expansionNames={expansionNames}
-                    mode={displayMode}
-                    actions={actions}
-                  />
-                ) : (
-                  listing.sections.map((section) => (
-                    <SectionPanel
-                      key={section.id}
+                <SwitchFade switchKey={`${expansion}:${activeTab}`}>
+                  {availableOpen ? (
+                    <AvailableNow
                       log={log}
-                      section={section}
-                      expansionName={expansionNames.get(section.expansionId) ?? ""}
+                      listing={listing}
+                      expansionNames={expansionNames}
+                      mode={displayMode}
+                      actions={actions}
+                      onSetLevel={() => setCharacterMenuOpen(true)}
+                    />
+                  ) : viewingNew ? (
+                    <NewEntriesView
+                      log={log}
+                      sections={listing.sections}
+                      expansionNames={expansionNames}
                       mode={displayMode}
                       actions={actions}
                     />
-                  ))
-                )}
+                  ) : (
+                    listing.sections.map((section) => (
+                      <SectionPanel
+                        key={section.id}
+                        log={log}
+                        section={section}
+                        expansionName={expansionNames.get(section.expansionId) ?? ""}
+                        mode={displayMode}
+                        actions={actions}
+                      />
+                    ))
+                  )}
+                </SwitchFade>
               </div>
             </main>
           </div>
@@ -445,6 +447,21 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
         </div>
       </div>
     </ChangedByHandContext.Provider>
+  );
+}
+
+/**
+ * Fades its list in with a short upward slide when `switchKey` changes (a new expansion or section).
+ * The first render, and every later change to the list under the same key, play nothing.
+ */
+function SwitchFade({ switchKey, children }: { switchKey: string; children: ReactNode }) {
+  const [state, setState] = useState({ key: switchKey, animate: false });
+  if (state.key !== switchKey) setState({ key: switchKey, animate: true });
+  // Keyed, so a switch remounts the wrapper and restarts the animation; the class then stays put.
+  return (
+    <div key={switchKey} className={state.animate ? "switch-fade" : undefined}>
+      {children}
+    </div>
   );
 }
 

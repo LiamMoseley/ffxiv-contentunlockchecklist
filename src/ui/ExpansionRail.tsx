@@ -1,9 +1,14 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import type { Log, ProgressCount } from "../log";
 import { Pictogram } from "./Pictogram";
 import { Count, ProgressBar } from "./ProgressBar";
 
 /** Which expansion tile is chosen: one expansion, or the All tile. */
 export type ExpansionChoice = string | "all";
+
+/** The marker's box in the rail, and whether a tile is chosen (it fades out when none is). */
+type Box = { x: number; y: number; w: number; h: number; on: boolean };
+const sameBox = (a: Box, b: Box) => a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h && a.on === b.on;
 
 /**
  * The column of expansion tiles, with the All tile set apart at the top. Each tile shows its name,
@@ -31,8 +36,43 @@ export function ExpansionRail({
   onToggleCollapsed: () => void;
 }) {
   const overall = log.overallProgress();
+  const railRef = useRef<HTMLElement>(null);
+  const [marker, setMarker] = useState<Box | null>(null);
+  const placed = useRef<Box | null>(null);
+
+  // The active marker is one element that slides between tiles, so it is placed from the chosen
+  // tile's box. It follows the rail's and the tiles' sizes (collapsing, a narrow window, web fonts).
+  useLayoutEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const place = () => {
+      const tile = rail.querySelector<HTMLElement>(".rail-item.chosen");
+      const last = placed.current;
+      // With no tile chosen, the marker stays where it was and fades out.
+      const next: Box | null = tile
+        ? { x: tile.offsetLeft, y: tile.offsetTop, w: tile.offsetWidth, h: tile.offsetHeight, on: true }
+        : last && { ...last, on: false };
+      if (next && (!last || !sameBox(last, next))) {
+        placed.current = next;
+        setMarker(next);
+      }
+    };
+    place();
+    const observer = new ResizeObserver(place);
+    observer.observe(rail);
+    rail.querySelectorAll(".rail-item").forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  });
+
   return (
-    <nav className="rail" aria-label="Expansions">
+    <nav className="rail" aria-label="Expansions" ref={railRef}>
+      {marker && (
+        <span
+          className={`rail-marker${marker.on ? " on" : ""}`}
+          aria-hidden="true"
+          style={{ transform: `translate(${marker.x}px, ${marker.y}px)`, width: marker.w, height: marker.h }}
+        />
+      )}
       <Tile
         className="available"
         pictogram="available"
