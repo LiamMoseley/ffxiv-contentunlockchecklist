@@ -36,7 +36,10 @@ for (const file of all.filter((f) => f.endsWith(".css"))) {
 }
 
 if (unused.size > 0) {
-  console.error(`CSS classes no source file mentions:\n${[...unused.keys()].map((k) => `  ${k}`).join("\n")}`);
+  console.error(
+    `CSS classes no source file mentions:\n${[...unused.keys()].map((k) => `  ${k}`).join("\n")}\n` +
+      'Write each class name whole in the source ("flash-completed", not `flash-${status}`), or list a runtime-built one in DYNAMIC.',
+  );
   process.exit(1);
 }
 console.log("No unused CSS classes.");

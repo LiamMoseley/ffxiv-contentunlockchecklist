@@ -34,7 +34,7 @@ if (criterionAt.length === 0) {
   process.exit(1);
 }
 
-/** `3` is [3]; `1-5` is [1, 2, 3, 4, 5]. Anything else, including a backwards range, is NaN and reported as bad. */
+/** `3` is [3]; `1-5` is [1, 2, 3, 4, 5]; the caller splits a comma list (`1-5,7`) first. Anything else, including a backwards range, is NaN and reported as bad. */
 function expandNumbers(token) {
   const range = /^(\d+)-(\d+)$/.exec(token);
   if (!range || Number(range[1]) > Number(range[2])) return [Number(token)];
@@ -44,7 +44,8 @@ function expandNumbers(token) {
 
 let result;
 if (command === "tick" || command === "untick") {
-  const chosen = args[0] === "all" ? criterionAt.map((_, i) => i + 1) : args.flatMap(expandNumbers);
+  const chosen =
+    args[0] === "all" ? criterionAt.map((_, i) => i + 1) : args.flatMap((arg) => arg.split(",")).flatMap(expandNumbers);
   const bad = chosen.filter((n) => !Number.isInteger(n) || n < 1 || n > criterionAt.length);
   if (bad.length > 0) {
     console.error(`No criterion ${bad.join(", ")}: the issue has ${criterionAt.length}.`);
