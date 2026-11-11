@@ -594,33 +594,41 @@ a:hover {
 /* Entries: a table above 1000px, labelled cards at 1000px and below */
 .entries {
   width: 100%;
-  /* Fixed, so every section's table shares one set of column widths and nothing shifts while scrolling (#88) */
-  table-layout: fixed;
   border-collapse: collapse;
   font-size: 14px;
   line-height: 1.35;
 }
-.entries .col-status {
-  width: 44px;
-}
-.entries .col-level {
-  width: 96px;
-}
-.entries .col-unlock {
-  width: 22%;
-}
-.entries .col-type {
-  width: 11%;
-}
-.entries .col-quest {
-  width: 20%;
-}
-.entries .col-location {
-  width: 14%;
-}
-/* Information takes whatever is left */
-.entries td {
-  overflow-wrap: anywhere;
+/*
+ * Fixed layout, so every section's table shares one set of column widths and nothing shifts while scrolling (#88).
+ * Chosen against the bundled content: the percentages leave Information about 160px at 1001px, and its
+ * 'iLv. 110-123' is the widest Level text (85px). Recheck them if a wiki update adds longer cells.
+ */
+@media (min-width: 1001px) {
+  .entries {
+    table-layout: fixed;
+  }
+  .entries .col-status {
+    width: 44px;
+  }
+  .entries .col-level {
+    width: 96px;
+  }
+  .entries .col-unlock {
+    width: 20%;
+  }
+  .entries .col-type {
+    width: 10%;
+  }
+  .entries .col-quest {
+    width: 18%;
+  }
+  .entries .col-location {
+    width: 12%;
+  }
+  /* Information takes whatever is left */
+  .entries td {
+    overflow-wrap: anywhere;
+  }
 }
 .entries th {
   padding: 2px 8px 4px;
