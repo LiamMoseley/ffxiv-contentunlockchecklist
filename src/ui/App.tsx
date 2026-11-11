@@ -217,8 +217,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           <ExpansionRail
             log={log}
             chosen={expansion}
-            inactive={availableOpen}
-            noneChosen={viewingNew}
+            noneChosen={viewingNew || availableOpen}
+            availableOpen={availableOpen}
+            onToggleAvailable={() => {
+              // Available now replaces the NEW view; coming back lands on the normal view.
+              if (availableOpen) log.showAllEntries();
+              else log.showAvailableNow();
+              refresh();
+            }}
             onChoose={setExpansion}
             collapsed={railCollapsed}
             onToggleCollapsed={() => {
@@ -268,19 +274,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   label="Sections"
                 />
               )}
-              <button
-                type="button"
-                className="available-toggle"
-                aria-pressed={availableOpen}
-                onClick={() => {
-                  // Available now replaces the NEW view; coming back lands on the normal view.
-                  if (availableOpen) log.showAllEntries();
-                  else log.showAvailableNow();
-                  refresh();
-                }}
-              >
-                {availableOpen ? "Back to the log" : "Available now"}
-              </button>
               <button
                 type="button"
                 className="filters-toggle"

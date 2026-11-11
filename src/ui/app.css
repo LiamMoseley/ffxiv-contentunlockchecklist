@@ -232,18 +232,6 @@ a:hover {
 .rail-item.chosen {
   background: linear-gradient(90deg, rgba(255, 231, 160, 0.12), transparent);
 }
-/* Available now covers every expansion: the tiles stay for spacing but are greyed out and do nothing */
-.rail-item.inactive {
-  opacity: 0.4;
-  filter: grayscale(1);
-  cursor: default;
-}
-.rail-item.inactive:hover {
-  background: none;
-}
-.rail-item.inactive:hover .tile {
-  filter: none;
-}
 .new-badge {
   display: inline-block;
   margin-left: 6px;
@@ -331,6 +319,16 @@ a:hover {
 }
 .rail-item.all .tile svg {
   filter: none;
+}
+.rail-item.available .tile {
+  border-color: #e4f0e0;
+  color: #f4ffee;
+  background: linear-gradient(160deg, #4fae6a, #1f6a3a 75%);
+}
+.rail-item.available.chosen .tile {
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 12px 3px rgba(170, 240, 190, 0.75);
 }
 .rail-item.all.chosen .tile {
   box-shadow:
@@ -1098,7 +1096,6 @@ a.wiki-link:focus-visible {
 .hint-bar .undo,
 .new-notice button,
 .available-empty button,
-.available-toggle,
 .filters-toggle,
 .dialog-buttons button {
   display: inline-flex;
@@ -1126,7 +1123,6 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:hover:not(:disabled),
 .new-notice button:hover:not(:disabled),
 .available-empty button:hover:not(:disabled),
-.available-toggle:hover:not(:disabled),
 .filters-toggle:hover:not(:disabled),
 .dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
@@ -1135,7 +1131,6 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:active:not(:disabled),
 .new-notice button:active:not(:disabled),
 .available-empty button:active:not(:disabled),
-.available-toggle:active:not(:disabled),
 .filters-toggle:active:not(:disabled),
 .dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
@@ -1154,14 +1149,13 @@ a.wiki-link:focus-visible {
 .hint-bar .undo:focus-visible,
 .new-notice button:focus-visible,
 .available-empty button:focus-visible,
-.available-toggle:focus-visible,
 .filters-toggle:focus-visible,
 .update-button:focus-visible,
 .dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
-/* On: Filters open. Inset bevel and a gold label. Available now stays a plain pill */
+/* On: Filters open. Inset bevel and a gold label */
 .filters-toggle[aria-expanded="true"]:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
@@ -1503,9 +1497,8 @@ a.wiki-link:focus-visible {
   flex: 1;
   min-width: 0;
 }
-/* The embossed pill comes from the shared rule above; these only size and place the toggles */
-.filters-toggle,
-.available-toggle {
+/* The embossed pill comes from the shared rule above; this only sizes and places the toggle */
+.filters-toggle {
   flex: none;
   margin-right: 14px;
   padding: 0 14px;
@@ -1589,7 +1582,7 @@ a.wiki-link:focus-visible {
   padding-top: 36px;
   text-align: center;
 }
-/* Phones: the tabs take a row of their own, with Available now and Filters on the row below */
+/* Phones: the tabs take a row of their own, with Filters on the row below */
 @media (max-width: 760px) {
   .tabs-row {
     flex-wrap: wrap;
@@ -1598,8 +1591,7 @@ a.wiki-link:focus-visible {
     flex: 1 1 100%;
     margin-bottom: 0;
   }
-  .tabs-row .filters-toggle,
-  .tabs-row .available-toggle {
+  .tabs-row .filters-toggle {
     margin-right: 0;
   }
   .tabs-row.available .available-title {

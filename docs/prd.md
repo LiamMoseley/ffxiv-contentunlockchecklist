@@ -219,7 +219,8 @@ left.*
 *As a returning player, I want to see what my character can unlock at their current level, so that I
 know what to do next.*
 - Each character can have a level, meaning their highest job level.
-- **Available now** lists every Unmarked entry the character can reach, across all expansions:
+- **Available now** is a tile at the top of the expansion rail, above All. Choosing it opens the view;
+  choosing All or an expansion tile leaves it. It lists every Unmarked entry the character can reach, across all expansions:
   levelling entries at or below their level, and level-cap entries once they have reached that
   expansion's level cap.
 - Item level isn't tracked for characters. Level-cap entries show their item level so the player can
@@ -452,9 +453,8 @@ properly; don't promote the prototype code.
   inspired by the crafting window's Progress bar. A full bar switches to the blue Quality fill.
 - **Links:** wiki links are blue, as on the wiki, on exactly the words the wiki links. The blue is
   lightened so it stays readable on the charcoal window.
-- **Buttons:** embossed grey pill-shaped buttons with a black edge, in a footer bar. The Available now
-  and Filters toggles use the same pill; Available now (and its Back to the log label) stays a plain
-  pill, and Filters, when open, shows an inset bevel and a gold label. The Update
+- **Buttons:** embossed grey pill-shaped buttons with a black edge, in a footer bar. The Filters
+  toggle uses the same pill and, when open, shows an inset bevel and a gold label. The Update
   button keeps its bordered look. Hover, pressed and focus states are consistent across all of them.
 - **Text fields:** Search, the Type and Optional challenges drop-downs and the Characters form fields
   look like the game's text fields: a dark recessed box with a thin light-grey border, small rounded

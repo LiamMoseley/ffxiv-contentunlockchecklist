@@ -744,7 +744,8 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         (next.tab === undefined || TABS.includes(next.tab));
       if (!valid) return;
       selection = { ...selection, ...next };
-      endNewView();
+      // Choosing an expansion or tab leaves any other view, Available now included.
+      openView = "sections";
       saveView();
     },
     /** Whether the tile column is collapsed, remembered on the device. */
