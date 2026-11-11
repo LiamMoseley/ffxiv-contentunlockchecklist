@@ -849,7 +849,7 @@ a.wiki-link:focus-visible {
   background: rgba(0, 0, 0, 0.35);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
 }
-/* Disabled dims the icon and border, not the whole button, so the offline badge keeps its red */
+/* Disabled dims the icon and border, not the whole button, so the offline sign keeps its red */
 .update-button:disabled {
   border-color: rgba(90, 74, 48, 0.45);
   cursor: not-allowed;
@@ -857,11 +857,12 @@ a.wiki-link:focus-visible {
 .update-button:disabled .update-icon {
   opacity: 0.45;
 }
-/* Sits on the button's bottom-right corner without changing the button's size */
-.update-offline-badge {
+/* A "no" sign centred over the icon, inside the button so its size doesn't change */
+.update-offline-sign {
   position: absolute;
-  right: 1px;
-  bottom: 1px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Footer bar */

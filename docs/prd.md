@@ -300,7 +300,7 @@ log.*
   under a placeholder expansion named by its levels (for example "Level 101–110"), until the app
   learns its real name.
 - While the device is offline, **Update** stays visible but disabled, and shows it's offline with its
-  download icon marked by a small red slashed badge, not a text label. Its accessible name and tooltip
+  download icon overlaid with a centred red "no" sign (a ring with a diagonal slash), not a text label. Its accessible name and tooltip
   still say it's offline. If an
   update fails anyway, the app says the wiki couldn't be reached and changes nothing.
 
