@@ -28,6 +28,7 @@ A ticket's `- [ ]` acceptance criteria are its definition of done, and the ticke
 
 - Tick each criterion the branch demonstrably meets (a passing test, code you read, or a check you ran): `node scripts/issue-criteria.mjs tick <n> <criterion numbers>|all`, numbering the `- [ ]` lines from 1. It changes the markers only, never a criterion's wording. `untick` puts criteria back, for one you ticked before checking it. Add a criterion the owner asks for with `node scripts/issue-criteria.mjs add <n> "<text>" [--ticked]`, and change one the owner has overruled with `reword <n> <criterion number> "<text>"`; never reword on your own. Add `--dry` to print the new body first.
 - A PR body follows the `pr` skill's template, then adds **Needs owner check** and the review findings left over, in that order.
+- **Record an owner follow-up when it arrives.** A change the owner asks for that the ticket does not cover gets its `add --ticked` criterion and its PRD edit in the same step, before the commit that builds it, not at the end of the session.
 - Leave unticked anything only the owner can verify (how the UI looks against the prototype verdict, a live deploy, a repository setting), and list those under **Needs owner check** in the PR body, one `- [ ]` tick box per item so the owner can tick them in GitHub. The owner ticks them after checking. End your closing report to the owner with the same list, one line per criterion, so it reaches them outside the PR too.
 - List any criterion the branch does not meet in the PR body, and leave it unticked.
 
