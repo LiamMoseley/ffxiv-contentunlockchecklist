@@ -16,7 +16,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "duplication": "jscpd",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run duplication && npm test"
+    "unused-css": "node scripts/unused-css.mjs",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run unused-css && npm run duplication && npm test"
   },
   "dependencies": {
     "node-html-parser": "^9.0.6",
