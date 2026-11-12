@@ -22,7 +22,7 @@
   --link-dim: #7894c4;
   /* Bronze frame metal, shared by the window and (later) menus, dialogs and messages */
   /* The window's frame, and how the help dialog is kept inside it */
-  --page-pad: 18px;
+  --page-pad: 8px;
   --window-frame: 4px;
   --window-min-height: 480px;
   --dialog-gap: 12px;
