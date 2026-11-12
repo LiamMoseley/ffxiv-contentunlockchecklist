@@ -508,8 +508,6 @@ properly; don't promote the prototype code.
     Shown. It plays only when a change crosses to 100%: never on load, on switching character, or for an
     expansion already at 100%; Undo then completing again plays it again; an expansion with no counted
     entries never celebrates. Under reduced motion only the toast shows.
-  - A section reaching 100% plays the same sweep and a ring burst on its pinned heading, under the same
-    rules.
   - Switching expansion or section, or to or from Available now, fades the list in with a short upward
     slide (not on Firefox-based browsers, where it hitches), and the rail's active marker slides to the
     chosen tile.
