@@ -1307,14 +1307,13 @@ tr.flash-completed > td.unlock::after {
 
 /* Phones: the tile column becomes a compact row, the footer sticks to the bottom */
 @media (max-width: 760px) {
-  /* The window keeps its rounded corners, with a slim strip of the page's black showing around it */
+  /* The window keeps its rounded corners and reaches the screen's edges: the page's black shows only behind the corners */
   .page {
-    --phone-pad: 6px;
-    padding: var(--phone-pad);
+    padding: 0;
   }
   .window {
     height: auto;
-    min-height: calc(100dvh - 2 * var(--phone-pad));
+    min-height: 100dvh;
     border-left-width: 3px;
     border-right-width: 3px;
   }
