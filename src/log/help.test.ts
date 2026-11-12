@@ -1,5 +1,36 @@
+import { readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { helpContent } from "./index";
+
+const uiDir = new URL("../ui/", import.meta.url);
+
+/** Every key the UI compares `event.key` with (`=== "x"`, `!== "Tab"`), as the help dialog names it. */
+const boundKeys = [
+  ...new Set(
+    readdirSync(uiDir)
+      .filter((file) => file.endsWith(".tsx") && !file.endsWith(".test.tsx"))
+      .flatMap((file) => [
+        ...readFileSync(new URL(file, uiDir), "utf8").matchAll(/\.key(?:\.toLowerCase\(\))? [!=]== "([^"]+)"/g),
+      ])
+      .map((match) => (match[1] === " " ? "Space" : match[1]!)),
+  ),
+];
+
+describe("help content covers the UI's key bindings", () => {
+  const listed = helpContent()
+    .controls.find((group) => group.title === "Keyboard")!
+    .items.map((item) => item.keys)
+    .join(" | ")
+    .toLowerCase();
+
+  it("finds the UI's key bindings", () => {
+    expect(boundKeys.length).toBeGreaterThan(0);
+  });
+
+  it.each(boundKeys)("lists the %s key (CODING_STANDARDS.md: the help names every shortcut the UI binds)", (key) => {
+    expect(listed).toContain(key.toLowerCase());
+  });
+});
 
 describe("help content", () => {
   const help = helpContent();
