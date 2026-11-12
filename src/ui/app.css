@@ -49,6 +49,7 @@
   --size-sm: 13px;
   --size-md: 14px;
   --size-lg: 15px;
+  --size-xl: 16px;
   --size-tab: 13px;
   --type-display: 400 24px/1 var(--font-title);
   --type-title: var(--type-display);
@@ -1728,7 +1729,7 @@ tr.flash-completed > td.unlock::after {
 }
 .update-dialog h3 {
   margin: 10px 0 4px;
-  font-size: var(--size-md);
+  font-size: var(--size-xl);
 }
 .update-dialog ul {
   margin: 0;
