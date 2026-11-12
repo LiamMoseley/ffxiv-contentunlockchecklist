@@ -355,7 +355,8 @@ a:hover {
   }
   to {
     opacity: 0;
-    transform: scale(1.7);
+    /* The rail clips what leaves it: a 50px tile has about 13px of rail padding to grow into */
+    transform: scale(1.45);
   }
 }
 .tile-new {
