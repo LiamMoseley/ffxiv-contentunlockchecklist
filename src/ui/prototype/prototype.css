@@ -1,0 +1,453 @@
+/* PROTOTYPE (throwaway): the switcher bar and three stacked-row layouts. Uses the app's tokens and status looks. */
+
+/* ---- Switcher bar: obviously not part of the design ---- */
+.proto-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 60px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100vw - 16px);
+  padding: 4px 6px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+  font:
+    13px/1.2 system-ui,
+    sans-serif;
+}
+.proto-bar button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #e4e4e4;
+  color: #111;
+}
+.proto-bar-label {
+  min-width: 0;
+  padding: 0 4px;
+  text-align: center;
+}
+.proto-bar-cases.on {
+  background: #111;
+  color: #fff;
+}
+
+/* ---- Shared ---- */
+.pr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 900px;
+  margin: 6px auto 0;
+  padding: 0 2px 8px;
+}
+.pr-caption {
+  padding: 8px 2px 3px;
+  font-size: var(--size-xs);
+  font-style: italic;
+  color: var(--yellow);
+}
+.pr {
+  position: relative;
+  min-width: 0;
+  border-radius: 6px;
+  background: linear-gradient(#3f3f3f, #353535);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px #1a1a1a;
+  font-size: var(--size-sm);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+.pr:hover {
+  background: linear-gradient(#444, #3a3a3a);
+}
+.pr:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+.pr.completed {
+  color: #9a9a9a;
+}
+.pr.completed a.wiki-link {
+  color: var(--link-dim);
+}
+.pr.notInterested .pr-fade {
+  opacity: 0.42;
+}
+.pr.flash-completed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(240, 195, 90, 0.45), transparent) no-repeat -40% 0 / 40% 100%;
+  animation: sheen 0.3s ease-out forwards;
+}
+.pr-status {
+  flex: none;
+  display: inline-flex;
+}
+.pr-status .status {
+  padding: 6px;
+}
+.pr-status .status-box {
+  width: 22px;
+  height: 22px;
+}
+.pr-name {
+  font-weight: 400;
+  font-size: var(--size-xl);
+  line-height: 1.25;
+  min-width: 0;
+}
+.pr-name .rich,
+.pr-name .line {
+  display: inline;
+}
+.pr-name .line + .line::before {
+  content: " / ";
+  color: var(--text-faint);
+}
+.pr-plate {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 5px;
+  background: radial-gradient(circle at 50% 35%, #3b3b3b, #1c1c1c);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px #111,
+    0 0 0 2px #575757;
+}
+.pr-plate .wiki-icon {
+  margin: 0;
+  width: 28px;
+  height: 28px;
+}
+.pr-label {
+  display: block;
+  font-size: var(--size-xs);
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+.pr-quiet {
+  font-size: var(--size-xs);
+  color: var(--text-dim);
+}
+.pr.completed .pr-quiet {
+  color: #8c8c8c;
+}
+.pr-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: 3px;
+  border: 1px solid #1a1a1a;
+  background: linear-gradient(#2e2e2e, #262626);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  font-size: var(--size-xs);
+  line-height: 1.6;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.pr-chip .rich,
+.pr-chip .line {
+  display: inline;
+}
+.pr-chip .wiki-icon {
+  width: 16px;
+  height: 16px;
+}
+.pr-chip.level {
+  color: var(--cream);
+}
+.pr-chip.optional {
+  border-color: rgba(240, 195, 90, 0.45);
+  background: rgba(240, 195, 90, 0.12);
+  color: var(--gold);
+}
+
+/* ---- A: headline + chips ---- */
+.pr-a {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 12px 10px 6px;
+}
+.pr-a-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-left: 6px;
+}
+.pr-a .pr-quest,
+.pr-a-more {
+  padding-left: 6px;
+}
+.pr-a .pr-quest .rich {
+  font-size: var(--size-md);
+  color: var(--text);
+}
+.pr-a.completed .pr-quest .rich {
+  color: #9a9a9a;
+}
+.pr-a-more {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 6px 14px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ---- B: level spine ---- */
+.pr-b {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+}
+.pr-b-spine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0 8px;
+  border-right: 1px solid #1f1f1f;
+  border-radius: 6px 0 0 6px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.pr-b-level {
+  font: 400 22px/1 var(--font-serif);
+  text-align: center;
+  color: var(--gold);
+}
+.pr-b-level small {
+  display: block;
+  margin-bottom: 2px;
+  font: 400 var(--size-xs) / 1.2 var(--font-body);
+  color: var(--text-faint);
+}
+.pr-b-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 8px 10px 10px;
+}
+.pr-b-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pr-b-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  font-size: var(--size-xs);
+  color: var(--text-dim);
+}
+.pr-b-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 6px 14px;
+  margin-top: 4px;
+}
+.pr-b-wide {
+  grid-column: 1 / -1;
+}
+.pr-b .pr-quest .rich {
+  color: var(--cream);
+}
+.pr-b.completed .pr-quest .rich {
+  color: #9a9a9a;
+}
+
+/* ---- D: spine + chips. The spine's tick row and the main column's head row share a 36px height and the same top
+   padding, so the box, the icon and the name sit on one line. ---- */
+.pr-d {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+}
+.pr-d-spine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  border-right: 1px solid #1f1f1f;
+  border-radius: 6px 0 0 6px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.pr-d-tick {
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+/* Item level: smaller, and teal so it never reads as a character level. Alone, it takes the big number's place. */
+.pr-d-ilv {
+  margin-top: -2px;
+  font: 400 var(--size-md) / 1.1 var(--font-serif);
+  text-align: center;
+  color: var(--text);
+}
+.pr-d-ilv small {
+  display: block;
+  font: 400 var(--size-badge) / 1.3 var(--font-body);
+  color: var(--text-faint);
+}
+.pr-b-level.pr-d-ilv-main {
+  color: var(--text);
+}
+.pr-d-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px 12px 10px 10px;
+}
+.pr-d-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+.pr-d .pr-chips {
+  padding-left: 0;
+}
+/* Quest, Location and Information share one size, and their headings are bold so they read apart from the content */
+.pr-d .pr-field {
+  font-size: var(--size-xs);
+}
+.pr-d .pr-label {
+  font-weight: 700;
+}
+.pr-d .pr-quest .rich {
+  color: var(--text);
+}
+.pr-d.completed .pr-quest .rich {
+  color: #9a9a9a;
+}
+.pr-d .pr-a-more {
+  padding-left: 0;
+}
+/* A rule between the Type chips and Quest, and (stacked, on a phone) between Location and Information */
+.pr-d .pr-quest {
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+@media (max-width: 760px) {
+  .pr-d .pr-a-more {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pr-d .pr-a-more .pr-field + .pr-field {
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+}
+@media (min-width: 761px) {
+  .pr-d .pr-a-more {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- C: compact ledger ---- */
+.pr-c {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px 10px 8px 4px;
+}
+.pr-c .pr-status .status {
+  padding: 5px;
+}
+.pr-c .pr-status .status-box {
+  width: 20px;
+  height: 20px;
+}
+.pr-c-line1 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.pr-c-line1 .pr-name {
+  flex: 1;
+}
+.pr-c-lv {
+  flex: none;
+  font-size: var(--size-xs);
+  color: var(--cream);
+  white-space: nowrap;
+}
+.pr-c-line2,
+.pr-c-notes {
+  padding-left: 34px;
+  font-size: var(--size-xs);
+  color: var(--text-dim);
+}
+.pr-c-line2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+}
+.pr-c-line2 .wiki-icon {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+.pr-c-quest .rich,
+.pr-c-notes .rich,
+.pr-c-line2 > .rich {
+  display: inline;
+}
+.pr-c .line {
+  display: inline;
+}
+.pr-c .line + .line::before {
+  content: " / ";
+  color: var(--text-faint);
+}
+.pr-c-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin-left: 34px;
+  padding-left: 0;
+  color: var(--text-faint);
+}
+.pr-run {
+  margin-right: 5px;
+  font-size: var(--size-badge);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c9a24a;
+}
+@media (min-width: 761px) {
+  .pr-c-notes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2px 18px;
+  }
+}

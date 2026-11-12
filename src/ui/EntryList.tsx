@@ -17,6 +17,8 @@ import {
   type EntryStatus,
   type RichText,
 } from "../log";
+import { usePrototypeVariant } from "./prototype/PrototypeSwitcher";
+import { StackedRowPrototype } from "./prototype/StackedRowPrototype";
 
 export const STATUS_LABEL: Record<EntryStatus, string> = {
   unmarked: "Unmarked",
@@ -40,7 +42,7 @@ export function StatusBox({ status, flash }: { status: EntryStatus; flash?: bool
 }
 
 /** A cell's text with the wiki's icons and links, one block per line. */
-function RichCell({ text }: { text: RichText }) {
+export function RichCell({ text }: { text: RichText }) {
   // Nothing at all, so the card layout can hide an empty cell and its label.
   if (text.length === 0) return null;
   return (
@@ -76,7 +78,7 @@ function RichCell({ text }: { text: RichText }) {
  * The wiki's own "empty content" icon (a question mark): every card with no icon shows it. Committed by hand in
  * public/icons, since `npm run snapshot` downloads only the icons the content uses.
  */
-function FallbackGlyph() {
+export function FallbackGlyph() {
   return (
     <img
       className="wiki-icon"
@@ -95,7 +97,7 @@ export const BundledIconContext = createContext<(icon: string) => boolean>(() =>
  * A wiki icon. A bundled one is served from the app. One that only appeared after an in-browser update comes from
  * the wiki, which rejects requests that carry a Referer, so none is sent; the service worker keeps it for offline use.
  */
-function WikiIcon({ icon, size }: { icon: string; size: number }) {
+export function WikiIcon({ icon, size }: { icon: string; size: number }) {
   const bundled = useContext(BundledIconContext)(icon);
   return (
     <img
@@ -110,7 +112,7 @@ function WikiIcon({ icon, size }: { icon: string; size: number }) {
 }
 
 /** The status box as a button; its click, like a click anywhere on the entry, reaches the entry's handler. */
-function StatusButton({ entry, status, flash }: { entry: Entry; status: EntryStatus; flash: boolean }) {
+export function StatusButton({ entry, status, flash }: { entry: Entry; status: EntryStatus; flash: boolean }) {
   return (
     <button
       type="button"
@@ -124,7 +126,7 @@ function StatusButton({ entry, status, flash }: { entry: Entry; status: EntrySta
 }
 
 /** What an entry's row needs to play its status animation: whether it is flashing, and the class that plays it. */
-function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
+export function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
   const flashing = actions.flash?.entryId === entry.id && actions.flash.status === status;
   return {
     flashing,
@@ -146,7 +148,7 @@ const onLink = (event: { target: EventTarget }) => event.target instanceof Eleme
  * toggles Not interested, and the browser's context menu stays off the entry. The returned function gives
  * one entry's props; the list shares the touch state, one touch at a time.
  */
-function useEntryProps(actions: EntryActions) {
+export function useEntryProps(actions: EntryActions) {
   // The pending long-press timer, whether it fired (so the click that follows the lift is ignored) and the timer
   // that clears that flag if no click comes, and whether the last pointer was a touch (so the context menu a
   // long-press raises isn't a second right click).
@@ -244,6 +246,20 @@ export type EntryListProps = {
 
 export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps) {
   const entryProps = useEntryProps(actions);
+  // PROTOTYPE (throwaway): ?variant=A|B|C swaps the table for a candidate stacked-row layout. Dev server only.
+  const variant = usePrototypeVariant();
+  if (variant) {
+    return (
+      <StackedRowPrototype
+        variant={variant}
+        entries={entries}
+        statusOf={statusOf}
+        isNew={isNew}
+        actions={actions}
+        entryProps={entryProps}
+      />
+    );
+  }
   return (
     <table className="entries">
       <colgroup>

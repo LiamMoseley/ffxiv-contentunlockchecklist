@@ -8,6 +8,7 @@ import bundledContent from "./content/bundled-content.json";
 import { createLog, type Content } from "./log";
 import { App } from "./ui/App";
 import { BundledIconContext } from "./ui/EntryList";
+import { PrototypeSwitcher } from "./ui/prototype/PrototypeSwitcher";
 import "./ui/app.css";
 
 registerServiceWorker();
@@ -24,5 +25,6 @@ createRoot(document.getElementById("root")!).render(
     <BundledIconContext.Provider value={log.isBundledIcon}>
       <App log={log} preferences={storage} />
     </BundledIconContext.Provider>
+    {import.meta.env.DEV && <PrototypeSwitcher />}
   </StrictMode>,
 );
