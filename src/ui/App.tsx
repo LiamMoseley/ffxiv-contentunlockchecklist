@@ -29,6 +29,10 @@ const WIKI_PAGE_URL = "https://ffxiv.consolegameswiki.com/wiki/Content_Unlock";
 /** A section tab: one of the expansion's two sections, or both. */
 type TabKey = Selection["tab"];
 
+/** A key pressed inside an open dialog belongs to the dialog: the app's own shortcuts leave it alone. */
+const inDialog = (event: KeyboardEvent) =>
+  event.target instanceof Element && !!event.target.closest(".dialog-backdrop");
+
 /** The wiki writes "Level 51 - 60"; the window shows "Level 51–60". */
 const sectionTitle = (section: Section) => section.heading.replace(/\s*-\s*/, "–");
 
@@ -54,7 +58,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   // "/" or Ctrl/Cmd+K opens the filters and focuses the search box, except while typing in a field.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.altKey) return;
+      if (event.altKey || inDialog(event)) return;
       const inField =
         event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]");
       const slash = event.key === "/" && !event.ctrlKey && !event.metaKey && !inField;
@@ -136,6 +140,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     const onKey = (event: KeyboardEvent) => {
       if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "z")
         return;
+      if (inDialog(event)) return;
       if (event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]")) return;
       event.preventDefault();
       undoRef.current();

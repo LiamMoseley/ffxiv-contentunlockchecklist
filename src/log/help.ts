@@ -35,7 +35,10 @@ export function helpContent(): HelpContent {
       {
         title: "Keyboard",
         items: [
-          { keys: "Space", does: "Completes the focused entry, like a left click." },
+          {
+            keys: "Space",
+            does: "Completes the focused entry, like a left click. Enter does the same on its status box.",
+          },
           { keys: "X", does: "Sets the focused entry to Not interested, like a right click." },
           { keys: "/ or Ctrl/Cmd+K", does: "Opens the filters and moves focus to the search box." },
           { keys: "Ctrl/Cmd+Z", does: "Undoes the last change." },
