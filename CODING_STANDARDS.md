@@ -30,6 +30,12 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **A window-level key handler ignores keys pressed inside a dialog.** `/`, Ctrl/Cmd+K and Ctrl/Cmd+Z in `App.tsx` start with `inDialog(event)`, so a key meant for the open dialog never moves focus or changes progress behind its backdrop. A new window-level handler does the same. A shortcut the UI binds is also named in `helpContent()` (`help.test.ts` fails when a bound key is missing).
 
+**Text styles come from the tokens at the top of `app.css` (#119).** Never write a `font-size` or `font` shorthand with a pixel literal in a rule.
+- *Sizes:* `--size-badge` 10px, `--size-xs` 12px (table headings, counts, meta, the hint bar legend, the footer bar), `--size-sm` 13px (the log's table and card text, notices, buttons, form labels), `--size-md` 14px (help and dialog text), `--size-lg` 15px (phone Unlock text), `--size-xl` 16px (the update dialog's section headings), and `--size-tab` 13px. Pick the nearest step rather than adding a half-pixel one. (`--text-*` is taken: those are colours.)
+- *Roles* carry weight, size, line height and face together: `--type-title` (app title), `--type-display` (dialog headings), `--type-name` (character name), `--type-section` (section heading), `--type-rail` and `--type-rail-collapsed`, `--type-count`, and `--type-overline`, the small gold uppercase heading that the help dialog, the Characters menu and Display Mode share.
+- *Weights:* 400 by default; 300 only for the rail and the big counts; 700 only for badges and the overline heading. No 600.
+- *Phones:* a size that is smaller on phones is redefined in the `:root` of the phone `@media` block, not overridden on its selector. Phone-only controls (Update, Undo, Filters) take a scale step.
+
 **A size taken from another rule uses its CSS variable.** The help dialog's cap comes from `--page-pad`, `--window-frame`, `--window-min-height` and `--dialog-gap`, so changing the window's frame moves the dialog with it. A copied `68px` drifts silently.
 
 **One validation rule per field, shared by every path that writes it.** Adding, editing and importing a character all go through the same function for the World (`acceptedWorld`), so a rule changed in one cannot drift in another. A test that exercises each path guards it.
