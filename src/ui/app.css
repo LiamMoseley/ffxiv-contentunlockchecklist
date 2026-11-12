@@ -913,11 +913,12 @@ tr.flash-completed > td.unlock::after {
 .dialog.help-dialog {
   display: flex;
   flex-direction: column;
-  width: min(760px, calc(100vw - 24px));
+  width: min(1040px, calc(100vw - 24px));
   max-height: calc(100vh - 48px);
 }
-/* The title and Close button stay put; only the help text scrolls. On a wide screen the controls sit in
-   one column and the status boxes and Undo in another, with a line between; a narrow one stacks them. */
+/* The title and Close button stay put; only the help text scrolls. Three columns on a wide screen (controls,
+   reading the list, setting up), two on a medium one with the third underneath, one on a narrow one; a line
+   separates the groups. */
 .help-body {
   min-height: 0;
   overflow-y: auto;
@@ -932,8 +933,35 @@ tr.flash-completed > td.unlock::after {
     padding-left: 24px;
     border-left: 1px solid rgba(255, 255, 255, 0.08);
   }
+  .help-column:nth-child(3) {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 16px;
+  }
+  .help-column:nth-child(3) section:first-child h3 {
+    margin-top: 16px;
+    padding-top: 0;
+    border-top: 0;
+  }
 }
-/* Stacked, the second group's first heading needs its divider back. */
+@media (min-width: 1000px) {
+  .help-body {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .help-column:nth-child(3) {
+    grid-column: auto;
+    padding-left: 24px;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 0;
+    margin-top: 0;
+  }
+  .help-column:nth-child(3) section:first-child h3 {
+    margin-top: 0;
+  }
+}
+/* Stacked, each later group's first heading needs its divider back. */
 @media (max-width: 699px) {
   .help-column + .help-column section:first-child h3 {
     margin-top: 16px;

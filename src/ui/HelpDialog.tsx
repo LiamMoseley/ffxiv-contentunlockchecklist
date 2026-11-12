@@ -1,7 +1,16 @@
 import { useEffect, useRef } from "react";
-import { helpContent } from "../log";
+import { helpContent, type HelpContent } from "../log";
 import { DialogBackdrop } from "./Dialog";
 import { StatusBox, STATUS_LABEL } from "./EntryList";
+
+function HelpTopics({ topics }: { topics: HelpContent["topics"] }) {
+  return topics.map((topic) => (
+    <section key={topic.title}>
+      <h3>{topic.title}</h3>
+      <p>{topic.text}</p>
+    </section>
+  ));
+}
 
 /** How to use the app: the controls, the three status boxes and Undo. The words come from the Log core. */
 export function HelpDialog({ onClose }: { onClose: () => void }) {
@@ -12,7 +21,7 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
     <DialogBackdrop onClose={onClose} closeOnBackdropClick>
       <div className="dialog help-dialog" role="dialog" aria-modal="true" aria-labelledby="help-title">
         <h2 id="help-title">How to use this app</h2>
-        {/* Two columns on a wide screen: how to give input, then what the app shows and undoes. */}
+        {/* Columns on a wide screen: how to give input, how to read the list, and how to set the app up. */}
         <div className="help-body">
           <div className="help-column" aria-label="Controls" role="group">
             {help.controls.map((group) => (
@@ -29,7 +38,7 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
               </section>
             ))}
           </div>
-          <div className="help-column" aria-label="Status boxes and Undo" role="group">
+          <div className="help-column" aria-label="Reading the list" role="group">
             <section>
               <h3>Status boxes</h3>
               <dl>
@@ -47,6 +56,10 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
               <h3>Undo</h3>
               <p>{help.undo}</p>
             </section>
+            <HelpTopics topics={help.topics.filter((topic) => topic.group === "view")} />
+          </div>
+          <div className="help-column" aria-label="Filters, characters and levels" role="group">
+            <HelpTopics topics={help.topics.filter((topic) => topic.group === "setup")} />
           </div>
         </div>
         <div className="dialog-buttons">

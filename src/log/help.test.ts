@@ -35,6 +35,20 @@ describe("help content", () => {
     for (const box of help.statusBoxes) expect(box.meaning.length).toBeGreaterThan(0);
   });
 
+  it("explains the expansion tiles, filters, characters and levels", () => {
+    expect(help.topics.map((topic) => [topic.group, topic.title])).toEqual([
+      ["view", "Expansion tiles"],
+      ["setup", "Filters and search"],
+      ["setup", "Characters"],
+      ["setup", "Levels and Available now"],
+    ]);
+    const text = (title: string) => help.topics.find((topic) => topic.title === title)?.text ?? "";
+    expect(text("Expansion tiles")).toContain("Available now");
+    expect(text("Filters and search")).toContain("Optional challenges");
+    expect(text("Characters")).toContain("Export");
+    expect(text("Levels and Available now")).toContain("Set level");
+  });
+
   it("says Undo reverses the last change", () => {
     expect(help.undo).toBe("Undo reverses the last change.");
   });

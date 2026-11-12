@@ -6,6 +6,9 @@ export type HelpContent = {
   controls: HelpControlGroup[];
   statusBoxes: { status: EntryStatus; meaning: string }[];
   undo: string;
+  /** Plain explanations of the app's features, each a title and one paragraph. `view` topics sit beside the
+   * status boxes and Undo, `setup` topics (filters, characters) in a group of their own. */
+  topics: { group: "view" | "setup"; title: string; text: string }[];
 };
 
 /**
@@ -50,5 +53,27 @@ export function helpContent(): HelpContent {
       },
     ],
     undo: "Undo reverses the last change.",
+    topics: [
+      {
+        group: "view",
+        title: "Expansion tiles",
+        text: "The tiles on the left choose what the list shows: Available now, All (every expansion) or one expansion, each with its progress bar. For an expansion, the tabs above the list switch between its sections. The arrow at the bottom of the tiles shrinks them to save room.",
+      },
+      {
+        group: "setup",
+        title: "Filters and search",
+        text: "Filters opens a panel, and so does pressing /. Search matches any word in the entries in view. Type shows one kind of content, Optional challenges hides them or shows only them, and two checkboxes hide Completed or Not interested entries. Filters are remembered, and a number on the button counts those in use. Complete Shown and Clear Shown act only on the entries the filters leave showing.",
+      },
+      {
+        group: "setup",
+        title: "Characters",
+        text: "The button at the top right names the current character. Select it to switch characters, or to Add, Edit, Reset or Delete one. Progress, counts and filters belong to the current character only, and Reset clears only theirs. Export saves every character to a backup file, and Import adds that file's progress back.",
+      },
+      {
+        group: "setup",
+        title: "Levels and Available now",
+        text: "Give a character a level, their highest job level, when you add or edit them. Available now then lists every Unmarked entry they can reach at that level, and an entry leaves the list when you complete it. Without a level it shows a Set level button.",
+      },
+    ],
   };
 }
