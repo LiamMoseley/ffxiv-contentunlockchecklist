@@ -541,6 +541,14 @@ a:hover {
   scrollbar-width: thin;
   scrollbar-color: #8a8a8a #2a2a2a;
 }
+/* Where the window has a fixed height (not the phone layout, whose page grows with the list), the list's height
+   comes from the flex column, never from the rows. Without this, the filter bar sliding re-measures all 429 rows
+   on every frame (about 40ms each on All). */
+@media (min-width: 761px) {
+  .scroll {
+    contain: size;
+  }
+}
 
 /* Switching expansion or section: the list fades in with a short upward slide */
 .switch-fade {
