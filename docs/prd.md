@@ -219,6 +219,12 @@ them.*
 left.*
 - Separate options hide completed entries and hide not-interested entries.
 - A section whose entries are all hidden says so, instead of appearing empty.
+- **Clear filters** sits at the end of the filter bar, always shown and enabled only while a filter is
+  active. It resets the search, type, optional challenges and both Hide options; in Available now it leaves
+  the two locked Hide options alone. Filters are not progress, so it can't be undone.
+- The search box has its own ✕ (drawn by the app, so every browser matches) while it has text, and Escape
+  in the box clears it. On a touch device (no hover, or a coarse pointer) its placeholder reads "Search";
+  the "(press /)" hint stays on desktop.
 
 **US-14. See what I can do now.**
 *As a returning player, I want to see what my character can unlock at their current level, so that I
@@ -483,6 +489,8 @@ properly; don't promote the prototype code.
     across the row, ending off the row's far edge. Setting Not interested or returning to Unmarked changes
     quietly, with no animation. Nothing plays
     on load, on switching character, view, section or expansion, or for bulk actions, Undo or updates.
+  - The filter bar slides open and shut (height plus fade, about 200ms) and its controls can't be focused
+    while it is closed.
   - Progress bar fills animate, with a brief flash when an expansion reaches 100%.
   - Switching expansion or section, or to or from Available now, fades the list in with a short upward
     slide (not on Firefox-based browsers, where it hitches), and the rail's active marker slides to the

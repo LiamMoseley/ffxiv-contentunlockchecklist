@@ -765,6 +765,25 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
       filters = { ...filters, ...next };
       saveView();
     },
+    /**
+     * Resets the search, type, optional challenge choice and both Hide filters. Available now keeps its two Hide
+     * filters as they are, since it always hides Completed and Not interested entries. Filters are not progress,
+     * so this is not undoable.
+     */
+    clearFilters() {
+      filters = {
+        ...DEFAULT_FILTERS,
+        ...(openView === "available"
+          ? { hideCompleted: filters.hideCompleted, hideNotInterested: filters.hideNotInterested }
+          : {}),
+      };
+      saveView();
+    },
+    /** Whether Clear filters would change anything: a filter it resets is active. */
+    canClearFilters: (): boolean =>
+      activeFilterCount(
+        openView === "available" ? { ...filters, hideCompleted: false, hideNotInterested: false } : filters,
+      ) > 0,
     /** How many filters are narrowing the log right now. */
     activeFilterCount: (): number =>
       // Available now lists only Unmarked entries, so it always hides Completed and Not interested ones.

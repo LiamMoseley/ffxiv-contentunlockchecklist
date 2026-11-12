@@ -1351,6 +1351,7 @@ tr.flash-completed > td.unlock::after {
 .new-notice button,
 .available-empty button,
 .filters-toggle,
+.filters-clear,
 .dialog-buttons button {
   display: inline-flex;
   cursor: pointer;
@@ -1378,6 +1379,7 @@ tr.flash-completed > td.unlock::after {
 .new-notice button:hover:not(:disabled),
 .available-empty button:hover:not(:disabled),
 .filters-toggle:hover:not(:disabled),
+.filters-clear:hover:not(:disabled),
 .dialog-buttons button:hover:not(:disabled):hover:not(:disabled) {
   background: linear-gradient(#6e6e6e, #525252 48%, #454545 52%, #3b3b3b);
 }
@@ -1386,12 +1388,14 @@ tr.flash-completed > td.unlock::after {
 .new-notice button:active:not(:disabled),
 .available-empty button:active:not(:disabled),
 .filters-toggle:active:not(:disabled),
+.filters-clear:active:not(:disabled),
 .dialog-buttons button:active:not(:disabled):active:not(:disabled) {
   background: linear-gradient(#333, #444);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 .button-footer button:disabled,
 .hint-bar .undo:disabled,
+.filters-clear:disabled,
 .dialog-buttons button:disabled:disabled {
   color: #767676;
   text-shadow: none;
@@ -1404,6 +1408,7 @@ tr.flash-completed > td.unlock::after {
 .new-notice button:focus-visible,
 .available-empty button:focus-visible,
 .filters-toggle:focus-visible,
+.filters-clear:focus-visible,
 .update-button:focus-visible,
 .dialog-buttons button:focus-visible:focus-visible {
   outline: 2px solid var(--gold);
@@ -1808,13 +1813,64 @@ tr.flash-completed > td.unlock::after {
   text-shadow: none;
 }
 
-/* Search and filters */
+/* Search and filters. The wrapper stays mounted and slides open and shut: a grid row going from 0fr to 1fr
+   animates the height without measuring it. Closed, its controls are inert (the attribute) and hidden. */
+.filter-bar-wrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 0.2s ease,
+    opacity 0.2s ease,
+    visibility 0.2s;
+}
+.filter-bar-wrap.closed {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+.filter-bar-clip {
+  min-height: 0;
+  overflow: hidden;
+}
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 8px 14px;
-  padding: 0 14px 8px 18px;
+  padding: 4px 14px 8px 18px;
+}
+.filters-clear {
+  padding: 0 14px;
+  font-size: 13px;
+}
+.search-box {
+  position: relative;
+  display: flex;
+}
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  padding-right: 26px;
+}
+.search-clear {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  cursor: pointer;
+}
+.search-clear:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 .filter-field {
   display: flex;
@@ -1886,14 +1942,10 @@ tr.flash-completed > td.unlock::after {
   background: #1c1c1c;
   color: var(--text);
 }
-/* The Search clear (x) button, in the same light grey */
+/* The browser's own Search clear (x) is WebKit-only: hidden everywhere, our own button replaces it */
 .filter-field input[type="search"]::-webkit-search-cancel-button {
   appearance: none;
-  width: 10px;
-  height: 10px;
-  cursor: pointer;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M1 1l8 8M9 1l-8 8' stroke='%23d8d8d8' stroke-width='1.6'/%3E%3C/svg%3E")
-    center / contain no-repeat;
+  display: none;
 }
 /* The Filters checkboxes look like status boxes: dark box, gold fill when ticked */
 .filter-checks input[type="checkbox"] {

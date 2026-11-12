@@ -1175,6 +1175,70 @@ describe("filtering the log", () => {
     expect(log.activeFilterCount()).toBe(2);
   });
 
+  it("clears every filter, and only says it can when one is active", () => {
+    const { log } = openLog();
+    expect(log.canClearFilters()).toBe(false);
+
+    log.setFilters({ search: "  " });
+    expect(log.canClearFilters()).toBe(false);
+
+    log.setFilters({
+      search: "coil",
+      type: "Trial",
+      optionalChallenge: "only",
+      hideCompleted: true,
+      hideNotInterested: true,
+    });
+    expect(log.canClearFilters()).toBe(true);
+
+    log.clearFilters();
+    expect(log.filters()).toEqual({
+      search: "",
+      type: null,
+      optionalChallenge: "all",
+      hideCompleted: false,
+      hideNotInterested: false,
+    });
+    expect(log.activeFilterCount()).toBe(0);
+    expect(log.canClearFilters()).toBe(false);
+  });
+
+  it("clears the remembered filters too", () => {
+    const { log, storage, clock } = openLog();
+    log.setFilters({ type: "Trial", hideCompleted: true });
+    log.clearFilters();
+
+    expect(openLog({ storage, clock }).log.filters()).toMatchObject({ type: null, hideCompleted: false });
+  });
+
+  it("is not undoable: clearing filters leaves Undo on the last progress change", () => {
+    const { log } = openLog();
+    const id = "sastasha/its-probably-pirates@arr";
+    log.setEntryStatus(id, "completed");
+    log.setFilters({ search: "coil" });
+    log.clearFilters();
+
+    expect(log.canUndo()).toBe(true);
+    log.undo();
+    expect(log.entryStatus(id)).toBe("unmarked");
+    expect(log.canUndo()).toBe(false);
+  });
+
+  it("clears Available now's other filters and leaves its two hide filters alone", () => {
+    const { log } = openLog();
+    log.showAvailableNow();
+    expect(log.canClearFilters()).toBe(false);
+
+    log.setFilters({ search: "coil", type: "Trial", optionalChallenge: "none" });
+    expect(log.canClearFilters()).toBe(true);
+    expect(log.activeFilterCount()).toBe(5);
+
+    log.clearFilters();
+    expect(log.filters()).toMatchObject({ search: "", type: null, optionalChallenge: "all" });
+    expect(log.activeFilterCount()).toBe(2);
+    expect(log.canClearFilters()).toBe(false);
+  });
+
   it("ignores a type or optional challenge choice that does not exist", () => {
     const { log } = openLog();
     log.setFilters({ type: "Dungeon" });

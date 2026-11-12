@@ -43,7 +43,7 @@ export function helpContent(): HelpContent {
           { keys: "/ or Ctrl/Cmd+K", does: "Opens the filters and moves focus to the search box." },
           { keys: "Ctrl/Cmd+Z", does: "Undoes the last change." },
           { keys: "Tab", does: "Moves focus to the next control; Shift+Tab goes back." },
-          { keys: "Escape", does: "Closes the open dialog." },
+          { keys: "Escape", does: "Closes the open dialog, or clears the text in the search box." },
         ],
       },
     ],
@@ -60,7 +60,7 @@ export function helpContent(): HelpContent {
       {
         group: "view",
         title: "Filters and search",
-        text: "Filters opens a panel, and so does pressing /. Search matches any word in the entries in view. Type shows one kind of content, Optional challenges hides them or shows only them, and two checkboxes hide Completed or Not interested entries. Filters are remembered, and a number on the button counts those in use. Complete Shown and Clear Shown act only on the entries the filters leave showing.",
+        text: "Filters opens a panel, and so does pressing /. Search matches any word in the entries in view. Type shows one kind of content, Optional challenges hides them or shows only them, and two checkboxes hide Completed or Not interested entries. Filters are remembered, and a number on the button counts those in use. Clear filters resets them all. Complete Shown and Clear Shown act only on the entries the filters leave showing.",
       },
       {
         group: "setup",
