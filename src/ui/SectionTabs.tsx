@@ -28,7 +28,7 @@ export function SectionTabs<K extends string>({
           onClick={() => onChoose(tab.key)}
         >
           <span>
-            {tab.label} <Count progress={tab.progress} />
+            {tab.label} <Count progress={tab.progress} bracketed />
           </span>
         </button>
       ))}

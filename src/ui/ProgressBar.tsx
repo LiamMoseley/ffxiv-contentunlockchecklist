@@ -36,11 +36,8 @@ export function ProgressBar({ progress, label, thin }: { progress: ProgressCount
   );
 }
 
-/** "completed/total", as shown beside every bar and in every tab. */
-export function Count({ progress }: { progress: ProgressCount }) {
-  return (
-    <span className="count">
-      {progress.completed}/{progress.total}
-    </span>
-  );
+/** "completed/total", as shown beside every bar and in every tab. A tab's count is bracketed, to set it apart from its text. */
+export function Count({ progress, bracketed }: { progress: ProgressCount; bracketed?: boolean }) {
+  const text = `${progress.completed}/${progress.total}`;
+  return <span className="count">{bracketed ? `(${text})` : text}</span>;
 }

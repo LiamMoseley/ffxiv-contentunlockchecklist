@@ -45,7 +45,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 ### Section tabs
 - **Shape:** **separate** slanted grey tab buttons side by side with gaps, as in Character Configuration, not one long bar. Each has a black outline and a pale bevel.
 - **Active tab:** lighter, with a **yellow triangle in its bottom-left corner**. The triangle is drawn as part of the tab's skewed shape, so it always sits in the corner.
-- **Label:** each tab shows a count, e.g. "Level 61–70 5/5", then "Level 70 …", then "All …".
+- **Label:** each tab shows a count in brackets, e.g. "Level 61–70 (5/5)", then "Level 70 …", then "All …". (Brackets were added later, in #95, so the count reads apart from the level text.)
 - **Available now:** its heading is one non-clickable tab in the selected look (yellow corner), with no glow. It reads "Level 1 to 85" and the number of rows listed (not Completed/total, since Completed rows leave the view), or "Available now" with no level set.
 
 ### Section headings

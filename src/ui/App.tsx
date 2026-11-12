@@ -307,7 +307,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                         {availableTab.rows !== null && (
                           <>
                             {" "}
-                            <span className="count">{availableTab.rows}</span>
+                            <span className="count">({availableTab.rows})</span>
                           </>
                         )}
                       </span>
