@@ -1430,6 +1430,11 @@ tr.flash-completed > td.unlock::after {
   .legend {
     display: none;
   }
+  /* A focused entry scrolls clear of the pinned bar as well as the pinned headings */
+  .entries tbody tr,
+  .entry-card {
+    scroll-margin-bottom: 48px;
+  }
   .footer-bar {
     border-radius: 0;
   }
