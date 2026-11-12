@@ -1314,8 +1314,6 @@ tr.flash-completed > td.unlock::after {
   .window {
     height: auto;
     min-height: 100dvh;
-    border-left-width: 3px;
-    border-right-width: 3px;
   }
   .title-bar {
     padding: 6px 10px;
