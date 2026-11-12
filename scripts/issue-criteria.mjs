@@ -86,5 +86,7 @@ if (flags.has("--dry")) {
   const file = join(mkdtempSync(join(tmpdir(), "criteria-")), "body.md");
   writeFileSync(file, next);
   gh("issue", "edit", issue, "--body-file", file);
-  console.log(`Updated #${issue}.`);
+  // Names each criterion it wrote, so a wrong number from `reword` or `tick` shows at once, not on the next read.
+  const before = new Set(lines);
+  console.log(`Updated #${issue}:\n${result.filter((l) => /^- \[[ xX]\]/.test(l) && !before.has(l)).join("\n")}`);
 }
