@@ -363,6 +363,35 @@ a:hover {
     transform: scale(1.45);
   }
 }
+/* The same celebration on a Section's pinned heading: the tile's sweep, and a ring that spreads as a box-shadow (a scaled wide box would stretch) */
+.head-celebrate {
+  display: contents;
+}
+.head-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 0 2px rgba(255, 225, 130, 0.9),
+    inset 0 0 0 2px rgba(255, 225, 130, 0.9);
+  animation: head-ring 0.6s ease-out 0.45s forwards;
+}
+@keyframes head-ring {
+  from {
+    opacity: 1;
+    box-shadow:
+      0 0 0 0 rgba(255, 225, 130, 0.9),
+      inset 0 0 0 2px rgba(255, 225, 130, 0.9);
+  }
+  to {
+    opacity: 0;
+    box-shadow:
+      0 0 0 8px rgba(255, 225, 130, 0),
+      inset 0 0 0 2px rgba(255, 225, 130, 0);
+  }
+}
 .tile-new {
   position: absolute;
   top: -5px;
