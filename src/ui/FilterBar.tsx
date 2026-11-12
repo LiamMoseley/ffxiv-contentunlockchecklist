@@ -118,6 +118,8 @@ export function FilterBar({
             onClick={() => {
               log.clearFilters();
               onChange();
+              // The button disables itself now: keep keyboard focus in the bar.
+              searchRef.current?.focus();
             }}
           >
             Clear filters
