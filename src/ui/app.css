@@ -1314,6 +1314,9 @@ tr.flash-completed > td.unlock::after {
   .window {
     height: auto;
     min-height: 100dvh;
+    /* The pinned bar is square, so mid-page nothing shows behind it; at the page's end the window's rounded
+       inner edge trims its bottom corners. `clip`, not `hidden`, so the bar can still stick. */
+    overflow: clip;
   }
   .title-bar {
     padding: 6px 10px;
@@ -1430,7 +1433,6 @@ tr.flash-completed > td.unlock::after {
     flex-wrap: nowrap;
     gap: 8px;
     padding: 6px 10px;
-    border-radius: 0 0 7px 7px;
     background: linear-gradient(#333, #2b2b2b);
   }
   .legend {
