@@ -149,7 +149,7 @@ progress.*
   Not interested entry it sets Completed. Right click (or a long-press of about 500ms on a touch device)
   toggles Unmarked ↔ Not interested; on a Completed entry it sets Not interested. Space acts as left
   click and X as right click from the keyboard. The browser's context menu is suppressed on entries
-  only, and entries cannot be text-selected. A second tap on the same entry within about 400ms is
+  only, and entries cannot be text-selected. A second tap on the same entry within about 250ms is
   ignored, so a quick double tap cannot flip it straight back, and a double tap does not zoom the page. Clicking a wiki link in the row never changes the status.
 - A legend for the three box states is always visible.
 - Completed entries are visibly distinct and dimmed, but stay readable.

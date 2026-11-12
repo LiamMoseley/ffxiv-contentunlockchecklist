@@ -120,7 +120,7 @@ function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
 const LONG_PRESS_MS = 500;
 
 /** A tap this soon after the last one on the same entry is a double tap, not a second change. */
-const DOUBLE_TAP_MS = 400;
+const DOUBLE_TAP_MS = 250;
 
 const onLink = (event: { target: EventTarget }) => event.target instanceof Element && !!event.target.closest("a");
 
