@@ -1307,19 +1307,19 @@ tr.flash-completed > td.unlock::after {
 
 /* Phones: the tile column becomes a compact row, the footer sticks to the bottom */
 @media (max-width: 760px) {
+  /* The window keeps its rounded corners, with a slim strip of the page's black showing around it */
   .page {
-    padding: 0;
+    --phone-pad: 6px;
+    padding: var(--phone-pad);
   }
   .window {
     height: auto;
-    min-height: 100dvh;
-    border-radius: 0;
+    min-height: calc(100dvh - 2 * var(--phone-pad));
     border-left-width: 3px;
     border-right-width: 3px;
   }
   .title-bar {
     padding: 6px 10px;
-    border-radius: 0;
   }
   .title-bar h1 {
     font-size: 21px;
@@ -1433,6 +1433,7 @@ tr.flash-completed > td.unlock::after {
     flex-wrap: nowrap;
     gap: 8px;
     padding: 6px 10px;
+    border-radius: 0 0 7px 7px;
     background: linear-gradient(#333, #2b2b2b);
   }
   .legend {
