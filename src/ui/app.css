@@ -652,6 +652,8 @@ a:hover {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
+  /* A double tap does not zoom the page, and a tap acts at once. */
+  touch-action: manipulation;
 }
 .entries tbody tr:focus-visible,
 .entry-card:focus-visible {
