@@ -1461,9 +1461,16 @@ tr.flash-completed > td.unlock::after {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
   }
+  /* The (?) and the toggles are as tall as Undo (26px) for a touch screen */
   .hint-bar .hint-icon {
     grid-column: 1;
     justify-self: start;
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+  .hint-bar .display-mode button {
+    height: 26px;
   }
   .hint-bar button.undo {
     grid-column: 2;

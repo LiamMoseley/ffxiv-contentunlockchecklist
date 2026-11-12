@@ -369,8 +369,8 @@ play.*
 - The window is as tall as the screen, so its rounded border is always visible on every side, and all of
   its content (title bar, expansion tiles, list, buttons and legal text) scrolls inside it. The page
   itself never scrolls.
-- The pinned bottom bar is slim and its buttons keep their size but are spread apart: the (?) in the left
-  corner, Undo exactly centred and the Display Mode toggles at the right. The "Display Mode" label is hidden
+- The pinned bottom bar is slim and its buttons are spread apart, all at least as tall as Undo (26px) for
+  touch: the (?) in the left corner, Undo exactly centred and the Display Mode toggles at the right. The "Display Mode" label is hidden
   at this width. The legal text scrolls with the content at its very end; Clear Shown and Complete Shown stay
   in the flow above it, and the Update button stays in the footer beside the credit text, where on a phone it
   is a worded "Update from wiki" button as wide as its words.
