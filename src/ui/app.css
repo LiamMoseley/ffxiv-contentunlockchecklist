@@ -26,6 +26,9 @@
   --window-frame: 4px;
   --window-min-height: 480px;
   --dialog-gap: 12px;
+  --section-head-height: 38px;
+  --column-head-height: 24px;
+  --wrapped-head-clearance: 80px;
   --scrollbar-allowance: 18px;
   --bronze: linear-gradient(#ecd9a6, #c09a5c 28%, #7c5d33 55%, #a07c47 78%, #e0c68e);
 
@@ -543,7 +546,9 @@ a:hover {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: 4px 10px 8px 4px;
+  /* Margin, not padding: the pinned heading sits at the list's very top, so it never moves when scrolling starts (#96) */
+  margin-top: 4px;
+  padding: 0 10px 8px 4px;
   scrollbar-width: thin;
   scrollbar-color: #8a8a8a #2a2a2a;
 }
@@ -577,12 +582,22 @@ a:hover {
 .section {
   margin-bottom: 14px;
 }
+/*
+ * Pinned while its Section scrolls (#96): the next Section's heading pushes it out, because a sticky box stays inside
+ * its parent. The column headers pin under it at --section-head-height, so the heading has a fixed height (it
+ * never wraps above 1000px). The scroller is .scroll, or the page on a phone. Rows scroll under both, so
+ * scroll-margin-top on a row and a card keeps a focused one clear of them.
+ */
 .section-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  height: var(--section-head-height);
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 4px;
-  padding: 7px 12px;
+  padding: 0 12px;
   border-radius: 6px;
   background: linear-gradient(#404040, #333);
   box-shadow:
@@ -624,6 +639,14 @@ a:hover {
  * 'iLv. 110-123' is the widest Level text (85px). Recheck them if a wiki update adds longer cells.
  */
 @media (min-width: 1001px) {
+  /* The heading and the column headers under it read as one pinned panel: square the heading's bottom, and outline it
+     on the inside like the column headers, with a black line between the two */
+  .section-head {
+    border-radius: 6px 6px 0 0;
+    box-shadow:
+      inset 0 0 0 1px #1a1a1a,
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  }
   .entries {
     table-layout: fixed;
   }
@@ -651,12 +674,33 @@ a:hover {
   }
 }
 .entries th {
+  position: sticky;
+  top: var(--section-head-height);
+  z-index: 1;
+  box-sizing: border-box;
+  height: var(--column-head-height);
+  /* A darker band than the rows, so a row cut off beneath it reads as passing under */
+  background: linear-gradient(#2b2b2b, #242424);
   padding: 2px 8px 4px;
   text-align: left;
   font-size: 12px;
   font-weight: 400;
   color: var(--text-faint);
-  border-bottom: 1px solid var(--line);
+  /*
+   * The black outline continues the heading's down both sides and along the bottom (#96). Inset shadows, not borders
+   * (a sticky cell loses its collapsed borders) and not outer shadows (they smeared in Firefox), and no cast shadow.
+   */
+  box-shadow: inset 0 -1px 0 #1a1a1a;
+}
+.entries th:first-child {
+  box-shadow:
+    inset 1px 0 0 #1a1a1a,
+    inset 0 -1px 0 #1a1a1a;
+}
+.entries th:last-child {
+  box-shadow:
+    inset -1px 0 0 #1a1a1a,
+    inset 0 -1px 0 #1a1a1a;
 }
 .entries td {
   padding: 6px 8px;
@@ -665,6 +709,7 @@ a:hover {
 }
 .entries tbody tr {
   cursor: pointer;
+  scroll-margin-top: calc(var(--section-head-height) + var(--column-head-height));
 }
 /* Clicks never select text, and a touch long-press raises no browser menu: it sets Not interested. */
 .entries tbody tr,
@@ -1135,6 +1180,16 @@ tr.flash-completed > td.unlock::after {
 @media (max-width: 1000px) {
   .entries thead {
     display: none;
+  }
+  .section-head {
+    height: auto;
+    min-height: var(--section-head-height);
+    padding: 7px 12px;
+  }
+  /* A wrapped heading is taller than --section-head-height (58px at 375px wide, more when the name is long) */
+  .entries tr,
+  .entry-card {
+    scroll-margin-top: var(--wrapped-head-clearance);
   }
   .entries,
   .entries tbody,
