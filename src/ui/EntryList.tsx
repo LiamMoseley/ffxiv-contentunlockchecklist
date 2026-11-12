@@ -72,6 +72,19 @@ function RichCell({ text }: { text: RichText }) {
   );
 }
 
+/** The wiki's own "empty content" icon (a question mark), bundled with the rest: every card with no icon shows it. */
+function FallbackGlyph() {
+  return (
+    <img
+      className="wiki-icon"
+      src={`${import.meta.env.BASE_URL}icons/Empty_content_icon.png`}
+      width={36}
+      height={36}
+      alt=""
+    />
+  );
+}
+
 /** Whether the app ships a wiki icon; the App supplies the Log core's answer. */
 export const BundledIconContext = createContext<(icon: string) => boolean>(() => true);
 
@@ -304,7 +317,7 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
             title={name}
             {...entryProps(entry.id)}
           >
-            <span className="card-icon">{icon && <WikiIcon icon={icon.icon} size={36} />}</span>
+            <span className="card-icon">{icon ? <WikiIcon icon={icon.icon} size={36} /> : <FallbackGlyph />}</span>
             <span className="card-text">
               <b>
                 {name}
