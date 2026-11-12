@@ -186,6 +186,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const listing = log.listing();
   const viewingNew = listing.view === "new";
   const availableOpen = listing.view === "available";
+  const availableProgress = availableOpen ? log.availableProgress() : null;
   const tabs: TabChoice<TabKey>[] =
     expansion === "all"
       ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
@@ -301,7 +302,15 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 {availableOpen ? (
                   <div className="tabs">
                     <h2 className="tab-static">
-                      <span>{log.availableTabLabel()}</span>
+                      <span>
+                        {log.availableTabLabel()}
+                        {availableProgress && (
+                          <>
+                            {" "}
+                            <Count progress={availableProgress} />
+                          </>
+                        )}
+                      </span>
                     </h2>
                   </div>
                 ) : (

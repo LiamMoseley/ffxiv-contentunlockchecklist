@@ -237,7 +237,9 @@ know what to do next.*
 - Item level isn't tracked for characters. Level-cap entries show their item level so the player can
   judge it themselves.
 - The view's heading is a single tab, styled like a selected Section tab (the yellow corner) and not clickable, with no glow. It reads
-  "Level 1 to X" for a character at level X, and "Available now" with no level set. The rail tile keeps its name.
+  "Level 1 to X" for a character at level X, and "Available now" with no level set. With a level set it
+  also shows a Completed/total count, as the other tabs do, over every entry the level reaches (Not
+  interested ones left out; the search and filters do not change it). The rail tile keeps its name.
 - If the character has no level set, Available now says so in a sentence with a **Set level** button.
 - Completing an entry removes it from this view straight away.
 - When nothing is left, the app says so and suggests raising the level.
