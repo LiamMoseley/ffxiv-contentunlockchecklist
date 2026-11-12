@@ -39,6 +39,27 @@
   --font-rail: "Saira Extra Condensed", "Barlow Condensed", "Arial Narrow", sans-serif-condensed, sans-serif;
   --font-body: "Noto Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
 
+  /*
+   * Type: sizes come from this scale, and the headings are roles that carry their weight, size,
+   * line height and face together (--type-title is the app title, which is smaller on phones than the dialog headings). A size that differs on phones is redefined in the phone block's
+   * :root, never overridden per selector. See "Typography" in CODING_STANDARDS.md.
+   */
+  --size-badge: 10px;
+  --size-xs: 12px;
+  --size-sm: 13px;
+  --size-md: 14px;
+  --size-lg: 15px;
+  --size-tab: 13px;
+  --type-display: 400 24px/1 var(--font-title);
+  --type-title: var(--type-display);
+  --type-name: 400 24px/1 var(--font-serif);
+  --type-section: 400 21px/1.1 var(--font-serif);
+  --type-rail: 300 20px/1.05 var(--font-rail);
+  --type-rail-collapsed: 300 17px/1.05 var(--font-rail);
+  --type-count: 300 var(--size-lg) / 1 var(--font-body);
+  --type-overline: 700 15px/1 var(--font-title);
+  --accent-heading: var(--gold);
+
   color-scheme: dark;
 }
 
@@ -124,7 +145,7 @@ a:hover {
 }
 .title-bar h1 {
   margin: 0;
-  font: 400 24px/1 var(--font-title);
+  font: var(--type-title);
   letter-spacing: 0.01em;
   color: #ececec;
   text-shadow: 0 1px 2px #000;
@@ -146,10 +167,10 @@ a:hover {
   text-shadow: 0 1px 2px #000;
 }
 .character-level {
-  font: 400 14px/1 var(--font-body);
+  font: 400 var(--size-md) / 1 var(--font-body);
 }
 .character-name {
-  font: 400 24px/1 var(--font-serif);
+  font: var(--type-name);
   font-stretch: extra-condensed;
   font-variant: small-caps;
   letter-spacing: 0.05em;
@@ -159,7 +180,7 @@ a:hover {
   white-space: nowrap;
 }
 .character-world {
-  font: 400 14px/1 var(--font-body);
+  font: 400 var(--size-md) / 1 var(--font-body);
   color: var(--text-dim);
 }
 
@@ -223,7 +244,7 @@ a:hover {
   }
 }
 .count {
-  font: 300 15px/1 var(--font-body);
+  font: var(--type-count);
   color: #e6e6e6;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -293,7 +314,7 @@ a:hover {
   border-radius: 3px;
   background: var(--gold);
   color: #3a2a05;
-  font-size: 10px;
+  font-size: var(--size-badge);
   font-weight: 700;
   line-height: 15px;
   letter-spacing: 0.04em;
@@ -309,8 +330,8 @@ a:hover {
   border: 1px solid #1e1e1e;
   border-radius: 6px;
   background: rgba(240, 195, 90, 0.1);
-  /* Same size and colour as the legend in the hint bar */
-  font-size: 12.5px;
+  /* Same colour as the legend in the hint bar, one size larger */
+  font-size: var(--size-sm);
   color: var(--text-dim);
 }
 .new-notice-text {
@@ -378,7 +399,7 @@ a:hover {
   border-radius: 3px;
   background: var(--gold);
   color: #3a2a05;
-  font-size: 9px;
+  font-size: var(--size-badge);
   font-weight: 700;
   line-height: 13px;
   box-shadow: 0 0 0 1px #3a0d07;
@@ -443,7 +464,7 @@ a:hover {
   gap: 2px;
 }
 .rail-name {
-  font: 300 20px/1.05 var(--font-rail);
+  font: var(--type-rail);
   letter-spacing: 0.03em;
   color: #f0f0f0;
   text-shadow: 0 1px 1px #000;
@@ -455,7 +476,7 @@ a:hover {
   display: none;
 }
 .rail-detail {
-  font-size: 11.5px;
+  font-size: var(--size-xs);
   color: var(--text-dim);
 }
 .rail-progress {
@@ -469,7 +490,7 @@ a:hover {
   min-width: 0;
 }
 .rail-progress .count {
-  font-size: 12px;
+  font-size: var(--size-xs);
   color: #cfcfcf;
 }
 .rail-collapse {
@@ -515,7 +536,7 @@ a:hover {
   display: inline;
 }
 .collapsed .rail-name {
-  font-size: 17px;
+  font: var(--type-rail-collapsed);
 }
 .collapsed .rail-progress {
   width: 100%;
@@ -549,7 +570,7 @@ a:hover {
   border: 0;
   background: none;
   color: #f2f2f2;
-  font-size: 13.5px;
+  font-size: var(--size-tab);
 }
 .tabs button::before,
 .tabs .tab-static::before {
@@ -590,7 +611,7 @@ a:hover {
   text-shadow: 0 1px 1px #000;
 }
 .tabs .count {
-  font-size: 12px;
+  font-size: var(--size-xs);
   color: #d4d4d4;
   font-variant-numeric: tabular-nums;
 }
@@ -659,7 +680,7 @@ a:hover {
 }
 .section-head h2 {
   margin: 0;
-  font: 400 21px/1.1 var(--font-serif);
+  font: var(--type-section);
   font-stretch: extra-condensed;
   font-variant: small-caps;
   letter-spacing: 0.05em;
@@ -669,7 +690,7 @@ a:hover {
 }
 .section-head h2 span {
   margin-left: 6px;
-  font: 400 14px var(--font-body);
+  font: 400 var(--size-md) var(--font-body);
   letter-spacing: 0;
   color: var(--text-dim);
 }
@@ -683,7 +704,7 @@ a:hover {
 .entries {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: var(--size-sm);
   line-height: 1.35;
 }
 /*
@@ -736,7 +757,7 @@ a:hover {
   background: linear-gradient(#2b2b2b, #242424);
   padding: 2px 8px 4px;
   text-align: left;
-  font-size: 12px;
+  font-size: var(--size-xs);
   font-weight: 400;
   color: var(--text-faint);
   /*
@@ -786,7 +807,7 @@ a:hover {
   white-space: nowrap;
 }
 .entries .level span + span {
-  font-size: 12px;
+  font-size: var(--size-xs);
   color: var(--text-dim);
 }
 
@@ -965,14 +986,14 @@ tr.flash-completed > td.unlock::after {
   min-width: 0;
 }
 .card-text b {
-  font-size: 14px;
+  font-size: var(--size-sm);
   font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .card-text small {
-  font-size: 13px;
+  font-size: var(--size-sm);
   color: #dcdcdc;
   white-space: nowrap;
   overflow: hidden;
@@ -1004,7 +1025,7 @@ tr.flash-completed > td.unlock::after {
   padding: 6px 14px;
   border-top: 1px solid #1e1e1e;
   background: rgba(0, 0, 0, 0.18);
-  font-size: 12.5px;
+  font-size: var(--size-xs);
   color: var(--text-dim);
 }
 .hint-icon {
@@ -1016,7 +1037,7 @@ tr.flash-completed > td.unlock::after {
   background: #5a5a5a;
   color: #fff;
   font-weight: 700;
-  font-size: 12px;
+  font-size: var(--size-xs);
   padding: 0;
   border: 0;
   cursor: pointer;
@@ -1069,16 +1090,19 @@ tr.flash-completed > td.unlock::after {
   }
 }
 /* Gold condensed headings with the Characters menu's divider line above; the first has nothing above it. */
+/* The overline heading: one role for the help dialog's headings, the Characters menu's sections and the Display Mode label */
+.help-body h3,
+.character-section-title,
+.display-mode-label {
+  font: var(--type-overline);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 .help-body h3 {
   margin: 16px 0 6px;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font:
-    700 15px/1 "Barlow Condensed",
-    sans-serif;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #f0c35a;
+  color: var(--accent-heading);
 }
 .help-column:first-child section:first-child h3 {
   margin-top: 0;
@@ -1095,12 +1119,12 @@ tr.flash-completed > td.unlock::after {
   align-items: center;
   gap: 6px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: var(--size-md);
 }
 .help-body dd,
 .help-body section p {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--size-md);
   color: var(--text-dim);
 }
 .legend {
@@ -1123,11 +1147,6 @@ tr.flash-completed > td.unlock::after {
 }
 .display-mode-label {
   margin-right: 12px;
-  font:
-    700 13px/1 "Barlow Condensed",
-    sans-serif;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   white-space: nowrap;
   background: linear-gradient(#fff4c8, #ffb347 55%, #e07b1a);
   -webkit-background-clip: text;
@@ -1230,7 +1249,7 @@ tr.flash-completed > td.unlock::after {
   border-top: 1px solid #1e1e1e;
   border-radius: 0 0 7px 7px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  font-size: 12.5px;
+  font-size: var(--size-xs);
   color: var(--text-dim);
 }
 
@@ -1279,13 +1298,13 @@ tr.flash-completed > td.unlock::after {
   }
   .entries td::before {
     content: attr(data-label);
-    font-size: 12px;
+    font-size: var(--size-xs);
     line-height: 1.7;
     color: var(--text-faint);
   }
   .entries td.unlock {
     display: block;
-    font-size: 15px;
+    font-size: var(--size-lg);
   }
   .entries td.unlock::before,
   .entries td:empty {
@@ -1314,6 +1333,13 @@ tr.flash-completed > td.unlock::after {
 
 /* Phones: the tile column becomes a compact row, the slim bar sticks to the bottom */
 @media (max-width: 760px) {
+  /* The type that is smaller on phones: redefine its token here, not per selector */
+  :root {
+    --type-title: 400 21px/1 var(--font-title);
+    --type-name: 400 20px/1 var(--font-serif);
+    --type-rail: 300 15px/1.05 var(--font-rail);
+    --size-tab: 12px;
+  }
   /* The window keeps its rounded corners and reaches the screen's edges: the page's black shows only behind the corners */
   .page {
     padding: 0;
@@ -1340,15 +1366,9 @@ tr.flash-completed > td.unlock::after {
   .title-bar {
     padding: 6px 10px;
   }
-  .title-bar h1 {
-    font-size: 21px;
-  }
   .character-level,
   .character-world {
     display: none;
-  }
-  .character-name {
-    font-size: 20px;
   }
   .window-body,
   .window-body.collapsed {
@@ -1390,9 +1410,6 @@ tr.flash-completed > td.unlock::after {
     align-items: center;
     width: 100%;
   }
-  .rail-name {
-    font-size: 15px;
-  }
   .rail-name .long,
   .rail-detail,
   .rail-progress .count {
@@ -1417,10 +1434,6 @@ tr.flash-completed > td.unlock::after {
     flex: 1 1 auto;
     height: 30px;
     padding: 0 5px;
-    font-size: 12.5px;
-  }
-  .tabs .count {
-    font-size: 11.5px;
   }
   /* No side padding: the list sits as far from the window's edge as the tabs above it (it had 4px more on the left) */
   .scroll {
@@ -1469,7 +1482,7 @@ tr.flash-completed > td.unlock::after {
     justify-self: start;
     width: var(--pill-height);
     height: var(--pill-height);
-    font-size: 14px;
+    font-size: var(--size-md);
   }
   .hint-bar .display-mode button {
     height: var(--pill-height);
@@ -1503,7 +1516,7 @@ tr.flash-completed > td.unlock::after {
   .update-button {
     height: 30px;
     padding: 0 14px;
-    font-size: 13px;
+    font-size: var(--size-sm);
   }
   .update-label {
     display: inline;
@@ -1544,7 +1557,7 @@ tr.flash-completed > td.unlock::after {
     min-width: 0;
     padding: 0 8px;
     white-space: nowrap;
-    font-size: 13px;
+    font-size: var(--size-sm);
   }
   .chevron {
     display: none;
@@ -1577,7 +1590,7 @@ tr.flash-completed > td.unlock::after {
     inset 0 1px 0 rgba(0, 0, 0, 0.45),
     0 1px 1px rgba(0, 0, 0, 0.6);
   color: #f0f0f0;
-  font-size: 14px;
+  font-size: var(--size-md);
   text-shadow: 0 1px 1px #000;
 }
 .button-footer button:hover:not(:disabled),
@@ -1628,11 +1641,11 @@ tr.flash-completed > td.unlock::after {
 }
 .hint-bar .undo {
   padding: 0 14px;
-  font-size: 13px;
+  font-size: var(--size-sm);
 }
 .new-notice button {
   padding: 0 14px;
-  font-size: 12.5px;
+  font-size: var(--size-sm);
 }
 
 /* Brief messages and confirmations, framed in the window's bronze */
@@ -1647,7 +1660,7 @@ tr.flash-completed > td.unlock::after {
   gap: 14px;
   max-width: min(560px, calc(100vw - 24px));
   padding: 8px 14px;
-  font-size: 13.5px;
+  font-size: var(--size-md);
   /* One line per message: a toast built from several messages separates them with newlines */
   white-space: pre-line;
 }
@@ -1715,7 +1728,7 @@ tr.flash-completed > td.unlock::after {
 }
 .update-dialog h3 {
   margin: 10px 0 4px;
-  font-size: 1em;
+  font-size: var(--size-md);
 }
 .update-dialog ul {
   margin: 0;
@@ -1781,7 +1794,7 @@ tr.flash-completed > td.unlock::after {
 .update-diff {
   margin: 2px 0 6px;
   padding-left: 18px;
-  font-size: 0.82em;
+  font-size: var(--size-xs);
 }
 .update-diff del {
   color: #d98a8a;
@@ -1802,14 +1815,14 @@ tr.flash-completed > td.unlock::after {
   border-radius: 5px 5px 0 0;
   background: linear-gradient(rgba(255, 255, 255, 0.07), transparent);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
-  font: 400 24px/1 var(--font-title);
+  font: var(--type-display);
   letter-spacing: 0.01em;
   color: #ececec;
   text-shadow: 0 1px 2px #000;
 }
 .dialog p {
   margin: 0 0 16px;
-  font-size: 14px;
+  font-size: var(--size-md);
 }
 .dialog-buttons {
   display: flex;
@@ -1873,7 +1886,7 @@ tr.flash-completed > td.unlock::after {
   color: var(--cream);
 }
 .character-row-level {
-  font-size: 12px;
+  font-size: var(--size-xs);
   color: var(--text-dim);
 }
 .character-actions {
@@ -1886,10 +1899,7 @@ tr.flash-completed > td.unlock::after {
   margin: 16px 0 8px;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font: 600 11px/1 var(--font-body, inherit);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--accent-heading);
 }
 .character-list + .character-section-title {
   margin-top: 0;
@@ -1908,12 +1918,12 @@ tr.flash-completed > td.unlock::after {
 .character-form label {
   display: block;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: var(--size-sm);
   color: var(--text-dim);
 }
 .character-form .form-data-center {
   margin: 0 0 12px;
-  font-size: 13px;
+  font-size: var(--size-sm);
   color: var(--text-dim);
 }
 .character-form select,
@@ -1958,7 +1968,7 @@ tr.flash-completed > td.unlock::after {
   flex: none;
   margin-right: 14px;
   padding: 0 14px;
-  font-size: 13px;
+  font-size: var(--size-sm);
 }
 /* A yellow count badge: filters are narrowing the log, even while the panel is closed */
 .filters-active {
@@ -1969,7 +1979,7 @@ tr.flash-completed > td.unlock::after {
   border-radius: 7px;
   background: var(--yellow);
   color: #1c1c1c;
-  font-size: 10px;
+  font-size: var(--size-badge);
   font-weight: 700;
   line-height: 13px;
   vertical-align: 1px;
@@ -2006,7 +2016,7 @@ tr.flash-completed > td.unlock::after {
 }
 .filters-clear {
   padding: 0 14px;
-  font-size: 13px;
+  font-size: var(--size-sm);
 }
 .search-box {
   position: relative;
@@ -2040,7 +2050,7 @@ tr.flash-completed > td.unlock::after {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 12px;
+  font-size: var(--size-xs);
   color: var(--text-dim);
 }
 .filter-search {
@@ -2059,7 +2069,7 @@ tr.flash-completed > td.unlock::after {
   box-shadow: inset 0 1px 3px #000;
   color: var(--text);
   font: inherit;
-  font-size: 13px;
+  font-size: var(--size-sm);
   text-align: left;
   transition:
     border-color 0.12s,
@@ -2155,12 +2165,12 @@ tr.flash-completed > td.unlock::after {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 12.5px;
+  font-size: var(--size-sm);
   color: var(--text);
 }
 .filter-checks legend {
   padding: 0;
-  font-size: 12px;
+  font-size: var(--size-xs);
   color: var(--text-dim);
 }
 .filter-checks label {

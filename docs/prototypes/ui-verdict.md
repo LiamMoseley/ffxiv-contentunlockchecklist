@@ -58,7 +58,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 
 ### Entry rows and cards (row/card layout)
 - **Desktop (wider than 1000px):** a table with the wiki's columns: status box, Level (plus iLevel where the wiki has one), Unlock, Type, Quest, Location, Information.
-  - All row text is 14px and every cell is vertically centred. Column headings are 12px.
+  - All row text is 13px (#119) and every cell is vertically centred. Column headings are 12px.
 - **1000px and below:** each row becomes a labelled card ("Level", "Type", "Quest", …), and the side-pane stays.
 - **760px and below:** a phone layout:
   - the side-pane becomes a row of three tiles
@@ -111,6 +111,8 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Character name and section titles:** Noto Serif Display, extra-condensed width, small capitals, to echo the game's Trajan-style headers.
 - **Expansion names in the side-pane:** Saira Extra Condensed 300.
 - **Body:** Noto Sans, with Segoe UI and system fonts as fallbacks.
+- **Small headings** (the help dialog's headings, the Characters menu's "Character" and "Backup", and the Display Mode label): Barlow Condensed 700, 15px, uppercase, gold. The Display Mode label keeps its gold-to-orange gradient fill and glow (#119).
+- **Sizes and roles** come from tokens at the top of `app.css`; `CODING_STANDARDS.md` lists them.
 
 All four are free Google Fonts (SIL Open Font License); the game's own fonts are not used.
 
