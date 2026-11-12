@@ -28,6 +28,7 @@
   --dialog-gap: 12px;
   --section-head-height: 38px;
   --column-head-height: 24px;
+  --wrapped-head-clearance: 80px;
   --scrollbar-allowance: 18px;
   --bronze: linear-gradient(#ecd9a6, #c09a5c 28%, #7c5d33 55%, #a07c47 78%, #e0c68e);
 
@@ -1161,9 +1162,10 @@ tr.flash-completed > td.unlock::after {
     min-height: var(--section-head-height);
     padding: 7px 12px;
   }
+  /* A wrapped heading is taller than --section-head-height (58px at 375px wide, more when the name is long) */
   .entries tr,
   .entry-card {
-    scroll-margin-top: calc(var(--section-head-height) + 40px);
+    scroll-margin-top: var(--wrapped-head-clearance);
   }
   .entries,
   .entries tbody,
