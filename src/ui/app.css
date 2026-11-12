@@ -1315,6 +1315,10 @@ tr.flash-completed > td.unlock::after {
 .stacked-row.completed {
   color: #9a9a9a;
 }
+/* A little vertical padding makes a link easier to hit with a fingertip without moving the text */
+.stacked-row a.wiki-link {
+  padding: 4px 0;
+}
 .stacked-row.completed a.wiki-link {
   color: var(--link-dim);
 }

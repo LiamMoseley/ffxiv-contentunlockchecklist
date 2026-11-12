@@ -290,6 +290,8 @@ function StackedRow({
 }) {
   const flash = flashProps(actions, entry, status);
   const icon = entryIcon(entry);
+  // A Type line that was only an icon leaves no chip
+  const typeLines = withoutIcons(entry.rich.type).filter((line) => line.length > 0);
   const hasMore = entry.rich.location.length > 0 || entry.rich.information.length > 0;
   return (
     <li className={`stacked-row ${status} ${flash.className}`} title={entryName(entry)} {...entryProps(entry.id)}>
@@ -325,14 +327,16 @@ function StackedRow({
             {isNew && <NewBadge />}
           </span>
         </div>
-        <div className="row-chips">
-          {withoutIcons(entry.rich.type).map((line, i) => (
-            <span className="row-chip" key={i}>
-              <RichCell text={[line]} />
-            </span>
-          ))}
-          {entry.optionalChallenge && <span className="row-chip optional">Optional challenge</span>}
-        </div>
+        {(typeLines.length > 0 || entry.optionalChallenge) && (
+          <div className="row-chips">
+            {typeLines.map((line, i) => (
+              <span className="row-chip" key={i}>
+                <RichCell text={[line]} />
+              </span>
+            ))}
+            {entry.optionalChallenge && <span className="row-chip optional">Optional challenge</span>}
+          </div>
+        )}
         <RowField label="Quest" text={entry.rich.quest} className="row-field row-quest" />
         {hasMore && (
           <div className="row-more">
