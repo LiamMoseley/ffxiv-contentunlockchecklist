@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useReducer, useRef, useState, type ReactNode } from "react";
+import { useDeferredValue, useEffect, useLayoutEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { cacheWikiIcons } from "../adapters/offline";
 import {
   entryCount,
@@ -210,7 +210,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const switching = shownKey !== listKey;
   // A new expansion or section starts at the top: the list's own scroller, and the page where it scrolls instead (phones).
   const scrollRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
     if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
   }, [shownKey]);

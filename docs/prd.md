@@ -134,8 +134,8 @@ list.*
 - Scrolling a list of several sections (an expansion, All, Available now, NEW) pins the current section's
   heading to the top, and in table view the column headers under it. The next section's heading pushes the
   old one out. Cards view pins only the heading. The tabs row and filter bar stay outside the scroller.
-  The pinned column headers are a darker band with a shadow beneath, so a row passing under them reads as
-  cut off by a pinned header. Switching expansion or section tab scrolls the list back to the top.
+  The pinned column headers are a darker band, outlined in black as one panel with the heading above them
+  and with no drop shadow, so a row passing under them reads as cut off by a pinned header. Switching expansion or section tab scrolls the list back to the top.
 
 **US-4. Understand each entry.**
 *As a player, I want each entry's details laid out clearly, so that I know how to unlock it.*
