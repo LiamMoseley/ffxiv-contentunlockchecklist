@@ -1404,7 +1404,7 @@ tr.flash-completed > td.unlock::after {
     font-size: 11.5px;
   }
   .scroll {
-    margin-top: 6px;
+    margin-top: 8px;
   }
   /* No side padding: the list sits as far from the window's edge as the tabs above it (it had 4px more on the left) */
   .scroll {
@@ -2131,9 +2131,9 @@ tr.flash-completed > td.unlock::after {
     flex: 1 1 100%;
     margin-bottom: 0;
   }
-  /* Centred and wider, with the same 6px above (the row gap) and below (the list's top margin, set in the phone block) */
+  /* Centred and wider, with the same 8px above (the row gap) and below (the list's top margin, set in the phone block) */
   .tabs-row {
-    row-gap: 6px;
+    row-gap: 8px;
   }
   .tabs-row .filters-toggle {
     flex: 0 0 60%;
