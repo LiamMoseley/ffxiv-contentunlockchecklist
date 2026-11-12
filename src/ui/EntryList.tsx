@@ -128,14 +128,23 @@ const onLink = (event: { target: EventTarget }) => event.target instanceof Eleme
  * one entry's props; the list shares the touch state, one touch at a time.
  */
 function useEntryProps(actions: EntryActions) {
-  // The pending long-press timer, whether it fired (so the click that follows the lift is ignored), and whether
-  // the last pointer was a touch (so the context menu a long-press raises isn't a second right click).
-  const touch = useRef({ timer: undefined as ReturnType<typeof setTimeout> | undefined, fired: false, active: false });
-  useEffect(() => () => clearTimeout(touch.current.timer), []);
-  // Cancelling must not clear the flag-reset timer, only a press still pending.
-  const cancelLongPress = () => {
-    if (!touch.current.fired) clearTimeout(touch.current.timer);
-  };
+  // The pending long-press timer, whether it fired (so the click that follows the lift is ignored) and the timer
+  // that clears that flag if no click comes, and whether the last pointer was a touch (so the context menu a
+  // long-press raises isn't a second right click).
+  const touch = useRef({
+    pressTimer: undefined as ReturnType<typeof setTimeout> | undefined,
+    resetTimer: undefined as ReturnType<typeof setTimeout> | undefined,
+    fired: false,
+    active: false,
+  });
+  useEffect(
+    () => () => {
+      clearTimeout(touch.current.pressTimer);
+      clearTimeout(touch.current.resetTimer);
+    },
+    [],
+  );
+  const cancelLongPress = () => clearTimeout(touch.current.pressTimer);
 
   return (entryId: string) => ({
     tabIndex: 0,
@@ -155,21 +164,24 @@ function useEntryProps(actions: EntryActions) {
     onPointerDown: (event: PointerEvent) => {
       touch.current.active = event.pointerType === "touch";
       touch.current.fired = false;
+      clearTimeout(touch.current.resetTimer);
       cancelLongPress();
       if (!touch.current.active || onLink(event)) return;
-      touch.current.timer = setTimeout(() => {
+      touch.current.pressTimer = setTimeout(() => {
         touch.current.fired = true;
         actions.onToggleNotInterested(entryId);
         // The click that follows the lift is swallowed; if none comes, don't swallow a later one.
-        touch.current.timer = setTimeout(() => (touch.current.fired = false), 1000);
+        touch.current.resetTimer = setTimeout(() => (touch.current.fired = false), 1000);
       }, LONG_PRESS_MS);
     },
     onPointerUp: cancelLongPress,
     onPointerCancel: cancelLongPress,
     onPointerLeave: cancelLongPress,
     onKeyDown: (event: KeyboardEvent) => {
-      // A key press means the next context menu (Menu key, Shift+F10) is not a touch's.
+      // A key press means the next context menu (Menu key, Shift+F10) is not a touch's, and the click it
+      // makes (Space on the status button) is not the one a long-press leaves behind.
       touch.current.active = false;
+      touch.current.fired = false;
       if (event.ctrlKey || event.metaKey || event.altKey) return;
       if (event.key.toLowerCase() === "x") {
         event.preventDefault();
