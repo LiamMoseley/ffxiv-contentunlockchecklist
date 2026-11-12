@@ -28,6 +28,10 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **A ticket agrees with the PRD and `GLOSSARY.md`.** Flag a ticket or acceptance criterion that widens or narrows what a PRD story or a glossary term (Section, View) says: the owner confirms the reading before it is built. Search and filters narrow a view and never widen it.
 
+**A window-level key handler ignores keys pressed inside a dialog.** `/`, Ctrl/Cmd+K and Ctrl/Cmd+Z in `App.tsx` start with `inDialog(event)`, so a key meant for the open dialog never moves focus or changes progress behind its backdrop. A new window-level handler does the same. A shortcut the UI binds is also named in `helpContent()` (`help.test.ts` fails when a bound key is missing).
+
+**A size taken from another rule uses its CSS variable.** The help dialog's cap comes from `--page-pad`, `--window-frame`, `--window-min-height` and `--dialog-gap`, so changing the window's frame moves the dialog with it. A copied `68px` drifts silently.
+
 **One validation rule per field, shared by every path that writes it.** Adding, editing and importing a character all go through the same function for the World (`acceptedWorld`), so a rule changed in one cannot drift in another. A test that exercises each path guards it.
 
 **One query decides what a view lists.** Every view that lists entries gets its list from one Log core query, and everything derived from that list (Complete Shown and Clear Shown, counts, badges, empty states) uses the same query. A second list built in a component, such as bulk actions reading the section view while a different view is open, drifts from what the player sees.
