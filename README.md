@@ -1,4 +1,4 @@
-# FFXIV content unlock log
+# FFXIV Content Unlock Log
 
 A personal checklist of Final Fantasy XIV content unlocks. It takes the community wiki's
 [Content Unlock](https://ffxiv.consolegameswiki.com/wiki/Content_Unlock) page (over 400 dungeons,
@@ -15,7 +15,7 @@ entries each of your characters has done.
 ## What it is for
 
 The wiki's list is excellent reference material, but it cannot remember what _you_ have done. The
-The FFXIV content unlock log adds that memory:
+The FFXIV Content Unlock Log adds that memory:
 
 - **Returning players** can see what they have missed and what is open to them at their level.
 - **Completionists** get a progress bar for every expansion, section and the whole game.
