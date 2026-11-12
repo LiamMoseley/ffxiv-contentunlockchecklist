@@ -34,4 +34,8 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **One validation rule per field, shared by every path that writes it.** Adding, editing and importing a character all go through the same function for the World (`acceptedWorld`), so a rule changed in one cannot drift in another. A test that exercises each path guards it.
 
+**A control that disables itself on activation hands focus to the page.** Clear filters went disabled the moment a keyboard user pressed it, and focus dropped to `<body>`. Move focus to a sensible neighbour in the same handler.
+
+**Motion that changes the entry list's height needs the All tile's cost in mind.** The list holds up to 429 rows, and a per-frame resize re-measures them all (#94). Animate `transform` and `opacity`, or contain the list's size.
+
 **One query decides what a view lists.** Every view that lists entries gets its list from one Log core query, and everything derived from that list (Complete Shown and Clear Shown, counts, badges, empty states) uses the same query. A second list built in a component, such as bulk actions reading the section view while a different view is open, drifts from what the player sees.
