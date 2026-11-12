@@ -92,7 +92,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Counts:** they ignore Not-interested entries, as before.
 
 ### Buttons and footer
-- **Style:** **embossed** grey pills with a **black edge**, a light top bevel and a dark bottom bevel. No coloured border.
+- **Style:** **embossed** grey pills with a **black edge**, a light top bevel and a dark line under it (no bottom bevel, #91). No coloured border.
 - **Footer:** Clear Shown on the left and Complete Shown on the right (in the positions of "Default" and "Close"), with a gold chevron between them.
 - **Hint bar** above the footer: a "?" icon, the status legend and DISPLAY MODE.
 

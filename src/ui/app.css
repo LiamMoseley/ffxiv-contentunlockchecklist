@@ -1241,7 +1241,7 @@ tr.flash-completed > td.unlock::after {
   }
 }
 
-/* Embossed pill: grey gradient, light top bevel and dark bottom bevel, no edge line or coloured border */
+/* Embossed pill: grey gradient, light top bevel and a dark line under it (the bottom bevel is gone), no edge line or coloured border */
 .button-footer button,
 .hint-bar .undo,
 .new-notice button,
