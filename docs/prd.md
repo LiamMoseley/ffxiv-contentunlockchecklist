@@ -121,8 +121,9 @@ game at a time.*
 **US-2. Switch between an expansion's sections.**
 *As a player, I want to switch between an expansion's levelling and level-cap lists, so that I can see
 the content I'm ready for.*
-- Tabs show the expansion's sections, each with a completed count (for example "12/86").
-- An **All** tab shows both sections of the expansion together, with a combined count.
+- Tabs show the expansion's sections, each with a completed count in brackets (for example "(12/86)"), so it reads apart from the tab's text. Available now's tab brackets its row count the same way.
+- An **All** tab shows both sections of the expansion together, with a combined count. On the All expansion
+  tile the single tab is also called **All** (it was "Every section").
 - If the player chooses the All tab, switching to another expansion keeps them on All.
 
 **US-3. See everything at once.**
@@ -236,6 +237,10 @@ know what to do next.*
   expansion's level cap.
 - Item level isn't tracked for characters. Level-cap entries show their item level so the player can
   judge it themselves.
+- The view's heading is a single tab, styled like a selected Section tab (the yellow corner) and not clickable, with no glow. It reads
+  "Level 1 to X" for a character at level X, and "Available now" with no level set. With a level set it
+  also shows the number of rows the view lists. It is not Completed out of a total: the view lists only
+  Unmarked entries, so a row that is Completed or marked Not interested drops off it and the number falls. The rail tile keeps its name.
 - If the character has no level set, Available now says so in a sentence with a **Set level** button.
 - Completing an entry removes it from this view straight away.
 - When nothing is left, the app says so and suggests raising the level.

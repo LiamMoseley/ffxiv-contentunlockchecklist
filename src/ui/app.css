@@ -481,7 +481,9 @@ a:hover {
   padding: 0 14px 0 18px;
   margin-bottom: 8px;
 }
-.tabs button {
+/* .tab-static is Available now's tab: the same look, but a heading, not a button */
+.tabs button,
+.tabs .tab-static {
   position: relative;
   z-index: 0;
   flex: 0 1 180px;
@@ -493,7 +495,8 @@ a:hover {
   color: #f2f2f2;
   font-size: 13.5px;
 }
-.tabs button::before {
+.tabs button::before,
+.tabs .tab-static::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -509,8 +512,10 @@ a:hover {
 .tabs button:hover::before {
   background: linear-gradient(#787878, #575757 55%, #474747);
 }
-/* The triangle is a layer of the skewed tab itself, so it always sits in the bottom-left corner */
-.tabs button.active::before {
+/* The triangle is a layer of the skewed tab itself, so it always sits in the bottom-left corner.
+   Available now's tab is always the selected one, so it takes this look without a class. */
+.tabs button.active::before,
+.tabs .tab-static::before {
   background:
     linear-gradient(to top right, var(--yellow) 0 48%, rgba(246, 185, 59, 0.35) 48% 56%, transparent 56%) left bottom /
       11px 11px no-repeat,
@@ -520,7 +525,8 @@ a:hover {
     inset 0 0 0 1px rgba(255, 255, 255, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
-.tabs button > span {
+.tabs button > span,
+.tabs .tab-static > span {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1281,7 +1287,8 @@ tr.flash-completed > td.unlock::after {
     gap: 9px;
     padding: 0 12px;
   }
-  .tabs button {
+  .tabs button,
+  .tabs .tab-static {
     flex: 1 1 auto;
     height: 30px;
     padding: 0 5px;
@@ -1742,56 +1749,14 @@ tr.flash-completed > td.unlock::after {
   gap: 12px;
   container-type: inline-size;
 }
-/* Available now: a blue glow behind the row that fades out towards its edges, with no change to its size */
-.tabs-row.available {
-  position: relative;
-  isolation: isolate;
-}
-/* Centred on the buttons (24px tall, at the top of the row) and reaching the top of the section (10px above the row) */
-/* Holds the row at the height the tabs give it (24px plus their 8px margin) */
-.tabs-spacer {
-  flex: 1;
-  height: 32px;
-}
-/* The view's name, centred in the glow and set in capitals in the app title's font */
-.available-title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+/* Available now's tab is a heading, so it drops the heading's own margin and weight; it is not clickable */
+.tabs .tab-static {
   margin: 0;
-  height: 24px;
+  font-weight: 400;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  font: 400 20px/1 var(--font-title);
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  color: #e9e6df;
-  text-shadow: 0 1px 2px #000;
-  pointer-events: none;
-}
-/* When the row is too narrow to centre the title clear of the buttons, centre it in the space left of them */
-@container (max-width: 640px) {
-  .available-title {
-    right: 265px;
-  }
-}
-.tabs-row.available::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: -10px;
-  height: 44px;
-  left: -10px;
-  right: -10px;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse closest-side at 50% 50%,
-    rgba(74, 163, 255, 0.45),
-    rgba(74, 163, 255, 0.2) 55%,
-    transparent 100%
-  );
 }
 .tabs-row .tabs {
   flex: 1;
@@ -2034,21 +1999,15 @@ tr.flash-completed > td.unlock::after {
   .tabs-row .filters-toggle {
     margin-right: 0;
   }
-  .tabs-row.available .available-title {
-    position: static;
-    flex: 1 1 100%;
-    pointer-events: auto;
-  }
-  .tabs-row.available .tabs-spacer {
-    display: none;
-  }
-  .tabs button > span {
+  .tabs button > span,
+  .tabs .tab-static > span {
     white-space: normal;
   }
   .tabs .count {
     display: block;
   }
-  .tabs button {
+  .tabs button,
+  .tabs .tab-static {
     height: auto;
     min-height: 36px;
     padding: 2px 5px;

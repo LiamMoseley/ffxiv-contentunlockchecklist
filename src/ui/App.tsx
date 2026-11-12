@@ -47,7 +47,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     refresh();
   };
   const setTab = (key: TabKey) => {
-    // Choosing a tab in the Every section view has no selection to change, but still ends the NEW view.
+    // Choosing a tab in the All view has no selection to change, but still ends the NEW view.
     if (expansion === "all") log.showAllEntries();
     else log.setSelection({ tab: key });
     refresh();
@@ -186,9 +186,10 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const listing = log.listing();
   const viewingNew = listing.view === "new";
   const availableOpen = listing.view === "available";
+  const availableTab = availableOpen ? log.availableTab() : null;
   const tabs: TabChoice<TabKey>[] =
     expansion === "all"
-      ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
+      ? [{ key: "all", label: "All", progress: log.overallProgress() }]
       : [
           ...expansionSections.map((s) => ({
             key: s.kind,
@@ -297,12 +298,21 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   say(`Marked ${entryCount(n)} as seen.`);
                 }}
               />
-              <div className={`tabs-row${availableOpen ? " available" : ""}`}>
-                {availableOpen ? (
-                  <>
-                    <h2 className="available-title">Available now</h2>
-                    <div className="tabs-spacer" />
-                  </>
+              <div className="tabs-row">
+                {availableTab ? (
+                  <div className="tabs">
+                    <h2 className="tab-static">
+                      <span>
+                        {availableTab.label}
+                        {availableTab.rows !== null && (
+                          <>
+                            {" "}
+                            <span className="count">({availableTab.rows})</span>
+                          </>
+                        )}
+                      </span>
+                    </h2>
+                  </div>
                 ) : (
                   <SectionTabs
                     tabs={tabs}

@@ -800,6 +800,17 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         .sort((a, b) => b.count - a.count),
     /** Available now's own reading of the listing: see `listing`. */
     availableNow,
+    /**
+     * Available now's tab: the levels it covers (its name while the character has no level), and the number of rows
+     * the view lists. That number is null with no level, and falls as entries are marked, since the view lists
+     * only Unmarked ones; the search and filters narrow it as they narrow the list.
+     */
+    availableTab(): { label: string; rows: number | null } {
+      const { level } = currentCharacter();
+      if (level === null) return { label: "Available now", rows: null };
+      const rows = availableNow().sections.reduce((n, s) => n + s.entries.length, 0);
+      return { label: `Level 1 to ${level}`, rows };
+    },
     sectionProgress(sectionId: string): ProgressCount {
       return progressOf([sectionOrThrow(sectionId)]);
     },
