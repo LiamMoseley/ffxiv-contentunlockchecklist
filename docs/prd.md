@@ -122,7 +122,8 @@ game at a time.*
 *As a player, I want to switch between an expansion's levelling and level-cap lists, so that I can see
 the content I'm ready for.*
 - Tabs show the expansion's sections, each with a completed count in brackets (for example "(12/86)"), so it reads apart from the tab's text. Available now's tab brackets its row count the same way.
-- An **All** tab shows both sections of the expansion together, with a combined count.
+- An **All** tab shows both sections of the expansion together, with a combined count. On the All expansion
+  tile the single tab is also called **All** (it was "Every section").
 - If the player chooses the All tab, switching to another expansion keeps them on All.
 
 **US-3. See everything at once.**

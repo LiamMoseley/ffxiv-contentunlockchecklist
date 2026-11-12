@@ -47,7 +47,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     refresh();
   };
   const setTab = (key: TabKey) => {
-    // Choosing a tab in the Every section view has no selection to change, but still ends the NEW view.
+    // Choosing a tab in the All view has no selection to change, but still ends the NEW view.
     if (expansion === "all") log.showAllEntries();
     else log.setSelection({ tab: key });
     refresh();
@@ -189,7 +189,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const availableTab = availableOpen ? log.availableTab() : null;
   const tabs: TabChoice<TabKey>[] =
     expansion === "all"
-      ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
+      ? [{ key: "all", label: "All", progress: log.overallProgress() }]
       : [
           ...expansionSections.map((s) => ({
             key: s.kind,
