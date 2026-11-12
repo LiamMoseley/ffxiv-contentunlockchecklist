@@ -952,6 +952,9 @@ tr.flash-completed > td.unlock::after {
 .card-icon .wiki-icon {
   margin: 0;
 }
+.card-icon .fallback-glyph {
+  color: #9a8a5c;
+}
 .card-text {
   display: flex;
   flex-direction: column;

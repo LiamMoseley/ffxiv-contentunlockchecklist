@@ -72,6 +72,21 @@ function RichCell({ text }: { text: RichText }) {
   );
 }
 
+/** The one glyph every card with no wiki icon shows on its icon tile: a neutral scroll. */
+function FallbackGlyph() {
+  return (
+    <svg className="fallback-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M7 4h11a1 1 0 0 1 1 1v12a3 3 0 0 1-3 3H6a3 3 0 0 0 3-3V6a2 2 0 0 0-2-2Z M9 17h9 M11 9h5 M11 12.5h5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /** Whether the app ships a wiki icon; the App supplies the Log core's answer. */
 export const BundledIconContext = createContext<(icon: string) => boolean>(() => true);
 
@@ -304,7 +319,7 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
             title={name}
             {...entryProps(entry.id)}
           >
-            <span className="card-icon">{icon && <WikiIcon icon={icon.icon} size={36} />}</span>
+            <span className="card-icon">{icon ? <WikiIcon icon={icon.icon} size={36} /> : <FallbackGlyph />}</span>
             <span className="card-text">
               <b>
                 {name}
