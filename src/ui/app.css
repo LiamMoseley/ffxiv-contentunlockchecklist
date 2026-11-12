@@ -1305,7 +1305,7 @@ tr.flash-completed > td.unlock::after {
   }
 }
 
-/* Phones: the tile column becomes a compact row, the footer sticks to the bottom */
+/* Phones: the tile column becomes a compact row, the slim bar sticks to the bottom */
 @media (max-width: 760px) {
   /* The window keeps its rounded corners and reaches the screen's edges: the page's black shows only behind the corners */
   .page {
