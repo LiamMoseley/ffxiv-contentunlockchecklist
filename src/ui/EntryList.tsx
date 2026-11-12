@@ -72,7 +72,10 @@ function RichCell({ text }: { text: RichText }) {
   );
 }
 
-/** The wiki's own "empty content" icon (a question mark), bundled with the rest: every card with no icon shows it. */
+/**
+ * The wiki's own "empty content" icon (a question mark): every card with no icon shows it. Committed by hand in
+ * public/icons, since `npm run snapshot` downloads only the icons the content uses.
+ */
 function FallbackGlyph() {
   return (
     <img
