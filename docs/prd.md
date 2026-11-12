@@ -142,8 +142,9 @@ list.*
 - Entries show level, item level, unlock, type, quest, location and notes in columns on desktop, and as
   labelled cards on mobile.
 - In the cards view, an entry with no wiki icon (for example the Level 5 and Level 15 Class Quests) shows
-  one generic fallback glyph, a scroll, on its icon tile instead of an empty square. It is the same for
-  every such entry and dims like a real icon when the entry is Completed or Not interested.
+  one generic fallback glyph, the wiki's "Empty content icon" (a question mark), on its icon tile instead
+  of an empty square. It is bundled with the other icons, is the same for every such entry, and dims like a
+  real icon when the entry is Completed or Not interested.
 - Each section heading names its expansion and section, with a progress bar and count.
 - Links open the relevant wiki page without leaving the app.
 

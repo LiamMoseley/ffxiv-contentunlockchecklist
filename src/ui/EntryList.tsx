@@ -72,18 +72,16 @@ function RichCell({ text }: { text: RichText }) {
   );
 }
 
-/** The one glyph every card with no wiki icon shows on its icon tile: a neutral scroll. */
+/** The wiki's own "empty content" icon (a question mark), bundled with the rest: every card with no icon shows it. */
 function FallbackGlyph() {
   return (
-    <svg className="fallback-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M7 4h11a1 1 0 0 1 1 1v12a3 3 0 0 1-3 3H6a3 3 0 0 0 3-3V6a2 2 0 0 0-2-2Z M9 17h9 M11 9h5 M11 12.5h5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <img
+      className="wiki-icon"
+      src={`${import.meta.env.BASE_URL}icons/Empty_content_icon.png`}
+      width={36}
+      height={36}
+      alt=""
+    />
   );
 }
 
