@@ -370,7 +370,9 @@ play.*
 - The window is as tall as the screen, so its rounded border is always visible on every side, and all of
   its content (title bar, expansion tiles, list, buttons and legal text) scrolls inside it. The page
   itself never scrolls.
-- The pinned bottom bar is slim (the (?), Update, Undo, Display Mode). The legal text scrolls
+- The pinned bottom bar is slim (the (?), Update, Undo, Display Mode toggles) with finger-sized buttons at
+  least 18px apart, so a tap meant for the (?) cannot land on Update; the "Display Mode" label is dropped
+  at this width to make the room. The legal text scrolls
   with the content at its very end; Clear Shown and Complete Shown stay in the flow above them.
 - The list sits centred: as far from the window's left edge as from its right.
 - Round Jump to top and Jump to bottom buttons float above the bar, so the player can reach the

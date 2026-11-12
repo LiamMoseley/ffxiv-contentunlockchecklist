@@ -1455,6 +1455,37 @@ tr.flash-completed > td.unlock::after {
   .legend {
     display: none;
   }
+  /* Finger-sized controls, well apart, so a tap meant for one (the ?) never lands on its neighbour (Update). The
+     (?) and Update sit together at the left with 18px between them, Undo and the toggles at the right. */
+  .hint-bar {
+    gap: 18px;
+    padding: 5px 10px;
+  }
+  .hint-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+  .update-button.in-hint-bar {
+    min-width: 40px;
+    height: 32px;
+  }
+  .hint-bar button.undo {
+    height: 32px;
+    min-width: 62px;
+  }
+  .display-mode button {
+    width: 34px;
+    height: 32px;
+  }
+  .hint-bar .undo + .display-mode {
+    margin-left: 0;
+  }
+  /* The "Display Mode" label gives way to the spacing: the toggles keep their names (List, Cards) for screen
+     readers, and the group is still labelled for them. */
+  .display-mode-label {
+    display: none;
+  }
   /* A focused entry scrolls clear of the pinned bar as well as the pinned headings */
   .entries tbody tr,
   .entry-card {
@@ -2185,7 +2216,8 @@ tr.flash-completed > td.unlock::after {
   .scroll-jump {
     position: fixed;
     right: 10px;
-    bottom: 44px;
+    /* The window's 4px border, the taller bar (43px) and a 5px gap */
+    bottom: 52px;
     z-index: 2;
     display: flex;
     flex-direction: column;
