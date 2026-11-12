@@ -59,7 +59,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 ### Entry rows and cards (row/card layout)
 - **Desktop (wider than 1000px):** a table with the wiki's columns: status box, Level (plus iLevel where the wiki has one), Unlock, Type, Quest, Location, Information.
   - All row text is 13px (#119) and every cell is vertically centred. Column headings are 12px.
-- **1000px and below:** each row becomes a labelled card ("Level", "Type", "Quest", …), and the side-pane stays.
+- **1000px and below:** each row becomes a stacked row (a spine with the status box and Level, a headline, Type chips, then Quest, Location and Information; see US-4), and the side-pane stays.
 - **760px and below:** a phone layout:
   - the side-pane becomes a row of three tiles
   - the tabs size themselves to their labels

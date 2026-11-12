@@ -140,7 +140,14 @@ list.*
 **US-4. Understand each entry.**
 *As a player, I want each entry's details laid out clearly, so that I know how to unlock it.*
 - Entries show level, item level, unlock, type, quest, location and notes in columns on desktop, and as
-  labelled cards on mobile.
+  stacked rows at 1000px and below. A stacked row has a 52px spine down its left (the status box, then the
+  Level as a large gold number, then the Item level smaller and white beneath it; an entry with only an Item
+  level shows it as the large number, in white), and beside it a headline (the entry's icon on a plate, the
+  Unlock name with its inline icons removed and a multi-line unlock joined by " / ", then the NEW badge), a
+  chip per line of the Type plus an "Optional challenge" chip where the wiki tags one, the Quest, and the
+  Location and Information (stacked on a phone, in two columns from 761px). Quest, Location and Information
+  share one size under bold headings, with a rule between the groups. An empty field leaves no heading, rule
+  or gap, and Information is never truncated.
 - In the cards view, an entry with no wiki icon (for example the Level 5 and Level 15 Class Quests) shows
   one generic fallback glyph, the wiki's "Empty content icon" (a question mark), on its icon tile instead
   of an empty square. It is bundled with the other icons, is the same for every such entry, and dims like a

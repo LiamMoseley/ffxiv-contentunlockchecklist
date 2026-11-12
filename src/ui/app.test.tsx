@@ -31,7 +31,12 @@ describe("App renders", () => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     // jsdom has no layout engine, so the rail's tile observer is a stub.
     // ...and no matchMedia: the search placeholder asks whether the device is a touch one.
-    window.matchMedia = ((query: string) => ({ matches: false, media: query })) as typeof window.matchMedia;
+    window.matchMedia = ((query: string) => ({
+      matches: false,
+      media: query,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    })) as unknown as typeof window.matchMedia;
     globalThis.ResizeObserver = class {
       observe() {}
       unobserve() {}
