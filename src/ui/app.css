@@ -1211,8 +1211,8 @@ tr.flash-completed > td.unlock::after {
   background: #d0382c;
 }
 
-/* The Update button is in the footer on desktop and in the hint bar on phones; the phone block swaps them */
-.update-button.in-hint-bar {
+/* The label is for phones, where the button is a worded one under the footer text */
+.update-label {
   display: none;
 }
 
@@ -1455,33 +1455,22 @@ tr.flash-completed > td.unlock::after {
   .legend {
     display: none;
   }
-  /* The buttons keep their size and are spread apart so a tap meant for one (the ?) cannot land on its neighbour
-     (Update): the (?) in the left corner, Undo exactly centred, Update midway between them and the Display Mode
-     toggles at the right. Five columns, with Undo's in the middle. */
+  /* The (?) in the left corner, Undo exactly centred (equal outer columns) and the Display Mode toggles at the right */
   .hint-bar {
     display: grid;
-    /* The two outer columns are the same width (the Display Mode toggles') so Undo, in the middle one, is exactly
-       centred; the (?) sits at the start of the first. */
-    --edge: 56px;
-    grid-template-columns: var(--edge) minmax(0, 1fr) auto minmax(0, 1fr) var(--edge);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
   }
   .hint-bar .hint-icon {
     grid-column: 1;
     justify-self: start;
   }
-  .hint-bar .update-button.in-hint-bar {
-    grid-column: 2;
-    justify-self: center;
-    /* Midway between the (?) and Undo: the first column is wider than the (?), so pull back by the difference */
-    margin-right: calc(var(--edge) - 18px);
-  }
   .hint-bar button.undo {
-    grid-column: 3;
+    grid-column: 2;
     margin: 0;
   }
   .hint-bar div.display-mode {
-    grid-column: 5;
+    grid-column: 3;
     justify-self: end;
     margin: 0;
   }
@@ -1495,12 +1484,20 @@ tr.flash-completed > td.unlock::after {
   .entry-card {
     scroll-margin-bottom: 48px;
   }
-  /* Update moves from the scrolling footer to the pinned bar, beside the help button */
-  .update-button.in-footer {
-    display: none;
+  /* The footer's Update is a worded button on phones, under the credit text. It is as wide as its words and sits
+     at the left, so the Jump to top button at the page's end never covers it. */
+  .footer-source {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
   }
-  .update-button.in-hint-bar {
-    display: inline-flex;
+  .update-button {
+    height: 30px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+  .update-label {
+    display: inline;
   }
   .footer-bar {
     border-radius: 0;

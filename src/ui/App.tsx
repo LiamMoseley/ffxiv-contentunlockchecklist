@@ -473,8 +473,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               canUndo={log.canUndo()}
               onUndo={undo}
               onHelp={() => setHelpOpen(true)}
-              online={online}
-              onUpdate={() => setConfirmingUpdate(true)}
             />
             {helpOpen && <HelpDialog onClose={() => setHelpOpen(false)} />}
 
@@ -500,7 +498,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 <span>
                   Content from <a href={WIKI_PAGE_URL}>Content Unlock</a> on the community FFXIV wiki.
                 </span>
-                <UpdateButton className="in-footer" online={online} onClick={() => setConfirmingUpdate(true)} />
+                <UpdateButton online={online} onClick={() => setConfirmingUpdate(true)} />
               </span>
             </footer>
           </div>

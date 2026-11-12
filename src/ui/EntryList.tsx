@@ -17,7 +17,6 @@ import {
   type EntryStatus,
   type RichText,
 } from "../log";
-import { UpdateButton } from "./UpdateButton";
 
 export const STATUS_LABEL: Record<EntryStatus, string> = {
   unmarked: "Unmarked",
@@ -346,24 +345,18 @@ export function HintBar({
   canUndo,
   onUndo,
   onHelp,
-  online,
-  onUpdate,
 }: {
   mode: DisplayMode;
   onMode: (mode: DisplayMode) => void;
   canUndo: boolean;
   onUndo: () => void;
   onHelp: () => void;
-  online: boolean;
-  onUpdate: () => void;
 }) {
   return (
     <div className="hint-bar">
       <button type="button" className="hint-icon" aria-haspopup="dialog" aria-label="Help" onClick={onHelp}>
         ?
       </button>
-      {/* Phones only: the footer scrolls away there, so Update sits beside the help button (the CSS shows one copy) */}
-      <UpdateButton className="in-hint-bar" online={online} onClick={onUpdate} />
       <ul className="legend" aria-label="Status boxes">
         {(Object.keys(STATUS_LABEL) as EntryStatus[]).map((status) => (
           <li key={status}>
