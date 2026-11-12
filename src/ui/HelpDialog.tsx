@@ -21,7 +21,7 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
     <DialogBackdrop onClose={onClose} closeOnBackdropClick>
       <div className="dialog help-dialog" role="dialog" aria-modal="true" aria-labelledby="help-title">
         <h2 id="help-title">How to use this app</h2>
-        {/* Columns on a wide screen: how to give input, how to read the list, and how to set the app up. */}
+        {/* Columns on a wide screen: how to give input, what the boxes, Undo and filters do, and how characters, levels and tiles work. */}
         <div className="help-body">
           <div className="help-column" aria-label="Controls" role="group">
             {help.controls.map((group) => (
@@ -38,7 +38,7 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
               </section>
             ))}
           </div>
-          <div className="help-column" aria-label="Reading the list" role="group">
+          <div className="help-column" aria-label="Status boxes, Undo and filters" role="group">
             <section>
               <h3>Status boxes</h3>
               <dl>
@@ -58,7 +58,7 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
             </section>
             <HelpTopics topics={help.topics.filter((topic) => topic.group === "view")} />
           </div>
-          <div className="help-column" aria-label="Filters, characters and levels" role="group">
+          <div className="help-column" aria-label="Characters, levels and expansion tiles" role="group">
             <HelpTopics topics={help.topics.filter((topic) => topic.group === "setup")} />
           </div>
         </div>

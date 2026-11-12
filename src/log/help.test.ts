@@ -37,10 +37,10 @@ describe("help content", () => {
 
   it("explains the expansion tiles, filters, characters and levels", () => {
     expect(help.topics.map((topic) => [topic.group, topic.title])).toEqual([
-      ["view", "Expansion tiles"],
-      ["setup", "Filters and search"],
+      ["view", "Filters and search"],
       ["setup", "Characters"],
       ["setup", "Levels and Available now"],
+      ["setup", "Expansion tiles"],
     ]);
     const text = (title: string) => help.topics.find((topic) => topic.title === title)?.text ?? "";
     expect(text("Expansion tiles")).toContain("Available now");
