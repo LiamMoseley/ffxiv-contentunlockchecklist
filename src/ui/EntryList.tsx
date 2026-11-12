@@ -119,6 +119,9 @@ function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
 /** How long a touch is held before it counts as a right click. */
 const LONG_PRESS_MS = 500;
 
+/** A tap this soon after the last one on the same entry is a double tap, not a second change. */
+const DOUBLE_TAP_MS = 400;
+
 const onLink = (event: { target: EventTarget }) => event.target instanceof Element && !!event.target.closest("a");
 
 /**
@@ -136,6 +139,7 @@ function useEntryProps(actions: EntryActions) {
     resetTimer: undefined as ReturnType<typeof setTimeout> | undefined,
     fired: false,
     active: false,
+    lastTap: { entryId: "", at: -Infinity },
   });
   useEffect(
     () => () => {
@@ -148,11 +152,15 @@ function useEntryProps(actions: EntryActions) {
 
   return (entryId: string) => ({
     tabIndex: 0,
-    onClick: () => {
+    onClick: (event: MouseEvent) => {
       if (touch.current.fired) {
         touch.current.fired = false;
         return;
       }
+      // A quick second tap on the same entry would flip it straight back: ignore it.
+      const last = touch.current.lastTap;
+      if (touch.current.active && last.entryId === entryId && event.timeStamp - last.at < DOUBLE_TAP_MS) return;
+      touch.current.lastTap = { entryId, at: event.timeStamp };
       actions.onToggleCompleted(entryId);
     },
     onContextMenu: (event: MouseEvent) => {
