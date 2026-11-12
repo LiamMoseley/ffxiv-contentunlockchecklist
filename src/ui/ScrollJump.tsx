@@ -47,9 +47,15 @@ export function ScrollJump() {
   }, [shown]);
 
   function jump(to: Jump) {
-    focusNext.current = to === "up" ? "down" : "up";
+    const other: Jump = to === "up" ? "down" : "up";
     // Instant: the page can be tens of thousands of pixels long, and a smooth scroll that far takes seconds.
     window.scrollTo({ top: to === "up" ? 0 : document.documentElement.scrollHeight, behavior: "instant" });
+    // Only a button that is about to disappear hands focus on. Otherwise a pending hand-over would wait for some
+    // later change and take focus from wherever the player had moved on to.
+    const next = readJumps();
+    if (next[to]) return;
+    if (buttons.current[other]) buttons.current[other]?.focus();
+    else focusNext.current = other;
   }
 
   if (!shown.up && !shown.down) return null;
