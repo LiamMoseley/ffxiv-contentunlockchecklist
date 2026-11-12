@@ -46,7 +46,7 @@ export function helpContent(): HelpContent {
     ],
     statusBoxes: [
       { status: "unmarked", meaning: "An empty box: you have not marked this entry yet." },
-      { status: "completed", meaning: "A yellow box: you have unlocked this entry. It is dimmed in the list." },
+      { status: "completed", meaning: "A yellow box: you have completed this entry. It is dimmed in the list." },
       {
         status: "notInterested",
         meaning: "A grey box with a diagonal stroke: you will not do this entry. It is left out of progress counts.",
