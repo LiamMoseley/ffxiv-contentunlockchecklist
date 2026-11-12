@@ -151,20 +151,38 @@ describe("the open view and what it lists", () => {
       const { log } = openLog();
       const first = log.currentCharacter().id;
       log.editCharacter(first, { name: "Adventurer", level: 85 });
-      expect(log.availableTabLabel()).toBe("Level 1 to 85");
+      expect(log.availableTab().label).toBe("Level 1 to 85");
       log.editCharacter(first, { name: "Adventurer", level: 30 });
-      expect(log.availableTabLabel()).toBe("Level 1 to 30");
+      expect(log.availableTab().label).toBe("Level 1 to 30");
       const second = log.addCharacter({ name: "Second", level: 12 });
       if (!second.ok) throw new Error("expected the character to be added");
       log.switchCharacter(second.character.id);
-      expect(log.availableTabLabel()).toBe("Level 1 to 12");
+      expect(log.availableTab().label).toBe("Level 1 to 12");
       log.switchCharacter(first);
-      expect(log.availableTabLabel()).toBe("Level 1 to 30");
+      expect(log.availableTab().label).toBe("Level 1 to 30");
     });
 
-    it("reads 'Available now' while the character has no level", () => {
+    it("reads 'Available now' with no row count while the character has no level", () => {
       const { log } = openLog();
-      expect(log.availableTabLabel()).toBe("Available now");
+      expect(log.availableTab()).toEqual({ label: "Available now", rows: null });
+    });
+
+    it("counts the rows the view lists: Completed and Not interested entries drop off, and the filters narrow it", () => {
+      const { log } = openLog();
+      log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level: 30 });
+      log.showAvailableNow();
+      const listed = () => log.listing().sections.flatMap((s) => s.entries.map((e) => e.id));
+      const ids = listed();
+      expect(ids.length).toBeGreaterThan(2);
+      expect(log.availableTab().rows).toBe(ids.length);
+
+      log.toggleCompleted(ids[0]);
+      log.toggleNotInterested(ids[1]);
+      expect(log.availableTab().rows).toBe(ids.length - 2);
+
+      log.setFilters({ search: "Sastasha" });
+      expect(log.availableTab().rows).toBe(listed().length);
+      expect(log.availableTab().rows).toBeLessThan(ids.length - 2);
     });
   });
 });

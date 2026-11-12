@@ -186,9 +186,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const listing = log.listing();
   const viewingNew = listing.view === "new";
   const availableOpen = listing.view === "available";
-  // Available now lists only what is still to do, so its tab counts the rows listed, not Completed out of a total.
-  const availableRows =
-    availableOpen && listing.level !== null ? listing.sections.reduce((n, s) => n + s.entries.length, 0) : null;
+  const availableTab = availableOpen ? log.availableTab() : null;
   const tabs: TabChoice<TabKey>[] =
     expansion === "all"
       ? [{ key: "all", label: "Every section", progress: log.overallProgress() }]
@@ -301,15 +299,15 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 }}
               />
               <div className="tabs-row">
-                {availableOpen ? (
+                {availableTab ? (
                   <div className="tabs">
                     <h2 className="tab-static">
                       <span>
-                        {log.availableTabLabel()}
-                        {availableRows !== null && (
+                        {availableTab.label}
+                        {availableTab.rows !== null && (
                           <>
                             {" "}
-                            <span className="count">{availableRows}</span>
+                            <span className="count">{availableTab.rows}</span>
                           </>
                         )}
                       </span>
