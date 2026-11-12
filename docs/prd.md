@@ -145,9 +145,11 @@ list.*
 progress.*
 - Each entry has a single three-state status box: empty for Unmarked, yellow for Completed, and grey
   with a diagonal stroke for Not interested.
-- Clicking or tapping the box, or anywhere on the row, cycles Unmarked → Completed → Not interested →
-  Unmarked. Space does the same from the keyboard. Clicking a wiki link in the row never changes the
-  status.
+- Left click (or a tap) on the box, or anywhere on the row or card, toggles Unmarked ↔ Completed; on a
+  Not interested entry it sets Completed. Right click (or a long-press of about 500ms on a touch device)
+  toggles Unmarked ↔ Not interested; on a Completed entry it sets Not interested. Space acts as left
+  click and X as right click from the keyboard. The browser's context menu is suppressed on entries
+  only, and entries cannot be text-selected. Clicking a wiki link in the row never changes the status.
 - A legend for the three box states is always visible.
 - Completed entries are visibly distinct and dimmed, but stay readable.
 - All progress counts and bars update immediately.
@@ -156,8 +158,8 @@ progress.*
 **US-6. Mark an entry as not interested.**
 *As a casual player, I want to set aside content I'll never do, so that my progress reflects only what
 I care about.*
-- Not interested is the third state of the same status box (US-5), not a separate control. A keyboard
-  shortcut (X) sets it directly.
+- Not interested is the third state of the same status box (US-5), not a separate control. Right click,
+  a touch long-press, or the keyboard shortcut X sets it directly.
 - Not-interested entries are faded, with greyscale icons, and left out of every progress count, so that
   100% means "everything I want".
 - An entry can't be both completed and not interested.

@@ -152,13 +152,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   };
 
   const actions: EntryActions = {
-    onCycle: (entryId) => {
-      const result = log.cycleEntryStatus(entryId);
+    onToggleCompleted: (entryId) => {
+      const result = log.toggleCompleted(entryId);
       announce(null, result);
       flashEntry(entryId);
     },
-    onNotInterested: (entryId) => {
-      const result = log.setEntryStatus(entryId, "notInterested");
+    onToggleNotInterested: (entryId) => {
+      const result = log.toggleNotInterested(entryId);
       announce(null, result);
       flashEntry(entryId);
     },

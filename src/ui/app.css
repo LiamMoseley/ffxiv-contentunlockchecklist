@@ -646,6 +646,13 @@ a:hover {
 .entries tbody tr {
   cursor: pointer;
 }
+/* Clicks never select text, and a touch long-press raises no browser menu: it sets Not interested. */
+.entries tbody tr,
+.entry-card {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
 .entries tbody tr:focus-visible,
 .entry-card:focus-visible {
   outline: 2px solid var(--gold);
