@@ -21,6 +21,12 @@
   --link: #8ab4f8;
   --link-dim: #7894c4;
   /* Bronze frame metal, shared by the window and (later) menus, dialogs and messages */
+  /* The window's frame, and how the help dialog is kept inside it */
+  --page-pad: 18px;
+  --window-frame: 4px;
+  --window-min-height: 480px;
+  --dialog-gap: 12px;
+  --scrollbar-allowance: 18px;
   --bronze: linear-gradient(#ecd9a6, #c09a5c 28%, #7c5d33 55%, #a07c47 78%, #e0c68e);
 
   --font-title: "Barlow Condensed", "Arial Narrow", sans-serif-condensed, sans-serif;
@@ -74,15 +80,15 @@ a:hover {
 
 /* Window: charcoal, in a thick bronze frame with a black line inside and out */
 .page {
-  padding: 18px;
+  padding: var(--page-pad);
 }
 .window {
-  height: calc(100dvh - 36px);
-  min-height: 480px;
+  height: calc(100dvh - 2 * var(--page-pad));
+  min-height: var(--window-min-height);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  border: 4px solid transparent;
+  border: var(--window-frame) solid transparent;
   border-radius: 11px;
   background:
     linear-gradient(var(--window-top), var(--window) 120px, var(--window-bottom)) padding-box,
@@ -899,6 +905,91 @@ tr.flash-completed > td.unlock::after {
   color: #fff;
   font-weight: 700;
   font-size: 12px;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+.hint-icon:hover {
+  background: #747474;
+}
+.hint-icon:focus-visible {
+  outline: 2px solid #f0c35a;
+  outline-offset: 2px;
+}
+/* Never larger than the app window behind it, with --dialog-gap of the app showing on every side. The window
+   sits inside the page padding and its own frame, and is never shorter than --window-min-height. */
+.dialog.help-dialog {
+  --inset: calc(2 * (var(--page-pad) + var(--window-frame) + var(--dialog-gap)));
+  /* Same size and column layout as .update-dialog's flex column; the width and height differ. */
+  width: min(1040px, calc(100vw - var(--inset)));
+  max-height: max(
+    calc(var(--window-min-height) - var(--dialog-gap) * 2 - var(--window-frame) * 2),
+    calc(100dvh - var(--inset))
+  );
+}
+/* A viewport shorter than the window's minimum height plus the page padding (480 + 2 × 18) scrolls the page,
+   and its scrollbar narrows the window. */
+@media (max-height: 515px) {
+  .dialog.help-dialog {
+    width: min(1040px, calc(100vw - var(--inset) - var(--scrollbar-allowance)));
+  }
+}
+/* The title and Close button stay put; only the help text scrolls. Three columns on a wide screen (controls,
+   what the boxes, Undo and filters do, and setting up), stacked on a narrow one; a line separates the groups. */
+.help-body {
+  min-height: 0;
+  overflow-y: auto;
+}
+@media (min-width: 900px) {
+  .help-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 24px;
+  }
+  .help-column + .help-column {
+    padding-left: 24px;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .help-column section:first-child h3 {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+/* Gold condensed headings with the Characters menu's divider line above; the first has nothing above it. */
+.help-body h3 {
+  margin: 16px 0 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font:
+    700 15px/1 "Barlow Condensed",
+    sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f0c35a;
+}
+.help-column:first-child section:first-child h3 {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.help-body dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+.help-body dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.help-body dd,
+.help-body section p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-dim);
 }
 .legend {
   display: flex;
@@ -1389,9 +1480,12 @@ tr.flash-completed > td.unlock::after {
     transform: scale(0.95);
   }
 }
-.update-dialog {
+.update-dialog,
+.help-dialog {
   display: flex;
   flex-direction: column;
+}
+.update-dialog {
   width: min(520px, calc(100vw - 24px));
   max-height: calc(100vh - 48px);
 }

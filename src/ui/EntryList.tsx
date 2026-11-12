@@ -328,17 +328,19 @@ export function HintBar({
   onMode,
   canUndo,
   onUndo,
+  onHelp,
 }: {
   mode: DisplayMode;
   onMode: (mode: DisplayMode) => void;
   canUndo: boolean;
   onUndo: () => void;
+  onHelp: () => void;
 }) {
   return (
     <div className="hint-bar">
-      <span className="hint-icon" aria-hidden="true">
+      <button type="button" className="hint-icon" aria-haspopup="dialog" aria-label="Help" onClick={onHelp}>
         ?
-      </span>
+      </button>
       <ul className="legend" aria-label="Status boxes">
         {(Object.keys(STATUS_LABEL) as EntryStatus[]).map((status) => (
           <li key={status}>

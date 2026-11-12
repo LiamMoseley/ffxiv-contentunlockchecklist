@@ -21,6 +21,7 @@ export {
   type Storage,
   type Clock,
 } from "./log";
+export { helpContent, type HelpContent } from "./help";
 export { readDisplayMode, writeDisplayMode, type DisplayMode } from "./preferences";
 export {
   entryCount,

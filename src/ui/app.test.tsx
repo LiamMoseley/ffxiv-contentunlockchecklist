@@ -63,6 +63,72 @@ describe("App renders", () => {
     expect(host.querySelectorAll(".entries tbody tr, .grid > *").length).toBeGreaterThan(0);
   });
 
+  it("opens the help dialog from the (?) button", async () => {
+    await mount();
+    const button = host.querySelector<HTMLElement>("button[aria-label='Help']");
+    expect(button).not.toBeNull();
+    await act(async () => button!.click());
+    expect(host.querySelector("[role=dialog][aria-labelledby='help-title']")).not.toBeNull();
+  });
+
+  async function openHelp() {
+    const button = host.querySelector<HTMLElement>("button[aria-label='Help']")!;
+    button.focus();
+    await act(async () => button.click());
+    return button;
+  }
+  const helpDialog = () => host.querySelector("[role=dialog][aria-labelledby='help-title']");
+  const press = (key: string, target: Element) =>
+    act(async () => void target.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true, cancelable: true })));
+  /** Focus returns to the opener on a deferred timer. */
+  const settle = () => act(async () => void (await new Promise((resolve) => setTimeout(resolve, 10))));
+
+  it("shows every help topic in the dialog", async () => {
+    await mount();
+    await openHelp();
+    const headings = [...helpDialog()!.querySelectorAll("h3")].map((h) => h.textContent);
+    expect(headings).toEqual([
+      "Mouse",
+      "Touch",
+      "Keyboard",
+      "Status boxes",
+      "Undo",
+      "Filters and search",
+      "Characters",
+      "Levels and Available now",
+      "Expansion tiles",
+    ]);
+  });
+
+  it("closes the help dialog with Close and with Escape, returning focus to the (?)", async () => {
+    await mount();
+    const opener = await openHelp();
+    const close = [...helpDialog()!.querySelectorAll("button")].find((b) => b.textContent === "Close")!;
+    await act(async () => close.click());
+    await settle();
+    expect(helpDialog()).toBeNull();
+    expect(document.activeElement).toBe(opener);
+
+    await openHelp();
+    await press("Escape", helpDialog()!.querySelector("button")!);
+    await settle();
+    expect(helpDialog()).toBeNull();
+    expect(document.activeElement).toBe(opener);
+  });
+
+  it("leaves the app's shortcuts alone while the help dialog is open", async () => {
+    await mount();
+    await openHelp();
+    await press("/", helpDialog()!.querySelector("button")!);
+    expect(host.querySelector("#filter-bar")).toBeNull();
+  });
+
+  it("opens the filters with / outside a dialog", async () => {
+    await mount();
+    await press("/", document.body);
+    expect(host.querySelector("#filter-bar")).not.toBeNull();
+  });
+
   it("survives choosing each tile and each section tab", async () => {
     await mount();
     for (const tile of host.querySelectorAll<HTMLElement>(".rail-item")) {
