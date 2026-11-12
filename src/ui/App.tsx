@@ -208,6 +208,12 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const listKey = availableOpen ? "available" : `${expansion}:${activeTab}`;
   const shownKey = useDeferredValue(listKey);
   const switching = shownKey !== listKey;
+  // A new expansion or section starts at the top: the list's own scroller, and the page where it scrolls instead (phones).
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+  }, [shownKey]);
   const lastShown = useRef(listing);
   if (!switching) lastShown.current = listing;
   const shownListing = switching ? lastShown.current : listing;
@@ -349,7 +355,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                 open={filtersOpen}
                 alwaysHidingMarked={availableOpen}
               />
-              <div className="scroll">
+              <div className="scroll" ref={scrollRef}>
                 <SwitchFade switchKey={shownKey}>
                   {shownListing.view === "available" ? (
                     <AvailableNow

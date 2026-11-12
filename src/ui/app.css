@@ -670,13 +670,15 @@ a:hover {
   z-index: 1;
   box-sizing: border-box;
   height: var(--column-head-height);
-  background: var(--window);
+  /* A darker band than the rows, with a shadow that falls onto them, so a row cut off beneath it reads as passing under */
+  background: linear-gradient(#2b2b2b, #242424);
   padding: 2px 8px 4px;
   text-align: left;
   font-size: 12px;
   font-weight: 400;
   color: var(--text-faint);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid #5a5a5a;
+  box-shadow: 0 5px 6px -3px rgba(0, 0, 0, 0.7);
 }
 .entries td {
   padding: 6px 8px;
