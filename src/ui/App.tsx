@@ -117,7 +117,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     if (result.changed === 0) return;
     const finished = result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`);
     // A single row's change needs no message of its own; only finishing a section is worth one.
-    const message = [text, ...finished].filter(Boolean).join(" ");
+    const message = [text, ...finished].filter(Boolean).join("\n");
     if (message) say(message);
   };
 
