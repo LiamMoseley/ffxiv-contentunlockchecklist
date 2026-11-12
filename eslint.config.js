@@ -36,6 +36,13 @@ export default tseslint.config(
           selector: `${parent} > MemberExpression[property.name='name'][object.name=/^(character|current|saved)$/]`,
           message: 'Show a character as "Name (World)": use `log.characterLabel(character)`.',
         })),
+        {
+          // Module state is shared by every component instance and survives a remount; EntryList's long-press
+          // state once leaked between lists this way. Keep it in a component, a ref or the Log core.
+          selector:
+            "Program > VariableDeclaration[kind='let'], ExportNamedDeclaration > VariableDeclaration[kind='let']",
+          message: "No module-level `let` in the UI: keep state in a component, a ref or the Log core.",
+        },
       ],
     },
   },

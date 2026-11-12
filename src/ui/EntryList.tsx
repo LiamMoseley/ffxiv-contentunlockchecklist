@@ -1,4 +1,12 @@
-import { createContext, useContext, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  type KeyboardEvent,
+  type MouseEvent,
+  type PointerEvent,
+} from "react";
 import {
   entryIcon,
   entryName,
@@ -111,29 +119,29 @@ function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
 /** How long a touch is held before it counts as a right click. */
 const LONG_PRESS_MS = 500;
 
-// One touch at a time: the pending long-press timer, whether it fired (so the click that follows the lift is
-// ignored), and whether the last pointer was a touch (so the context menu a long-press raises isn't a second right click).
-let pressTimer: ReturnType<typeof setTimeout> | undefined;
-let longPressed = false;
-let lastPointerWasTouch = false;
-
-// Cancelling must not clear the flag-reset timer, only a press still pending.
-const cancelLongPress = () => {
-  if (!longPressed) clearTimeout(pressTimer);
-};
 const onLink = (event: { target: EventTarget }) => event.target instanceof Element && !!event.target.closest("a");
 
 /**
  * What makes an entry focusable and operable: left click (or a tap, or Space while the entry itself is
  * focused; the status button does so natively) toggles Completed, right click (or a long-press, or X)
- * toggles Not interested, and the browser's context menu stays off the entry.
+ * toggles Not interested, and the browser's context menu stays off the entry. The returned function gives
+ * one entry's props; the list shares the touch state, one touch at a time.
  */
-function entryProps(actions: EntryActions, entryId: string) {
-  return {
+function useEntryProps(actions: EntryActions) {
+  // The pending long-press timer, whether it fired (so the click that follows the lift is ignored), and whether
+  // the last pointer was a touch (so the context menu a long-press raises isn't a second right click).
+  const touch = useRef({ timer: undefined as ReturnType<typeof setTimeout> | undefined, fired: false, active: false });
+  useEffect(() => () => clearTimeout(touch.current.timer), []);
+  // Cancelling must not clear the flag-reset timer, only a press still pending.
+  const cancelLongPress = () => {
+    if (!touch.current.fired) clearTimeout(touch.current.timer);
+  };
+
+  return (entryId: string) => ({
     tabIndex: 0,
     onClick: () => {
-      if (longPressed) {
-        longPressed = false;
+      if (touch.current.fired) {
+        touch.current.fired = false;
         return;
       }
       actions.onToggleCompleted(entryId);
@@ -142,24 +150,26 @@ function entryProps(actions: EntryActions, entryId: string) {
       // A wiki link keeps its own menu (open in a new tab).
       if (onLink(event)) return;
       event.preventDefault();
-      if (!lastPointerWasTouch) actions.onToggleNotInterested(entryId);
+      if (!touch.current.active) actions.onToggleNotInterested(entryId);
     },
     onPointerDown: (event: PointerEvent) => {
-      lastPointerWasTouch = event.pointerType === "touch";
-      longPressed = false;
+      touch.current.active = event.pointerType === "touch";
+      touch.current.fired = false;
       cancelLongPress();
-      if (!lastPointerWasTouch || onLink(event)) return;
-      pressTimer = setTimeout(() => {
-        longPressed = true;
+      if (!touch.current.active || onLink(event)) return;
+      touch.current.timer = setTimeout(() => {
+        touch.current.fired = true;
         actions.onToggleNotInterested(entryId);
         // The click that follows the lift is swallowed; if none comes, don't swallow a later one.
-        pressTimer = setTimeout(() => (longPressed = false), 1000);
+        touch.current.timer = setTimeout(() => (touch.current.fired = false), 1000);
       }, LONG_PRESS_MS);
     },
     onPointerUp: cancelLongPress,
     onPointerCancel: cancelLongPress,
     onPointerLeave: cancelLongPress,
     onKeyDown: (event: KeyboardEvent) => {
+      // A key press means the next context menu (Menu key, Shift+F10) is not a touch's.
+      touch.current.active = false;
       if (event.ctrlKey || event.metaKey || event.altKey) return;
       if (event.key.toLowerCase() === "x") {
         event.preventDefault();
@@ -169,7 +179,7 @@ function entryProps(actions: EntryActions, entryId: string) {
         actions.onToggleCompleted(entryId);
       }
     },
-  };
+  });
 }
 
 const levelParts = (entry: Entry) =>
@@ -197,6 +207,7 @@ export type EntryListProps = {
 };
 
 export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps) {
+  const entryProps = useEntryProps(actions);
   return (
     <table className="entries">
       <colgroup>
@@ -224,7 +235,7 @@ export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps
           const status = statusOf(entry.id);
           const flash = flashProps(actions, entry, status);
           return (
-            <tr key={entry.id} className={`${status} ${flash.className}`} {...entryProps(actions, entry.id)}>
+            <tr key={entry.id} className={`${status} ${flash.className}`} {...entryProps(entry.id)}>
               <td className="status-cell">
                 <StatusButton entry={entry} status={status} flash={flash.flashing} />
               </td>
@@ -258,6 +269,7 @@ export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps
 }
 
 export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps) {
+  const entryProps = useEntryProps(actions);
   return (
     <ul className="entry-grid">
       {entries.map((entry) => {
@@ -270,7 +282,7 @@ export function EntryGrid({ entries, statusOf, isNew, actions }: EntryListProps)
             key={entry.id}
             className={`entry-card ${status} ${flash.className}`}
             title={name}
-            {...entryProps(actions, entry.id)}
+            {...entryProps(entry.id)}
           >
             <span className="card-icon">{icon && <WikiIcon icon={icon.icon} size={36} />}</span>
             <span className="card-text">
