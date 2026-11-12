@@ -910,16 +910,36 @@ tr.flash-completed > td.unlock::after {
   outline: 2px solid #f0c35a;
   outline-offset: 2px;
 }
-.help-dialog {
+.dialog.help-dialog {
   display: flex;
   flex-direction: column;
-  width: min(520px, calc(100vw - 24px));
+  width: min(760px, calc(100vw - 24px));
   max-height: calc(100vh - 48px);
 }
-/* The title and Close button stay put; only the help text scrolls. */
+/* The title and Close button stay put; only the help text scrolls. On a wide screen the controls sit in
+   one column and the status boxes and Undo in another, with a line between; a narrow one stacks them. */
 .help-body {
   min-height: 0;
   overflow-y: auto;
+}
+@media (min-width: 700px) {
+  .help-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+  .help-column + .help-column {
+    padding-left: 24px;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+/* Stacked, the second group's first heading needs its divider back. */
+@media (max-width: 699px) {
+  .help-column + .help-column section:first-child h3 {
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
 }
 /* Gold condensed headings with the Characters menu's divider line above; the first has nothing above it. */
 .help-body h3 {
