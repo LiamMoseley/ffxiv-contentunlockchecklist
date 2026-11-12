@@ -117,7 +117,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     if (result.changed === 0) return;
     const finished = result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`);
     // A single row's change needs no message of its own; only finishing a section is worth one.
-    const message = [text, ...finished].filter(Boolean).join(" ");
+    const message = [text, ...finished].filter(Boolean).join("\n");
     if (message) say(message);
   };
 
@@ -420,9 +420,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
               Clear Shown
             </button>
-            <span className="chevron" aria-hidden="true">
-              ︾
-            </span>
+            <svg className="chevron" viewBox="0 0 17 9" aria-hidden="true">
+              <path d="M0.75 0.75L8.5 5.25L16.25 0.75M0.75 4.25L8.5 8.75L16.25 4.25" />
+            </svg>
             <button type="button" disabled={completeCount === 0 || switching} onClick={() => setConfirming("complete")}>
               Complete Shown
             </button>
