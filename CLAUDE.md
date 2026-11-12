@@ -2,7 +2,7 @@
 
 ### Issue tracker
 
-Issues are tracked in GitHub Issues (LiamMoseley/ffxiv-contentunlockchecklist) via the `gh` CLI. Read `docs/agents/issue-tracker.md` before implementing, reviewing or closing a ticket, and before committing or pushing to a branch that has a PR: it covers ticking acceptance criteria, listing **Needs owner check** in the PR body, and checking the PR's state first.
+Issues are tracked in GitHub Issues (LiamMoseley/ffxiv-contentunlockchecklist) via the `gh` CLI (plain `gh issue view` prints nothing here: pass `--json`). Read `docs/agents/issue-tracker.md` before implementing, reviewing or closing a ticket, and before committing or pushing to a branch that has a PR: it covers ticking acceptance criteria, listing **Needs owner check** in the PR body, and checking the PR's state first.
 
 ### Testing
 
