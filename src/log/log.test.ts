@@ -232,6 +232,38 @@ describe("entry status", () => {
     expect(seen).toEqual(["completed", "notInterested", "unmarked"]);
   });
 
+  it("toggles Completed: Unmarked and Not interested become Completed, Completed becomes Unmarked", () => {
+    const { log } = openLog();
+    const seen = [];
+    log.setEntryStatus(SASTASHA, "notInterested");
+    for (let i = 0; i < 3; i++) {
+      log.toggleCompleted(SASTASHA);
+      seen.push(log.entryStatus(SASTASHA));
+    }
+    expect(seen).toEqual(["completed", "unmarked", "completed"]);
+  });
+
+  it("toggles Not interested: Unmarked and Completed become Not interested, Not interested becomes Unmarked", () => {
+    const { log } = openLog();
+    const seen = [];
+    log.setEntryStatus(SASTASHA, "completed");
+    for (let i = 0; i < 3; i++) {
+      log.toggleNotInterested(SASTASHA);
+      seen.push(log.entryStatus(SASTASHA));
+    }
+    expect(seen).toEqual(["notInterested", "unmarked", "notInterested"]);
+  });
+
+  it("undoes a toggle", () => {
+    const { log } = openLog();
+    log.toggleCompleted(SASTASHA);
+    log.toggleNotInterested(SASTASHA);
+    log.undo();
+    expect(log.entryStatus(SASTASHA)).toBe("completed");
+    log.undo();
+    expect(log.entryStatus(SASTASHA)).toBe("unmarked");
+  });
+
   it("changes only the entry it is cycled on", () => {
     const { log } = openLog();
     log.cycleEntryStatus(SASTASHA);

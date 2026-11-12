@@ -1,4 +1,4 @@
-import { createContext, useContext, type KeyboardEvent } from "react";
+import { createContext, useContext, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import {
   entryIcon,
   entryName,
@@ -16,10 +16,10 @@ export const STATUS_LABEL: Record<EntryStatus, string> = {
   notInterested: "Not interested",
 };
 
-/** What the player does to an entry: cycle its status, or jump straight to Not interested. */
+/** What the player does to an entry: toggle Completed (left click), or toggle Not interested (right click). */
 export type EntryActions = {
-  onCycle: (entryId: string) => void;
-  onNotInterested: (entryId: string) => void;
+  onToggleCompleted: (entryId: string) => void;
+  onToggleNotInterested: (entryId: string) => void;
   /** The entry the player just set to Completed or Not interested, which plays its animation. */
   flash?: EntryFlash | null;
 };
@@ -108,22 +108,65 @@ function flashProps(actions: EntryActions, entry: Entry, status: EntryStatus) {
   };
 }
 
+/** How long a touch is held before it counts as a right click. */
+const LONG_PRESS_MS = 500;
+
+// One touch at a time: the pending long-press timer, whether it fired (so the click that follows the lift is
+// ignored), and whether the last pointer was a touch (so the context menu a long-press raises isn't a second right click).
+let pressTimer: ReturnType<typeof setTimeout> | undefined;
+let longPressed = false;
+let lastPointerWasTouch = false;
+
+// Cancelling must not clear the flag-reset timer, only a press still pending.
+const cancelLongPress = () => {
+  if (!longPressed) clearTimeout(pressTimer);
+};
+const onLink = (event: { target: EventTarget }) => event.target instanceof Element && !!event.target.closest("a");
+
 /**
- * What makes an entry focusable and operable: a click anywhere on it cycles its status, Space cycles
- * it while the entry itself is focused (the status button does so natively), and X sets Not interested.
+ * What makes an entry focusable and operable: left click (or a tap, or Space while the entry itself is
+ * focused; the status button does so natively) toggles Completed, right click (or a long-press, or X)
+ * toggles Not interested, and the browser's context menu stays off the entry.
  */
 function entryProps(actions: EntryActions, entryId: string) {
   return {
     tabIndex: 0,
-    onClick: () => actions.onCycle(entryId),
+    onClick: () => {
+      if (longPressed) {
+        longPressed = false;
+        return;
+      }
+      actions.onToggleCompleted(entryId);
+    },
+    onContextMenu: (event: MouseEvent) => {
+      // A wiki link keeps its own menu (open in a new tab).
+      if (onLink(event)) return;
+      event.preventDefault();
+      if (!lastPointerWasTouch) actions.onToggleNotInterested(entryId);
+    },
+    onPointerDown: (event: PointerEvent) => {
+      lastPointerWasTouch = event.pointerType === "touch";
+      longPressed = false;
+      cancelLongPress();
+      if (!lastPointerWasTouch || onLink(event)) return;
+      pressTimer = setTimeout(() => {
+        longPressed = true;
+        actions.onToggleNotInterested(entryId);
+        // The click that follows the lift is swallowed; if none comes, don't swallow a later one.
+        pressTimer = setTimeout(() => (longPressed = false), 1000);
+      }, LONG_PRESS_MS);
+    },
+    onPointerUp: cancelLongPress,
+    onPointerCancel: cancelLongPress,
+    onPointerLeave: cancelLongPress,
     onKeyDown: (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey) return;
       if (event.key.toLowerCase() === "x") {
         event.preventDefault();
-        actions.onNotInterested(entryId);
+        actions.onToggleNotInterested(entryId);
       } else if (event.key === " " && event.target === event.currentTarget) {
         event.preventDefault();
-        actions.onCycle(entryId);
+        actions.onToggleCompleted(entryId);
       }
     },
   };

@@ -794,6 +794,14 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     cycleEntryStatus(entryId: string): ChangeResult {
       return setEntryStatus(entryId, NEXT_STATUS[entryStatus(entryId)]);
     },
+    /** Left click: Completed, or Unmarked when it already is Completed. */
+    toggleCompleted(entryId: string): ChangeResult {
+      return setEntryStatus(entryId, entryStatus(entryId) === "completed" ? "unmarked" : "completed");
+    },
+    /** Right click: Not interested, or Unmarked when it already is Not interested. */
+    toggleNotInterested(entryId: string): ChangeResult {
+      return setEntryStatus(entryId, entryStatus(entryId) === "notInterested" ? "unmarked" : "notInterested");
+    },
     setEntryStatus,
     /** How many of the listed entries Complete Shown would change: those neither Completed nor Not interested. */
     completeShownCount: (): number => shownIds().filter((id) => entryStatus(id) === "unmarked").length,
