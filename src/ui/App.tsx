@@ -133,11 +133,9 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const announce = (text: string | null, result: ChangeResult) => {
     refresh();
     if (result.changed === 0) return;
-    if (result.expansionsCompleted.length > 0 || result.sectionsFinished.length > 0) {
+    if (result.expansionsCompleted.length > 0) {
       const count = ++celebrationCount.current;
-      // Expansions by their ID (the rail tile), sections as "section:<ID>" (the pinned heading).
-      const ids = [...result.expansionsCompleted, ...result.sectionsFinished.map((id) => `section:${id}`)];
-      setCelebrating((now) => ({ ...now, ...Object.fromEntries(ids.map((id) => [id, count])) }));
+      setCelebrating((now) => ({ ...now, ...Object.fromEntries(result.expansionsCompleted.map((id) => [id, count])) }));
     }
     const finished = [
       ...result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`),
@@ -405,7 +403,6 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                         expansionName={expansionNames.get(section.expansionId) ?? ""}
                         mode={displayMode}
                         actions={actions}
-                        celebration={celebrating[`section:${section.id}`]}
                       />
                     ))
                   )}
@@ -730,15 +727,12 @@ function SectionPanel({
   expansionName,
   mode,
   actions,
-  celebration,
 }: {
   log: Log;
   section: Section;
   expansionName: string;
   mode: DisplayMode;
   actions: EntryActions;
-  /** Set while the heading celebrates its section reaching 100%; a new value restarts the animation. */
-  celebration?: number;
 }) {
   const progress = log.sectionProgress(section.id);
   const shown = section.entries;
@@ -750,12 +744,6 @@ function SectionPanel({
         </h2>
         <ProgressBar progress={progress} label={`${expansionName} ${sectionTitle(section)} progress`} />
         <Count progress={progress} />
-        {celebration !== undefined && (
-          <span key={celebration} className="head-celebrate" aria-hidden="true">
-            <span className="tile-sweep" />
-            <span className="head-ring" />
-          </span>
-        )}
       </div>
       {shown.length === 0 ? (
         <p className="section-empty">All entries in this section are hidden by the search or filters.</p>
