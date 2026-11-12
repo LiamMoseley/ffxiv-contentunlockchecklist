@@ -166,30 +166,5 @@ describe("the open view and what it lists", () => {
       const { log } = openLog();
       expect(log.availableTabLabel()).toBe("Available now");
     });
-
-    it("counts Completed out of the entries the level reaches, leaving Not interested ones out, and has no count without a level", () => {
-      const { log } = openLog();
-      expect(log.availableProgress()).toBeNull();
-      log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level: 30 });
-      log.showAvailableNow();
-      const reached = log.listing().sections.flatMap((s) => s.entries.map((e) => e.id));
-      expect(reached.length).toBeGreaterThan(2);
-      expect(log.availableProgress()).toEqual({ completed: 0, total: reached.length });
-
-      log.toggleCompleted(reached[0]);
-      log.toggleNotInterested(reached[1]);
-      // Completing drops an entry from the view, but the count still holds it; Not interested leaves the count.
-      expect(log.availableProgress()).toEqual({ completed: 1, total: reached.length - 1 });
-    });
-
-    it("keeps counting entries the search and filters hide", () => {
-      const { log } = openLog();
-      log.editCharacter(log.currentCharacter().id, { name: "Adventurer", level: 30 });
-      log.showAvailableNow();
-      const before = log.availableProgress();
-      log.setFilters({ search: "Sastasha" });
-      expect(log.listing().sections.flatMap((s) => s.entries).length).toBeLessThan(before!.total);
-      expect(log.availableProgress()).toEqual(before);
-    });
   });
 });

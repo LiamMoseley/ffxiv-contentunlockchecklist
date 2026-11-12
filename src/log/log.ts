@@ -202,19 +202,15 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
    * expansion's level cap. A character with no level gets `level: null` and nothing. The search and filters
    * apply; `filteredOut` counts the reachable entries they leave out.
    */
-  /** Whether a character at `level` can reach the entry: see `availableNow`. */
-  function reachableAt(level: number, section: Section, entry: Entry): boolean {
-    return section.kind === "levelCap"
-      ? level >= expansionOrThrow(section.expansionId).levelCap
-      : level >= parseInt(entry.level, 10);
-  }
-
   function availableNow(): Available {
     const level = currentCharacter().level;
     if (level === null) return { level, sections: [], filteredOut: 0 };
     let filteredOut = 0;
     const sections = content.sections.flatMap((section) => {
-      const reached = section.entries.filter((e) => reachableAt(level, section, e) && entryStatus(e.id) === "unmarked");
+      const cap = expansionOrThrow(section.expansionId).levelCap;
+      const reachable = (entry: Entry) =>
+        section.kind === "levelCap" ? level >= cap : level >= parseInt(entry.level, 10);
+      const reached = section.entries.filter((e) => reachable(e) && entryStatus(e.id) === "unmarked");
       const entries = reached.filter((e) => passesFilters(e, "unmarked", filters));
       filteredOut += reached.length - entries.length;
       return entries.length > 0 ? [{ ...section, entries }] : [];
@@ -808,20 +804,6 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     availableTabLabel(): string {
       const { level } = currentCharacter();
       return level === null ? "Available now" : `Level 1 to ${level}`;
-    },
-    /**
-     * Completed out of every entry the character's level reaches (Not interested ones left out), whatever the
-     * search and filters hide. Null while the character has no level.
-     */
-    availableProgress(): ProgressCount | null {
-      const { level } = currentCharacter();
-      if (level === null) return null;
-      return progressOf(
-        content.sections.map((section) => ({
-          ...section,
-          entries: section.entries.filter((e) => reachableAt(level, section, e)),
-        })),
-      );
     },
     sectionProgress(sectionId: string): ProgressCount {
       return progressOf([sectionOrThrow(sectionId)]);
