@@ -18,7 +18,7 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **Start-up work in `createLog` goes just before its `return`.** The closure declares its helpers as `const`s in order (`statusOf`, `selection`, `filters`, `history`), so work that runs while the log is created, such as offering a bundled copy, hits an uninitialised `const` if it sits higher up.
 
-**Keep the UI thin.** The UI has no tests, so any rule that decides what is valid, derived or allowed (uniqueness, a Data Center from a World, what Reset clears) belongs in the Log core, where it is tested. A component only collects input, calls a command and shows the result. A message built from a command's counts (the import summary) is such a rule: the command returns the text, and a test asserts it as a literal.
+**Keep the UI thin.** The UI has no tests, so any rule that decides what is valid, derived or allowed (uniqueness, a number shown in a tab (#95), a Data Center from a World, what Reset clears) belongs in the Log core, where it is tested. A component only collects input, calls a command and shows the result. A message built from a command's counts (the import summary) is such a rule: the command returns the text, and a test asserts it as a literal.
 
 **Duplication is a check, not a judgement.** `npm run duplication` (jscpd, settings in `.jscpd.json`) fails on a repeated block of 8 lines. Extract the shared helper rather than raising the limit.
 
