@@ -368,6 +368,12 @@ play.*
 - Controls that rely on hover elsewhere are always visible on touch screens.
 - The pinned bottom bar is slim (Undo, Display Mode, the (?)). The legal text and Update link scroll
   with the page at its very end; Clear Shown and Complete Shown stay in the page flow above them.
+- The list sits centred: as far from the window's left edge as from its right.
+- Round Jump to top and Jump to bottom buttons float above the bar, so the player can reach the
+  expansion tiles or the Clear Shown, Complete Shown, Update and legal area without a long scroll. Each
+  shows only when it would go somewhere (Up is hidden at the top, Down at the bottom, both when the page
+  is short). They jump instantly, and focus moves to the other button when the pressed one disappears.
+  Desktop, whose list scrolls inside a fixed window, has neither.
 - Expansion tiles use the community's short names (ARR, HW, SB, ShB, EW, DT) where space is tight.
 
 **US-24. Open it without installing anything.**

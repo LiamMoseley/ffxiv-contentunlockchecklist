@@ -21,6 +21,7 @@ import { FilterBar } from "./FilterBar";
 import { HelpDialog } from "./HelpDialog";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { ChangedByHandContext, Count, ProgressBar } from "./ProgressBar";
+import { ScrollJump } from "./ScrollJump";
 import { UpdateDialog } from "./UpdateDialog";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
 
@@ -469,6 +470,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             onHelp={() => setHelpOpen(true)}
           />
           {helpOpen && <HelpDialog onClose={() => setHelpOpen(false)} />}
+          <ScrollJump />
 
           <div className="button-footer" role="group" aria-label="Shown entries">
             <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
