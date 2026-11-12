@@ -18,6 +18,8 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 
 ## Before implementing
 
+**Branch from `origin/main`, never local `main`.** Local `main` is not kept current (#124's branch started 3 commits behind and a diff against it showed other people's work as the change). Run `git fetch`, then `git checkout -b <branch> origin/main`, then `git branch --unset-upstream`. Check `gh pr list --head <current-branch> --state all` first: a current branch with an open PR for other work (the rename, #125) is not the place for a new ticket's commits. A hard reset is denied here; `git checkout -B <branch> origin/main` moves a branch that holds no commits of its own.
+
 A `ready-for-human` ticket asks for the owner's decision, so read its comments first. If a decision is missing, ask the owner (one question per undecided item) and build only what they answer. A ticket with its decisions recorded is implemented as usual.
 
 **Read every ticket with `comments` in the `--json` list, and read them again before `/code-review` and before opening the PR.** The owner answers a ticket's **Open for the owner** item as a comment, often mid-session (#98: the glyph choice, an image link, arrived after the placeholder was built, verified and sent to review). A fetch of `title,body,labels` alone misses it.
