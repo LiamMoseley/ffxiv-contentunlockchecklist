@@ -1414,12 +1414,24 @@ tr.flash-completed > td.unlock::after {
     max-width: none;
     margin-left: 0;
   }
-  .footer-bar {
+  /* The slim bar (?, Undo, Display Mode) is pinned; the legal footer scrolls. The bar is last in the window's
+     flex column, so at the end of the page it sits under the legal text and covers nothing; Clear Shown and
+     Complete Shown stay in flow above the legal text. The legend is in the help dialog on phones. */
+  .hint-bar {
+    order: 1;
     position: sticky;
     bottom: 0;
     z-index: 1;
-    border-radius: 0;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 6px 10px;
     background: linear-gradient(#333, #2b2b2b);
+  }
+  .legend {
+    display: none;
+  }
+  .footer-bar {
+    border-radius: 0;
   }
 }
 

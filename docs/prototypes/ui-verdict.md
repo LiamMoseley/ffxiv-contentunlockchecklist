@@ -95,7 +95,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 ### Buttons and footer
 - **Style:** **embossed** grey pills with a **black edge**, a light top bevel and a dark line under it (no bottom bevel, #91). No coloured border.
 - **Footer:** Clear Shown on the left and Complete Shown on the right (in the positions of "Default" and "Close"), with a gold chevron between them.
-- **Hint bar** above the footer: a "?" icon, the status legend and DISPLAY MODE.
+- **Hint bar** above the footer: a "?" icon, the status legend and DISPLAY MODE. At phone width (760px) the legend is hidden and the bar is a slim pinned strip with the "?", Undo and DISPLAY MODE; the legal footer scrolls with the page (#99).
 
 ### Filters
 - **Style:** settings-style checkbox lines under a "Filters" heading: "Hide completed entries." and "Hide entries marked not interested."
