@@ -30,6 +30,8 @@ describe("App renders", () => {
   beforeAll(() => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     // jsdom has no layout engine, so the rail's tile observer is a stub.
+    // ...and no matchMedia: the search placeholder asks whether the device is a touch one.
+    window.matchMedia = ((query: string) => ({ matches: false, media: query })) as typeof window.matchMedia;
     globalThis.ResizeObserver = class {
       observe() {}
       unobserve() {}
@@ -120,13 +122,14 @@ describe("App renders", () => {
     await mount();
     await openHelp();
     await press("/", helpDialog()!.querySelector("button")!);
-    expect(host.querySelector("#filter-bar")).toBeNull();
+    expect(host.querySelector(".filter-bar-wrap.closed")).not.toBeNull();
   });
 
   it("opens the filters with / outside a dialog", async () => {
     await mount();
     await press("/", document.body);
-    expect(host.querySelector("#filter-bar")).not.toBeNull();
+    expect(host.querySelector(".filter-bar-wrap")).not.toBeNull();
+    expect(host.querySelector(".filter-bar-wrap.closed")).toBeNull();
   });
 
   it("survives choosing each tile and each section tab", async () => {

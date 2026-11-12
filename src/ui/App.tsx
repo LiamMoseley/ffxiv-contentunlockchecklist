@@ -332,9 +332,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   {filtersOpen ? "▴" : "▾"}
                 </button>
               </div>
-              {filtersOpen && (
-                <FilterBar log={log} searchRef={searchRef} onChange={refresh} alwaysHidingMarked={availableOpen} />
-              )}
+              <FilterBar
+                log={log}
+                searchRef={searchRef}
+                onChange={refresh}
+                open={filtersOpen}
+                alwaysHidingMarked={availableOpen}
+              />
               <div className="scroll">
                 <SwitchFade switchKey={shownKey}>
                   {shownListing.view === "available" ? (
