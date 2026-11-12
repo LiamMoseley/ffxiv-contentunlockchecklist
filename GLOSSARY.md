@@ -9,8 +9,16 @@ The whole checklist: every entry, grouped by expansion and section.
 _Avoid_: List, checklist (in code and docs)
 
 **Entry**:
-One row of the log, exactly as the wiki lists it: the content it unlocks, the quests that unlock it, and its level, location and notes. A row naming several unlocks is still one entry.
-_Avoid_: Unlock (as a noun for a row), item, content (for a single row)
+One line of the log, exactly as the wiki lists it: the content it unlocks, the quests that unlock it, and its level, location and notes. A wiki row naming several unlocks is still one entry.
+_Avoid_: Unlock (as a noun for an entry), item, content (for a single entry)
+
+**Row**:
+How an entry appears in List mode. Wider than 1000px it is a table row; at 1000px and below it becomes a stacked row: a spine with the status box and Level beside a block holding the icon, Unlock name, Type chips, Quest, Location and Information.
+_Avoid_: Tile, card (for a row)
+
+**Card**:
+How an entry appears in Cards mode: its wiki icon, name, a one-line summary and its status box.
+_Avoid_: Tile (that is an expansion tile), entry card
 
 **Section**:
 One level-band table of the log, either an expansion's levelling section (e.g. Level 51–60) or its level-cap section (e.g. Level 60).

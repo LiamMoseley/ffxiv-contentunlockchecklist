@@ -3,6 +3,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useSyncExternalStore,
   type KeyboardEvent,
   type MouseEvent,
   type PointerEvent,
@@ -242,7 +243,132 @@ export type EntryListProps = {
   actions: EntryActions;
 };
 
-export function EntryTable({ entries, statusOf, isNew, actions }: EntryListProps) {
+/** The width at and below which List mode draws stacked rows; the same 1000px as the stylesheet's breakpoint. */
+const STACKED_ROW_QUERY = "(max-width: 1000px)";
+
+function useStackedRows(): boolean {
+  return useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia(STACKED_ROW_QUERY);
+      query.addEventListener("change", onChange);
+      return () => query.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(STACKED_ROW_QUERY).matches,
+  );
+}
+
+/** The same text without its inline icons: the icon plate already shows the entry's icon. */
+const withoutIcons = (text: RichText): RichText => text.map((line) => line.filter((segment) => !("icon" in segment)));
+
+/** A field of a stacked row: a bold heading over its text. Nothing is drawn for an empty field. */
+function RowField({ label, text, className }: { label: string; text: RichText; className: string }) {
+  if (text.length === 0) return null;
+  return (
+    <div className={className}>
+      <span className="row-label">{label}</span>
+      <RichCell text={text} />
+    </div>
+  );
+}
+
+/**
+ * One stacked row: a spine down the left (status box, then the Level, then the Item level), and beside it the
+ * headline (icon plate, Unlock name), the Type chips, the Quest, and the Location and Information.
+ */
+function StackedRow({
+  entry,
+  status,
+  isNew,
+  actions,
+  entryProps,
+}: {
+  entry: Entry;
+  status: EntryStatus;
+  isNew: boolean;
+  actions: EntryActions;
+  entryProps: ReturnType<typeof useEntryProps>;
+}) {
+  const flash = flashProps(actions, entry, status);
+  const icon = entryIcon(entry);
+  const hasMore = entry.rich.location.length > 0 || entry.rich.information.length > 0;
+  return (
+    <li className={`stacked-row ${status} ${flash.className}`} title={entryName(entry)} {...entryProps(entry.id)}>
+      <div className="row-spine">
+        <div className="row-tick">
+          <StatusButton entry={entry} status={status} flash={flash.flashing} />
+        </div>
+        {entry.level ? (
+          <span className="row-level">
+            <small>Lv.</small>
+            {entry.level}
+          </span>
+        ) : (
+          entry.itemLevel && (
+            <span className="row-level item">
+              <small>iLv.</small>
+              {entry.itemLevel}
+            </span>
+          )
+        )}
+        {entry.level && entry.itemLevel && (
+          <span className="row-item-level">
+            <small>iLv.</small>
+            {entry.itemLevel}
+          </span>
+        )}
+      </div>
+      <div className="row-main">
+        <div className="row-head">
+          <span className="row-plate">{icon ? <WikiIcon icon={icon.icon} size={28} /> : <FallbackGlyph />}</span>
+          <span className="row-name">
+            <RichCell text={withoutIcons(entry.rich.unlock)} />
+            {isNew && <NewBadge />}
+          </span>
+        </div>
+        <div className="row-chips">
+          {withoutIcons(entry.rich.type).map((line, i) => (
+            <span className="row-chip" key={i}>
+              <RichCell text={[line]} />
+            </span>
+          ))}
+          {entry.optionalChallenge && <span className="row-chip optional">Optional challenge</span>}
+        </div>
+        <RowField label="Quest" text={entry.rich.quest} className="row-field row-quest" />
+        {hasMore && (
+          <div className="row-more">
+            <RowField label="Location" text={entry.rich.location} className="row-field" />
+            <RowField label="Information" text={entry.rich.information} className="row-field" />
+          </div>
+        )}
+      </div>
+    </li>
+  );
+}
+
+/** List mode at 1000px and below: each entry as a stacked row. */
+function StackedRows({ entries, statusOf, isNew, actions }: EntryListProps) {
+  const entryProps = useEntryProps(actions);
+  return (
+    <ul className="stacked-rows">
+      {entries.map((entry) => (
+        <StackedRow
+          key={entry.id}
+          entry={entry}
+          status={statusOf(entry.id)}
+          isNew={isNew(entry.id)}
+          actions={actions}
+          entryProps={entryProps}
+        />
+      ))}
+    </ul>
+  );
+}
+
+export function EntryTable(props: EntryListProps) {
+  return useStackedRows() ? <StackedRows {...props} /> : <WideTable {...props} />;
+}
+
+function WideTable({ entries, statusOf, isNew, actions }: EntryListProps) {
   const entryProps = useEntryProps(actions);
   return (
     <table className="entries">

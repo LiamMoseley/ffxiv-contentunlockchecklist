@@ -59,6 +59,11 @@
   --type-rail-collapsed: 300 17px/1.05 var(--font-rail);
   --type-count: 300 var(--size-lg) / 1 var(--font-body);
   --type-overline: 700 15px/1 var(--font-title);
+  /* The stacked row's spine: the large Level, the smaller Item level under it, and their "Lv." / "iLv." labels */
+  --type-spine-level: 400 22px/1 var(--font-serif);
+  --type-spine-label: 400 var(--size-xs) / 1.2 var(--font-body);
+  --type-spine-item-level: 400 var(--size-md) / 1.1 var(--font-serif);
+  --type-spine-item-label: 400 var(--size-badge) / 1.3 var(--font-body);
   --accent-heading: var(--gold);
 
   color-scheme: dark;
@@ -900,9 +905,10 @@ a.wiki-link:focus-visible {
 }
 /*
  * On a table row the sheen hangs off the Unlock cell, which is never positioned: a pseudo-element on the <tr>
- * itself becomes an anonymous cell and resizes the row (#88), and the Status cell is absolutely positioned in cards.
+ * itself becomes an anonymous cell and resizes the row (#88).
  */
 .entry-card.flash-completed::after,
+.stacked-row.flash-completed::after,
 tr.flash-completed > td.unlock::after {
   content: "";
   position: absolute;
@@ -1254,81 +1260,230 @@ tr.flash-completed > td.unlock::after {
   color: var(--text-dim);
 }
 
-/* 1000px and below: each entry becomes a labelled card */
+/* 1000px and below: each entry is a stacked row (see StackedRow in EntryList.tsx) */
 @media (max-width: 1000px) {
-  .entries thead {
-    display: none;
-  }
   .section-head {
     height: auto;
     min-height: var(--section-head-height);
     padding: 7px 12px;
   }
   /* A wrapped heading is taller than --section-head-height (58px at 375px wide, more when the name is long) */
-  .entries tr,
+  .stacked-row,
   .entry-card {
     scroll-margin-top: var(--wrapped-head-clearance);
   }
-  .entries,
-  .entries tbody,
-  .entries tr,
-  .entries td {
-    display: block;
+}
+
+/*
+ * The stacked row: a 52px spine (status box, Level, Item level) beside a main column (headline, Type chips,
+ * Quest, then Location and Information). An empty field renders nothing, so rows vary in height.
+ */
+.stacked-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.stacked-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  min-width: 0;
+  border-radius: 6px;
+  background: linear-gradient(#3f3f3f, #353535);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px #1a1a1a;
+  font-size: var(--size-sm);
+  line-height: 1.35;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+.stacked-row:hover {
+  background: linear-gradient(#444, #3a3a3a);
+}
+.stacked-row:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+.stacked-row.completed {
+  color: #9a9a9a;
+}
+.stacked-row.completed a.wiki-link {
+  color: var(--link-dim);
+}
+.stacked-row.notInterested .row-spine > :not(.row-tick),
+.stacked-row.notInterested .row-main {
+  opacity: 0.42;
+}
+.row-spine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  border-right: 1px solid #1f1f1f;
+  border-radius: 6px 0 0 6px;
+  background: rgba(0, 0, 0, 0.2);
+}
+/* A 36px row, the headline's height, so the 22px box sits level with the icon and name */
+.row-tick {
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+.row-tick .status {
+  padding: 6px;
+}
+.row-tick .status-box {
+  width: 22px;
+  height: 22px;
+}
+.row-level {
+  font: var(--type-spine-level);
+  text-align: center;
+  color: var(--gold);
+}
+/* An entry with only an Item level: it takes the Level's place, in white */
+.row-level.item {
+  color: var(--text);
+}
+.row-level small,
+.row-item-level small {
+  display: block;
+  color: var(--text-faint);
+}
+.row-level small {
+  margin-bottom: 2px;
+  font: var(--type-spine-label);
+}
+.row-item-level {
+  margin-top: -2px;
+  font: var(--type-spine-item-level);
+  text-align: center;
+  color: var(--text);
+}
+.row-item-level small {
+  font: var(--type-spine-item-label);
+}
+.row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px 12px 10px 10px;
+}
+.row-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+.row-plate {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 5px;
+  background: radial-gradient(circle at 50% 35%, #3b3b3b, #1c1c1c);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px #111,
+    0 0 0 2px #575757;
+}
+.row-plate .wiki-icon {
+  margin: 0;
+  width: 28px;
+  height: 28px;
+}
+.row-name {
+  min-width: 0;
+  font-size: var(--size-xl);
+  line-height: 1.25;
+}
+/* A multi-line Unlock reads as one line: its lines are joined by " / " */
+.row-name .rich,
+.row-name .line {
+  display: inline;
+}
+.row-name .line + .line::before {
+  content: " / ";
+  color: var(--text-faint);
+}
+.row-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.row-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: 3px;
+  border: 1px solid #1a1a1a;
+  background: linear-gradient(#2e2e2e, #262626);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  font-size: var(--size-xs);
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+.row-chip .rich,
+.row-chip .line {
+  display: inline;
+}
+.row-chip.optional {
+  border-color: rgba(240, 195, 90, 0.45);
+  background: rgba(240, 195, 90, 0.12);
+  color: var(--gold);
+}
+/* Quest, Location and Information share one size; their headings are bold. A rule sits above each group. */
+.row-field {
+  font-size: var(--size-xs);
+}
+.row-label {
+  display: block;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+.row-quest {
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+.stacked-row.completed .row-quest {
+  color: #9a9a9a;
+}
+.row-more {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px 14px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--text-dim);
+}
+.stacked-row.completed .row-more {
+  color: #8c8c8c;
+}
+/* Stacked (a phone), Location and Information have a rule between them */
+.row-more .row-field + .row-field {
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+@media (min-width: 761px) {
+  .row-more {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .entries tr {
-    position: relative;
-    margin-top: 6px;
-    padding: 8px 10px 8px 44px;
-    border-radius: 6px;
-    background: linear-gradient(#3f3f3f, #353535);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 0 0 1px #1a1a1a;
-  }
-  .entries tr {
-    display: flex;
-    flex-direction: column;
-  }
-  .entries td {
-    display: grid;
-    grid-template-columns: 82px minmax(0, 1fr);
-    gap: 8px;
-    padding: 1px 0;
-    border: 0;
-    overflow-wrap: anywhere;
-  }
-  .entries td::before {
-    content: attr(data-label);
-    font-size: var(--size-xs);
-    line-height: 1.7;
-    color: var(--text-faint);
-  }
-  .entries td.unlock {
-    display: block;
-    font-size: var(--size-lg);
-  }
-  .entries td.unlock::before,
-  .entries td:empty {
-    display: none;
-  }
-  .entries td.status-cell {
-    position: absolute;
-    left: 10px;
-    top: 8px;
-    display: block;
-    padding: 0;
-  }
-  .entries td.status-cell::before {
-    display: none;
-  }
-  .entries td.unlock {
-    order: -1;
-  }
-  .entries td.level span {
-    display: inline;
-  }
-  .entries td.level span + span {
-    margin-left: 8px;
+  .row-more .row-field + .row-field {
+    padding-top: 0;
+    border-top: 0;
   }
 }
 
@@ -1504,6 +1659,7 @@ tr.flash-completed > td.unlock::after {
   }
   /* A focused entry scrolls clear of the pinned bar as well as the pinned headings */
   .entries tbody tr,
+  .stacked-row,
   .entry-card {
     scroll-margin-bottom: 48px;
   }
