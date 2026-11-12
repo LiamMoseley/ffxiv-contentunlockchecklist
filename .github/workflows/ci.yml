@@ -26,6 +26,8 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run unused-css
+      - run: npm run table-pseudo-css
+      - run: npm run type-tokens
       - run: npm run duplication
       - run: npm test
       - run: npm run build
