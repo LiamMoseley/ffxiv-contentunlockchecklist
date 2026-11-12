@@ -1455,33 +1455,37 @@ tr.flash-completed > td.unlock::after {
   .legend {
     display: none;
   }
-  /* Finger-sized controls, well apart, so a tap meant for one (the ?) never lands on its neighbour (Update). The
-     (?) and Update sit together at the left with 18px between them, Undo and the toggles at the right. */
+  /* The buttons keep their size and are spread apart so a tap meant for one (the ?) cannot land on its neighbour
+     (Update): the (?) in the left corner, Undo exactly centred, Update midway between them and the Display Mode
+     toggles at the right. Five columns, with Undo's in the middle. */
   .hint-bar {
-    gap: 18px;
-    padding: 5px 10px;
+    display: grid;
+    /* The two outer columns are the same width (the Display Mode toggles') so Undo, in the middle one, is exactly
+       centred; the (?) sits at the start of the first. */
+    --edge: 56px;
+    grid-template-columns: var(--edge) minmax(0, 1fr) auto minmax(0, 1fr) var(--edge);
+    align-items: center;
   }
-  .hint-icon {
-    width: 32px;
-    height: 32px;
-    font-size: 15px;
+  .hint-bar .hint-icon {
+    grid-column: 1;
+    justify-self: start;
   }
-  .update-button.in-hint-bar {
-    min-width: 40px;
-    height: 32px;
+  .hint-bar .update-button.in-hint-bar {
+    grid-column: 2;
+    justify-self: center;
+    /* Midway between the (?) and Undo: the first column is wider than the (?), so pull back by the difference */
+    margin-right: calc(var(--edge) - 18px);
   }
   .hint-bar button.undo {
-    height: 32px;
-    min-width: 62px;
+    grid-column: 3;
+    margin: 0;
   }
-  .display-mode button {
-    width: 34px;
-    height: 32px;
+  .hint-bar div.display-mode {
+    grid-column: 5;
+    justify-self: end;
+    margin: 0;
   }
-  .hint-bar .undo + .display-mode {
-    margin-left: 0;
-  }
-  /* The "Display Mode" label gives way to the spacing: the toggles keep their names (List, Cards) for screen
+  /* The "Display Mode" label stays hidden to make room: the toggles keep their names (List, Cards) for screen
      readers, and the group is still labelled for them. */
   .display-mode-label {
     display: none;
@@ -2216,8 +2220,8 @@ tr.flash-completed > td.unlock::after {
   .scroll-jump {
     position: fixed;
     right: 10px;
-    /* The window's 4px border, the taller bar (43px) and a 5px gap */
-    bottom: 52px;
+    /* The window's 4px border, the bar (39px) and a 5px gap */
+    bottom: 48px;
     z-index: 2;
     display: flex;
     flex-direction: column;
