@@ -269,7 +269,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
           {/* Everything but the jump buttons scrolls together on a phone; on desktop the wrapper has no box of its own */}
           <div className="window-scroll" ref={windowScrollRef}>
             <header className="title-bar">
-              <h1>Content Unlock Log</h1>
+              <h1>FFXIV content unlock log</h1>
               <button
                 type="button"
                 className="character"
