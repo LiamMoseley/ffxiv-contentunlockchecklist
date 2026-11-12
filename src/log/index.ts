@@ -22,6 +22,7 @@ export {
   type Clock,
 } from "./log";
 export { helpContent, type HelpContent } from "./help";
+export { scrollJumps } from "./scroll-jumps";
 export { readDisplayMode, writeDisplayMode, type DisplayMode } from "./preferences";
 export {
   entryCount,

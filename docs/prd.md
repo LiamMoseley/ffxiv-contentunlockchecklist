@@ -163,7 +163,8 @@ progress.*
   ignored, so a quick double tap cannot flip it straight back, and a double tap does not zoom the page. Clicking a wiki link in the row never changes the status.
 - A legend for the three box states is always visible. The (?) beside it is a button that opens a help
   dialog: mouse, touch and keyboard controls (every shortcut the app binds), the three status boxes and
-  Undo. Escape or Close closes it and returns focus to the (?).
+  Undo. Escape or Close closes it and returns focus to the (?). At phone width the legend is hidden
+  (the help explains it) and the bottom bar is a slim pinned strip of the (?), Undo and Display Mode.
 - Completed entries are visibly distinct and dimmed, but stay readable.
 - All progress counts and bars update immediately.
 - Finishing a whole section is acknowledged with a short message.
@@ -365,6 +366,20 @@ update never undoes my record.*
 play.*
 - Every feature works at phone width without sideways scrolling.
 - Controls that rely on hover elsewhere are always visible on touch screens.
+- The window is as tall as the screen, so its rounded border is always visible on every side, and all of
+  its content (title bar, expansion tiles, list, buttons and legal text) scrolls inside it. The page
+  itself never scrolls.
+- The pinned bottom bar is slim and its buttons are spread apart, all at least as tall as Undo (26px) for
+  touch: the (?) in the left corner, Undo exactly centred and the Display Mode toggles at the right. The "Display Mode" label is hidden
+  at this width. The legal text scrolls with the content at its very end; Clear Shown and Complete Shown stay
+  in the flow above it, and the Update button stays in the footer beside the credit text, where on a phone it
+  is a worded "Update from wiki" button as wide as its words.
+- The list sits centred: as far from the window's left edge as from its right.
+- Round Jump to top and Jump to bottom buttons float above the bar, so the player can reach the
+  expansion tiles or the Clear Shown, Complete Shown, Update and legal area without a long scroll. Each
+  shows only when it would go somewhere (Up is hidden at the top, Down at the bottom, both when the page
+  is short). They jump instantly, and focus moves to the other button when the pressed one disappears.
+  Desktop, whose list scrolls inside a fixed window, has neither.
 - Expansion tiles use the community's short names (ARR, HW, SB, ShB, EW, DT) where space is tight.
 
 **US-24. Open it without installing anything.**

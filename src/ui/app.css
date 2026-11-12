@@ -28,6 +28,8 @@
   --dialog-gap: 12px;
   --section-head-height: 38px;
   --column-head-height: 24px;
+  /* The embossed pill buttons' height (Undo, Clear Shown, Filters), which the phone bar's other controls match */
+  --pill-height: 26px;
   --wrapped-head-clearance: 80px;
   --scrollbar-allowance: 18px;
   --bronze: linear-gradient(#ecd9a6, #c09a5c 28%, #7c5d33 55%, #a07c47 78%, #e0c68e);
@@ -101,6 +103,11 @@ a:hover {
     inset 0 0 0 1px #000,
     inset 0 2px 0 1px rgba(255, 255, 255, 0.08),
     0 18px 50px rgba(0, 0, 0, 0.9);
+}
+
+/* The wrapper of everything that scrolls together on a phone: no box of its own elsewhere */
+.window-scroll {
+  display: contents;
 }
 
 /* Title bar: condensed title at the left, the character at the right, on one centre line */
@@ -1206,6 +1213,11 @@ tr.flash-completed > td.unlock::after {
   background: #d0382c;
 }
 
+/* The label is for phones, where the button is a worded one under the footer text */
+.update-label {
+  display: none;
+}
+
 /* Footer bar */
 .footer-bar {
   display: flex;
@@ -1300,21 +1312,33 @@ tr.flash-completed > td.unlock::after {
   }
 }
 
-/* Phones: the tile column becomes a compact row, the footer sticks to the bottom */
+/* Phones: the tile column becomes a compact row, the slim bar sticks to the bottom */
 @media (max-width: 760px) {
+  /* The window keeps its rounded corners and reaches the screen's edges: the page's black shows only behind the corners */
   .page {
     padding: 0;
   }
+  /* The window is as tall as the screen, so its border shows on every side all the time, and its content scrolls
+     inside it (.window-scroll). The rounded inner edge trims the scrolling content and the square pinned bar. */
   .window {
-    height: auto;
-    min-height: 100dvh;
-    border-radius: 0;
-    border-left-width: 3px;
-    border-right-width: 3px;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .window-scroll {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  /* Every child keeps its natural height: the window-body's flex: 1 would otherwise collapse it to nothing */
+  .window-scroll > * {
+    flex: none;
   }
   .title-bar {
     padding: 6px 10px;
-    border-radius: 0;
   }
   .title-bar h1 {
     font-size: 21px;
@@ -1398,8 +1422,11 @@ tr.flash-completed > td.unlock::after {
   .tabs .count {
     font-size: 11.5px;
   }
+  /* No side padding: the list sits as far from the window's edge as the tabs above it (it had 4px more on the left) */
   .scroll {
+    margin-top: 8px;
     overflow: visible;
+    padding-left: 0;
     padding-right: 0;
   }
   .section-head {
@@ -1414,12 +1441,75 @@ tr.flash-completed > td.unlock::after {
     max-width: none;
     margin-left: 0;
   }
-  .footer-bar {
+  /* The slim bar (?, Update, Undo, Display Mode) is pinned; the legal footer scrolls. The bar is last in the window's
+     flex column, so at the end of the page it sits under the legal text and covers nothing; Clear Shown and
+     Complete Shown stay in flow above the legal text. The legend is in the help dialog on phones. */
+  .hint-bar {
+    order: 1;
     position: sticky;
     bottom: 0;
     z-index: 1;
-    border-radius: 0;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 6px 10px;
     background: linear-gradient(#333, #2b2b2b);
+  }
+  .legend {
+    display: none;
+  }
+  /* The (?) in the left corner, Undo exactly centred (equal outer columns) and the Display Mode toggles at the right */
+  .hint-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+  }
+  /* The (?) and the toggles are as tall as Undo for a touch screen */
+  .hint-bar .hint-icon {
+    grid-column: 1;
+    justify-self: start;
+    width: var(--pill-height);
+    height: var(--pill-height);
+    font-size: 14px;
+  }
+  .hint-bar .display-mode button {
+    height: var(--pill-height);
+  }
+  .hint-bar button.undo {
+    grid-column: 2;
+    margin: 0;
+  }
+  .hint-bar div.display-mode {
+    grid-column: 3;
+    justify-self: end;
+    margin: 0;
+  }
+  /* The "Display Mode" label stays hidden to make room: the toggles keep their names (List, Cards) for screen
+     readers, and the group is still labelled for them. */
+  .display-mode-label {
+    display: none;
+  }
+  /* A focused entry scrolls clear of the pinned bar as well as the pinned headings */
+  .entries tbody tr,
+  .entry-card {
+    scroll-margin-bottom: 48px;
+  }
+  /* The footer's Update is a worded button on phones, under the credit text. It is as wide as its words and sits
+     at the left, so the Jump to top button at the page's end never covers it. */
+  .footer-source {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .update-button {
+    height: 30px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+  .update-label {
+    display: inline;
+  }
+  .footer-bar {
+    border-radius: 0;
   }
 }
 
@@ -1476,7 +1566,7 @@ tr.flash-completed > td.unlock::after {
     box-shadow 0.15s;
   align-items: center;
   justify-content: center;
-  height: 26px;
+  height: var(--pill-height);
   padding: 0 22px;
   line-height: 1;
   border: 0;
@@ -2097,8 +2187,14 @@ tr.flash-completed > td.unlock::after {
     flex: 1 1 100%;
     margin-bottom: 0;
   }
+  /* Centred and wider, with the same 8px above (the row gap) and below (the list's top margin, set in the phone block) */
+  .tabs-row {
+    row-gap: 8px;
+  }
   .tabs-row .filters-toggle {
-    margin-right: 0;
+    flex: 0 0 60%;
+    margin: 0 auto;
+    padding: 0 8px;
   }
   .tabs button > span,
   .tabs .tab-static > span {
@@ -2120,4 +2216,50 @@ tr.flash-completed > td.unlock::after {
   width: fit-content;
   margin: 14px auto 0;
   font-style: normal;
+}
+
+/* Jump to top / bottom: phones only, where the page is long. Pinned above the slim bar, below dialogs and the toast. */
+.scroll-jump {
+  display: none;
+}
+@media (max-width: 760px) {
+  .scroll-jump {
+    position: fixed;
+    right: 10px;
+    /* The window's 4px border, the bar (39px) and a 5px gap */
+    bottom: 48px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .scroll-jump button {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    /* A lighter bronze than the window's edge, and the expansion rail's grey gradient (a little see-through, as it floats over the list) */
+    border: 2px solid #d9bf8a;
+    border-radius: 50%;
+    background: linear-gradient(90deg, rgba(31, 31, 31, 0.95), rgba(38, 38, 38, 0.95));
+    color: #e6d3a3;
+    box-shadow:
+      inset 0 1px 3px #000,
+      0 2px 8px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
+  .scroll-jump button:active {
+    background: rgba(0, 0, 0, 0.95);
+  }
+  .scroll-jump button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+  .scroll-jump svg {
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 }
