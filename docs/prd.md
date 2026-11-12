@@ -456,7 +456,9 @@ properly; don't promote the prototype code.
   lightened so it stays readable on the charcoal window.
 - **Buttons:** embossed grey pill-shaped buttons with a black edge, in a footer bar. The Filters
   toggle uses the same pill and, when open, shows an inset bevel and a gold label. The Update
-  button keeps its bordered look. Hover, pressed and focus states are consistent across all of them.
+  button keeps its bordered look. The footer's Clear Shown and Complete Shown buttons have an even
+  10px of padding above and below, with a gold double chevron (an inline SVG, so it centres the same in
+  every browser) between them. Hover, pressed and focus states are consistent across all of them.
 - **Text fields:** Search, the Type and Optional challenges drop-downs and the Characters form fields
   look like the game's text fields: a dark recessed box with a thin light-grey border, small rounded
   corners and a faint inner shadow. Hover brightens the border; focus shows a gold border and soft glow.
@@ -466,7 +468,8 @@ properly; don't promote the prototype code.
   with a highlight on the grey body, shared by every dialog, menu and message. Each dialog's title sits
   in a title bar like the window's, with a black line beneath it, and its buttons sit in a footer band
   under a matching black line. Dialogs fade and scale in.
-  Messages appear briefly near the bottom of the screen.
+  Messages appear briefly near the bottom of the screen; a message built from several parts shows each
+  on its own line.
 - **Site icon:** the browser tab shows the Main Scenario Quest icon; the home-screen icon is the same
   icon on a dark tile with a bronze border.
 - **Motion:** feedback and orientation only, never needed to read a state, and switched off by the

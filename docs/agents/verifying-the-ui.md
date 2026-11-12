@@ -4,9 +4,11 @@ Start the app with `preview_start {name: "dev"}` (`.claude/launch.json`).
 
 For a wiki update preview or the automatic update notice, read `docs/agents/verifying-updates.md`. For offline support or the service worker, read `docs/agents/verifying-offline.md`.
 
+- **The settled look (pill bevels, fonts, colours) is recorded in `docs/prototypes/ui-verdict.md` and in CSS comments, beyond the PRD.** A ticket that changes the look edits those too, or they go stale.
 - **Open the ticket's reference image with `Read` before building a visual change, and compare it with a zoomed screenshot before ticking a visual criterion.** A prose description of a reference can be wrong (a ticket said "dark fields" for a light-grey reference; the build was redone twice). Reference images live under `docs/reference/`; a ticket that names a reference without one there is missing it, so ask the owner for it first.
   - **A ticket whose decisions describe how something looks, with no reference at all, is missing one too.** Prose like "a small badge at its bottom-right" produced four redesigns of a 22px button (badge, ring, red/green dots, red dot). Before committing to a design, build the one or two candidates, magnify them (see below) and send the owner the screenshot with `SendUserFile`; build the one they pick.
 - **Drive forms with `form_input`, `find` and `javascript_tool`.** Typing with `computer` into dialog fields lost keystrokes here, and a screenshot taken straight after an action can show the state before it.
+- **Measure a glyph's ink, not its box.** A text icon's line box can be centred while the drawn shape sits off (the footer chevron, #91). Draw icons as inline SVG, since fonts differ per browser and the pane is Chromium only; leave cross-browser alignment unticked under **Needs owner check**.
 - **Prove styling with computed styles** (`getComputedStyle(el)` through `javascript_tool`: font family, size, transform), then take one screenshot for the owner.
 - **Set up state through `localStorage`** (`contentUnlockLog.progress`, `contentUnlockLog.currentCharacter`), then reload: faster than clicking through the UI.
 - **Wait about 500ms after an action, then read the page, before any screenshot or zoom.** A capture straight after a click, a reload or a style edit shows the old render; re-capture once before concluding a change did not apply.
