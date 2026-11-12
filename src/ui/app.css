@@ -913,15 +913,15 @@ tr.flash-completed > td.unlock::after {
 .dialog.help-dialog {
   display: flex;
   flex-direction: column;
-  /* Never larger than the app window behind it: the page's 18px padding plus the window's 4px frame on each
-     side, and the window's own height (it is never shorter than 480px). */
-  width: min(1040px, calc(100vw - 44px));
-  max-height: max(472px, calc(100dvh - 44px));
+  /* Never larger than the app window behind it, with 12px of the app showing on every side: the page's 18px
+     padding plus the window's 4px frame, and the window's own height (it is never shorter than 480px). */
+  width: min(1040px, calc(100vw - 68px));
+  max-height: max(448px, calc(100dvh - 68px));
 }
 /* A viewport shorter than the window's 480px minimum scrolls the page, and its scrollbar narrows the window. */
 @media (max-height: 515px) {
   .dialog.help-dialog {
-    width: min(1040px, calc(100vw - 62px));
+    width: min(1040px, calc(100vw - 86px));
   }
 }
 /* The title and Close button stay put; only the help text scrolls. Three columns on a wide screen (controls,
