@@ -103,6 +103,11 @@ a:hover {
     0 18px 50px rgba(0, 0, 0, 0.9);
 }
 
+/* The wrapper of everything that scrolls together on a phone: no box of its own elsewhere */
+.window-scroll {
+  display: contents;
+}
+
 /* Title bar: condensed title at the left, the character at the right, on one centre line */
 .title-bar {
   display: flex;
@@ -1311,12 +1316,24 @@ tr.flash-completed > td.unlock::after {
   .page {
     padding: 0;
   }
+  /* The window is as tall as the screen, so its border shows on every side all the time, and its content scrolls
+     inside it (.window-scroll). The rounded inner edge trims the scrolling content and the square pinned bar. */
   .window {
-    height: auto;
-    min-height: 100dvh;
-    /* The pinned bar is square, so mid-page nothing shows behind it; at the page's end the window's rounded
-       inner edge trims its bottom corners. `clip`, not `hidden`, so the bar can still stick. */
-    overflow: clip;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .window-scroll {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  /* Every child keeps its natural height: the window-body's flex: 1 would otherwise collapse it to nothing */
+  .window-scroll > * {
+    flex: none;
   }
   .title-bar {
     padding: 6px 10px;

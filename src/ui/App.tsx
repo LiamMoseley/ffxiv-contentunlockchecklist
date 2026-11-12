@@ -229,11 +229,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const listKey = availableOpen ? "available" : `${expansion}:${activeTab}`;
   const shownKey = useDeferredValue(listKey);
   const switching = shownKey !== listKey;
-  // A new expansion or section starts at the top: the list's own scroller, and the page where it scrolls instead (phones).
+  // A new expansion or section starts at the top: the list's own scroller, and the window's content where that
+  // scrolls instead (phones).
   const scrollRef = useRef<HTMLDivElement>(null);
+  const windowScrollRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
-    if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+    if (windowScrollRef.current) windowScrollRef.current.scrollTop = 0;
   }, [shownKey]);
   const lastShown = useRef(listing);
   if (!switching) lastShown.current = listing;
@@ -264,238 +266,245 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
     <ChangedByHandContext.Provider value={flash !== null}>
       <div className="page">
         <div className="window">
-          <header className="title-bar">
-            <h1>Content Unlock Log</h1>
-            <button
-              type="button"
-              className="character"
-              aria-haspopup="dialog"
-              aria-label={`Current character: ${log.characterLabel(character)}. Switch character`}
-              onClick={() => setCharacterMenuOpen(true)}
-            >
-              {character.level !== null && <span className="character-level">Level {character.level} ·</span>}
-              {/* eslint-disable-next-line no-restricted-syntax -- the title bar styles name and World apart */}
-              <span className="character-name">{character.name}</span>
-              {character.world && <span className="character-world">({character.world})</span>}
-            </button>
-          </header>
+          {/* Everything but the jump buttons scrolls together on a phone; on desktop the wrapper has no box of its own */}
+          <div className="window-scroll" ref={windowScrollRef}>
+            <header className="title-bar">
+              <h1>Content Unlock Log</h1>
+              <button
+                type="button"
+                className="character"
+                aria-haspopup="dialog"
+                aria-label={`Current character: ${log.characterLabel(character)}. Switch character`}
+                onClick={() => setCharacterMenuOpen(true)}
+              >
+                {character.level !== null && <span className="character-level">Level {character.level} ·</span>}
+                {/* eslint-disable-next-line no-restricted-syntax -- the title bar styles name and World apart */}
+                <span className="character-name">{character.name}</span>
+                {character.world && <span className="character-world">({character.world})</span>}
+              </button>
+            </header>
 
-          <div className={`window-body${railCollapsed ? " collapsed" : ""}`}>
-            <ExpansionRail
-              log={log}
-              chosen={expansion}
-              noneChosen={viewingNew || availableOpen}
-              celebrating={celebrating}
-              availableOpen={availableOpen}
-              onChooseAvailable={() => {
-                // Available now replaces the NEW view; choosing a tile leaves it.
-                log.showAvailableNow();
-                refresh();
-              }}
-              onChoose={setExpansion}
-              collapsed={railCollapsed}
-              onToggleCollapsed={() => {
-                log.setRailCollapsed(!railCollapsed);
-                refresh();
-              }}
-            />
-
-            <main className="main">
-              <UpdateNotice
+            <div className={`window-body${railCollapsed ? " collapsed" : ""}`}>
+              <ExpansionRail
                 log={log}
-                onReview={(preview) => setUpdate({ preview })}
-                onDismiss={() => {
-                  log.dismissUpdateNotice();
+                chosen={expansion}
+                noneChosen={viewingNew || availableOpen}
+                celebrating={celebrating}
+                availableOpen={availableOpen}
+                onChooseAvailable={() => {
+                  // Available now replaces the NEW view; choosing a tile leaves it.
+                  log.showAvailableNow();
+                  refresh();
+                }}
+                onChoose={setExpansion}
+                collapsed={railCollapsed}
+                onToggleCollapsed={() => {
+                  log.setRailCollapsed(!railCollapsed);
                   refresh();
                 }}
               />
-              <NewNotice
-                log={log}
-                viewing={viewingNew}
-                onShow={() => {
-                  log.showNewEntries();
-                  refresh();
-                }}
-                onShowAll={() => {
-                  log.showAllEntries();
-                  refresh();
-                }}
-                onMarkSeen={() => {
-                  const n = log.markNewSeen();
-                  refresh();
-                  say(`Marked ${entryCount(n)} as seen.`);
-                }}
-              />
-              <div className="tabs-row">
-                {availableTab ? (
-                  <div className="tabs">
-                    <h2 className="tab-static">
-                      <span>
-                        {availableTab.label}
-                        {availableTab.rows !== null && (
-                          <>
-                            {" "}
-                            <span className="count">({availableTab.rows})</span>
-                          </>
-                        )}
-                      </span>
-                    </h2>
-                  </div>
-                ) : (
-                  <SectionTabs
-                    tabs={tabs}
 
-                    active={viewingNew ? null : activeTab}
-                    onChoose={(key) => expansion !== "all" && setTab(key)}
-                    label="Sections"
-                  />
-                )}
-                <button
-                  type="button"
-                  className="filters-toggle"
-                  aria-expanded={filtersOpen}
-                  aria-controls="filter-bar"
-                  onClick={() => setFiltersOpen(!filtersOpen)}
-                >
-                  Filters
-                  {activeFilters > 0 && (
-                    <span
-                      className="filters-active"
-                      title={`${activeFilters} active`}
-                      aria-label={`${activeFilters} active`}
-                    >
-                      {activeFilters}
-                    </span>
-                  )}{" "}
-                  {filtersOpen ? "▴" : "▾"}
-                </button>
-              </div>
-              <FilterBar
-                log={log}
-                searchRef={searchRef}
-                onChange={refresh}
-                open={filtersOpen}
-                alwaysHidingMarked={availableOpen}
-              />
-              <div className="scroll" ref={scrollRef}>
-                <SwitchFade switchKey={shownKey}>
-                  {shownListing.view === "available" ? (
-                    <AvailableNow
-                      log={log}
-                      listing={shownListing}
-                      expansionNames={expansionNames}
-                      mode={displayMode}
-                      actions={actions}
-                      onSetLevel={() => setCharacterMenuOpen(true)}
-                    />
-                  ) : shownListing.view === "new" ? (
-                    <NewEntriesView
-                      log={log}
-                      sections={shownListing.sections}
-                      expansionNames={expansionNames}
-                      mode={displayMode}
-                      actions={actions}
-                    />
+              <main className="main">
+                <UpdateNotice
+                  log={log}
+                  onReview={(preview) => setUpdate({ preview })}
+                  onDismiss={() => {
+                    log.dismissUpdateNotice();
+                    refresh();
+                  }}
+                />
+                <NewNotice
+                  log={log}
+                  viewing={viewingNew}
+                  onShow={() => {
+                    log.showNewEntries();
+                    refresh();
+                  }}
+                  onShowAll={() => {
+                    log.showAllEntries();
+                    refresh();
+                  }}
+                  onMarkSeen={() => {
+                    const n = log.markNewSeen();
+                    refresh();
+                    say(`Marked ${entryCount(n)} as seen.`);
+                  }}
+                />
+                <div className="tabs-row">
+                  {availableTab ? (
+                    <div className="tabs">
+                      <h2 className="tab-static">
+                        <span>
+                          {availableTab.label}
+                          {availableTab.rows !== null && (
+                            <>
+                              {" "}
+                              <span className="count">({availableTab.rows})</span>
+                            </>
+                          )}
+                        </span>
+                      </h2>
+                    </div>
                   ) : (
-                    shownListing.sections.map((section) => (
-                      <SectionPanel
-                        key={section.id}
+                    <SectionTabs
+                      tabs={tabs}
+
+                      active={viewingNew ? null : activeTab}
+                      onChoose={(key) => expansion !== "all" && setTab(key)}
+                      label="Sections"
+                    />
+                  )}
+                  <button
+                    type="button"
+                    className="filters-toggle"
+                    aria-expanded={filtersOpen}
+                    aria-controls="filter-bar"
+                    onClick={() => setFiltersOpen(!filtersOpen)}
+                  >
+                    Filters
+                    {activeFilters > 0 && (
+                      <span
+                        className="filters-active"
+                        title={`${activeFilters} active`}
+                        aria-label={`${activeFilters} active`}
+                      >
+                        {activeFilters}
+                      </span>
+                    )}{" "}
+                    {filtersOpen ? "▴" : "▾"}
+                  </button>
+                </div>
+                <FilterBar
+                  log={log}
+                  searchRef={searchRef}
+                  onChange={refresh}
+                  open={filtersOpen}
+                  alwaysHidingMarked={availableOpen}
+                />
+                <div className="scroll" ref={scrollRef}>
+                  <SwitchFade switchKey={shownKey}>
+                    {shownListing.view === "available" ? (
+                      <AvailableNow
                         log={log}
-                        section={section}
-                        expansionName={expansionNames.get(section.expansionId) ?? ""}
+                        listing={shownListing}
+                        expansionNames={expansionNames}
+                        mode={displayMode}
+                        actions={actions}
+                        onSetLevel={() => setCharacterMenuOpen(true)}
+                      />
+                    ) : shownListing.view === "new" ? (
+                      <NewEntriesView
+                        log={log}
+                        sections={shownListing.sections}
+                        expansionNames={expansionNames}
                         mode={displayMode}
                         actions={actions}
                       />
-                    ))
-                  )}
-                </SwitchFade>
-              </div>
-            </main>
-          </div>
+                    ) : (
+                      shownListing.sections.map((section) => (
+                        <SectionPanel
+                          key={section.id}
+                          log={log}
+                          section={section}
+                          expansionName={expansionNames.get(section.expansionId) ?? ""}
+                          mode={displayMode}
+                          actions={actions}
+                        />
+                      ))
+                    )}
+                  </SwitchFade>
+                </div>
+              </main>
+            </div>
 
-          {characterMenuOpen && (
-            <CharacterMenu
-              log={log}
-              onClose={() => setCharacterMenuOpen(false)}
-              onChange={(message) => {
-                refresh();
-                if (message) say(message);
-              }}
-            />
-          )}
-          {confirmingUpdate && (
-            <ConfirmDialog
-              title="Update from the wiki"
-              text="Fetch the latest list from the wiki and review what changed? Nothing is applied until you confirm the changes, and your progress is never changed."
-              confirmLabel="Update"
-              onConfirm={() => {
-                setConfirmingUpdate(false);
-                setUpdate({});
-              }}
-              onCancel={() => setConfirmingUpdate(false)}
-            />
-          )}
-          {update && (
-            <UpdateDialog
-              log={log}
-              preview={update.preview}
-              onClose={() => setUpdate(null)}
-              onChecked={refresh}
-              onApplied={(message) => {
-                setUpdate(null);
-                refresh();
-                say(message);
-              }}
-            />
-          )}
-          {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
-          {confirming && (
-            <ConfirmDialog
-              title={confirming === "complete" ? "Complete Shown" : "Clear Shown"}
-              text={
-                confirming === "complete"
-                  ? `Mark ${entryCount(completeCount)} Completed? Not interested entries are left alone.`
-                  : `Set ${entryCount(clearCount)} back to Unmarked?`
-              }
-              confirmLabel={confirming === "complete" ? "Complete" : "Clear"}
-              onConfirm={confirmBulk}
-              onCancel={() => setConfirming(null)}
-            />
-          )}
+            {characterMenuOpen && (
+              <CharacterMenu
+                log={log}
+                onClose={() => setCharacterMenuOpen(false)}
+                onChange={(message) => {
+                  refresh();
+                  if (message) say(message);
+                }}
+              />
+            )}
+            {confirmingUpdate && (
+              <ConfirmDialog
+                title="Update from the wiki"
+                text="Fetch the latest list from the wiki and review what changed? Nothing is applied until you confirm the changes, and your progress is never changed."
+                confirmLabel="Update"
+                onConfirm={() => {
+                  setConfirmingUpdate(false);
+                  setUpdate({});
+                }}
+                onCancel={() => setConfirmingUpdate(false)}
+              />
+            )}
+            {update && (
+              <UpdateDialog
+                log={log}
+                preview={update.preview}
+                onClose={() => setUpdate(null)}
+                onChecked={refresh}
+                onApplied={(message) => {
+                  setUpdate(null);
+                  refresh();
+                  say(message);
+                }}
+              />
+            )}
+            {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
+            {confirming && (
+              <ConfirmDialog
+                title={confirming === "complete" ? "Complete Shown" : "Clear Shown"}
+                text={
+                  confirming === "complete"
+                    ? `Mark ${entryCount(completeCount)} Completed? Not interested entries are left alone.`
+                    : `Set ${entryCount(clearCount)} back to Unmarked?`
+                }
+                confirmLabel={confirming === "complete" ? "Complete" : "Clear"}
+                onConfirm={confirmBulk}
+                onCancel={() => setConfirming(null)}
+              />
+            )}
 
-          <HintBar
-            mode={displayMode}
-            onMode={chooseDisplayMode}
-            canUndo={log.canUndo()}
-            onUndo={undo}
-            onHelp={() => setHelpOpen(true)}
-            online={online}
-            onUpdate={() => setConfirmingUpdate(true)}
-          />
-          {helpOpen && <HelpDialog onClose={() => setHelpOpen(false)} />}
-          <ScrollJump />
+            <HintBar
+              mode={displayMode}
+              onMode={chooseDisplayMode}
+              canUndo={log.canUndo()}
+              onUndo={undo}
+              onHelp={() => setHelpOpen(true)}
+              online={online}
+              onUpdate={() => setConfirmingUpdate(true)}
+            />
+            {helpOpen && <HelpDialog onClose={() => setHelpOpen(false)} />}
 
-          <div className="button-footer" role="group" aria-label="Shown entries">
-            <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
-              Clear Shown
-            </button>
-            <svg className="chevron" viewBox="0 0 17 9" aria-hidden="true">
-              <path d="M0.75 0.75L8.5 5.25L16.25 0.75M0.75 4.25L8.5 8.75L16.25 4.25" />
-            </svg>
-            <button type="button" disabled={completeCount === 0 || switching} onClick={() => setConfirming("complete")}>
-              Complete Shown
-            </button>
-          </div>
+            <div className="button-footer" role="group" aria-label="Shown entries">
+              <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
+                Clear Shown
+              </button>
+              <svg className="chevron" viewBox="0 0 17 9" aria-hidden="true">
+                <path d="M0.75 0.75L8.5 5.25L16.25 0.75M0.75 4.25L8.5 8.75L16.25 4.25" />
+              </svg>
+              <button
+                type="button"
+                disabled={completeCount === 0 || switching}
+                onClick={() => setConfirming("complete")}
+              >
+                Complete Shown
+              </button>
+            </div>
 
-          <footer className="footer-bar">
-            <span>An unofficial, personal tool. FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
-            <span className="footer-source">
-              <span>
-                Content from <a href={WIKI_PAGE_URL}>Content Unlock</a> on the community FFXIV wiki.
+            <footer className="footer-bar">
+              <span>An unofficial, personal tool. FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved.</span>
+              <span className="footer-source">
+                <span>
+                  Content from <a href={WIKI_PAGE_URL}>Content Unlock</a> on the community FFXIV wiki.
+                </span>
+                <UpdateButton className="in-footer" online={online} onClick={() => setConfirmingUpdate(true)} />
               </span>
-              <UpdateButton className="in-footer" online={online} onClick={() => setConfirmingUpdate(true)} />
-            </span>
-          </footer>
+            </footer>
+          </div>
+          <ScrollJump scroller={windowScrollRef} />
         </div>
       </div>
     </ChangedByHandContext.Provider>

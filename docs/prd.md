@@ -367,8 +367,11 @@ update never undoes my record.*
 play.*
 - Every feature works at phone width without sideways scrolling.
 - Controls that rely on hover elsewhere are always visible on touch screens.
+- The window is as tall as the screen, so its rounded border is always visible on every side, and all of
+  its content (title bar, expansion tiles, list, buttons and legal text) scrolls inside it. The page
+  itself never scrolls.
 - The pinned bottom bar is slim (the (?), Update, Undo, Display Mode). The legal text scrolls
-  with the page at its very end; Clear Shown and Complete Shown stay in the page flow above them.
+  with the content at its very end; Clear Shown and Complete Shown stay in the flow above them.
 - The list sits centred: as far from the window's left edge as from its right.
 - Round Jump to top and Jump to bottom buttons float above the bar, so the player can reach the
   expansion tiles or the Clear Shown, Complete Shown, Update and legal area without a long scroll. Each
