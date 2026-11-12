@@ -22,6 +22,7 @@ import { HelpDialog } from "./HelpDialog";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { ChangedByHandContext, Count, ProgressBar } from "./ProgressBar";
 import { ScrollJump } from "./ScrollJump";
+import { UpdateButton } from "./UpdateButton";
 import { UpdateDialog } from "./UpdateDialog";
 import { SectionTabs, type TabChoice } from "./SectionTabs";
 
@@ -468,6 +469,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             canUndo={log.canUndo()}
             onUndo={undo}
             onHelp={() => setHelpOpen(true)}
+            online={online}
+            onUpdate={() => setConfirmingUpdate(true)}
           />
           {helpOpen && <HelpDialog onClose={() => setHelpOpen(false)} />}
           <ScrollJump />
@@ -490,26 +493,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               <span>
                 Content from <a href={WIKI_PAGE_URL}>Content Unlock</a> on the community FFXIV wiki.
               </span>
-              <button
-                type="button"
-                className="update-button"
-                disabled={!online}
-                aria-label={online ? "Update from the wiki" : "Update from the wiki (offline)"}
-                title={online ? "Update from the wiki" : "You're offline: Update needs the wiki"}
-                onClick={() => setConfirmingUpdate(true)}
-              >
-                <svg
-                  className="update-icon"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path d="M6 1h2v6h2.5L7 10.5 3.5 7H6V1ZM2 11.5h10V13H2v-1.5Z" />
-                </svg>
-                {!online && <span className="update-offline-dot" aria-hidden="true" />}
-              </button>
+              <UpdateButton className="in-footer" online={online} onClick={() => setConfirmingUpdate(true)} />
             </span>
           </footer>
         </div>

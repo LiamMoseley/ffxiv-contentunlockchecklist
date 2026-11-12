@@ -164,7 +164,8 @@ progress.*
 - A legend for the three box states is always visible. The (?) beside it is a button that opens a help
   dialog: mouse, touch and keyboard controls (every shortcut the app binds), the three status boxes and
   Undo. Escape or Close closes it and returns focus to the (?). At phone width the legend is hidden
-  (the help explains it) and the bottom bar is a slim pinned strip of the (?), Undo and Display Mode.
+  (the help explains it) and the bottom bar is a slim pinned strip of the (?), the Update button, Undo
+  and Display Mode.
 - Completed entries are visibly distinct and dimmed, but stay readable.
 - All progress counts and bars update immediately.
 - Finishing a whole section is acknowledged with a short message.
@@ -366,7 +367,7 @@ update never undoes my record.*
 play.*
 - Every feature works at phone width without sideways scrolling.
 - Controls that rely on hover elsewhere are always visible on touch screens.
-- The pinned bottom bar is slim (Undo, Display Mode, the (?)). The legal text and Update link scroll
+- The pinned bottom bar is slim (the (?), Update, Undo, Display Mode). The legal text scrolls
   with the page at its very end; Clear Shown and Complete Shown stay in the page flow above them.
 - The list sits centred: as far from the window's left edge as from its right.
 - Round Jump to top and Jump to bottom buttons float above the bar, so the player can reach the
