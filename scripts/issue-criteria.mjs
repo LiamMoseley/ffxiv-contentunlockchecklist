@@ -53,7 +53,15 @@ if (command === "tick" || command === "untick") {
   }
   result = [...lines];
   const [from, to] = command === "tick" ? [/^- \[ \]/, "- [x]"] : [/^- \[[xX]\]/, "- [ ]"];
-  for (const n of chosen) result[criterionAt[n - 1]] = result[criterionAt[n - 1]].replace(from, to);
+  for (const n of chosen) {
+    const at = criterionAt[n - 1];
+    // Only the owner ticks a **Needs owner check** criterion, in GitHub after looking (docs/agents/issue-tracker.md).
+    if (command === "tick" && /^- \[ \] \*\*Needs owner check/.test(lines[at])) {
+      console.error(`Left criterion ${n} unticked: it is for the owner to check.`);
+      continue;
+    }
+    result[at] = result[at].replace(from, to);
+  }
 } else if (command === "reword") {
   const n = Number(args[0]);
   if (!Number.isInteger(n) || n < 1 || n > criterionAt.length || args.length < 2) {
@@ -65,6 +73,8 @@ if (command === "tick" || command === "untick") {
   const at = criterionAt[n - 1];
   let end = at;
   while (end + 1 < lines.length && lines[end + 1].trim() !== "" && !/^(- |#)/.test(lines[end + 1])) end++;
+  // Says what it replaced: numbers shift as criteria are added, and #99 reworded the wrong one.
+  console.error(`Replacing criterion ${n}: ${lines[at]}`);
   result.splice(at, end - at + 1, `${lines[at].slice(0, 5)} ${args.slice(1).join(" ")}`);
 } else {
   // A criterion can wrap onto continuation lines: insert after the last of them.
