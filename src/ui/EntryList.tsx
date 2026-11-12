@@ -117,7 +117,11 @@ let pressTimer: ReturnType<typeof setTimeout> | undefined;
 let longPressed = false;
 let lastPointerWasTouch = false;
 
-const cancelLongPress = () => clearTimeout(pressTimer);
+// Cancelling must not clear the flag-reset timer, only a press still pending.
+const cancelLongPress = () => {
+  if (!longPressed) clearTimeout(pressTimer);
+};
+const onLink = (event: { target: EventTarget }) => event.target instanceof Element && !!event.target.closest("a");
 
 /**
  * What makes an entry focusable and operable: left click (or a tap, or Space while the entry itself is
@@ -135,6 +139,8 @@ function entryProps(actions: EntryActions, entryId: string) {
       actions.onToggleCompleted(entryId);
     },
     onContextMenu: (event: MouseEvent) => {
+      // A wiki link keeps its own menu (open in a new tab).
+      if (onLink(event)) return;
       event.preventDefault();
       if (!lastPointerWasTouch) actions.onToggleNotInterested(entryId);
     },
@@ -142,10 +148,12 @@ function entryProps(actions: EntryActions, entryId: string) {
       lastPointerWasTouch = event.pointerType === "touch";
       longPressed = false;
       cancelLongPress();
-      if (!lastPointerWasTouch) return;
+      if (!lastPointerWasTouch || onLink(event)) return;
       pressTimer = setTimeout(() => {
         longPressed = true;
         actions.onToggleNotInterested(entryId);
+        // The click that follows the lift is swallowed; if none comes, don't swallow a later one.
+        pressTimer = setTimeout(() => (longPressed = false), 1000);
       }, LONG_PRESS_MS);
     },
     onPointerUp: cancelLongPress,
