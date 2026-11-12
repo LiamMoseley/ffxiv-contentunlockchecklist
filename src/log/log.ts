@@ -800,6 +800,11 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
         .sort((a, b) => b.count - a.count),
     /** Available now's own reading of the listing: see `listing`. */
     availableNow,
+    /** The text of Available now's tab: the levels it covers, or its name while the character has no level. */
+    availableTabLabel(): string {
+      const { level } = currentCharacter();
+      return level === null ? "Available now" : `Level 1 to ${level}`;
+    },
     sectionProgress(sectionId: string): ProgressCount {
       return progressOf([sectionOrThrow(sectionId)]);
     },

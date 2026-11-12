@@ -297,12 +297,13 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   say(`Marked ${entryCount(n)} as seen.`);
                 }}
               />
-              <div className={`tabs-row${availableOpen ? " available" : ""}`}>
+              <div className="tabs-row">
                 {availableOpen ? (
-                  <>
-                    <h2 className="available-title">Available now</h2>
-                    <div className="tabs-spacer" />
-                  </>
+                  <div className="tabs">
+                    <h2 className="tab-static">
+                      <span>{log.availableTabLabel()}</span>
+                    </h2>
+                  </div>
                 ) : (
                   <SectionTabs
                     tabs={tabs}

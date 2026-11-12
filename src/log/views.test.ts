@@ -145,4 +145,26 @@ describe("the open view and what it lists", () => {
       expect(log.clearShownCount()).toBe(0);
     });
   });
+
+  describe("the Available now tab's text", () => {
+    it("reads 'Level 1 to X' for the character's level, and follows a level change or a character switch", () => {
+      const { log } = openLog();
+      const first = log.currentCharacter().id;
+      log.editCharacter(first, { name: "Adventurer", level: 85 });
+      expect(log.availableTabLabel()).toBe("Level 1 to 85");
+      log.editCharacter(first, { name: "Adventurer", level: 30 });
+      expect(log.availableTabLabel()).toBe("Level 1 to 30");
+      const second = log.addCharacter({ name: "Second", level: 12 });
+      if (!second.ok) throw new Error("expected the character to be added");
+      log.switchCharacter(second.character.id);
+      expect(log.availableTabLabel()).toBe("Level 1 to 12");
+      log.switchCharacter(first);
+      expect(log.availableTabLabel()).toBe("Level 1 to 30");
+    });
+
+    it("reads 'Available now' while the character has no level", () => {
+      const { log } = openLog();
+      expect(log.availableTabLabel()).toBe("Available now");
+    });
+  });
 });
