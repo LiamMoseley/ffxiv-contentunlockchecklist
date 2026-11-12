@@ -117,11 +117,30 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
 
   const say = (text: string) => setToast({ id: ++toastCount.current, text });
 
-  /** Shows the message for a change, adding a note for each section it finished. */
+  // The expansions whose rail tile is celebrating, each with a counter so a repeat restarts the animation.
+  // Only a change that crosses an expansion to 100% sets it; load, switching Character and Undo never do.
+  const [celebrating, setCelebrating] = useState<Record<string, number>>({});
+  const celebrationCount = useRef(0);
+  // Cleared on a timer, like the row flash, so a tile that remounts later does not replay it.
+  useEffect(() => {
+    if (Object.keys(celebrating).length === 0) return;
+    const timer = setTimeout(() => setCelebrating({}), 1500);
+    return () => clearTimeout(timer);
+  }, [celebrating]);
+  const expansionName = (id: string) => log.expansions().find((e) => e.id === id)?.name ?? "";
+
+  /** Shows the message for a change, adding a note for each section and expansion it finished. */
   const announce = (text: string | null, result: ChangeResult) => {
     refresh();
     if (result.changed === 0) return;
-    const finished = result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`);
+    if (result.expansionsCompleted.length > 0) {
+      const count = ++celebrationCount.current;
+      setCelebrating((now) => ({ ...now, ...Object.fromEntries(result.expansionsCompleted.map((id) => [id, count])) }));
+    }
+    const finished = [
+      ...result.sectionsFinished.map((id) => `${sectionNames.get(id)} complete!`),
+      ...result.expansionsCompleted.map((id) => `${expansionName(id)} complete!`),
+    ];
     // A single row's change needs no message of its own; only finishing a section is worth one.
     const message = [text, ...finished].filter(Boolean).join("\n");
     if (message) say(message);
@@ -264,6 +283,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
               log={log}
               chosen={expansion}
               noneChosen={viewingNew || availableOpen}
+              celebrating={celebrating}
               availableOpen={availableOpen}
               onChooseAvailable={() => {
                 // Available now replaces the NEW view; choosing a tile leaves it.

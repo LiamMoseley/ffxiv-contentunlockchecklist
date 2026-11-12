@@ -21,9 +21,12 @@ export function ExpansionRail({
   collapsed,
   onToggleCollapsed,
   noneChosen = false,
+  celebrating = {},
   availableOpen = false,
   onChooseAvailable,
 }: {
+  /** Expansions that just reached 100%, each with a counter that changes on every new celebration. */
+  celebrating?: Record<string, number>;
   /** Available now is showing: its tile is highlighted. */
   availableOpen?: boolean;
   onChooseAvailable: () => void;
@@ -105,6 +108,7 @@ export function ExpansionRail({
           progress={log.expansionProgress(expansion.id)}
           chosen={!noneChosen && chosen === expansion.id}
           hasNew={log.expansionHasNew(expansion.id)}
+          celebration={celebrating[expansion.id]}
           onClick={() => onChoose(expansion.id)}
         />
       ))}
@@ -133,8 +137,11 @@ function Tile({
   progress,
   chosen,
   hasNew = false,
+  celebration,
   onClick,
 }: {
+  /** Set while the tile celebrates reaching 100%; a new value restarts the animation. */
+  celebration?: number;
   /** The expansion has NEW entries not yet seen. */
   hasNew?: boolean;
   className?: string;
@@ -161,6 +168,12 @@ function Tile({
       <span className="tile">
         <Pictogram name={pictogram} />
         {hasNew && <span className="tile-new">NEW</span>}
+        {celebration !== undefined && (
+          <span key={celebration} className="tile-celebrate" aria-hidden="true">
+            <span className="tile-sweep" />
+            <span className="tile-ring" />
+          </span>
+        )}
       </span>
       <span className="rail-text">
         <span className="rail-name">

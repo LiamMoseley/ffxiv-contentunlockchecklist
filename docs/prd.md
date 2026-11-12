@@ -502,6 +502,12 @@ properly; don't promote the prototype code.
   - The filter bar slides open and shut (height plus fade, about 200ms) and its controls can't be focused
     while it is closed.
   - Progress bar fills animate, with a brief flash when an expansion reaches 100%.
+  - An expansion reaching 100% (every entry in its two sections that is not Not interested is Completed,
+    as the progress bar counts it) plays a gold sweep across its rail tile, then a ring burst around it,
+    and a toast says the expansion is complete. It plays on the collapsed rail's tile too, and for Complete
+    Shown. It plays only when a change crosses to 100%: never on load, on switching character, or for an
+    expansion already at 100%; Undo then completing again plays it again; an expansion with no counted
+    entries never celebrates. Under reduced motion only the toast shows.
   - Switching expansion or section, or to or from Available now, fades the list in with a short upward
     slide (not on Firefox-based browsers, where it hitches), and the rail's active marker slides to the
     chosen tile.

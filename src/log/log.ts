@@ -34,8 +34,11 @@ export type Clock = { now(): Date };
 /** Completed entries out of the entries counted; Not interested entries are in neither number. */
 export type ProgressCount = { completed: number; total: number };
 
-/** What a command changed: how many entries, and the IDs of sections it brought to fully Completed. */
-export type ChangeResult = { changed: number; sectionsFinished: string[] };
+/**
+ * What a command changed: how many entries, the IDs of sections it brought to fully Completed, and the IDs
+ * of expansions it took to 100% (as the progress bar counts it; an expansion with nothing counted never is).
+ */
+export type ChangeResult = { changed: number; sectionsFinished: string[]; expansionsCompleted: string[] };
 
 /** The entries available now, grouped by the section they belong to; `level` is null when the character has none. */
 export type Available = {
@@ -359,6 +362,7 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     next: Map<string, EntryStatus>,
   ): ChangeResult & { earlier: Map<string, EntryStatus> } {
     const finishedBefore = new Set(content.sections.filter((s) => isFinished(s, characterId)).map((s) => s.id));
+    const completeBefore = new Set(completeExpansions(characterId));
     const earlier = new Map<string, EntryStatus>();
     const stamp = now();
     const records = { ...progress.statuses[characterId] };
@@ -375,7 +379,21 @@ export function createLog({ content: bundled, storage, clock, wiki }: LogOptions
     const sectionsFinished = content.sections
       .filter((s) => !finishedBefore.has(s.id) && isFinished(s, characterId))
       .map((s) => s.id);
-    return { changed: earlier.size, sectionsFinished, earlier };
+    const expansionsCompleted = completeExpansions(characterId).filter((id) => !completeBefore.has(id));
+    return { changed: earlier.size, sectionsFinished, expansionsCompleted, earlier };
+  }
+
+  /** The IDs of the expansions whose counted entries are all Completed, and at least one is counted. */
+  function completeExpansions(characterId: string): string[] {
+    return content.expansions
+      .filter((expansion) => {
+        const { completed, total } = progressOf(
+          content.sections.filter((s) => s.expansionId === expansion.id),
+          characterId,
+        );
+        return total > 0 && completed === total;
+      })
+      .map((expansion) => expansion.id);
   }
 
   /** A change the player can undo: every command that changes statuses goes through here. */

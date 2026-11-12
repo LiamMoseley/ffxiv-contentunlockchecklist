@@ -656,6 +656,67 @@ describe("finishing a section", () => {
   });
 });
 
+describe("completing an expansion", () => {
+  const expansionOf = (log: ReturnType<typeof openLog>["log"], id: string) =>
+    log.sections().filter((s) => s.expansionId === id);
+  const idsOf = (log: ReturnType<typeof openLog>["log"], id: string) =>
+    expansionOf(log, id).flatMap((s) => s.entries.map((e) => e.id));
+
+  it("reports the expansion when its last counted entry is Completed, and not before", () => {
+    const { log } = openLog();
+    const ids = idsOf(log, "arr");
+    for (const id of ids.slice(0, -1)) expect(log.setEntryStatus(id, "completed").expansionsCompleted).toEqual([]);
+    expect(log.setEntryStatus(ids.at(-1)!, "completed").expansionsCompleted).toEqual(["arr"]);
+  });
+
+  it("does not report an expansion that was already at 100%", () => {
+    const { log } = openLog();
+    for (const id of idsOf(log, "arr")) log.setEntryStatus(id, "completed");
+    const extra = log.sections().find((s) => s.expansionId !== "arr")!.entries[0].id;
+    expect(log.setEntryStatus(extra, "completed").expansionsCompleted).toEqual([]);
+    expect(log.setEntryStatus(extra, "notInterested").expansionsCompleted).toEqual([]);
+  });
+
+  it("reports it again when completed again after an Undo", () => {
+    const { log } = openLog();
+    const ids = idsOf(log, "arr");
+    for (const id of ids) log.setEntryStatus(id, "completed");
+    log.undo();
+    expect(log.expansionProgress("arr").completed).toBe(ids.length - 1);
+    expect(log.setEntryStatus(ids.at(-1)!, "completed").expansionsCompleted).toEqual(["arr"]);
+  });
+
+  it("reports an expansion a bulk Complete Shown takes to 100%", () => {
+    const { log } = openLog();
+    log.setSelection({ expansion: "arr", tab: "levelling" });
+    expect(log.completeShown().expansionsCompleted).toEqual([]);
+    log.setSelection({ expansion: "arr", tab: "levelCap" });
+    expect(log.completeShown().expansionsCompleted).toEqual(["arr"]);
+  });
+
+  it("reports an expansion finished by setting its last open entry to Not interested", () => {
+    const { log } = openLog();
+    const ids = idsOf(log, "arr");
+    for (const id of ids.slice(0, -1)) log.setEntryStatus(id, "completed");
+    expect(log.setEntryStatus(ids.at(-1)!, "notInterested").expansionsCompleted).toEqual(["arr"]);
+  });
+
+  it("never reports an expansion whose entries are all Not interested", () => {
+    const { log } = openLog();
+    const ids = idsOf(log, "arr");
+    for (const id of ids) expect(log.setEntryStatus(id, "notInterested").expansionsCompleted).toEqual([]);
+    expect(log.expansionProgress("arr")).toEqual({ completed: 0, total: 0 });
+  });
+
+  it("reports nothing when switching Character", () => {
+    const { log } = openLog();
+    for (const id of idsOf(log, "arr")) log.setEntryStatus(id, "completed");
+    const other = log.addCharacter({ name: "Other" });
+    if (other.ok) log.switchCharacter(other.character.id);
+    expect(log.setEntryStatus(idsOf(log, "arr")[0], "completed").expansionsCompleted).toEqual([]);
+  });
+});
+
 describe("adding characters", () => {
   it("adds a character with a name and optionally a World, Data Center and level", () => {
     const { log } = openLog();
