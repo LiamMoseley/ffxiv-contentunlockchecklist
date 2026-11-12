@@ -420,8 +420,8 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
               Clear Shown
             </button>
-            <svg className="chevron" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 5l9 7 9-7M3 12l9 7 9-7" />
+            <svg className="chevron" viewBox="0 0 17 9" aria-hidden="true">
+              <path d="M0.75 0.75L8.5 5.25L16.25 0.75M0.75 4.25L8.5 8.75L16.25 4.25" />
             </svg>
             <button type="button" disabled={completeCount === 0 || switching} onClick={() => setConfirming("complete")}>
               Complete Shown
