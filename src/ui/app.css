@@ -28,6 +28,8 @@
   --dialog-gap: 12px;
   --section-head-height: 38px;
   --column-head-height: 24px;
+  /* The embossed pill buttons' height (Undo, Clear Shown, Filters), which the phone bar's other controls match */
+  --pill-height: 26px;
   --wrapped-head-clearance: 80px;
   --scrollbar-allowance: 18px;
   --bronze: linear-gradient(#ecd9a6, #c09a5c 28%, #7c5d33 55%, #a07c47 78%, #e0c68e);
@@ -1461,16 +1463,16 @@ tr.flash-completed > td.unlock::after {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
   }
-  /* The (?) and the toggles are as tall as Undo (26px) for a touch screen */
+  /* The (?) and the toggles are as tall as Undo for a touch screen */
   .hint-bar .hint-icon {
     grid-column: 1;
     justify-self: start;
-    width: 26px;
-    height: 26px;
+    width: var(--pill-height);
+    height: var(--pill-height);
     font-size: 14px;
   }
   .hint-bar .display-mode button {
-    height: 26px;
+    height: var(--pill-height);
   }
   .hint-bar button.undo {
     grid-column: 2;
@@ -1564,7 +1566,7 @@ tr.flash-completed > td.unlock::after {
     box-shadow 0.15s;
   align-items: center;
   justify-content: center;
-  height: 26px;
+  height: var(--pill-height);
   padding: 0 22px;
   line-height: 1;
   border: 0;
