@@ -921,7 +921,18 @@ tr.flash-completed > td.unlock::after {
   min-height: 0;
   overflow-y: auto;
 }
-/* Section headings share the Characters menu's look, divider line included; the first has nothing above it. */
+/* Gold condensed headings with the Characters menu's divider line above; the first has nothing above it. */
+.help-body h3 {
+  margin: 16px 0 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font:
+    700 15px/1 "Barlow Condensed",
+    sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f0c35a;
+}
 .help-body section:first-child h3 {
   margin-top: 0;
   padding-top: 0;
@@ -1622,8 +1633,7 @@ tr.flash-completed > td.unlock::after {
 .character-actions + .character-actions {
   margin-top: 8px;
 }
-.character-section-title,
-.help-body h3 {
+.character-section-title {
   margin: 16px 0 8px;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
