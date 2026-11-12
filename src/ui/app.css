@@ -1221,12 +1221,16 @@ tr.flash-completed > td.unlock::after {
   min-width: 150px;
 }
 .chevron {
-  color: var(--gold);
-  font-size: 22px;
-  line-height: 1;
-  /* The glyph's ink sits about 0.75px above its line box's centre, so nudge it down to the buttons' middle */
-  transform: translateY(0.75px);
-  text-shadow: 0 0 6px rgba(240, 195, 90, 0.6);
+  /* An SVG rather than a font glyph: fonts place the glyph differently per browser, so it sat off-centre in Firefox */
+  flex: none;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(240, 195, 90, 0.6));
 }
 @media (max-width: 760px) {
   .button-footer button {
