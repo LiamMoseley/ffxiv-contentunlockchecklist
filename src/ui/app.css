@@ -1437,8 +1437,11 @@ tr.flash-completed > td.unlock::after {
   .entry-card {
     scroll-margin-bottom: 48px;
   }
+  /* At the very end of the page the Jump to top button floats over the footer's right edge, where the Update
+     button is: the extra bottom padding scrolls the footer clear of it (bar 39px + button 40px + gaps). */
   .footer-bar {
     border-radius: 0;
+    padding-bottom: 58px;
   }
 }
 
