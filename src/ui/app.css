@@ -512,8 +512,10 @@ a:hover {
 .tabs button:hover::before {
   background: linear-gradient(#787878, #575757 55%, #474747);
 }
-/* The triangle is a layer of the skewed tab itself, so it always sits in the bottom-left corner */
-.tabs button.active::before {
+/* The triangle is a layer of the skewed tab itself, so it always sits in the bottom-left corner.
+   Available now's tab is always the selected one, so it takes this look without a class. */
+.tabs button.active::before,
+.tabs .tab-static::before {
   background:
     linear-gradient(to top right, var(--yellow) 0 48%, rgba(246, 185, 59, 0.35) 48% 56%, transparent 56%) left bottom /
       11px 11px no-repeat,
