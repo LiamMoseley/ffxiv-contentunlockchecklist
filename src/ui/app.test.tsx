@@ -63,6 +63,14 @@ describe("App renders", () => {
     expect(host.querySelectorAll(".entries tbody tr, .grid > *").length).toBeGreaterThan(0);
   });
 
+  it("opens the help dialog from the (?) button", async () => {
+    await mount();
+    const button = host.querySelector<HTMLElement>("button[aria-label='Help']");
+    expect(button).not.toBeNull();
+    await act(async () => button!.click());
+    expect(host.querySelector("[role=dialog][aria-labelledby='help-title']")).not.toBeNull();
+  });
+
   it("survives choosing each tile and each section tab", async () => {
     await mount();
     for (const tile of host.querySelectorAll<HTMLElement>(".rail-item")) {

@@ -151,7 +151,9 @@ progress.*
   click and X as right click from the keyboard. The browser's context menu is suppressed on entries
   only, and entries cannot be text-selected. A second tap on the same entry within about 250ms is
   ignored, so a quick double tap cannot flip it straight back, and a double tap does not zoom the page. Clicking a wiki link in the row never changes the status.
-- A legend for the three box states is always visible.
+- A legend for the three box states is always visible. The (?) beside it is a button that opens a help
+  dialog: mouse, touch and keyboard controls (every shortcut the app binds), the three status boxes and
+  Undo. Escape or Close closes it and returns focus to the (?).
 - Completed entries are visibly distinct and dimmed, but stay readable.
 - All progress counts and bars update immediately.
 - Finishing a whole section is acknowledged with a short message.

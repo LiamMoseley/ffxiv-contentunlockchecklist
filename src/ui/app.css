@@ -899,6 +899,57 @@ tr.flash-completed > td.unlock::after {
   color: #fff;
   font-weight: 700;
   font-size: 12px;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+.hint-icon:hover {
+  background: #747474;
+}
+.hint-icon:focus-visible {
+  outline: 2px solid #f0c35a;
+  outline-offset: 2px;
+}
+.help-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(520px, calc(100vw - 24px));
+  max-height: calc(100vh - 48px);
+}
+/* The title and Close button stay put; only the help text scrolls. */
+.help-body {
+  min-height: 0;
+  overflow-y: auto;
+}
+.help-body h3 {
+  margin: 0 0 6px;
+  font:
+    700 15px/1 "Barlow Condensed",
+    sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f0c35a;
+}
+.help-body section {
+  margin-bottom: 14px;
+}
+.help-body dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+.help-body dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.help-body dd,
+.help-body section p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-dim);
 }
 .legend {
   display: flex;

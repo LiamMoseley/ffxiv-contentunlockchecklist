@@ -18,6 +18,7 @@ import { EntryGrid, EntryTable, HintBar, NewBadge, type EntryActions, type Entry
 import { CharacterMenu } from "./CharacterMenu";
 import { ConfirmDialog, Toast } from "./Messages";
 import { FilterBar } from "./FilterBar";
+import { HelpDialog } from "./HelpDialog";
 import { ExpansionRail, type ExpansionChoice } from "./ExpansionRail";
 import { ChangedByHandContext, Count, ProgressBar } from "./ProgressBar";
 import { UpdateDialog } from "./UpdateDialog";
@@ -80,6 +81,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
   const [toast, setToast] = useState<{ id: number; text: string } | null>(null);
   const [confirming, setConfirming] = useState<"complete" | "clear" | null>(null);
   const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
   const toastCount = useRef(0);
   const [confirmingUpdate, setConfirmingUpdate] = useState(false);
   // The update dialog: Review opens the update the notice offers (`preview`); the Update action fetches its own.
@@ -414,7 +416,14 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
             />
           )}
 
-          <HintBar mode={displayMode} onMode={chooseDisplayMode} canUndo={log.canUndo()} onUndo={undo} />
+          <HintBar
+            mode={displayMode}
+            onMode={chooseDisplayMode}
+            canUndo={log.canUndo()}
+            onUndo={undo}
+            onHelp={() => setHelpOpen(true)}
+          />
+          {helpOpen && <HelpDialog onClose={() => setHelpOpen(false)} />}
 
           <div className="button-footer" role="group" aria-label="Shown entries">
             <button type="button" disabled={clearCount === 0 || switching} onClick={() => setConfirming("clear")}>
