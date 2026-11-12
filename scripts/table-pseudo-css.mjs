@@ -11,18 +11,10 @@
  * a `<tr>` (`.flash-completed::after`) looks the same as one on a `<div>`, so the browser check in
  * docs/agents/verifying-the-ui.md covers that case.
  */
-import { readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
-
-const dir = process.argv[2] ?? "src";
-
-const stylesheets = readdirSync(dir, { withFileTypes: true, recursive: true })
-  .filter((entry) => entry.isFile() && entry.name.endsWith(".css"))
-  .map((entry) => join(entry.parentPath, entry.name));
+import { stylesheets } from "./stylesheets.mjs";
 
 const found = [];
-for (const file of stylesheets) {
-  const css = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+for (const { file, css } of stylesheets(process.argv[2] ?? "src")) {
   // A selector is the text before a `{`, minus at-rule preludes such as `@media (...)`.
   for (const [, prelude] of css.matchAll(/([^{}]+)\{/g)) {
     if (prelude.trim().startsWith("@")) continue;

@@ -18,7 +18,8 @@
     "duplication": "jscpd --silent || jscpd",
     "unused-css": "node scripts/unused-css.mjs",
     "table-pseudo-css": "node scripts/table-pseudo-css.mjs",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run unused-css && npm run table-pseudo-css && npm run duplication && npm test"
+    "type-tokens": "node scripts/type-tokens.mjs",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run unused-css && npm run table-pseudo-css && npm run type-tokens && npm run duplication && npm test"
   },
   "dependencies": {
     "node-html-parser": "^9.0.6",
