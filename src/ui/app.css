@@ -363,31 +363,33 @@ a:hover {
     transform: scale(1.45);
   }
 }
-/*
- * The same celebration on a Section's pinned heading: the tile's sweep, then a ring that grows from inside the
- * heading out to its edges. It stays inside the heading because the list's scroller clips anything outside it and
- * the tabs above paint over it; a scaled wide box would stretch, so the ring's inset is animated instead.
- */
+/* The same celebration on a Section's pinned heading: the tile's sweep, and a ring that spreads as a box-shadow (a scaled wide box would stretch) */
 .head-celebrate {
   display: contents;
 }
 .head-ring {
   position: absolute;
-  inset: 10px 40px;
-  border: 2px solid rgba(255, 225, 130, 0.9);
+  inset: 0;
   border-radius: 6px;
   pointer-events: none;
   opacity: 0;
+  box-shadow:
+    0 0 0 2px rgba(255, 225, 130, 0.9),
+    inset 0 0 0 2px rgba(255, 225, 130, 0.9);
   animation: head-ring 0.6s ease-out 0.45s forwards;
 }
 @keyframes head-ring {
   from {
     opacity: 1;
-    inset: 10px 40px;
+    box-shadow:
+      0 0 0 0 rgba(255, 225, 130, 0.9),
+      inset 0 0 0 2px rgba(255, 225, 130, 0.9);
   }
   to {
     opacity: 0;
-    inset: 0;
+    box-shadow:
+      0 0 0 8px rgba(255, 225, 130, 0),
+      inset 0 0 0 2px rgba(255, 225, 130, 0);
   }
 }
 .tile-new {
