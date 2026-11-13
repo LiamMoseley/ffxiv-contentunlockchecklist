@@ -1,6 +1,7 @@
 /*
  * The game-window look settled by UI prototype variant E (docs/prototypes/ui-verdict.md; the
  * prototype is archived at the archive/prototype-ui tag). All chrome is drawn in CSS: none of the game's artwork or fonts.
+ * The dark grey panels (window, rail, dialogs) carry a faint grain, as the game's do: see --grain.
  */
 :root {
   --page: #000;
@@ -33,6 +34,15 @@
   --wrapped-head-clearance: 80px;
   --scrollbar-allowance: 18px;
   --bronze: linear-gradient(#ecd9a6, #c09a5c 28%, #7c5d33 55%, #a07c47 78%, #e0c68e);
+  /*
+   * The grain on the dark grey panels (window, rail, dialogs): monochrome noise, drawn here as a tiled
+   * SVG so there is no image file. The noise is centred on mid grey and each panel blends it in with
+   * `overlay`, which leaves the panel's own colour alone and only speckles it, so the grain adds no
+   * brightness. Its strength is the 0.13 in the feColorMatrix (the offset after it is 0.5 - 1.5 x that, so
+   * the noise stays centred on mid grey) and its grain size is baseFrequency (lower is coarser); a
+   * custom property cannot be read inside a data URI, so those are the numbers to tune.
+   */
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0.13 0.13 0.13 0 0.305 0.13 0.13 0.13 0 0.305 0.13 0.13 0.13 0 0.305 0 0 0 0 1'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 
   --font-title: "Barlow Condensed", "Arial Narrow", sans-serif-condensed, sans-serif;
   --font-serif: "Noto Serif Display", "Times New Roman", Georgia, serif;
@@ -123,8 +133,10 @@ a:hover {
   border: var(--window-frame) solid transparent;
   border-radius: 11px;
   background:
+    var(--grain) padding-box,
     linear-gradient(var(--window-top), var(--window) 120px, var(--window-bottom)) padding-box,
     var(--bronze) border-box;
+  background-blend-mode: overlay, normal, normal;
   box-shadow:
     0 0 0 1px #000,
     inset 0 0 0 1px #000,
@@ -265,7 +277,8 @@ a:hover {
   padding: 10px 8px;
   overflow-y: auto;
   border-radius: 6px;
-  background: linear-gradient(90deg, #1f1f1f, var(--rail));
+  background: var(--grain), linear-gradient(90deg, #1f1f1f, var(--rail));
+  background-blend-mode: overlay, normal;
   box-shadow:
     inset 0 1px 3px #000,
     0 1px 0 rgba(255, 255, 255, 0.06);
@@ -1832,8 +1845,10 @@ tr.flash-completed > td.unlock::after {
   border: 3px solid transparent;
   border-radius: 8px;
   background:
+    var(--grain) padding-box,
     linear-gradient(var(--window-top), var(--window) 70px, var(--window-bottom)) padding-box,
     var(--bronze) border-box;
+  background-blend-mode: overlay, normal, normal;
   box-shadow:
     0 0 0 1px #000,
     inset 0 0 0 1px #000,
