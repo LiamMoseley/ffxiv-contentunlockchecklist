@@ -381,7 +381,7 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   open={filtersOpen}
                   alwaysHidingMarked={availableOpen}
                 />
-                <div className={"list-frame"}>
+                <div className="list-frame">
                   <div className="scroll" ref={scrollRef}>
                     <SwitchFade switchKey={shownKey}>
                       {shownListing.view === "available" ? (
