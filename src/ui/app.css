@@ -771,8 +771,9 @@ a:hover {
 }
 /*
  * Fixed layout, so every section's table shares one set of column widths and nothing shifts while scrolling (#88).
- * Chosen against the bundled content: the percentages leave Information about 160px at 1001px, and its
- * 'iLv. 110-123' is the widest Level text (85px). Recheck them if a wiki update adds longer cells.
+ * Chosen against the bundled content: the percentages leave Information about 175px at 1001px, and its
+ * 'iLv. 110-123' is the widest Level text (85px). At 1500px every Unlock and Type name fits on one line but
+ * "Variant Dungeon (Advanced)"; narrower, long names wrap. Recheck them if a wiki update adds longer cells.
  */
 @media (min-width: 1001px) {
   /* The heading and the column headers under it read as one pinned panel: square the heading's bottom, and outline it
@@ -793,13 +794,13 @@ a:hover {
     width: 96px;
   }
   .entries .col-unlock {
-    width: 20%;
+    width: 22%;
   }
   .entries .col-type {
-    width: 10%;
+    width: 14%;
   }
   .entries .col-quest {
-    width: 18%;
+    width: 14%;
   }
   .entries .col-location {
     width: 12%;
