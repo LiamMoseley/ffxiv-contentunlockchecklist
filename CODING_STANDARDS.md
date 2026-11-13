@@ -26,7 +26,7 @@ Judgement calls for review. Mechanical rules live in `eslint.config.js`; formatt
 
 **The device's state is an adapter reading, not a rule.** A component may read whether the device is online (`navigator.onLine`) to disable a control and say why. What an update does, and what a failed fetch means, stays in the Log core.
 
-**The look settled by the UI prototype verdict is the owner's.** Fading Completed and Not interested rows by opacity, the Completed text colour and the bronze frame came from `docs/prototypes/ui-verdict.md` (on the `prototype/ui` branch). An accessibility fix that changes one of them (a contrast change, an underline, a different fade) is a decision to put to the owner with the contrast numbers, not a change to make: #47 changed the fading, and the owner had it restored.
+**The look settled by the UI prototype verdict is the owner's.** Fading Completed and Not interested rows by opacity, the Completed text colour and the bronze frame came from `docs/prototypes/ui-verdict.md` (the prototype itself is archived at the `archive/prototype-ui` tag). An accessibility fix that changes one of them (a contrast change, an underline, a different fade) is a decision to put to the owner with the contrast numbers, not a change to make: #47 changed the fading, and the owner had it restored.
 
 **A ticket agrees with the PRD and `GLOSSARY.md`.** Flag a ticket or acceptance criterion that widens or narrows what a PRD story or a glossary term (Section, View) says: the owner confirms the reading before it is built. Search and filters narrow a view and never widen it.
 
