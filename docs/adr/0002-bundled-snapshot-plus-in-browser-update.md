@@ -1,6 +1,6 @@
 # Bundled content snapshot plus in-browser update
 
-Superseded in part by ADR-0005: a device applies the content release with the higher release number, not the copy with the higher wiki revision.
+Superseded in part by ADR-0005: a device applies the content release with the higher release number, not the copy with the higher wiki revision. Superseded in part by ADR-0006: icons are published with the content, and the app no longer fetches them from the wiki.
 
 The app is a static site. A build script fetches and parses the wiki's Content Unlock page and bundles the result, so the app works offline from its first load. The same parser also runs in the browser for the player's Update action and the automatic update check, which is possible because the wiki's MediaWiki API allows cross-origin requests (`origin=*`). Refreshing the bundled snapshot for a new patch is one script run.
 
