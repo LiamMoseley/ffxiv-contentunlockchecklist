@@ -659,6 +659,18 @@ a:hover {
       inset 0 1px 3px #000,
       0 1px 0 rgba(255, 255, 255, 0.06);
   }
+  /* The table's frame is smooth; Cards and the stacked rows (1000px and below) sit on the window's grain, so the
+     frame carries it too, blended in like the rail's */
+  .list-frame.cards {
+    background: var(--grain), linear-gradient(#333, #2d2d2d);
+    background-blend-mode: overlay, normal;
+  }
+  @media (max-width: 1000px) {
+    .list-frame {
+      background: var(--grain), linear-gradient(#333, #2d2d2d);
+      background-blend-mode: overlay, normal;
+    }
+  }
   .list-frame .scroll {
     margin-top: 0;
     padding: 0;
