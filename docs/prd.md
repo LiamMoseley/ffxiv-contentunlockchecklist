@@ -485,7 +485,7 @@ configuration screens without copying any of the game's artwork.
 
 The detailed look was settled by a UI prototype, variant E ("Game window"). Its verdict,
 [`docs/prototypes/ui-verdict.md`](prototypes/ui-verdict.md), is the primary source for colours,
-sizes, breakpoints and typefaces. The runnable prototype is kept at the `archive/prototype-ui` tag. Rebuild it
+sizes, breakpoints and typefaces. The runnable prototype is archived at the `archive/prototype-ui` tag (a prototype still in progress lives on a `prototype/<name>` branch instead). Rebuild it
 properly; don't promote the prototype code.
 
 - **Window:** a single dark charcoal window in a thick bronze frame on a black background. The title

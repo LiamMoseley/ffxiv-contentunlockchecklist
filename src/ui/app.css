@@ -1,6 +1,6 @@
 /*
  * The game-window look settled by UI prototype variant E (docs/prototypes/ui-verdict.md; the
- * prototype is at the archive/prototype-ui tag). All chrome is drawn in CSS: none of the game's artwork or fonts.
+ * prototype is archived at the archive/prototype-ui tag). All chrome is drawn in CSS: none of the game's artwork or fonts.
  */
 :root {
   --page: #000;
