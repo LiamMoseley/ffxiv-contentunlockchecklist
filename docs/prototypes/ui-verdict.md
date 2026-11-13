@@ -57,6 +57,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 ### Table row polish
 - **Unlock name:** brighter (`#fff`) and a touch heavier (600) than the other columns, which are unchanged.
 - **Spacing:** 8px above and below each row's text, a divider of 5% white (quieter than `--line-soft`), and a 56px status column (was 44px).
+- **Tint and hover:** every other row carries a 2% white tint; the hover is 8% white (was 4%).
 
 ### Section headings
 - **Panel:** rounded, as in the "ACTIONS" header, holding the expansion name and section, a bar and a count.
