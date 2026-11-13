@@ -16,6 +16,10 @@ _Avoid_: Unlock (as a noun for an entry), item, content (for a single entry)
 How an entry appears in List mode. Wider than 1000px it is a table row; at 1000px and below it becomes a stacked row: a spine with the status box and Level beside a block holding the icon, Unlock name, Type chips, Quest, Location and Information.
 _Avoid_: Tile, card (for a row)
 
+**List frame**:
+The recessed panel round the scrolling list on a desktop window, built like the expansion rail but lighter. It holds the pinned section heading, the column headers and the rows; the tabs row and filter bar stay above it. Not the bronze window frame.
+_Avoid_: Frame (alone, it means the bronze window frame), panel
+
 **Card**:
 How an entry appears in Cards mode: its wiki icon, name, a one-line summary and its status box.
 _Avoid_: Tile (that is an expansion tile), entry card

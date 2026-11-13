@@ -49,6 +49,11 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Label:** each tab shows a count in brackets, e.g. "Level 61–70 (5/5)", then "Level 70 …", then "All …". (Brackets were added later, in #95, so the count reads apart from the level text.)
 - **Available now:** its heading is one non-clickable tab in the selected look (yellow corner), with no glow. It reads "Level 1 to 85" and the number of rows listed (not Completed/total, since Completed rows leave the view), or "Available now" with no level set.
 
+### List frame
+- **What:** a recessed panel round the scrolling list (the **list frame**, not the bronze window frame), built like the rail but lighter: charcoal `#2a2a2a → #2e2e2e`, the same grain and radius, and an inset shadow at about half the rail's strength. It wraps the scrolling list only; the tabs row and filter bar stay above it.
+- **Fit:** the pinned section heading and column headers sit flush to its left, right and top edges and its rounded corners clip them. It ends 8px above the hint bar, in line with the rail's bottom edge, and the scrollbar sits inside its right edge.
+- **Where:** table rows (1001px and wider) first; stacked rows and Cards in a later commit. The phone layout (760px and below) has no frame.
+
 ### Section headings
 - **Panel:** rounded, as in the "ACTIONS" header, holding the expansion name and section, a bar and a count.
 
