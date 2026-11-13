@@ -665,6 +665,13 @@ a:hover {
     margin-top: 0;
     padding: 0;
   }
+  /* The heading's black outline is an outer shadow below 1001px, which the frame's clip cuts off: draw it inside, as
+     the table's heading does */
+  .list-frame .section-head {
+    box-shadow:
+      inset 0 0 0 1px #1a1a1a,
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  }
   /* Stacked rows and cards are not flush like the table: they keep a margin inside the frame */
   .list-frame .stacked-rows,
   .list-frame .entry-grid {
