@@ -638,7 +638,7 @@ a:hover {
 
 /*
  * The list frame (#132): a recessed panel round the scrolling list, built like the rail but lighter (#2a2a2a to
- * #2e2e2e, an inset shadow at about half the rail's). It wraps .scroll only, so the tabs row and the filter bar stay
+ * #2e2e2e, the rail's own inset shadow; the pinned heading's top corners follow its 6px radius). It wraps .scroll only, so the tabs row and the filter bar stay
  * above it. The pinned heading and column headers sit flush to its edges and its rounded corners clip them. It ends
  * 8px above the hint bar, the rail's own gap, and 8px from the window's right edge (.main has 10px, hence -2px).
  * Not the bronze window frame. On a phone, and where the frame does not apply, it has no box of its own.
@@ -658,15 +658,12 @@ a:hover {
     background: var(--grain), linear-gradient(90deg, #2a2a2a, #2e2e2e);
     background-blend-mode: overlay, normal;
     box-shadow:
-      inset 0 1px 3px rgba(0, 0, 0, 0.5),
-      0 1px 0 rgba(255, 255, 255, 0.03);
+      inset 0 1px 3px #000,
+      0 1px 0 rgba(255, 255, 255, 0.06);
   }
   .list-frame .scroll {
     margin-top: 0;
     padding: 0;
-  }
-  .list-frame .section-head {
-    border-radius: 0;
   }
   /* Stacked rows and cards are not flush like the table: they keep a margin inside the frame */
   .list-frame .stacked-rows,
