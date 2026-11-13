@@ -54,6 +54,13 @@ The highest character level in an expansion. Every entry in a level-cap section 
 **Patch**:
 A game update that often adds new content.
 
+**Content release**:
+One published version of the log's content, as the Curator approved it: every entry, the entries removed so far and the expansions. Each release is complete in itself and numbered one higher than the last.
+_Avoid_: Snapshot, version, update (for the published thing)
+
+**Update**:
+A device applying a content release newer than the one it holds, however many releases it skipped.
+
 **Curator**:
 The one person who runs the app: they review each change to the wiki's Content Unlock page, decide how its entries match the log's, and publish the content every copy of the app receives. Players never curate.
 _Avoid_: Owner (that is the player whose progress syncs), admin, maintainer
@@ -107,7 +114,7 @@ The entries a character could unlock at their character level and has not yet ma
 An entry status whose entry no longer appears in the log after an update. It is kept, and reattaches if the entry returns.
 
 **NEW entry**:
-An entry the most recently applied update added, tagged NEW until the player marks it as seen or the next update replaces the tags. Whether NEW entries have been seen belongs to the device's log, not to a character.
+An entry an update added, tagged NEW until the player marks it as seen; later updates add to the NEW entries rather than replacing them. An entry restored after removal is not NEW. Whether NEW entries have been seen belongs to the device's log, not to a character.
 _Avoid_: Unread, fresh
 
 **Mark as seen**:
