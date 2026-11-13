@@ -55,7 +55,6 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Where:** 761px and wider: table rows, stacked rows (761-1000px) and Cards. The phone layout (760px and below) has no frame.
 
 ### Table row polish
-- **Unlock name:** brighter (`#fff`) and a touch heavier (600) than the other columns, which are unchanged.
 - **Spacing:** 8px above and below each row's text, a divider of 5% white (quieter than the old `#3c3c3c`), and a 56px status column (was 44px).
 - **Tint and hover:** every other row carries a 2% white tint; the hover is 8% white (was 4%).
 - **Column headers:** labels at `--size-sm` (was `--size-xs`) in `#d4d4d4` (was `--text-faint`).
