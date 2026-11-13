@@ -54,10 +54,6 @@ The highest character level in an expansion. Every entry in a level-cap section 
 **Patch**:
 A game update that often adds new content.
 
-**Curator**:
-The one person who runs the app: they review each change to the wiki's Content Unlock page, decide how its entries match the log's, and publish the content every copy of the app receives. Players never curate.
-_Avoid_: Owner (that is the player whose progress syncs), admin, maintainer
-
 ## Characters
 
 **Character**:
