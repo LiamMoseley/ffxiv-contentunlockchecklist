@@ -9,7 +9,7 @@ The whole checklist: every entry, grouped by expansion and section.
 _Avoid_: List, checklist (in code and docs)
 
 **Entry**:
-One line of the log, exactly as the wiki lists it: the content it unlocks, the quests that unlock it, and its level, location and notes. A wiki row naming several unlocks is still one entry.
+One line of the log, exactly as the wiki lists it: the content it unlocks, the quests that unlock it, and its level, location and notes. A wiki row naming several unlocks is still one entry. An entry keeps its identity when the wiki rewords it and the Curator matches the new wording to it, even across expansions, and after it is removed and later restored.
 _Avoid_: Unlock (as a noun for an entry), item, content (for a single entry)
 
 **Row**:
@@ -38,7 +38,7 @@ The entries the player is looking at: the selected expansion and tab, everything
 The in-game act of gaining access to a piece of content, usually by completing a quest. A verb or event, never a row.
 
 **Unlock name**:
-The name of what an entry unlocks, as the wiki writes it, for example "Sastasha" or "Duty Roulette: Leveling". An entry is recognised by its unlock name and the names of its quests.
+The name of what an entry unlocks, as the wiki writes it, for example "Sastasha" or "Duty Roulette: Leveling".
 _Avoid_: Content name
 
 **Optional challenge**:
