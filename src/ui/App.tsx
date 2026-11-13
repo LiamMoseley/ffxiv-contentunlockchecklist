@@ -381,38 +381,40 @@ export function App({ log, preferences }: { log: Log; preferences: Storage }) {
                   open={filtersOpen}
                   alwaysHidingMarked={availableOpen}
                 />
-                <div className="scroll" ref={scrollRef}>
-                  <SwitchFade switchKey={shownKey}>
-                    {shownListing.view === "available" ? (
-                      <AvailableNow
-                        log={log}
-                        listing={shownListing}
-                        expansionNames={expansionNames}
-                        mode={displayMode}
-                        actions={actions}
-                        onSetLevel={() => setCharacterMenuOpen(true)}
-                      />
-                    ) : shownListing.view === "new" ? (
-                      <NewEntriesView
-                        log={log}
-                        sections={shownListing.sections}
-                        expansionNames={expansionNames}
-                        mode={displayMode}
-                        actions={actions}
-                      />
-                    ) : (
-                      shownListing.sections.map((section) => (
-                        <SectionPanel
-                          key={section.id}
+                <div className={displayMode === "grid" ? "list-frame cards" : "list-frame"}>
+                  <div className="scroll" ref={scrollRef}>
+                    <SwitchFade switchKey={shownKey}>
+                      {shownListing.view === "available" ? (
+                        <AvailableNow
                           log={log}
-                          section={section}
-                          expansionName={expansionNames.get(section.expansionId) ?? ""}
+                          listing={shownListing}
+                          expansionNames={expansionNames}
+                          mode={displayMode}
+                          actions={actions}
+                          onSetLevel={() => setCharacterMenuOpen(true)}
+                        />
+                      ) : shownListing.view === "new" ? (
+                        <NewEntriesView
+                          log={log}
+                          sections={shownListing.sections}
+                          expansionNames={expansionNames}
                           mode={displayMode}
                           actions={actions}
                         />
-                      ))
-                    )}
-                  </SwitchFade>
+                      ) : (
+                        shownListing.sections.map((section) => (
+                          <SectionPanel
+                            key={section.id}
+                            log={log}
+                            section={section}
+                            expansionName={expansionNames.get(section.expansionId) ?? ""}
+                            mode={displayMode}
+                            actions={actions}
+                          />
+                        ))
+                      )}
+                    </SwitchFade>
+                  </div>
                 </div>
               </main>
             </div>

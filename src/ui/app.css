@@ -9,8 +9,9 @@
   --window: #333;
   --window-bottom: #2b2b2b;
   --rail: #262626;
+  /* The list frame's fill: darker than the window, lighter than the rail */
+  --list-frame-fill: linear-gradient(90deg, #2a2a2a, #2e2e2e);
   --line: #4a4a4a;
-  --line-soft: #3c3c3c;
   --text: #eee;
   --text-dim: #b8b8b8;
   --text-faint: #ababab;
@@ -635,6 +636,62 @@ a:hover {
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * The list frame (#132): a recessed panel round the scrolling list, built like the rail but lighter (#2a2a2a to
+ * #2e2e2e, the rail's own inset shadow; the pinned heading's top corners follow its 6px radius). It wraps .scroll only, so the tabs row and the filter bar stay
+ * above it. The pinned heading and column headers sit flush to its edges and its rounded corners clip them. It ends
+ * 8px above the hint bar, the rail's own gap, and 8px from the window's right edge (.main has 10px, hence -2px).
+ * Not the bronze window frame. On a phone, and where the frame does not apply, it has no box of its own.
+ */
+.list-frame {
+  display: contents;
+}
+@media (min-width: 761px) {
+  .list-frame {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    margin: 0 -2px 8px 0;
+    overflow: hidden;
+    border-radius: 6px;
+    /* Smooth, no grain: opaque, so the window's grain stays out (Cards and stacked rows add their own, below) */
+    background: var(--list-frame-fill);
+    box-shadow:
+      inset 0 1px 3px #000,
+      0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  /* The table's frame is smooth; Cards and the stacked rows (1000px and below) sit on the window's grain, so the
+     frame carries it too, blended in like the rail's */
+  .list-frame.cards {
+    background: var(--grain), var(--list-frame-fill);
+    background-blend-mode: overlay, normal;
+  }
+  @media (max-width: 1000px) {
+    .list-frame {
+      background: var(--grain), var(--list-frame-fill);
+      background-blend-mode: overlay, normal;
+    }
+  }
+  .list-frame .scroll {
+    margin-top: 0;
+    padding: 0;
+  }
+  /* The heading's black outline is an outer shadow below 1001px, which the frame's clip cuts off: draw it inside, as
+     the table's heading does */
+  .list-frame .section-head {
+    box-shadow:
+      inset 0 0 0 1px #1a1a1a,
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  }
+  /* Stacked rows and cards are not flush like the table: they keep a margin inside the frame */
+  .list-frame .stacked-rows,
+  .list-frame .entry-grid {
+    margin: 0;
+    padding: 6px 8px 8px;
+  }
+}
+
 .scroll {
   flex: 1;
   min-height: 0;
@@ -728,8 +785,9 @@ a:hover {
 }
 /*
  * Fixed layout, so every section's table shares one set of column widths and nothing shifts while scrolling (#88).
- * Chosen against the bundled content: the percentages leave Information about 160px at 1001px, and its
- * 'iLv. 110-123' is the widest Level text (85px). Recheck them if a wiki update adds longer cells.
+ * Chosen against the bundled content: the percentages leave Information about 175px at 1001px, and its
+ * 'iLv. 110-123' is the widest Level text (85px). At 1500px every Unlock and Type name fits on one line but
+ * "Variant Dungeon (Advanced)" and "Inconceivably Further Hildibrand Adventures"; narrower, long names wrap. Recheck them if a wiki update adds longer cells.
  */
 @media (min-width: 1001px) {
   /* The heading and the column headers under it read as one pinned panel: square the heading's bottom, and outline it
@@ -744,7 +802,7 @@ a:hover {
     table-layout: fixed;
   }
   .entries .col-status {
-    width: 44px;
+    width: 56px;
   }
   .entries .col-level {
     width: 96px;
@@ -753,13 +811,13 @@ a:hover {
     width: 20%;
   }
   .entries .col-type {
-    width: 10%;
+    width: 14%;
   }
   .entries .col-quest {
-    width: 18%;
+    width: 15%;
   }
   .entries .col-location {
-    width: 12%;
+    width: 13%;
   }
   /* Information takes whatever is left */
   .entries td {
@@ -776,9 +834,9 @@ a:hover {
   background: linear-gradient(#2b2b2b, #242424);
   padding: 2px 8px 4px;
   text-align: left;
-  font-size: var(--size-xs);
+  font-size: var(--size-sm);
   font-weight: 400;
-  color: var(--text-faint);
+  color: #d4d4d4;
   /*
    * The black outline continues the heading's down both sides and along the bottom (#96). Inset shadows, not borders
    * (a sticky cell loses its collapsed borders) and not outer shadows (they smeared in Firefox), and no cast shadow.
@@ -796,9 +854,9 @@ a:hover {
     inset 0 -1px 0 #1a1a1a;
 }
 .entries td {
-  padding: 6px 8px;
+  padding: 8px;
   vertical-align: middle;
-  border-bottom: 1px solid var(--line-soft);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .entries tbody tr {
   cursor: pointer;
@@ -818,8 +876,12 @@ a:hover {
   outline: 2px solid var(--gold);
   outline-offset: -2px;
 }
+/* A very faint tint on every other row, and a hover clearly brighter than it */
+.entries tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
 .entries tbody tr:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.08);
 }
 .entries .level span {
   display: block;
@@ -828,6 +890,16 @@ a:hover {
 .entries .level span + span {
   font-size: var(--size-xs);
   color: var(--text-dim);
+}
+
+/* The Type cell: a line that starts with an icon puts the label beside it (it wrapped under the icon, as in "Game / Mechanic"),
+   and the label goes on one line where it fits */
+.entries .type-cell .line:has(> .wiki-icon:first-child) {
+  display: flex;
+  align-items: center;
+}
+.entries .type-cell .line > .wiki-icon {
+  flex: none;
 }
 
 /* Text with the wiki's icons and links, one block per line */
@@ -2125,6 +2197,20 @@ tr.flash-completed > td.unlock::after {
   align-items: flex-start;
   gap: 12px;
   container-type: inline-size;
+}
+/* On a desktop window the row sits as far above the list (or the open filter bar) as .main's padding puts it below the
+   title bar: 10px, measured from the Filters button, the row's tallest item. The phone block sets its own spacing. */
+@media (min-width: 761px) {
+  .tabs-row {
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .tabs-row .tabs {
+    margin-bottom: 0;
+  }
+  .filter-bar {
+    padding-bottom: 10px;
+  }
 }
 /* Available now's tab is a heading, so it drops the heading's own margin and weight; it is not clickable */
 .tabs .tab-static {

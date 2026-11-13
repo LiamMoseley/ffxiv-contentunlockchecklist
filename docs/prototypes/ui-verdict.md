@@ -49,6 +49,18 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Label:** each tab shows a count in brackets, e.g. "Level 61–70 (5/5)", then "Level 70 …", then "All …". (Brackets were added later, in #95, so the count reads apart from the level text.)
 - **Available now:** its heading is one non-clickable tab in the selected look (yellow corner), with no glow. It reads "Level 1 to 85" and the number of rows listed (not Completed/total, since Completed rows leave the view), or "Available now" with no level set.
 
+### List frame
+- **What:** a recessed panel round the scrolling list (the **list frame**, not the bronze window frame), built like the rail but lighter: an opaque charcoal `#2a2a2a → #2e2e2e` (darker than the window, lighter than the rail), the rail's radius and its inset shadow. The table's frame is smooth; Cards and the stacked rows (1000px and below) carry the grain, blended in like the rail's. The pinned section heading is rounded at the top to match the frame's corners. It wraps the scrolling list only; the tabs row and filter bar stay above it.
+- **Fit:** the pinned section heading and column headers sit flush to its left, right and top edges and its rounded corners clip them. It ends 8px above the hint bar, in line with the rail's bottom edge, and the scrollbar sits inside its right edge.
+- **Where:** 761px and wider: table rows, stacked rows (761-1000px) and Cards. The phone layout (760px and below) has no frame.
+
+### Table row polish
+- **Spacing:** 8px above and below each row's text, a divider of 5% white (quieter than the old `#3c3c3c`), and a 56px status column (was 44px).
+- **Tint and hover:** every other row carries a 2% white tint; the hover is 8% white (was 4%).
+- **Column headers:** labels at `--size-sm` (was `--size-xs`) in `#d4d4d4` (was `--text-faint`).
+- **Column widths:** Unlock 20%, Type 14%, Quest 15%, Location 13% (was 20, 10, 18, 12), so at 1500px every Unlock and Type name fits on one line but "Variant Dungeon (Advanced)" and "Inconceivably Further Hildibrand Adventures". Information keeps about 175px at 1001px.
+- **Type:** the icon sits beside its label, which stays on one line where it fits (a long one wraps beside the icon, not under it).
+
 ### Section headings
 - **Panel:** rounded, as in the "ACTIONS" header, holding the expansion name and section, a bar and a count.
 
