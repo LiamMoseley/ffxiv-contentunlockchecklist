@@ -7,7 +7,7 @@ mobile), entry status controls, progress bars and footer buttons?
 against the owner's screenshots of the game's Character Configuration, System Configuration, Actions & Traits
 and crafting windows.
 
-**Primary source.** The runnable prototype lives on branch `prototype/ui`, code in `prototypes/ui/` (not on main). Check out that branch and run it from the repo root with
+**Primary source.** The runnable prototype is kept at the `archive/prototype-ui` tag, code in `prototypes/ui/` (not on main). Check out that tag (`git switch --detach archive/prototype-ui`) and run it from the repo root with
 `npm --prefix prototypes/ui start`, then open `http://localhost:5199/?variant=E`. Variants A–D are kept for comparison.
 This is throwaway code. Rebuild the winner properly; don't promote this code.
 
