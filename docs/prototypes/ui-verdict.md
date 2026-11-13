@@ -52,7 +52,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 ### List frame
 - **What:** a recessed panel round the scrolling list (the **list frame**, not the bronze window frame), built like the rail but lighter: charcoal `#2a2a2a → #2e2e2e`, the same grain and radius, and an inset shadow at about half the rail's strength. It wraps the scrolling list only; the tabs row and filter bar stay above it.
 - **Fit:** the pinned section heading and column headers sit flush to its left, right and top edges and its rounded corners clip them. It ends 8px above the hint bar, in line with the rail's bottom edge, and the scrollbar sits inside its right edge.
-- **Where:** table rows (1001px and wider) first; stacked rows and Cards in a later commit. The phone layout (760px and below) has no frame.
+- **Where:** 761px and wider: table rows, stacked rows (761-1000px) and Cards. The phone layout (760px and below) has no frame.
 
 ### Section headings
 - **Panel:** rounded, as in the "ACTIONS" header, holding the expansion name and section, a bar and a count.

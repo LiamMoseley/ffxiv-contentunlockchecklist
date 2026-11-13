@@ -645,8 +645,8 @@ a:hover {
 .list-frame {
   display: contents;
 }
-@media (min-width: 1001px) {
-  .list-frame:not(.cards) {
+@media (min-width: 761px) {
+  .list-frame {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -660,12 +660,18 @@ a:hover {
       inset 0 1px 3px rgba(0, 0, 0, 0.5),
       0 1px 0 rgba(255, 255, 255, 0.03);
   }
-  .list-frame:not(.cards) .scroll {
+  .list-frame .scroll {
     margin-top: 0;
     padding: 0;
   }
-  .list-frame:not(.cards) .section-head {
+  .list-frame .section-head {
     border-radius: 0;
+  }
+  /* Stacked rows and cards are not flush like the table: they keep a margin inside the frame */
+  .list-frame .stacked-rows,
+  .list-frame .entry-grid {
+    margin: 0;
+    padding: 6px 8px 8px;
   }
 }
 
