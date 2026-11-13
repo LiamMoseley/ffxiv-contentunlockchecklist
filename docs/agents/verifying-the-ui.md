@@ -80,6 +80,10 @@ Sections: the look and its references; driving the app; proving a style (colour 
 ## Responsive layout
 
 - **Check responsive layout with `resize_window`** (a narrow width such as 800 and a wide one such as 1500), and reset it with `preset: "desktop"` afterwards.
+  - **The pane resets its own size** (when it is resized or the app redraws), so a reading can come from a different width than the one you set. Call `resize_window` in the same `browser_batch` as the probe, and have every probe return `innerWidth`; a number measured at the wrong width looks plausible (#132 read 1079px and 800px as 1500px).
+  - **Find cells that wrap with this probe, run per column.** `td` index 2 is Unlock and 3 is Type; use `.line` elements, since a wrapped one is taller than its line height:
+    `[...document.querySelectorAll('.entries tbody tr')].flatMap(tr => [...tr.children].flatMap((td, i) => [...td.querySelectorAll('.line')].filter(l => l.getBoundingClientRect().height > parseFloat(getComputedStyle(l).lineHeight) * 1.6).map(l => [i, l.textContent.trim()])))`
+    Run it on the All tile (429 rows, every name in the bundled content) at 1500 and about 1100px, and read `th` widths beside it: `[...document.querySelectorAll('.entries th')].map(t => t.getBoundingClientRect().width)`. Wrapping at 1100px is expected for long names; at 1500px only the longest few should wrap.
   - **At 360×640, test sideways scroll in every view**, not only the default list: Filters open, Available now, Cards, the Characters menu. In `javascript_tool`, `document.documentElement.scrollWidth` must equal `clientWidth`, and `[...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1)` must be empty. Also read each tab's `scrollWidth > clientWidth` on its text span: a tab can fit the page and still show "L. L. A.".
   - **A short laptop is 1280×560.** The window shrinks to fit and the list scrolls; check `.window` height against `innerHeight`.
 ## Dialogs and keyboard
