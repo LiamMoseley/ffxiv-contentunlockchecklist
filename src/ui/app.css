@@ -1710,7 +1710,9 @@ tr.flash-completed > td.unlock::after {
     flex-wrap: nowrap;
     gap: 8px;
     padding: 6px 10px;
-    background: linear-gradient(#333, #2b2b2b);
+    /* Opaque so the list does not show through it, which also hides the window's grain: it carries its own */
+    background: var(--grain), linear-gradient(#333, #2b2b2b);
+    background-blend-mode: overlay, normal;
   }
   .legend {
     display: none;
