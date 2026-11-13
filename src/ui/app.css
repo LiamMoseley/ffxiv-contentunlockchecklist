@@ -2184,6 +2184,19 @@ tr.flash-completed > td.unlock::after {
   gap: 12px;
   container-type: inline-size;
 }
+/* On a desktop window the row sits as far above the list (or the open filter bar) as .main's padding puts it below the
+   title bar: 10px, measured from the Filters button, the row's tallest item. The phone block sets its own spacing. */
+@media (min-width: 761px) {
+  .tabs-row {
+    margin-bottom: 10px;
+  }
+  .tabs-row .tabs {
+    margin-bottom: 0;
+  }
+  .filter-bar {
+    padding-bottom: 10px;
+  }
+}
 /* Available now's tab is a heading, so it drops the heading's own margin and weight; it is not clickable */
 .tabs .tab-static {
   margin: 0;
