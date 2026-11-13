@@ -10,7 +10,6 @@
   --window-bottom: #2b2b2b;
   --rail: #262626;
   --line: #4a4a4a;
-  --line-soft: #3c3c3c;
   --text: #eee;
   --text-dim: #b8b8b8;
   --text-faint: #ababab;
@@ -786,7 +785,7 @@ a:hover {
     table-layout: fixed;
   }
   .entries .col-status {
-    width: 44px;
+    width: 56px;
   }
   .entries .col-level {
     width: 96px;
@@ -838,9 +837,9 @@ a:hover {
     inset 0 -1px 0 #1a1a1a;
 }
 .entries td {
-  padding: 6px 8px;
+  padding: 8px;
   vertical-align: middle;
-  border-bottom: 1px solid var(--line-soft);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 /* The Unlock name is the row's headline: brighter and a touch heavier than the other columns. It sits before the
    Completed rule below, so a completed row still dims it. */
