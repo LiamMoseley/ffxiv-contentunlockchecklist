@@ -817,9 +817,9 @@ a:hover {
   background: linear-gradient(#2b2b2b, #242424);
   padding: 2px 8px 4px;
   text-align: left;
-  font-size: var(--size-xs);
+  font-size: var(--size-sm);
   font-weight: 400;
-  color: var(--text-faint);
+  color: #d4d4d4;
   /*
    * The black outline continues the heading's down both sides and along the bottom (#96). Inset shadows, not borders
    * (a sticky cell loses its collapsed borders) and not outer shadows (they smeared in Firefox), and no cast shadow.
