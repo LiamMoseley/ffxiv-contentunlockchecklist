@@ -27,6 +27,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 
 ### Window and palette
 - **Window:** charcoal grey gradient (`#3d3d3d` → `#333` → `#2b2b2b`) on a black page.
+- **Grain:** the game's dark grey panels are not polished metal but faintly grainy. The window body, the rail and the dialogs, menus and messages carry a subtle monochrome noise (`--grain` in `app.css`, a tiled SVG, no image file). Buttons, progress bars, expansion tiles and the bronze frame stay smooth.
 - **Frame:** thick, about 4px, in **bronze**: a vertical metal gradient `#ecd9a6 → #c09a5c → #7c5d33 → #a07c47 → #e0c68e`, with a black line inside and outside. The same bronze frames the character menu, dialogs and messages.
 - **Text:** `#eee` for body text, `#a3a3a3` for secondary text, `#7d7d7d` for faint text.
 - **Accents:** checkbox yellow `#f6b93b`, gold `#f0c35a`, cream `#efe2bf`.
