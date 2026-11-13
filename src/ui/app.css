@@ -2188,6 +2188,7 @@ tr.flash-completed > td.unlock::after {
    title bar: 10px, measured from the Filters button, the row's tallest item. The phone block sets its own spacing. */
 @media (min-width: 761px) {
   .tabs-row {
+    align-items: center;
     margin-bottom: 10px;
   }
   .tabs-row .tabs {
