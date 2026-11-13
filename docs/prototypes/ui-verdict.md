@@ -58,7 +58,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Spacing:** 8px above and below each row's text, a divider of 5% white (quieter than the old `#3c3c3c`), and a 56px status column (was 44px).
 - **Tint and hover:** every other row carries a 2% white tint; the hover is 8% white (was 4%).
 - **Column headers:** labels at `--size-sm` (was `--size-xs`) in `#d4d4d4` (was `--text-faint`).
-- **Column widths:** Unlock 22%, Type 14%, Quest 14%, Location 12% (was 20, 10, 18, 12), so at 1500px every Unlock and Type name fits on one line but "Variant Dungeon (Advanced)". Information keeps about 175px at 1001px.
+- **Column widths:** Unlock 20%, Type 14%, Quest 15%, Location 13% (was 20, 10, 18, 12), so at 1500px every Unlock and Type name fits on one line but "Variant Dungeon (Advanced)" and "Inconceivably Further Hildibrand Adventures". Information keeps about 175px at 1001px.
 - **Type:** the icon sits beside its label, which stays on one line where it fits (a long one wraps beside the icon, not under it).
 
 ### Section headings

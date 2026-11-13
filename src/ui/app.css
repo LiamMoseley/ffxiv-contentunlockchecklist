@@ -653,8 +653,8 @@ a:hover {
     margin: 0 -2px 8px 0;
     overflow: hidden;
     border-radius: 6px;
-    background: var(--grain), linear-gradient(90deg, #2a2a2a, #2e2e2e);
-    background-blend-mode: overlay, normal;
+    /* Smooth, no grain: the window's own gradient colours down this panel, but opaque so the window's grain stays out */
+    background: linear-gradient(#333, #2d2d2d);
     box-shadow:
       inset 0 1px 3px #000,
       0 1px 0 rgba(255, 255, 255, 0.06);
@@ -773,7 +773,7 @@ a:hover {
  * Fixed layout, so every section's table shares one set of column widths and nothing shifts while scrolling (#88).
  * Chosen against the bundled content: the percentages leave Information about 175px at 1001px, and its
  * 'iLv. 110-123' is the widest Level text (85px). At 1500px every Unlock and Type name fits on one line but
- * "Variant Dungeon (Advanced)"; narrower, long names wrap. Recheck them if a wiki update adds longer cells.
+ * "Variant Dungeon (Advanced)" and "Inconceivably Further Hildibrand Adventures"; narrower, long names wrap. Recheck them if a wiki update adds longer cells.
  */
 @media (min-width: 1001px) {
   /* The heading and the column headers under it read as one pinned panel: square the heading's bottom, and outline it
@@ -794,16 +794,16 @@ a:hover {
     width: 96px;
   }
   .entries .col-unlock {
-    width: 22%;
+    width: 20%;
   }
   .entries .col-type {
     width: 14%;
   }
   .entries .col-quest {
-    width: 14%;
+    width: 15%;
   }
   .entries .col-location {
-    width: 12%;
+    width: 13%;
   }
   /* Information takes whatever is left */
   .entries td {
