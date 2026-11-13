@@ -111,7 +111,7 @@ _Avoid_: Hidden, skipped, ignored
 The entries a character could unlock at their character level and has not yet marked: levelling entries at or below that level, and level-cap entries once the character has reached the cap.
 
 **Orphaned status**:
-An entry status whose entry no longer appears in the log after an update. It is kept, and reattaches if the entry returns.
+An entry status whose entry a content release no longer has, and which the Curator matched to no other entry. It is kept, and reattaches if the entry returns.
 
 **NEW entry**:
 An entry an update added, tagged NEW until the player marks it as seen; later updates add to the NEW entries rather than replacing them. An entry restored after removal is not NEW. Whether NEW entries have been seen belongs to the device's log, not to a character.
@@ -121,4 +121,4 @@ _Avoid_: Unread, fresh
 Clears every NEW tag and marker at once.
 
 **Suggested match**:
-A proposal, shown during an update, that an entry new in that update is a reworded version of an entry orphaned by it, in the same expansion. The player accepts or declines it; a declined pair is never suggested again.
+A proposal in a curation report that a new wiki row is a reworded version of an entry the content release no longer has, in the same expansion. The Curator confirms or rejects it; players never see one.
