@@ -881,6 +881,16 @@ a:hover {
   color: var(--text-dim);
 }
 
+/* The Type cell: a line that starts with an icon puts the label beside it (it wrapped under the icon, as in "Game / Mechanic"),
+   and the label goes on one line where it fits */
+.entries .type-cell .line:has(> .wiki-icon:first-child) {
+  display: flex;
+  align-items: center;
+}
+.entries .type-cell .line > .wiki-icon {
+  flex: none;
+}
+
 /* Text with the wiki's icons and links, one block per line */
 .line {
   display: block;

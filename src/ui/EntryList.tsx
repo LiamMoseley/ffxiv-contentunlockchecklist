@@ -414,7 +414,7 @@ function WideTable({ entries, statusOf, isNew, actions }: EntryListProps) {
                 <RichCell text={entry.rich.unlock} />
                 {isNew(entry.id) && <NewBadge />}
               </td>
-              <td data-label="Type">
+              <td data-label="Type" className="type-cell">
                 <RichCell text={entry.rich.type} />
               </td>
               <td data-label="Quest">

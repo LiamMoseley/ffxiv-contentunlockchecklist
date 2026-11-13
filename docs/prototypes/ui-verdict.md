@@ -59,6 +59,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Spacing:** 8px above and below each row's text, a divider of 5% white (quieter than `--line-soft`), and a 56px status column (was 44px).
 - **Tint and hover:** every other row carries a 2% white tint; the hover is 8% white (was 4%).
 - **Column headers:** labels at `--size-sm` (was `--size-xs`) in `#d4d4d4` (was `--text-faint`).
+- **Type:** the icon sits beside its label, which stays on one line where it fits (a long one wraps beside the icon, not under it).
 
 ### Section headings
 - **Panel:** rounded, as in the "ACTIONS" header, holding the expansion name and section, a bar and a count.
