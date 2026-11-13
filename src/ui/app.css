@@ -9,6 +9,8 @@
   --window: #333;
   --window-bottom: #2b2b2b;
   --rail: #262626;
+  /* The list frame's fill: darker than the window, lighter than the rail */
+  --list-frame-fill: linear-gradient(90deg, #2a2a2a, #2e2e2e);
   --line: #4a4a4a;
   --text: #eee;
   --text-dim: #b8b8b8;
@@ -653,8 +655,8 @@ a:hover {
     margin: 0 -2px 8px 0;
     overflow: hidden;
     border-radius: 6px;
-    /* Smooth, no grain: the window's own gradient colours down this panel, but opaque so the window's grain stays out */
-    background: linear-gradient(#333, #2d2d2d);
+    /* Smooth, no grain: opaque, so the window's grain stays out (Cards and stacked rows add their own, below) */
+    background: var(--list-frame-fill);
     box-shadow:
       inset 0 1px 3px #000,
       0 1px 0 rgba(255, 255, 255, 0.06);
@@ -662,12 +664,12 @@ a:hover {
   /* The table's frame is smooth; Cards and the stacked rows (1000px and below) sit on the window's grain, so the
      frame carries it too, blended in like the rail's */
   .list-frame.cards {
-    background: var(--grain), linear-gradient(#333, #2d2d2d);
+    background: var(--grain), var(--list-frame-fill);
     background-blend-mode: overlay, normal;
   }
   @media (max-width: 1000px) {
     .list-frame {
-      background: var(--grain), linear-gradient(#333, #2d2d2d);
+      background: var(--grain), var(--list-frame-fill);
       background-blend-mode: overlay, normal;
     }
   }

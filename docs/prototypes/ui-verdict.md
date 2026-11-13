@@ -50,7 +50,7 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Available now:** its heading is one non-clickable tab in the selected look (yellow corner), with no glow. It reads "Level 1 to 85" and the number of rows listed (not Completed/total, since Completed rows leave the view), or "Available now" with no level set.
 
 ### List frame
-- **What:** a recessed panel round the scrolling list (the **list frame**, not the bronze window frame), built like the rail: the window's own charcoal (`#333 → #2d2d2d`, opaque), the rail's radius and inset shadow. The table's frame is smooth; Cards and the stacked rows (1000px and below) carry the grain, blended in like the rail's. The pinned section heading is rounded at the top to match the frame's corners. It wraps the scrolling list only; the tabs row and filter bar stay above it.
+- **What:** a recessed panel round the scrolling list (the **list frame**, not the bronze window frame), built like the rail but lighter: an opaque charcoal `#2a2a2a → #2e2e2e` (darker than the window, lighter than the rail), the rail's radius and its inset shadow. The table's frame is smooth; Cards and the stacked rows (1000px and below) carry the grain, blended in like the rail's. The pinned section heading is rounded at the top to match the frame's corners. It wraps the scrolling list only; the tabs row and filter bar stay above it.
 - **Fit:** the pinned section heading and column headers sit flush to its left, right and top edges and its rounded corners clip them. It ends 8px above the hint bar, in line with the rail's bottom edge, and the scrollbar sits inside its right edge.
 - **Where:** 761px and wider: table rows, stacked rows (761-1000px) and Cards. The phone layout (760px and below) has no frame.
 
