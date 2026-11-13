@@ -54,6 +54,9 @@ The owner wanted the game's own windows matched as closely as possible, without 
 - **Fit:** the pinned section heading and column headers sit flush to its left, right and top edges and its rounded corners clip them. It ends 8px above the hint bar, in line with the rail's bottom edge, and the scrollbar sits inside its right edge.
 - **Where:** 761px and wider: table rows, stacked rows (761-1000px) and Cards. The phone layout (760px and below) has no frame.
 
+### Table row polish
+- **Unlock name:** brighter (`#fff`) and a touch heavier (600) than the other columns, which are unchanged.
+
 ### Section headings
 - **Panel:** rounded, as in the "ACTIONS" header, holding the expansion name and section, a bar and a count.
 
